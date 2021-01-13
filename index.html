@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>My New Hugo Site</title>
+  <title>Daryl&#39;s Blog</title>
   <meta name="description" content="" />
 
   
@@ -24,7 +24,7 @@
   <link rel="shortcut icon" href="/favicon.png">
 
   
-  <link href="https://siskinc.github.io/index.xml" rel="alternate" type="application/rss+xml" title="My New Hugo Site" />
+  <link href="https://siskinc.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Daryl's Blog" />
   
 </head>
 
@@ -32,7 +32,7 @@
   <aside class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <a href="https://siskinc.github.io/"><h1>My New Hugo Site</h1></a>
+      <a href="https://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
       <p class="lead">
       An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
       </p>
@@ -51,7 +51,20 @@
 
     <main class="content container">
     <div class="posts">
-
+<article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/first/">go-redis批量(pipeline)拉取数据的操作</a>
+  </h1>
+  <time datetime="2021-01-13T22:27:19&#43;0800" class="post-date">Wed, Jan 13, 2021</time>
+  主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了
+ 原理 在调用pipeline每次append命令时，会返回一个对应的xxxxCmd对象指针，保留这个指针即可，在Exec()函数执行完成后，会将结果写入对应的对象内
+demo package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.com/go-redis/redis/v8&#34; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;redis.Options{ Addr: &#34;local.arch:6379&#34;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &lt; 100; i++ { key := fmt.Sprintf(&#34;%d&#34;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.
+  
+  <div class="read-more-link">
+    <a href="/post/first/">Read More…</a>
+  </div>
+  
+</article>
 </div>
     </main>
 
