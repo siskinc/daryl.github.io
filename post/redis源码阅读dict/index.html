@@ -1,58 +1,83 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<!doctype html>
+<html lang="en-us">
 <head>
-  <link href="https://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.81.0-DEV" />
 
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 
-  <title>Redis源码阅读——DICT &middot; Daryl&#39;s Blog</title>
-  <meta name="description" content="" />
+    <title>Redis源码阅读——DICT | Daryl&#39;s Blog</title>
+    <meta property="og:title" content="Redis源码阅读——DICT - Daryl&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2020-04-21T23:24:04&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-04-21T23:24:04&#43;08:00'>
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="Redis源码阅读——DICT">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBdict/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
-  
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/hyde.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
-
-  
-  
+    
+    
+    
+    
+    
+    
 </head>
 
-  <body class=" ">
-  <aside class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <a href="https://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
-      <p class="lead">
-      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
-      </p>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://siskinc.github.io/">
+                        Daryl&#39;s Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
     </div>
+</header>
 
-    <nav>
-      <ul class="sidebar-nav">
-        <li><a href="https://siskinc.github.io/">Home</a> </li>
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">Redis源码阅读——DICT</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月21日
+        </date>
         
-      </ul>
-    </nav>
-
-    <p>&copy; 2021. All rights reserved. </p>
-  </div>
-</aside>
-
-    <main class="content container">
-    <div class="post">
-  <h1>Redis源码阅读——DICT</h1>
-  <time datetime=2020-04-21T23:24:04Z class="post-date">Tue, Apr 21, 2020</time>
-  <h2 id="数据结构">数据结构</h2>
+        
+        
+        <div class="post-content">
+            <h2 id="数据结构">数据结构</h2>
 <h3 id="字典的基本单元dictentry">字典的基本单元——<code>dictEntry</code></h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
 <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictEntry {
@@ -97,7 +122,9 @@
 </code></pre></div><p>从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。</p>
 <p>再观察，第一个字段table，其实就是一个dictEntry的指针列表，size代表table的长度，used代表table当前存储的dictEntry(注意，假如size==8,used==8,这不代表table的每个元素都不为NULL，因为算出来的hash可能会碰撞，hash和sizemask相与后可能会再一次碰撞)，sizemask作用就是保证hash后的值，能够落入table的范围内，其实说白了，就是求某一个key落入到dictht的哪个index里面，具体操作要看函数<code>_dictKeyIndex</code>。里面有一行代码是<code>idx = hash &amp; d-&gt;ht[table].sizemask;</code>，这个就是sizemask的主要作用。关于size,sizemask,在<code>dictExpand</code>可以看到对其赋值，size就是创建的table长度，sizemask是size-1。</p>
 <p>根据<code>dictht</code>和<code>dictEntry</code>的结构其实我们可以推论出一个事情，那就是redis的哈希表实现几乎就是最简单的哈希实现，数组加上链表，如果哈希碰撞，其实是一个灾难性的发生。为什么不使用数据加上红黑树的实现方式呢？下面图是来自于网络，最简单的哈希实现方式：</p>
-<p><a href="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png"><img src="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png" alt=""></a></p>
+<p><a href="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png">
+        <img class="mx-auto" alt="" src="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png" />   
+    </a></p>
 <h3 id="字典的类型dicttype">字典的类型——dictType</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
 <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictType {
@@ -499,13 +526,153 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
 <p>原来没用了&hellip;&hellip;</p>
 </blockquote>
 
+        </div>
+
+        
+
+
+        
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
 </div>
 
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
 
-    </main>
 
     
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
     
-  </body>
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>

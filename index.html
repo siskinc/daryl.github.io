@@ -1,161 +1,239 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<!doctype html>
+<html lang="en-us">
 <head>
-  <link href="https://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.81.0-DEV" />
+	<meta name="generator" content="Hugo 0.81.0-DEV" />
 
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 
-  <title>Daryl&#39;s Blog</title>
-  <meta name="description" content="" />
+    <title>Daryl&#39;s Blog | </title>
+    <meta property="og:title" content="Daryl&#39;s Blog | ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="">
+    <meta name="description" content="">
+    <meta property="og:url" content="https://siskinc.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
-  
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/poole.css">
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/syntax.css">
-  <link type="text/css" rel="stylesheet" href="https://siskinc.github.io/css/hyde.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/index.xml" title="Daryl's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
-  
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="/favicon.png">
-
-  
-  <link href="https://siskinc.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Daryl's Blog" />
-  
+    
+    
+    
+    
+    
+    
 </head>
 
-  <body class=" ">
-  <aside class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      <a href="https://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
-      <p class="lead">
-      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
-      </p>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://siskinc.github.io/">
+                            Daryl&#39;s Blog
+                        </a>
+                    </h1>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
     </div>
+</header>
 
-    <nav>
-      <ul class="sidebar-nav">
-        <li><a href="https://siskinc.github.io/">Home</a> </li>
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年11月9日
+        </date>
         
-      </ul>
-    </nav>
-
-    <p>&copy; 2021. All rights reserved. </p>
-  </div>
-</aside>
-
-    <main class="content container">
-    <div class="posts">
-<article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/">go-redis批量(pipeline)拉取数据的操作</a>
-  </h1>
-  <time datetime="2020-11-09T23:49:58Z" class="post-date">Mon, Nov 9, 2020</time>
-  主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了
+        <div class="post-content">
+            主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了
  原理 在调用pipeline每次append命令时，会返回一个对应的xxxxCmd对象指针，保留这个指针即可，在Exec()函数执行完成后，会将结果写入对应的对象内
-demo package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.com/go-redis/redis/v8&#34; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;redis.Options{ Addr: &#34;local.arch:6379&#34;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &lt; 100; i++ { key := fmt.Sprintf(&#34;%d&#34;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.
-  
-  <div class="read-more-link">
-    <a href="/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/">Python远程操作SSH</a>
-  </h1>
-  <time datetime="2020-11-05T13:59:29Z" class="post-date">Thu, Nov 5, 2020</time>
-  三方组件 paramiko
-创建ssh 连接 def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh 执行命令 def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&#39;command&#39;) for line in stdout.readlines(): print(line) 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">幂次定律在Redis中的应用</a>
-  </h1>
-  <time datetime="2020-09-12T16:45:46Z" class="post-date">Sat, Sep 12, 2020</time>
-  幂次定律  如果某件事的发生频率和它的某个属性成幂关系，那么这个频率就可以称之为符合幂次定律。幂次定律的表现是少数几个事件的发生频率占了整个发生频率的大部分， 而其余的大多数事件只占整个发生频率的一个小部分。幂次定律
+demo package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.com/go-redis/redis/v8&#34; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;redis.Options{ Addr: &#34;local.arch:6379&#34;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &lt; 100; i++ { key := fmt.Sprintf(&#34;%d&#34;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年11月5日
+        </date>
+        
+        <div class="post-content">
+            三方组件 paramiko
+创建ssh 连接 def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh 执行命令 def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&#39;command&#39;) for line in stdout.readlines(): print(line) ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年9月12日
+        </date>
+        
+        <div class="post-content">
+            幂次定律  如果某件事的发生频率和它的某个属性成幂关系，那么这个频率就可以称之为符合幂次定律。幂次定律的表现是少数几个事件的发生频率占了整个发生频率的大部分， 而其余的大多数事件只占整个发生频率的一个小部分。幂次定律
  Redis中的应用  在Redis中的跳表内容中有一个zslRandomLevel函数，返回一个随机的层级
- /* Returns a random level for the new skiplist node we are going to create. * The return value of this function is between 1 and ZSKIPLIST_MAXLEVEL * (both inclusive), with a powerlaw-alike distribution where higher * levels are less likely to be returned. */ int zslRandomLevel(void) { int level = 1; while ((random()&amp;0xFFFF) &lt; (ZSKIPLIST_P * 0xFFFF)) level += 1; return (level&lt;ZSKIPLIST_MAXLEVEL) ?
-  
-  <div class="read-more-link">
-    <a href="/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/">redis lua script注意点</a>
-  </h1>
-  <time datetime="2020-08-16T22:26:29Z" class="post-date">Sun, Aug 16, 2020</time>
-  脚本死循环 Redis 的指令执行是个单线程，这个单线程还要执行来自客户端的 lua 脚本。如果 lua 脚本中来一个死循环，在脚本没有对 Redis 的内部数据状态进行修改时，可以使用script kill指令用于动态杀死一个执行时间超时的 lua 脚本。因为 Redis 不允许 script kill 破坏脚本执行的原子性。比如脚本内部使用了 redis.call(&ldquo;set&rdquo;, key, value) 修改了内部的数据，那么 script kill 执行时服务器会返回错误。
+ /* Returns a random level for the new skiplist node we are going to create. * The return value of this function is between 1 and ZSKIPLIST_MAXLEVEL * (both inclusive), with a powerlaw-alike distribution where higher * levels are less likely to be returned. */ int zslRandomLevel(void) { int level = 1; while ((random()&amp;0xFFFF) &lt; (ZSKIPLIST_P * 0xFFFF)) level += 1; return (level&lt;ZSKIPLIST_MAXLEVEL) ?……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年8月16日
+        </date>
+        
+        <div class="post-content">
+            脚本死循环 Redis 的指令执行是个单线程，这个单线程还要执行来自客户端的 lua 脚本。如果 lua 脚本中来一个死循环，在脚本没有对 Redis 的内部数据状态进行修改时，可以使用script kill指令用于动态杀死一个执行时间超时的 lua 脚本。因为 Redis 不允许 script kill 破坏脚本执行的原子性。比如脚本内部使用了 redis.call(&ldquo;set&rdquo;, key, value) 修改了内部的数据，那么 script kill 执行时服务器会返回错误。
 Script Kill 的原理 lua 脚本引擎功能太强大了，它提供了各式各样的钩子函数，它允许在内部虚拟机执行指令时运行钩子代码。比如每执行 N 条指令执行一次某个钩子函数，Redis 正是使用了这个钩子函数。
-void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w条指令，执行一次钩子函数 luaMaskCountHook  lua_sethook(lua,luaMaskCountHook,LUA_MASKCOUNT,100000); ... } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">Golang map数据结构接受json中的uint64数据</a>
-  </h1>
-  <time datetime="2020-05-27T13:16:11Z" class="post-date">Wed, May 27, 2020</time>
-  例如有一个json数据：
+void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w条指令，执行一次钩子函数 luaMaskCountHook  lua_sethook(lua,luaMaskCountHook,LUA_MASKCOUNT,100000); ... } ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月27日
+        </date>
+        
+        <div class="post-content">
+            例如有一个json数据：
 { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } 但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
 package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct { Name string `json:&#34;name&#34;` Money uint64 `json:&#34;money&#34;` } func main() { info := &amp;Info{} json.Unmarshal([]byte(` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 }`), info) fmt.Println(info) } 但是在某些情况下，你不得不用一个map去接收数据怎么办？
 有几个坑需要注意一下：
   JSON的规范中，对于数字类型，并不区分是整型还是浮点型。
   如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型
   如何解决这个问题，先看下面程序：
-package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#34;strings&#34; ) func main() { const jsonStream = ` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } ` decoder := json.
-  
-  <div class="read-more-link">
-    <a href="/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/">Redis源码阅读之quicklist</a>
-  </h1>
-  <time datetime="2020-05-21T23:37:05Z" class="post-date">Thu, May 21, 2020</time>
-  数据结构 quicklistNode /* quicklistNode is a 32 byte struct describing a ziplist for a quicklist. * We use bit fields keep the quicklistNode at 32 bytes. * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &lt; 32k). * encoding: 2 bits, RAW=1, LZF=2. * container: 2 bits, NONE=1, ZIPLIST=2. * recompress: 1 bit, bool, true if node is temporarry decompressed for usage. * attempted_compress: 1 bit, boolean, used for verifying during testing.
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/">Redis字典扩张算法</a>
-  </h1>
-  <time datetime="2020-05-16T00:05:19Z" class="post-date">Sat, May 16, 2020</time>
-  源码 /* This is the initial size of every hash table */ #define DICT_HT_INITIAL_SIZE 4  /* Our hash table capability is a power of two */ static unsigned long _dictNextPower(unsigned long size) { unsigned long i = DICT_HT_INITIAL_SIZE; if (size &gt;= LONG_MAX) return LONG_MAX + 1LU; while(1) { if (i &gt;= size) return i; i *= 2; } } 结论  Redis的dict会从4开始扩张，最大到达LONG_MAX + 1LU
- 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/">Golang源码阅读之map</a>
-  </h1>
-  <time datetime="2020-05-15T23:33:35Z" class="post-date">Fri, May 15, 2020</time>
-  源码地址:src/runtime/map.go
-描述  Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。 Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/">Redis源码阅读之动态字符串</a>
-  </h1>
-  <time datetime="2020-05-10T11:07:16Z" class="post-date">Sun, May 10, 2020</time>
-  数据结构 typedef char *sds; /* Note: sdshdr5 is never used, we just access the flags byte directly. * However is here to document the layout of type 5 SDS strings. */ struct __attribute__ ((__packed__)) sdshdr5 { unsigned char flags; /* 3 lsb of type, and 5 msb of string length */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr8 { uint8_t len; /* used */ uint8_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr16 { uint16_t len; /* used */ uint16_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr32 { uint32_t len; /* used */ uint32_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr64 { uint64_t len; /* used */ uint64_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; 第一行其实很重要，其实翻源码可以发现，到处传值的都是sds，而不是sdshdr。而sds指向的是sdshdr的buf字段。
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/">HTTP 与 HTTPS 的区别</a>
-  </h1>
-  <time datetime="2020-04-25T22:00:23Z" class="post-date">Sat, Apr 25, 2020</time>
-  超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。
+package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#34;strings&#34; ) func main() { const jsonStream = ` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } ` decoder := json.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月21日
+        </date>
+        
+        <div class="post-content">
+            数据结构 quicklistNode /* quicklistNode is a 32 byte struct describing a ziplist for a quicklist. * We use bit fields keep the quicklistNode at 32 bytes. * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &lt; 32k). * encoding: 2 bits, RAW=1, LZF=2. * container: 2 bits, NONE=1, ZIPLIST=2. * recompress: 1 bit, bool, true if node is temporarry decompressed for usage. * attempted_compress: 1 bit, boolean, used for verifying during testing.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月16日
+        </date>
+        
+        <div class="post-content">
+            源码 /* This is the initial size of every hash table */ #define DICT_HT_INITIAL_SIZE 4  /* Our hash table capability is a power of two */ static unsigned long _dictNextPower(unsigned long size) { unsigned long i = DICT_HT_INITIAL_SIZE; if (size &gt;= LONG_MAX) return LONG_MAX + 1LU; while(1) { if (i &gt;= size) return i; i *= 2; } } 结论  Redis的dict会从4开始扩张，最大到达LONG_MAX + 1LU
+ ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月15日
+        </date>
+        
+        <div class="post-content">
+            源码地址:src/runtime/map.go
+描述  Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。 Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。  ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月10日
+        </date>
+        
+        <div class="post-content">
+            数据结构 typedef char *sds; /* Note: sdshdr5 is never used, we just access the flags byte directly. * However is here to document the layout of type 5 SDS strings. */ struct __attribute__ ((__packed__)) sdshdr5 { unsigned char flags; /* 3 lsb of type, and 5 msb of string length */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr8 { uint8_t len; /* used */ uint8_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr16 { uint16_t len; /* used */ uint16_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr32 { uint32_t len; /* used */ uint32_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr64 { uint64_t len; /* used */ uint64_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; 第一行其实很重要，其实翻源码可以发现，到处传值的都是sds，而不是sdshdr。而sds指向的是sdshdr的buf字段。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月25日
+        </date>
+        
+        <div class="post-content">
+            超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。
 为了解决HTTP协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议HTTPS，为了数据传输的安全，HTTPS在HTTP的基础上加入了SSL协议，SSL依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。
 基本概念 HTTP  是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。
  HTTPS  是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。
@@ -173,1027 +251,187 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
   服务器端在客户端提供的加密方案中选择加密程度最高的加密方式;
   服务器将选择好的加密方案通过明文方式返回给客户端;
   客户端接收到服务端返回的加密方式后，使用该加密方式生成产生随机码，用作通信过程中对称加密的密钥，使用服务端返回的公钥进行加密，将加密后的随机码发送至服务器;
-  服务器收到客户端返回的加密信息后，使用自己的私钥进行解密，获取对称加密密钥;在接下来的会话中，服务器和客户端将会使用该密码进行对称加密，保证通信过程中信息的安全;
-  
-  <div class="read-more-link">
-    <a href="/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">Redis源码阅读之内存分配</a>
-  </h1>
-  <time datetime="2020-04-22T23:01:09Z" class="post-date">Wed, Apr 22, 2020</time>
-  zmalloc是什么  zmalloc是redis内存分配的基本操作，相当于包了一层malloc的操作，分配出来的内存不只是裸露的
- API void *zmalloc(size_t size); void *zcalloc(size_t size); void *zrealloc(void *ptr, size_t size); void zfree(void *ptr); char *zstrdup(const char *s); size_t zmalloc_used_memory(void); void zmalloc_set_oom_handler(void (*oom_handler)(size_t)); size_t zmalloc_get_rss(void); int zmalloc_get_allocator_info(size_t *allocated, size_t *active, size_t *resident); void set_jemalloc_bg_thread(int enable); int jemalloc_purge(); size_t zmalloc_get_private_dirty(long pid); size_t zmalloc_get_smap_bytes_by_field(char *field, long pid); size_t zmalloc_get_memory_size(void); void zlibc_free(void *ptr); 内存分配zmalloc，zcalloc void *zmalloc(size_t size) { void *ptr = malloc(size+PREFIX_SIZE); if (!ptr) zmalloc_oom_handler(size); #ifdef HAVE_MALLOC_SIZE  update_zmalloc_stat_alloc(zmalloc_size(ptr)); return ptr; #else  *((size_t*)ptr) = size; update_zmalloc_stat_alloc(size+PREFIX_SIZE); return (char*)ptr+PREFIX_SIZE; #endif  } 在zmalloc的内存分配中，会多分配PREFIX_SIZE（sizeof(size_t)）个字节，多分配的是用来存储分配的字节数大小的。zcalloc其实和zmalloc做的事情差不多的，不作太多的赘余。
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%BA%8Crehash/">Redis源码阅读之字典（二）——Rehash</a>
-  </h1>
-  <time datetime="2020-04-21T23:58:01Z" class="post-date">Tue, Apr 21, 2020</time>
-  历史文章 Redis源码阅读之字典（一）
-Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不断的增加，dict的size也在不断的增加，当dict.used == dict.size或者used*100/size &lt; HASHTABLE_MIN_FILL,HASHTABLE_MIN_FILL一般为10，也就是说，要么容量不够，要么容量使用率小于10%了，就会调用dictExpand进行重新分配内存，这个时候就会触发rehash了。但是rehash不行一次性就操作完成了，试想一下，如果一个dict里面含有数百万的key，rehash一次可能会很久，就可能造成服务假死的情况。所以rehashing是一个长时间的过程，每一次可能只进行几个key的迁移。
- 哪些操作会触发rehashing的step dictRehashMilliseconds  redis server的定时任务会去执行dictRehashMilliseconds，但是都是传入的ms==1，主要是rehashing一下redis的dict和expired相关的键
- dictAddRaw  在给dict增加key的时候，新增的key会直接放入dict.ht[1]中
- dictGenericDelete  删除key时
- dictFind  查找key
- dictGetRandomKey 和 dictGetSomeKeys  获取随机key
- dictScan  遍历dict
- 每次rehash的过程 源码 /* Performs N steps of incremental rehashing. Returns 1 if there are still * keys to move from the old to the new hash table, otherwise 0 is returned. * * Note that a rehashing step consists in moving a bucket (that may have more * than one key as we use chaining) from the old to the new hash table, however * since part of the hash table may be composed of empty spaces, it is not * guaranteed that this function will rehash even a single bucket, since it * will visit at max N*10 empty buckets in total, otherwise the amount of * work it does would be unbound and the function may block for a long time.
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%BA%8Crehash/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBdict/">Redis源码阅读——DICT</a>
-  </h1>
-  <time datetime="2020-04-21T23:24:04Z" class="post-date">Tue, Apr 21, 2020</time>
-  数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
-哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBdict/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/">Redis源码阅读-dict</a>
-  </h1>
-  <time datetime="2020-04-21T23:23:41Z" class="post-date">Tue, Apr 21, 2020</time>
-  数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
-哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Redis源码阅读之字典（一）</a>
-  </h1>
-  <time datetime="2020-04-21T23:23:41Z" class="post-date">Tue, Apr 21, 2020</time>
-  数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
-哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/">Centos下，源码安装Python的h3包</a>
-  </h1>
-  <time datetime="2020-04-06T17:36:42Z" class="post-date">Mon, Apr 6, 2020</time>
-  公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
- 检查cmake版本 cmake --version 如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
-下载文件  自己下载对于的master压缩包
-  https://github.com/uber/h3 https://github.com/uber/h3-py  解压文件 unzip h3-master.zip unzip h3-py-master.zip 修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
-#!/usr/bin/env bash  set -ex VERSION=$1 IS_64BITS=$2 if [ &#34;&#34; == &#34;$VERSION&#34; ]; then echo &#34;Failed to specify version required&#34; exit 1 fi command -v cmake &gt;/dev/null 2&gt;&amp;1 || { echo &#34;cmake required but not found.&#34;; exit 1; } mkdir -p h3/out rm -rf h3c git clone https://github.
-  
-  <div class="read-more-link">
-    <a href="/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Golang重复对一个slice进行append造成数据错误</a>
-  </h1>
-  <time datetime="2020-04-04T20:06:21Z" class="post-date">Sat, Apr 4, 2020</time>
-  slice的属性   切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。
-  切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。
-  那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
-问题实例 slice的cap是怎么增长的   参考文章:How does Go slice capacity change on append? [duplicate]
-  有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go
-  slice的结构 type slice struct { array unsafe.Pointer len int cap int } 多次append造成的数据错误 代码 package main import &#34;fmt&#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&#34;temp&#34;, temp) temp = append(temp, 2) printSlice(&#34;temp&#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&#34;temp&#34;, temp) temp2 := append(temp, 4) printSlice(&#34;temp2&#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&#34;temp4&#34;, temp4) temp3 := append(temp, 5) printSlice(&#34;temp3&#34;, temp3) printSlice(&#34;temp2&#34;, temp2) } func printSlice(valName string, s []int) { fmt.
-  
-  <div class="read-more-link">
-    <a href="/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/">乐观锁（CAS）</a>
-  </h1>
-  <time datetime="2020-03-14T17:33:17Z" class="post-date">Sat, Mar 14, 2020</time>
-  什么是CAS   CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术
-  CAS是原子操作，保证并发安全，而不是保证并发同步
-  CAS是CPU的一个指令
-  CAS是非阻塞的、轻量级的乐观锁
-  为什么说CAS是乐观锁  乐观锁，严格来说并不是锁，通过原子性来保证数据的同步，比如说数据库的乐观锁，通过版本控制来实现等，所以CAS不会保证线程同步。乐观的认为在数据更新期间没有其他线程影响
- CAS原理  CAS(compare and swap) 比较并替换，就是将内存值更新为需要的值，但是有个条件，内存值必须与期望值相同。举个例子，期望值 E、内存值M、更新值U，当E == M的时候将M更新为U。
- CAS优缺点   优点
- 非阻塞的轻量级的乐观锁，通过CPU指令实现，在资源竞争不激烈的情况下性能高，相比synchronized重量锁，synchronized会进行比较复杂的加锁，解锁和唤醒操作。    缺点
-  ABA问题 线程C、D,线程D将A修改为B后又修改为A,此时C线程以为A没有改变过，java的原子类AtomicStampedReference，通过控制变量值的版本来保证CAS的正确性。
-  自旋时间过长，消耗CPU资源， 如果资源竞争激烈，多线程自旋长时间消耗资源。
-    CAS例子 不加锁 代码：
-package main import &#34;fmt&#34; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &lt; 100000; i++ { p++ } end &lt;- struct{}{} } func main() { go changeP() go changeP() &lt;-end &lt;-end fmt.
-  
-  <div class="read-more-link">
-    <a href="/post/%E4%B9%90%E8%A7%82%E9%94%81cas/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">Ubuntu 18.04换国内源</a>
-  </h1>
-  <time datetime="2020-02-28T16:54:07Z" class="post-date">Fri, Feb 28, 2020</time>
-  国内有很多Ubuntu的镜像源，例如阿里、网易、清华、中科大。我们这里以阿里云的源为例展示如何修改Ubuntu 18.04里面默认的源。编辑/etc/apt/sources.list文件：
-deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse中科大源 deb https://mirrors.
-  
-  <div class="read-more-link">
-    <a href="/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/">Windows下如何使用pip安装Uber H3</a>
-  </h1>
-  <time datetime="2020-02-26T17:21:02Z" class="post-date">Wed, Feb 26, 2020</time>
-  最近项目中会用到uber h3，而我写一个小工具或者去验证一些思路的时候常常会使用Python来着，方便嘛！而Uber H3是C写的，只是为Python提供了拓展，所以需要安装Vs14。这个需要自己提前安装好。在使用pip安装时直接报错了！大概的报错内容就是需要cmake，bash等东西，cmake好解决，自己下载到本地，放到环境变量里面就行，bash可以使用git bash来代替，所以只能跟Power shell暂时说拜拜，使用Git Bash来安装H3。Ok， 你运行pip install h3就会看见如下界面
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/nexus_5x_api_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/">Nexus 5X API 29 x86模拟器无法联网，无法打开chrome</a>
-  </h1>
-  <time datetime="2020-02-05T21:40:19Z" class="post-date">Wed, Feb 5, 2020</time>
-   在Android Studio中打开AVD Manager 点击Create Virtual Device&hellip;按钮   无法联网的原因没找到，但是无法打开chrome视乎是应为用了Play Store套件，选择没有Play Store的虚拟机即可，亲测有效
- 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC%E7%9A%84%E4%BC%98%E5%8A%A3/">远程办公的优劣</a>
-  </h1>
-  <time datetime="2020-02-03T22:19:09Z" class="post-date">Mon, Feb 3, 2020</time>
-  优势  起床就能工作，累了就能马上躺下休息。 事儿干完了能够开心的摸鱼，想看书看书，想刷题刷题。 遇到烦心事可以破口大骂不怕人听见，哈哈。  劣势  如果自制力不够，无法专心工作，容易摸鱼。 沟通困难，可能你想找的人也找不到。 没有工作氛围，没有工作节奏，等12点的时候，你发现厨房里面没饭吃。 生活容易被打扰，有些人会更加容易把工作和生活混在一起，那你的休息时间可就没了！  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/">xshell过期了怎么办，如何破解xshell</a>
-  </h1>
-  <time datetime="2019-12-25T20:35:41Z" class="post-date">Wed, Dec 25, 2019</time>
-   卸载xshell 删除xshell注册表  打开运行框（快捷键WIN+R）,输入regedit.exe 删除计算机\HKEY_CURRENT_USER\Software\Netscape目录   重新安装xshell  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/">golang scan rows to []string，golang使用mysql，将结果写入到string列表中</a>
-  </h1>
-  <time datetime="2019-12-17T19:36:31Z" class="post-date">Tue, Dec 17, 2019</time>
-  rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&#34;scan have an err: %v, sql string: %s&#34;, err, sqlStr) } } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/nohup%E4%B8%8D%E8%BE%93%E5%87%BA%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95/">nohup不输出日志信息的方法</a>
-  </h1>
-  <time datetime="2019-12-15T09:45:40Z" class="post-date">Sun, Dec 15, 2019</time>
-  只输出错误信息到日志文件 nohup ./program &gt; /dev/null 2 &gt; log &amp; 什么信息也不要 nohup ./program &gt;/dev/null 2&gt;&amp;1 &amp; 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/">git使用ssh自动替代https</a>
-  </h1>
-  <time datetime="2019-12-12T22:40:31Z" class="post-date">Thu, Dec 12, 2019</time>
-   在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
- 本地执行git命令: git config --global url.&#34;git@github.com:&#34;.insteadOf &#34;https://github.com/&#34; git config --global url.&#34;git@git.company.com:&#34;.insteadOf &#34;https://git.company.com/&#34;  company.com换成你自己公司的地址即可。
-  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： git config --global url.&#34;git@github.com:golang/&#34;.insteadOf &#34;https://go.googlesource.com/&#34; 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Golang交叉编译</a>
-  </h1>
-  <time datetime="2019-12-12T09:31:27Z" class="post-date">Thu, Dec 12, 2019</time>
-  Mac 下编译 Linux 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Linux 下编译 Mac 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go  GOOS：目标平台的操作系统（darwin、freebsd、linux、windows） GOARCH：目标平台的体系架构（386、amd64、arm） 交叉编译不支持 CGO 所以要禁用它   上面的命令编译 64 位可执行程序，你当然应该也会使用 386 编译 32 位可执行程序很多博客都提到要先增加对其它平台的支持，但是我跳过那一步，上面所列的命令也都能成功，且得到我想要的结果，可见那一步应该是非必须的，或是我所使用的 Go 版本已默认支持所有平台。
-  
-  <div class="read-more-link">
-    <a href="/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/k8s%E6%9C%8D%E5%8A%A1%E7%9B%B4%E6%8E%A5%E6%8C%82%E6%8E%89%E7%9A%84%E5%8E%9F%E5%9B%A0/">k8s服务直接挂掉的原因</a>
-  </h1>
-  <time datetime="2019-12-12T09:28:32Z" class="post-date">Thu, Dec 12, 2019</time>
-   首先要确定一点，在本地环境，配置一模一样，程序跑起来是正常的，但是一放到k8s就会直接挂掉，目前收集到两种原因
-  内存不够，OOM CPU不够  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/gorm%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E5%94%AF%E4%B8%80%E9%94%AE%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98/">gorm软删除和唯一键冲突的问题</a>
-  </h1>
-  <time datetime="2019-12-09T21:27:01Z" class="post-date">Mon, Dec 9, 2019</time>
-   如果直接使用gorm.Model嵌入到自己的model中，就无法对DeletedAt进行附加的操作，最简单的方式就是将gorm.Model的内容拷贝出来，将DeletedAt加入到自己的unique_index中  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/wordpressdocker%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7/">wordpress,docker,插件升级</a>
-  </h1>
-  <time datetime="2019-12-06T16:53:30Z" class="post-date">Fri, Dec 6, 2019</time>
-   wp-config.php最后一行添加define('FS_METHOD', &quot;direct&quot;); 设置文件权限chown -R www-data:www-data ./  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/">Run jQuery in Chrome Console</a>
-  </h1>
-  <time datetime="2019-11-28T00:57:49Z" class="post-date">Thu, Nov 28, 2019</time>
-  var jqry = document.createElement(&#39;script&#39;); jqry.src = &#34;https://code.jquery.com/jquery-3.3.1.min.js&#34;; document.getElementsByTagName(&#39;head&#39;)[0].appendChild(jqry); jQuery.noConflict(); 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">golang http.client 的 Connection reset by peer 问题</a>
-  </h1>
-  <time datetime="2019-11-28T00:28:26Z" class="post-date">Thu, Nov 28, 2019</time>
-  func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Close = true resp, err := http.Client.Do(req) } func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Header.Add(&#34;Connection&#34;, &#34;close&#34;) resp, err := http.Client.Do(req) } func main() { tr := http.Transport{DisableKeepAlives: true} client := http.Client{Transport: &amp;tr} resp, err := client.Get(&#34;https://www.baidu.com/&#34;) if resp != nil { defer resp.Body.Close() } checkError(err) fmt.
-  
-  <div class="read-more-link">
-    <a href="/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">记一次kafka-go使用踩坑（多个partition只会写入一个partition）</a>
-  </h1>
-  <time datetime="2019-11-06T05:33:44Z" class="post-date">Wed, Nov 6, 2019</time>
-  w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, }) 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/">定时统计任务参考</a>
-  </h1>
-  <time datetime="2019-11-01T22:12:47Z" class="post-date">Fri, Nov 1, 2019</time>
-   时间的触发，过期的数据不再使用（数据来源是消息中间件） 相关联的任务使用事件的方式，例如一天的统计数据是需要小时的数据来生成的，当一天的小时数据生成完了，再去触发生成一天的数据，请勿使用延时的观念，是神坑，勿入。 数据的读取，采用批量的方式读取，一次读取一个限定的值的数量。 数据的写入，采用批量的方式写入，最好有ticker来触发写入未到阈值数量的数据。 撸数据是一次sql撸完，还是分页撸？DBA告诉我让我一次撸完。  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/">CSS清除浮动</a>
-  </h1>
-  <time datetime="2019-10-25T14:29:00Z" class="post-date">Fri, Oct 25, 2019</time>
-  使用方法：.clearfix:after { content: &#34;&#34;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; } .clearfix:before, .clearfix:after { content: &#34;&#34;; display: table; } .clearfix:after { clear: both; } .clearfix { *zoom: 1; } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">golang自动调用结构体中内嵌字段的Init()函数</a>
-  </h1>
-  <time datetime="2019-09-26T13:31:39Z" class="post-date">Thu, Sep 26, 2019</time>
-  package main import ( &#34;fmt&#34; &#34;reflect&#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.ValueOf(c) if rv.Kind() == reflect.Ptr { rv = rv.Elem() } for i := 0; i &lt; rv.NumField(); i++ { value := rv.Field(i) if conf, ok := value.Interface().(initial); ok { conf.Init() } } } type A struct { } func (a *A) Init() { fmt.Println(&#34;Init A&#34;) } type B struct { AA *A } func main() { b := B{} triggerInitials(b) } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">Linux进程的五个段</a>
-  </h1>
-  <time datetime="2019-08-24T08:06:58Z" class="post-date">Sat, Aug 24, 2019</time>
-  数据段  用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；
- 代码段  代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&mdash;&ndash;它是不可写的；
- BSS段  包含了程序中未初始化的全局变量，在内存中bss段全部置零；
- 堆（heap）  堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可以动态扩展或者所建。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩展）；当利用free等函数释放内存时，被释放的内存从堆中被提出（堆被缩减）；
- 栈  栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。
- 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/">进程和线程有什么区别</a>
-  </h1>
-  <time datetime="2019-08-24T07:33:48Z" class="post-date">Sat, Aug 24, 2019</time>
-  [TOC]
-定义 进程  是具有一定独立功能的程序、它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，也就是说进程是可以独 立运行的一段程序。
- 线程  线程进程的一个实体，是CPU调度和分派的基本单位，他是比进程更小的能独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈 。
- 关系  一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（通常说的主线程）。 资源分配给进程，同一进程的所有线程共享该进程的所有资源。用户进程主要段segment：stack（向低地址），heap，.rodata,data/bss,.text。一个进程，上面的5部分是主要的，必须的。线程只拥有stack（线程栈，线程栈是单个线程所独享的，2M），保存自己的函数调用过程，比如heap，.rodata,data/bss，text段都是共享的。 线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的办法实现同步。 处理机分给线程，即真正在处理机上运行的是线程。 线程是指进程内的一个执行单元，也是进程内的可调度实体。  区别  调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。 并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。 拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源。  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/">Goroutines和线程对比</a>
-  </h1>
-  <time datetime="2019-08-15T22:31:52Z" class="post-date">Thu, Aug 15, 2019</time>
-  [TOC]
-栈不同  线程：每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。固定大小的栈对于更复杂或者更深层次的递归函数调用来说显然是不够的。修改固定的大小可以提升空间的利用率允许创建更多的线程，并且可以允许更深的递归调用，不过这两者是没法同时兼备的。 goroutine：一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。一个goroutine的栈，和操作系统线程一样，会保存其活跃或挂起的函数调用的本地变量，但是和OS线程不太一样的是一个goroutine的栈大小并不是固定的；栈的大小会根据需要动态地伸缩。而goroutine的栈的最大值有1GB，比传统的固定大小的线程栈要大得多，尽管一般情况下，大多goroutine都不需要这么大的栈。  调度不同  线程：OS线程会被操作系统内核调度。每几毫秒，一个硬件计时器会中断处理器，这会调用一个叫作scheduler的内核函数。这个函数会挂起当前执行的线程并保存内存中它的寄存器内容，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。因为操作系统线程是被内核所调度，所以从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。 goroutine：Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine。和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器而是被Go语言&quot;建筑&quot;本身进行调度的。例如当一个goroutine调用了time.Sleep或者被channel调用或者mutex操作阻塞时，调度器会使其进入休眠并开始执行另一个goroutine直到时机到了再去唤醒第一个goroutine。因为这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。  GOMAXPROCS Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。(GOMAXPROCS是前面说的m:n调度中的n)。在休眠中的或者在通信中被阻塞的goroutine是不需要一个对应的线程来做调度的。在I/O中或系统调用中或调用非Go语言函数时，是需要一个对应的操作系统线程的，但是GOMAXPROCS并不需要将这几种情况计算在内。
-你可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它。我们在下面的小程序中会看到GOMAXPROCS的效果，这个程序会无限打印0和1。
-for { go fmt.Print(0) fmt.Print(1) } $ GOMAXPROCS=1 go run hacker-cliché.go 111111111111111111110000000000000000000011111... $ GOMAXPROCS=2 go run hacker-cliché.go 010101010101010101011001100101011010010100110... 在第一次执行时，最多同时只能有一个goroutine被执行。初始情况下只有main goroutine被执行，所以会打印很多1。过了一段时间后，GO调度器会将其置为休眠，并唤醒另一个goroutine，这时候就开始打印很多0了，在打印的时候，goroutine是被调度到操作系统线程上的。在第二次执行时，我们使用了两个操作系统线程，所以两个goroutine可以一起被执行，以同样的频率交替打印0和1。我们必须强调的是goroutine的调度是受很多因子影响的，而runtime也是在不断地发展演进的，所以这里的你实际得到的结果可能会因为版本的不同而与我们运行的结果有所不同。
-Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言中，当前的线程都有一个独特的身份(id)，并且这个身份信息可以以一个普通值的形式被被很容易地获取到，典型的可以是一个integer或者指针值。这种情况下我们做一个抽象化的thread-local storage(线程本地存储，多线程编程中不希望其它线程访问的内容)就很容易，只需要以线程的id作为key的一个map就可以解决问题，每一个线程以其id就能从中获取到值，且和其它线程互不冲突。
-goroutine没有可以被程序员获取到的身份(id)的概念。这一点是设计上故意而为之，由于thread-local storage总是会被滥用。比如说，一个web server是用一种支持tls的语言实现的，而非常普遍的是很多函数会去寻找HTTP请求的信息，这代表它们就是去其存储层(这个存储层有可能是tls)查找的。这就像是那些过分依赖全局变量的程序一样，会导致一种非健康的“距离外行为”，在这种行为下，一个函数的行为可能不是由其自己内部的变量所决定，而是由其所运行在的线程所决定。因此，如果线程本身的身份会改变——比如一些worker线程之类的——那么函数的行为就会变得神秘莫测。
-Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显式的。这样不仅使程序变得更易读，而且会让我们自由地向一些给定的函数分配子任务时不用担心其身份信息影响行为。
-你现在应该已经明白了写一个Go程序所需要的所有语言特性信息。在后面两章节中，我们会回顾一些之前的实例和工具，支持我们写出更大规模的程序：如何将一个工程组织成一系列的包，如何获取，构建，测试，性能测试，剖析，写文档，并且将这些包分享出去。
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">数组中重复的数字(Python)</a>
-  </h1>
-  <time datetime="2019-08-13T22:48:18Z" class="post-date">Tue, Aug 13, 2019</time>
-  #!/usr/bin/env python # -*- coding: utf-8 -*- # @Time : 2019-08-13 22:35 # @Author : daryl # @File : main.py def use_map(numbers): &#34;&#34;&#34; 使用哈希表结构 :param numbers: :return: &#34;&#34;&#34; num_map = dict() for number in numbers: if number in num_map: print(number) else: num_map[number] = True def use_set(numbers): &#34;&#34;&#34; 使用set结构 :param numbers: :return: &#34;&#34;&#34; num_set = set() for number in numbers: if number in num_set: print(number) else: num_set.add(number) def use_sort(numbers): &#34;&#34;&#34; 排序后查找 :param numbers: :return: &#34;&#34;&#34; numbers = sorted(numbers) print(numbers) for index, number in enumerate(numbers): if index !
-  
-  <div class="read-more-link">
-    <a href="/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/">数组中重复的数字(Golang)</a>
-  </h1>
-  <time datetime="2019-08-13T22:26:43Z" class="post-date">Tue, Aug 13, 2019</time>
-  import &#34;fmt&#34; func main() { a := [...]int{2,3,1,0,2,5,3} num := make(map[int]bool) for _, v := range a { if !num[v] { num[v] = true } else { fmt.Println(v) } } } package main import ( &#34;fmt&#34; &#34;sort&#34; ) func main() { a := []int{2,3,1,0,2,5,3} sort.Ints(a) for i, v := range a { if i != v { if v == a[v] { fmt.Println(v) } else { a[i], a[v] = a[v], a[i] } } } } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Golang 实现单例模式</a>
-  </h1>
-  <time datetime="2019-08-13T21:47:01Z" class="post-date">Tue, Aug 13, 2019</time>
-  package main import &#34;fmt&#34; type Single struct { } var single *Single func GetSingle() *Single { if single == nil { single = &amp;Single{} } return single } func main() { fmt.Printf(&#34;%p\n&#34;, GetSingle()) fmt.Printf(&#34;%p\n&#34;, GetSingle()) fmt.Printf(&#34;%p\n&#34;, GetSingle()) } package main import ( &#34;fmt&#34; &#34;sync&#34; &#34;time&#34; ) type Single2 struct { } var single2 *Single2 var lock *sync.Mutex = &amp;sync.Mutex{} func GetSingle2() *Single2 { lock.Lock() defer lock.Unlock() if single2 == nil { single2 = &amp;Single2{} } return single2 } func main() { go fmt.
-  
-  <div class="read-more-link">
-    <a href="/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Python实现单例模式</a>
-  </h1>
-  <time datetime="2019-08-13T21:20:41Z" class="post-date">Tue, Aug 13, 2019</time>
-  [TOC]
-使用__new__方法 class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &#39;_instance&#39;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass 共享属性 class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).__new__(cls, *args, **kw) ob.__dict__ = cls._state return ob class MyClass2(Borg): pass 装饰器版本 def singleton(cls): instances = {} def getinstance(*args, **kw): if cls not in instances: instances[cls] = cls(*args, **kw) return instances[cls] return getinstance @singleton class MyClass: pass import方法 # mysingleton.
-  
-  <div class="read-more-link">
-    <a href="/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/svn_branch_%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF/">svn branch 创建分支</a>
-  </h1>
-  <time datetime="2019-07-26T09:49:33Z" class="post-date">Fri, Jul 26, 2019</time>
-  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/">使用docker-compose搭建WordPress</a>
-  </h1>
-  <time datetime="2019-07-25T23:18:13Z" class="post-date">Thu, Jul 25, 2019</time>
-  version: &#39;3&#39; services: nginx: image: nginx:1.13.9-alpine ports: - &#34;80:80&#34; - &#34;443:443&#34; restart: always volumes: - ./wordpress.conf:/etc/nginx/conf.d/default.conf - ./nginx_logs:/var/log/nginx - ./letsencrypt:/etc/letsencrypt depends_on: - wordpress networks: - daryl_blog_net wordpress: image: wordpress:latest restart: always volumes: - ./html:/var/www/html networks: - daryl_blog_net depends_on: - db environment: WORDPRESS_DB_HOST: db:3306 WORDPRESS_DB_USER: wordpress WORDPRESS_DB_PASSWORD: password db: image: mysql:5.7.23 volumes: - ./mysql:/var/lib/mysql - ./mysql_logs:/var/logs/mysql restart: always env_file: - mysql.env ports: - &#34;3306:3306&#34; networks: - daryl_blog_net networks: daryl_blog_net: driver: bridge ipam: config: - subnet: 192.
-  
-  <div class="read-more-link">
-    <a href="/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/">shell中通过eval执行一个字符串命令</a>
-  </h1>
-  <time datetime="2019-07-25T20:39:15Z" class="post-date">Thu, Jul 25, 2019</time>
-  #!/bin/bash echo &#34;Switch Directory : /home/pktgen-2.9.0&#34; dir=&#34;/home/pktgen-2.9.0&#34; cd $dir cmd=&#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&#34; eval $cmd 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/">svn钩子(hooks)</a>
-  </h1>
-  <time datetime="2019-07-25T20:37:23Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-钩子脚本的具体写法就是操作系统中shell脚本程序的写法,请根据自己SVN所在的操作系统和shell程序进行相应的写作
-所谓钩子就是与一些版本库事件触发的程序，例如新修订版本的创建，或是未版本化属性的修改。每个钩子都会被告知足够多的信息，包括那是什么事件，所操作的对象，和触发事件的用户名。通过钩子的输出或返回状态，钩子程序能让工作继续、停止或是以某种方式挂起。
-svn在每个代码仓库下有一个hooks目录用于放hook脚本, svn为我们提供了模板
-[root@idcflow2175 hooks]# pwd /home/svn/csvn/data/repositories/tr2/hooks [root@idcflow2175 hooks]# ll -rw-r--r-- 1 svn svn 1977 Jul 1 2013 post-commit.tmpl -rw-r--r-- 1 svn svn 1638 Jul 1 2013 post-lock.tmpl -rw-r--r-- 1 svn svn 2289 Jul 1 2013 post-revprop-change.tmpl -rw-r--r-- 1 svn svn 1567 Jul 1 2013 post-unlock.tmpl -rw-r--r-- 1 svn svn 3447 Jul 1 2013 pre-commit.tmpl -rw-r--r-- 1 svn svn 2455 Jul 1 2013 pre-lock.tmpl -rw-r--r-- 1 svn svn 2786 Jul 1 2013 pre-revprop-change.
-  
-  <div class="read-more-link">
-    <a href="/post/svn%E9%92%A9%E5%AD%90hooks/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/">使用Docker搭建svn服务器教程</a>
-  </h1>
-  <time datetime="2019-07-25T20:36:47Z" class="post-date">Thu, Jul 25, 2019</time>
-  svn简介 SVN是Subversion的简称，是一个开放源代码的版本控制系统，相较于RCS、CVS，它采用了分支管理系统，它的设计目标就是取代CVS。互联网上很多版本控制服务已从CVS迁移到Subversion。说得简单一点SVN就是用于多个人共同开发同一个项目，共用资源的目的。
-svn的docker搭建方法  请提前在服务器安装好docker服务 本篇教程选用的docker镜像为garethflowers/svn-server 安装并启动容器代码  docker run --restart always --name svn -d -v /root/dockers/svn:/var/opt/svn -p 3690:3690 garethflowers/svn-server 简析  /root/dockers/svn为宿主机的文件目录，/var/opt/svn为容器内的文件目录 &ndash;restart always命令可以实现容器在宿主机开机时自启动 -p 3690:3690表示将宿主机的3690端口映射到容器的3690端口，此端口为svn服务的默认端口，可以根据需要自行修改  创建svn仓库和账户 进入容器中进行配置 docker exec -it svn /bin/sh 创建名称为svn的资源仓库 svnadmin create svn 创建成功后svn目录内应该包含以下文件: README.txt conf db format hooks locks
-资源仓库配置，修改svnserve.conf anon-access = none # 匿名用户不可读写，也可设置为只读 readauth-access = write # 授权用户可写password-db = passwd # 密码文件路径，相对于当前目录authz-db = authz # 访问控制文件realm = /var/opt/svn/svn # 认证命名空间，会在认证提示界面显示，并作为凭证缓存的关键字，可以写仓库名称比如svn配置账号与密码，修改 passwd文件，格式为“账号 = 密码” [users]# harry = harryssecret# sally = sallyssecretadmin = 123456配置账户权限，修改 authz文件 [groups]owner = admin[/] # / 表示所有仓库admin = rw # 用户 admin 在所有仓库拥有读写权限[svn:/] # 表示以下用户在仓库 svn 的所有目录有相应权限@owner = rw # 表示 owner 组下的用户拥有读写权限拉取svn svn co svn://127.
-  
-  <div class="read-more-link">
-    <a href="/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/docker_xfs%E5%8D%A1%E6%AD%BB/">docker xfs卡死</a>
-  </h1>
-  <time datetime="2019-07-25T20:36:20Z" class="post-date">Thu, Jul 25, 2019</time>
-  原因 docker在xfs文件系统中，过于频繁create/destory container、pull/push image，当thin pool满时，DeviceMapper后端默认文件系统xfs会不断retry 失败的IO，导致进程挂起。
-解决办法  不用xfs文件系统 加入启动参数 dm.xfs_nospace_max_retries=0  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/">如何在mongoengine中使用referencefield引用本类</a>
-  </h1>
-  <time datetime="2019-07-25T20:35:44Z" class="post-date">Thu, Jul 25, 2019</time>
-  引用：原文
-from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&#34;self&#34;, reverse_delete_rule = NULLIFY) 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/docker%E4%B8%80%E9%94%AEss/">docker一键ss</a>
-  </h1>
-  <time datetime="2019-07-25T20:35:01Z" class="post-date">Thu, Jul 25, 2019</time>
-  sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &#34;ss-server&#34; -s &#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&#34; -x -e &#34;kcpserver&#34; -k &#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&#34; 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/linux_or_mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/">Linux or Mac 重启网络</a>
-  </h1>
-  <time datetime="2019-07-25T20:34:24Z" class="post-date">Thu, Jul 25, 2019</time>
-  Mac sudo ifconfig en0 down sudo ifconfig en0 up Linux /etc/init.d/networking restart
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/uwsgi_flask_gevent_%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87coverage/">uwsgi flask gevent 测试代码覆盖率（coverage）</a>
-  </h1>
-  <time datetime="2019-07-25T20:33:29Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-可能出现的问题  多进程启动 gevent启动 运行的服务可能不会停止  解决 我先参考了一下这一篇文章使用Coverage分析WSGI项目的代码覆盖率，他基本能够解决掉1.2两个问题，第三个问题我是使用了一个接口来停止当前进程的coverage，接口返回一个当前进程的work_id，可以判断是否所以进程都结束了，然后进行coverage combine就行了
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
-  </h1>
-  <time datetime="2019-07-25T20:31:14Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-原理  首先取出查找表中每个关键字及其对应的权值，采用如下公式计算出每个关键字对应的一个值：
-  其中 wj 表示每个关键字的权值（被查找到的概率），h 表示关键字的个数。
- 表中有多少关键字，就会有多少个 △Pi ，取其中最小的做为次优查找树的根结点，然后将表中关键字从第 i 个关键字的位置分成两部分，分别作为该根结点的左子树和右子树。同理，左子树和右子树也这么处理，直到最后构成次优查找树完成。
-typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemType;//定义元素类型  typedef struct BiTNode{ ElemType data; struct BiTNode *lchild, *rchild; }BiTNode, *BiTree; //定义变量  int i; int min; int dw; //创建次优查找树，R数组为查找表，sw数组为存储的各关键字的概率（权值），low和high表示的sw数组中的权值的范围  void SecondOptimal(BiTree T, ElemType R[], float sw[], int low, int high){ //由有序表R[low...high]及其累计权值表sw（其中sw[0]==0）递归构造次优查找树  i = low; min = abs(sw[high] - sw[low]); dw = sw[high] + sw[low - 1]; //选择最小的△Pi值  for (int j = low+1; j &lt;=high; j++){ if (abs(dw-sw[j]-sw[j-1])&lt;min){ i = j; min = abs(dw - sw[j] - sw[j - 1]); } } T = (BiTree)malloc(sizeof(BiTNode)); T-&gt;data = R[i];//生成结点（第一次生成根）  if (i == low) T-&gt;lchild = NULL;//左子树空  else SecondOptimal(T-&gt;lchild, R, sw, low, i - 1);//构造左子树  if (i == high) T-&gt;rchild = NULL;//右子树空  else SecondOptimal(T-&gt;rchild, R, sw, i + 1, high);//构造右子树  } 完整事例演示 例如，一含有 9 个关键字的查找表及其相应权值如下表所示：
-  
-  <div class="read-more-link">
-    <a href="/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">二叉搜索树</a>
-  </h1>
-  <time datetime="2019-07-25T20:29:05Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
- 二叉查找树（英语：Binary Search Tree），也称为二叉搜索树、有序二叉树（ordered binary tree）或排序二叉树（sorted binary tree）
- 性质 指一棵空树或者具有下列性质的二叉树：
- 若任意节点的左子树不空，则左子树上所有节点的值均小于它的根节点的值 若任意节点的右子树不空，则右子树上所有节点的值均大于它的根节点的值； 任意节点的左、右子树也分别为二叉查找树； 没有键值相等的节点。  优势 二叉查找树相比于其他数据结构的优势在于查找、插入的时间复杂度较低。为O(logn)。二叉查找树是基础性数据结构，用于构建更为抽象的数据结构，如集合、多重集、关联数组等。
-二叉搜索树的查找算法 在二叉搜索树b中查找x的过程为：
- 若b是空树，则搜索失败，否则： 若x等于b的根节点的数据域之值，则查找成功；否则： 若x小于b的根节点的数据域之值，则搜索左子树；否则： 查找右子树。  在二叉搜索树插入节点的算法 向一个二叉搜索树b中插入一个节点s的算法，过程为：
- 若b是空树，则将s所指节点作为根节点插入，否则： 若s-&gt;data等于b的根节点的数据域之值，则返回，否则： 若s-&gt;data小于b的根节点的数据域之值，则把s所指节点插入到左子树中，否则： 把s所指节点插入到右子树中。（新插入节点总是叶子节点）  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/vue-lazyload%E6%8F%92%E4%BB%B6/">vue-lazyload插件</a>
-  </h1>
-  <time datetime="2019-07-25T20:28:20Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-使用 npm install vue-lazyload --save //注册插件  import vueLazyload from &#39;vue-lazyload&#39; Vue.use(vueLazyload); //在需要懒加载的图片上 &lt;img v-lazy=&#34;imgUrl&#34;&gt; 参数说明 注册插件的时候，是可以传入第二个配置参数的
-Vue.use(vueLazyload,{}) 可选的参数如下：
-preLoad:类型Number,默认1.3. 表示lazyload的元素距离页面底部距离的百分比.计算值为(preload - 1).
-attempt:图片加载失败后的重试次数.默认为3.
-error:类型string.图片加载失败后的显示的失败图片路径.
-loading:类型string.图片正在加载中显示的loading图片的路径.
-listenEvents:类型array.默认[&lsquo;scroll&rsquo;, &lsquo;wheel&rsquo;, &lsquo;mousewheel&rsquo;, &lsquo;resize&rsquo;, &lsquo;animationend&rsquo;, &lsquo;transitionend&rsquo;, &lsquo;touchmove&rsquo;].即是在监听上述事件中,判断图片是否在preload的位置.如果你不想在那么多事件中判断,可以指定一个或者几个.例如如果你给这个属性只指定[&lsquo;touchmove&rsquo;].那么scroll 屏幕不会加载图片,只有手指滑动屏幕才会加载图片.
-adapter:注册img 的loading,loaded,error三个状态的回调函数,参数会暴露懒加载的img元素,可以对其进行操作.
-filter: img未加载之前,解析到src 的时候注册的回调函数.可以在加载图片之前,对src进行修改.注册在filter下的所有的函数都会执行
-lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.挖坑(vue懒加载组件)
-observer:是否启用IntersectionObserver,这个api有兼容问题
-observerOptions:默认{ rootMargin: &lsquo;0px&rsquo;, threshold: 0.1 } 主要是我对这个pai不熟,按照vue-lazyload的说法是开启之后,对很多节点的情况会优化性能.挖坑吧
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E4%B8%AD%E6%A3%80%E6%B5%8B%E6%9F%90%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E6%9C%89%E5%AE%9A%E4%B9%89/">python中检测某个变量是否有定义</a>
-  </h1>
-  <time datetime="2019-07-25T20:27:52Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-第一种方法使用内置函数locals() 'testvar' in locals().keys()
-第二种方法使用内置函数dir() 'testvar' in dir()
-第三种方法使用内置函数vars() vars().has_key('testvar')
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a>
-  </h1>
-  <time datetime="2019-07-25T20:27:18Z" class="post-date">Thu, Jul 25, 2019</time>
-   在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
- 解决方法如下，在__init__文件中加入以下代码:
-import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a>
-  </h1>
-  <time datetime="2019-07-25T20:26:43Z" class="post-date">Thu, Jul 25, 2019</time>
-  from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=''):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype='application/json')class JSONResponse(Response):def __init__(self, data, msg=''):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype='application/json')class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&quot;need login&quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype='application/json', status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/">Gin上传文件到MongoDB gridfs</a>
-  </h1>
-  <time datetime="2019-07-25T20:25:30Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-上传图片 func imagePost(c *gin.Context) { image, err := c.FormFile(&#34;file&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } fileImage, err := image.Open() if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } defer fileImage.Close() imageGridFS, err := model.GetGridFS(&#34;image&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } now := self_time.GetNowTimeStamp() nowStr := strconv.FormatInt(now, 10) file, err := imageGridFS.Create(nowStr) if err !
-  
-  <div class="read-more-link">
-    <a href="/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Django上传图片</a>
-  </h1>
-  <time datetime="2019-07-25T20:24:51Z" class="post-date">Thu, Jul 25, 2019</time>
-  model from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&#39;share_pictures/&#39;) name = models.CharField(max_length = 50) class Meta: db_table = &#34;picture&#34; def __str__(self): return self.name forms from django import forms class ImageForm(forms.Form): name = forms.CharField(max_length = 100, label=&#39;名字：&#39;) picture = forms.ImageField(label=&#39;图片：&#39;) Views class PictureView(APIView): def get(self, request): name = request.GET.get(&#39;name&#39;, &#39;&#39;) try: picture = Picture.objects.get(name=name) except Picture.DoesNotExist: return Response(status=status.HTTP_404_NOT_FOUND) image = open(picture.path.url[1:], &#39;rb&#39;).read() return HttpResponse(image, content_type=&#39;image/png&#39;) def post(self, request): MyImageForm = ImageForm(request.
-  
-  <div class="read-more-link">
-    <a href="/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E5%BD%93%E6%88%91%E4%BB%AC%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E4%BB%AC%E5%BA%94%E8%AF%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BB%80%E4%B9%88%E5%91%A2/">当我们接到一个需求时，我们应该做一些什么呢？</a>
-  </h1>
-  <time datetime="2019-07-25T20:24:04Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-沟通需求  不论是什么样的团队，按照道理来说一定会有一个和你对接的产品
-  沟通大致的轮廓，一般来说，产品不会把东西都会给你说清楚，因为很多人都是很被动的，喜欢一问一答的方式。 知道了一个需求的大致内容，现在应该去每一句话的去分享需求文档，然后发掘里面的细节，查看会不会影响到程序的实现，或者会影响到其他的功能，这些都是我们开发人员需要去注意的。 现在已经确认程序能够去实现这个需求，那么我们应该做什么呢？先分析我们需要如何去实现，并且应该多想想能不能有其他的实现方案，哪一个更好？ 要保证一个功能完美的在线上运行，我们最需要的是测试，我们在开发前就应该我们应该测试的案例，一开始你可能写不出来，无所谓，等你慢慢成为老油条，你一眼就知道要做些啥，而且这个东西不要只停留在想想中，一定要记下来，在开发过程中你还会想到许许多多的测试案例，也都记下来，不要偷懒，偷懒的后果出现bug会导致你被好几个人怼，包括测试。 开发，有前面的测试案例的发散，在写代码的过程你会发现，你会注意很多问题，包括边界条件。 自主测试，其实一个功能，最了解他的除了产品，可能就是你自己了，你知道怎么实现的，你最应该知道怎么测试，而且，测试人员也会有打盹的时候，很多时候我自己测试过后给了测试，依然会有bug，也就是说，测试人员的测试案例依然还是在我写的测试案例中，在不断积累的下，你会发现你的一个小需求可能会测试很多个测试案例，这是一个好事，这样你的功能才会在线上健壮的跑下去。  
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/">Python any() 函数</a>
-  </h1>
-  <time datetime="2019-07-25T17:50:44Z" class="post-date">Thu, Jul 25, 2019</time>
-  any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。
-元素除了是 0、空、FALSE 外都算 TRUE。
-如果想要测试一个list中是否有一个是1可以使用any，例如：
-x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&#39;passed&#39;) if 1 in (x, y, z): print(&#39;passed&#39;) # These only test for truthiness: if x or y or z: print(&#39;passed&#39;) if any((x, y, z)): print(&#39;passed&#39;) 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/">Python如何合并两个字典</a>
-  </h1>
-  <time datetime="2019-07-25T17:50:14Z" class="post-date">Thu, Jul 25, 2019</time>
-  Python 3
-x = {&#39;a&#39;: 1, &#39;b&#39;: 2} y = {&#39;b&#39;: 3, &#39;c&#39;: 4} z = {**x, **y} Python 2
-z = dict(x, **y)  Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖
- 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/">Python中下划线的5种含义</a>
-  </h1>
-  <time datetime="2019-07-25T17:46:49Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-单前导下划线 _var 当涉及到变量和方法名称时，单个下划线前缀有一个约定俗成的含义。 它是对程序员的一个提示 - 意味着Python社区一致认为它应该是什么意思，但程序的行为不受影响。
-下划线前缀的含义是告知其他程序员：以单个下划线开头的变量或方法仅供内部使用。 该约定在PEP 8中有定义。
-单末尾下划线 var_ 有时候，一个变量的最合适的名称已经被一个关键字所占用。 因此，像class或def这样的名称不能用作Python中的变量名称。 在这种情况下，你可以附加一个下划线来解决命名冲突。总之，单个末尾下划线（后缀）是一个约定，用来避免与Python关键字产生命名冲突。 PEP 8解释了这个约定。
-双前导下划线 __var 到目前为止，我们所涉及的所有命名模式的含义，来自于已达成共识的约定。 而对于以双下划线开头的Python类的属性（包括变量和方法），情况就有点不同了。
-双下划线前缀会导致Python解释器重写属性名称，以避免子类中的命名冲突。
-这也叫做名称修饰（name mangling） - 解释器更改变量的名称（例如：class名为Test, 变量名为__a,那么__a会被Python解释器重写属性名为_Test__a），以便在类被扩展的时候不容易产生冲突。名称修饰会影响在一个类的上下文中，以两个下划线字符（&ldquo;dunders&rdquo;）开头的所有名称。
-双前导和双末尾下划线 var 如果一个名字同时以双下划线开始和结束，则不会应用名称修饰。 由双下划线前缀和后缀包围的变量不会被Python解释器修改。
-单下划线 _ 按照习惯，有时候单个独立下划线是用作一个名字，来表示某个变量是临时的或无关紧要的。你也可以在拆分(unpacking)表达式中将单个下划线用作“不关心的”变量，以忽略特定的值。 同样，这个含义只是“依照约定”，并不会在Python解释器中触发特殊的行为。 单个下划线仅仅是一个有效的变量名称，会有这个用途而已。
-除了用作临时变量之外，“_”是大多数Python REPL中的一个特殊变量，它表示由解释器评估的最近一个表达式的结果。
-Python下划线命名模式 - 小结 evernotecid://9326179B-5200-4478-B32E-B919B94B243C/appyinxiangcom/21231346/ENResource/p4
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/">Golang不会自动把slice转换成interface{}类型的slice</a>
-  </h1>
-  <time datetime="2019-07-25T17:46:17Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-例子 我们时常会写一些interface，例如：
-type A interface{ Print() } type B struct { } func (b *B) Print() { fmt.Println(&#34;Here is *B&#34;) } 赋值的时候:
-var a A a = &amp;B{} 诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码
-var aa []A aa = make([]*B, 10) 好的，现在翻车了，会得到一个这样的报错：
-cannot use make([]*B, 10) (type []*B) as type []A in assignment原因   []A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。
-  []A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。
-  如何去实现 bb := []*B{&amp;B{}, &amp;B{}} var aa []AA = make([]AA, len(bb)) for i, d := range bb { aa[i] = d } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/">Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</a>
-  </h1>
-  <time datetime="2019-07-25T17:45:35Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
- PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型
- PyAPI_DATA(type): 声明公共的Python数据和类型
-PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接
-/* All windows ports, except cygwin, are handled in PC/pyconfig.h. Cygwin is the only other autoconf platform requiring special linkage handling and it uses __declspec(). */ /* 除了cygwin之外的所有Windows socket 文件都在PC / pyconfig.h中处理。 */ #if defined(__CYGWIN__)  # define HAVE_DECLSPEC_DLL  #endif  /* only get special linkage if built as shared or platform is Cygwin */ #if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__)  # if defined(HAVE_DECLSPEC_DLL)  # if defined(Py_BUILD_CORE) || defined(Py_BUILD_CORE_BUILTIN)  # define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE  # define PyAPI_DATA(RTYPE) extern __declspec(dllexport) RTYPE  /* module init functions inside the core need no external linkage */ /* except for Cygwin to handle embedding */ # if defined(__CYGWIN__)  # define PyMODINIT_FUNC __declspec(dllexport) PyObject*  # else /* __CYGWIN__ */ # define PyMODINIT_FUNC PyObject*  # endif /* __CYGWIN__ */ # else /* Py_BUILD_CORE */ /* Building an extension module, or an embedded situation */ /* public Python functions and data are imported */ /* Under Cygwin, auto-import functions to prevent compilation */ /* failures similar to those described at the bottom of 4.
-  
-  <div class="read-more-link">
-    <a href="/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/">Python源码阅读——基础</a>
-  </h1>
-  <time datetime="2019-07-25T17:44:55Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
- 阅读源码的版本: cmmit id: 9e4f2f3a6b8ee995c365e86d976937c141d867f8
- 在阅读Python的源码时，我们第一个想到的就是先去阅读Python的数据结构的源码。
-那么，我们先去挨着看看。
-数据结构 long struct _longobject { PyObject_VAR_HEAD digit ob_digit[1]; }; list typedef struct { PyObject_VAR_HEAD /* Vector of pointers to list elements. list[0] is ob_item[0], etc. */ PyObject **ob_item; /* ob_item contains space for &#39;allocated&#39; elements. The number * currently in use is ob_size. * Invariants: * 0 &lt;= ob_size &lt;= allocated * len(list) == ob_size * ob_item == NULL implies ob_size == allocated == 0 * list.
-  
-  <div class="read-more-link">
-    <a href="/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/rtti/">RTTI</a>
-  </h1>
-  <time datetime="2019-07-25T17:44:31Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
- RTTI是”Runtime Type Information”的缩写，意思是运行时类型信息，它提供了运行时确定对象类型的方法。
- typeid函数  对于c++的内置数据类型，typeid可以方便的输出它们的数据类型。
- #include &lt;iostream&gt; #include &lt;typeinfo&gt; using namespace std; int main() { short s = 2; unsigned ui = 10; int i = 10; char ch = &#39;a&#39;; wchar_t wch = L&#39;b&#39;; float f = 1.0f; double d = 2; cout&lt;&lt;typeid(s).name()&lt;&lt;endl; // short  cout&lt;&lt;typeid(ui).name()&lt;&lt;endl; // unsigned int  cout&lt;&lt;typeid(i).name()&lt;&lt;endl; // int  cout&lt;&lt;typeid(ch).name()&lt;&lt;endl; // char  cout&lt;&lt;typeid(wch).name()&lt;&lt;endl; // wchar_t  cout&lt;&lt;typeid(f).name()&lt;&lt;endl; // float  cout&lt;&lt;typeid(d).
-  
-  <div class="read-more-link">
-    <a href="/post/rtti/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/">Python3 和 Python2的区别</a>
-  </h1>
-  <time datetime="2019-07-25T17:36:53Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-print   Python2.7的print不是一个function
-  Python3里的print是一个function。
-  Unicode   Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。
-  Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。
-  由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：
-&gt;&gt;&gt; 中国 = &#39;china&#39; &gt;&gt;&gt;print(中国) china Python 2.x
-&gt;&gt;&gt; str = &#34;我爱北京天安门&#34; &gt;&gt;&gt; str &#39;\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8&#39; &gt;&gt;&gt; str = u&#34;我爱北京天安门&#34; &gt;&gt;&gt; str u&#39;\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8&#39; Python 3.x
-&gt;&gt;&gt; str = &#34;我爱北京天安门&#34; &gt;&gt;&gt; str &#39;我爱北京天安门&#39; 除法运算 Python中的除法较其它语言显得非常高端，有套很复杂的规则。Python中的除法有两个运算符，/和//
-首先来说/除法:
-  
-  <div class="read-more-link">
-    <a href="/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">关于Python的导入覆盖解决办法</a>
-  </h1>
-  <time datetime="2019-07-25T17:36:26Z" class="post-date">Thu, Jul 25, 2019</time>
-  这种问题一般来说还是不会引起的，可能会出现在datetime和time这样类型的模块中。例如：
-import datetime from datetime import datetime 如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。我的建议是将系统的模块放在最后面导入，自己写的模块放在前面，不过最好跟公司的人统一一下，统一使用import datetime就行。
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/">Python使用datetime来判断近七天</a>
-  </h1>
-  <time datetime="2019-07-25T17:35:46Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-strptime 使用strptime来格式化字符串
-datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) # datetime.datetime(2019, 1, 2, 0, 10) timedelta 使用timedelta来进行计算天数
-a = datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) b = datetime.datetime.strptime(&#34;2019-10-01&#34;, &#34;%Y-%m-%d&#34;) a - b # datetime.timedelta(1) (a - b).days # 1 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">Golang mgo 模糊查询的使用</a>
-  </h1>
-  <time datetime="2019-07-25T17:35:04Z" class="post-date">Thu, Jul 25, 2019</time>
-  在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
-db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
-query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;/a/&#34;, &#34;$options&#34;: &#34;im&#34;}} 大家用这个方式去查询，能查询到算我输！
-下面总结一下，正真使用的方式：
- 在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&quot;\a&quot;，而不是\a\。   根据第一点，我们将代码修改一下。
- query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;a&#34;, &#34;$options&#34;: &#34;im&#34;}}  但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
- 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  // RegEx represents a regular expression. The Options field may contain  // individual characters defining the way in which the pattern should be  // applied, and must be sorted. Valid options as of this writing are &#39;i&#39; for  // case insensitive matching, &#39;m&#39; for multi-line matching, &#39;x&#39; for verbose  // mode, &#39;l&#39; to make \w, \W, and similar be locale-dependent, &#39;s&#39; for dot-all  // mode (a &#39;.
-  
-  <div class="read-more-link">
-    <a href="/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">关于Basic Latin踩到的一些坑</a>
-  </h1>
-  <time datetime="2019-07-25T17:34:19Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
- 在wiki中，很多语言的字符集都包含了Basic Latin，一开始我没有细看，以为Basic Latin里面都是正常的字符集，后来在线上环境出现了问题
- 博主某天接到一个需求，需要过滤出某国语言的字符集（避免出现Unicode中的不可见字符），于是高高兴兴的在维基百科上找到该语言字符集抄了下来
-嗯，于是，线上环境出了一点小问题，由于我们某些功能是依赖于Basic Latin里面的特殊字符来做分割的，博主过于年轻，没有细看，于是翻车，卒，享年22岁。
-先看看Basic Latin里面到底是什么：https://jrgraphix.net/r/Unicode/0020-007F
-仔细看里面其实有很多特殊字符的，所以大多数程序员一般都会在正则表达式里面写0-9a-zA-Z来表示Basic Latin里面的东西，为什么不直接写\x0020-\x007F是有用意，以后看见一些东西还是不要随意忽略，就像为什么写0-9a-zA-Z来表示\x0020-\x007F，你以为别人是傻逼，写这么一长串干啥，实际上你是傻逼。
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/">mysql查看数据库和表的占用空间大小</a>
-  </h1>
-  <time datetime="2019-07-25T17:33:47Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-查看数据库的大小 use 数据库名SELECT sum(DATA_LENGTH)+sum(INDEX_LENGTH)FROM information_schema.TABLES where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;得到的结果是以字节为单位，除1024为K，除1048576为M。
-查看表的最后mysql修改时间 select TABLE_NAME,UPDATE_TIME from INFORMATION_SCHEMA.tables where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;可以通过查看数据库中表的mysql修改时间，来确定mysql数据库是否已经长期不再使用。
-查看数据库中各个表占用的空间大小 如果想知道MySQL数据库中每个表占用的空间、表记录的行数的话，可以打开MySQL的 information_schema 数据库。在该库中有一个 TABLES 表，这个表主要字段分别是：
-TABLE_SCHEMA : 数据库名TABLE_NAME：表名ENGINE：所使用的存储引擎TABLES_ROWS：记录数DATA_LENGTH：数据大小INDEX_LENGTH：索引大小
-其他字段请参考MySQL的手册，我们只需要了解这几个就足够了。
-所以要知道一个表占用空间的大小，那就相当于是 数据大小 + 索引大小 即可。
-SQL:
-SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SCHEMA=&lsquo;数据库名&rsquo; AND TABLE_NAME=&lsquo;表名&rsquo;
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/">Unicode 编码 范围</a>
-  </h1>
-  <time datetime="2019-07-25T17:33:08Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]文字部分（ U+0000 – U+007F） 基本拉丁字符 （ U+0080 – U+00FF） 增补拉丁字符集 1 （ U+0100 – U+017F） 拉丁字符扩展集 A （ U+0180 – U+024F） 拉丁字符扩展集 B （ U+0370 – U+03FF） 希腊文字中的科普特字符 （ U+0370 – U+03FF） 希腊字符 （ U+0400 – U+04FF） 西里尔字符 （ U+0500 – U+052F） 增补西里尔字符 （ U+0530 – U+058F） 亚美尼亚字符 （ U+0590 – U+059F） 希伯来字符（ U+0600 – U+06FF） 阿拉伯字符 （ U+0700 – U+074F） 叙利亚字符 （ U+0750 – U+077F） 增补阿拉伯字符 （ U+0780 – U+07BF） 塔纳字符 （ U+07C0 – U+07FF） N’Ko （ U+0900 – U+097F） 梵文字符（ U+0980 – U+09FF） 孟加拉字符（ U+0A00 – U+0A7F） 果鲁穆奇字符 （ U+0A80 – U+0AFF） 古吉拉特字符 （ U+0B00 – U+0B7F） 奥里亚字符 （ U+0B80 – U+0BFF） 泰米尔字符 （ U+0C00 – U+0C7F） 泰卢固字符 （ U+0C80 – U+0CFF） 埃纳德字符 （ U+0D00 – U+0D7F） 马拉亚拉姆字符 （ U+0D80 - U+0DFF） 僧伽罗字符 （ U+0E00 – U+0E7F） 泰语字符（ U+0E80 – U+0EFF） 老挝语字符（ U+0F00 – U+0FFF） 藏语字符
-  
-  <div class="read-more-link">
-    <a href="/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/">gin mongodb restful api设计: 动态的patch接口</a>
-  </h1>
-  <time datetime="2019-07-25T17:31:19Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
- 什么是Patch?   Patch方法可以用来更新资源的一个组成部分
- 什么时候使用Patch?   当你仅需更新资源的某一项，即不完全也不幂等
- 那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？
-答案当然是有的，先说说如何去实现：
-  我们需要利用golang的map[string]interface{}结构
-  我们需要一个动态的结构
-  在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&quot;$set&quot;: xxxx})操作
-    使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）
-  来，开始贴代码：
-// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId `json:&#34;id&#34; bson:&#34;_id&#34; show:&#34;id&#34;` Author string `json:&#34;author&#34; bson:&#34;author&#34; show:&#34;author&#34;` Title string `json:&#34;title&#34; bson:&#34;title&#34; show:&#34;title&#34;` Content string `json:&#34;content&#34; bson:&#34;content&#34; show:&#34;content&#34;` Publish int `json:&#34;publish&#34; bson:&#34;publish&#34;` CreatedTime int64 `json:&#34;created_time&#34; bson:&#34;created_time&#34; show:&#34;created_time&#34;` ChangedTime int64 `json:&#34;changed_time&#34; bson:&#34;changed_time&#34; show:&#34;changed_time&#34;` PageView int64 `json:&#34;page_view&#34; bson:&#34;page_view&#34; show:&#34;page_view&#34;` // 浏览量  ArticleType string `json:&#34;article_type&#34; bson:&#34;article_type&#34; show:&#34;article_type&#34;` ArticleTags []string `json:&#34;article_tags&#34; bson:&#34;article_tags&#34; show:&#34;article_tags&#34;` Deleted int `json:&#34;deleted&#34; bson:&#34;deleted&#34;` } func ArticlePatch(c *gin.
-  
-  <div class="read-more-link">
-    <a href="/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/">gin PostForm 方法不起作用</a>
-  </h1>
-  <time datetime="2019-07-25T17:30:08Z" class="post-date">Thu, Jul 25, 2019</time>
-  情景: 在httpie post 下，在 axios post下，总的来说，就是在form-data下只有c.Bind()会有用如果一定要用c.PostForm() headers必须为x-www-form-urlencoded
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/django_dumpdata_and_loaddata/">Django dumpdata and loaddata</a>
-  </h1>
-  <time datetime="2019-07-25T17:29:18Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
- 原文来自于: https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata
- dumpdata 命令  这个是Django自带的管理命令，可以用来备份你的模型实例和数据库  dumpdata 基本数据库的转存  下面的命令将把整个数据转存到db.json文件中   ./manage.py dumpdata &gt; db.json
- dumpdata 备份特定的 app  下面的命令将在django admin app 转存到 admin.json文件中   ./manage.py dumpdata admin &gt; admin.json
- dumpdata 备份特定的表  下面的命令将只转存django admin.logentry 表中的内容   ./manage.py dumpdata admin.logentry &gt; logentry.json
-  下面的命令将只转存django auth.user 表中的内容   ./manage.py dumpdata auth.user &gt; user.json
- dumpdata (&ndash;exclude)  你可以使用 &ndash;exclude 选择不需要备份的app或者表 你可以使用 &ndash;indent 加上一个代表空格数的数字 格式化输出   .
-  
-  <div class="read-more-link">
-    <a href="/post/django_dumpdata_and_loaddata/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/cplusplus_%E4%B8%AD%E4%B8%8D%E8%83%BD%E5%A3%B0%E6%98%8E%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%9C%89%E5%93%AA%E4%BA%9B/">C&#43;&#43; 中不能声明为虚函数的函数有哪些？</a>
-  </h1>
-  <time datetime="2019-07-25T17:03:49Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-普通函数  普通函数（非成员函数）只能被overload，不能被override，而且编译器会在编译时绑定函数。 多态的运行期行为体现在虚函数上，虚函数通过继承方式来体现出多态作用，顶层函数不属于成员函数，是不能被继承的
- 构造函数  因为构造函数本来就是为了明确初始化对象成员才产生的，然而virtual function主要是为了在不完全了解细节的情况下也能正确处理对象。另外，virtual函数是在不同类型的对象产生不同的动作，现在对象还没有产生，如何使用virtual函数来完成你想完成的动作。
- 内联成员函数  内联函数就是为了在代码中直接展开，减少函数调用花费的代价，虚函数是为了在继承后对象能够准确的执行自己的动作，这是不可能统一的。
- 静态成员函数  静态成员函数对于每个类来说只有一份代码，所有的对象都共享这一份代码，他也没有要动态邦定的必要性。不能被继承，只属于该类。
- 友元函数  C++不支持友元函数的继承，对于没有继承特性的函数没有虚函数的说法。友元函数不属于类的成员函数，不能被继承。
- 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式</a>
-  </h1>
-  <time datetime="2019-07-25T17:03:24Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-1、直接使用字符串相加 std::string a = &quot;hello&quot;;std::string b = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a = b + a;}2、使用insert函数 std::string a = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a.insert(0, &quot;hello&quot;);}比较：通过Quick C++ Benchmarks 可得到结果 static void StringCreation(benchmark::State&amp; state) {// Code inside this loop is measured repeatedlystd::string x = &quot;hello&quot;;for (auto _ : state) {x.
-  
-  <div class="read-more-link">
-    <a href="/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E8%BD%AC%E5%88%A9%E7%94%A8%E5%8C%BF%E5%90%8Dnamespace%E8%A7%A3%E5%86%B3cplusplus%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%AE%9A%E4%B9%89%E7%9A%84%E9%97%AE%E9%A2%98/">【转】利用匿名namespace解决C&#43;&#43;中重复定义的问题</a>
-  </h1>
-  <time datetime="2019-07-25T17:02:48Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-原文:https://blog.csdn.net/pi9nc/article/details/11267031
-利用匿名namespace解决C++中重复定义的问题 今天写代码的时候又碰到了C++中多编译单元导致重复定义(multi definition)的链接问题。其实这个问题以前也碰到过几次，急着编译出代码也没有去深究背后的一些知识。今天系统的看了一些资料，算是把这个问题彻底搞清楚了。这里做下简单总结吧：
-  C++中有由于模版分离编译等问题，导致常常需要在头文件加入变量定义或者函数定义的代码，从而在链接多编译单元时导致multi-definition重复定义的问题。     传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。
-  在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。
-  在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。
-但是这种方法经常会导致一个问题就是multi-definition重复定义，在较大型的工程中往往会采用多编译单元的形式生成多个.o文件，然后再用ld链接生成可执行文件。如果多个.o中都include了同一个hpp文件，而该hpp文件又包含了全局变量，类的静态成员等一些变量的定义，那么就会导致gcc的multi-definition报错。在传统的C程序中可以通过static申明一个变量或者函数不生成全局符号来解决这个问题，但是C++中static关键字对于类的成员有了其他语义。因此C++中建议使用匿名namespace来替代static避免multi-definition的问题。看如下一个例子：
------------ test.hpp---------- #include &lt;string&gt; class A { public: static std::string y; }; std::string A::y = std::string(); ----------- test_comm.cpp---------- #include &#34;test.hpp&#34; void func() { } ----------- test_main.cpp---------- #include &#34;test.hpp&#34; void func(); int main(int argc, char *argv) { func(); } 我们在g++上编译就会出现如下错误：
-leoxiang@SEC38_64_sles10:~$ g++ -c test_comm.cpp leoxiang@SEC38_64_sles10:~$ g++ -c test_main.cpp leoxiang@SEC38_64_sles10:~$ g++ -o test test_comm.
-  
-  <div class="read-more-link">
-    <a href="/post/%E8%BD%AC%E5%88%A9%E7%94%A8%E5%8C%BF%E5%90%8Dnamespace%E8%A7%A3%E5%86%B3cplusplus%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%AE%9A%E4%B9%89%E7%9A%84%E9%97%AE%E9%A2%98/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/vue_%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">vue 跨域问题</a>
-  </h1>
-  <time datetime="2019-07-25T17:02:10Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-和后端联调时总是会面对恼人的跨域问题，最近基于Vue开发项目时也遇到了这个问题，两边各自想了一堆办法，查了一堆资料，加了一堆参数，最后还得我把自己的localhost映射成上线时将要使用的域名。
-今天翻看代码时，突然发现vue-cli的config文件里有一个参数叫proxyTable，看这个名字就感觉能解决问题，于是我就去搜了一下，果然。在vuejs-templates，也就是vue-cli的使用的模板插件里，有关于API proxy的说明，使用的就是这个参数。https://vuejs-templates.github.io/webpack/proxy.html
-这个参数主要是一个地址映射表，你可以通过设置将复杂的url简化，例如我们要请求的地址是api.xxxxxxxx.com/list/1，可以按照如下设置：
-proxyTable: {&lsquo;/list&rsquo;: {target: &lsquo;http://api.xxxxxxxx.com&rsquo;,pathRewrite: {&lsquo;^/list&rsquo;: &lsquo;/list&rsquo;}}}这样我们在写url的时候，只用写成/list/1就可以代表api.xxxxxxxx.com/list/1.那么又是如何解决跨域问题的呢？其实在上面的&rsquo;list&rsquo;的参数里有一个changeOrigin参数，接收一个布尔值，如果设置为true,那么本地会虚拟一个服务端接收你的请求并代你发送该请求，这样就不会有跨域问题了，当然这只适用于开发环境。增加的代码如下所示：
-proxyTable: {&lsquo;/list&rsquo;: {target: &lsquo;http://api.xxxxxxxx.com&rsquo;,changeOrigin: true,pathRewrite: {&lsquo;^/list&rsquo;: &lsquo;/list&rsquo;}}}
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/axios_%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">axios 发送post请求</a>
-  </h1>
-  <time datetime="2019-07-25T17:01:19Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-方案一 在node中使用axios以post的方式发送一张图片给某个server时:
-let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
-let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).
-  
-  <div class="read-more-link">
-    <a href="/post/axios_%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2sdshdr/">redis源码解读--动态字符串SDSHDR</a>
-  </h1>
-  <time datetime="2019-07-25T16:54:31Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-阅读源码: sds.h sds.c
-SDSHDR 全称 Simple Dynamic Strings Header
-sds  char *的别名
- typedef char *sds; sdshdr  sdshdr有好几个类别，它们分别是：sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64，其中sdshdr5是不使用的
- 源码如下：
-/* Note: sdshdr5 is never used, we just access the flags byte directly. * However is here to document the layout of type 5 SDS strings. */ struct __attribute__ ((__packed__)) sdshdr5 { unsigned char flags; /* 3 lsb of type, and 5 msb of string length */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr8 { uint8_t len; /* used */ uint8_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr16 { uint16_t len; /* used */ uint16_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr32 { uint32_t len; /* used */ uint32_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr64 { uint64_t len; /* used */ uint64_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; };  这五个结构体中，len表示字符串的长度，alloc表示buf指针分配空间的大小，flags表示该字符串的类型(sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64),是由flags的第三位表示的，至于为何怎么说，请看下方的源码：
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2sdshdr/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/error_inflating_class_fragment/">Error inflating class fragment</a>
-  </h1>
-  <time datetime="2019-07-25T16:53:44Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。
-@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8Dzmalloc/">redis源码解读--内存分配zmalloc</a>
-  </h1>
-  <time datetime="2019-07-25T16:52:10Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-主要函数   void *zmalloc(size_t size);
-  void *zcalloc(size_t size);
-  void *zrealloc(void *ptr, size_t size);
-  void zfree(void *ptr);
-  char *zstrdup(const char *s);
-  size_t zmalloc_used_memory(void);
-  void zmalloc_set_oom_handler(void (*oom_handler)(size_t));
-  size_t zmalloc_get_rss(void);
-  int zmalloc_get_allocator_info(size_t *allocated, size_t *active, size_t *resident);
-  size_t zmalloc_get_private_dirty(long pid);
-  size_t zmalloc_get_smap_bytes_by_field(char *field, long pid);
-  size_t zmalloc_get_memory_size(void);
-  void zlibc_free(void *ptr);
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8Dzmalloc/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis_mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/">redis mongodb持久化的方式</a>
-  </h1>
-  <time datetime="2019-07-25T16:50:05Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-redis持久化方式(两种) RDB持久化 redis提供了RDB持久化的功能，这个功能可以将redis在内存中的的状态保存到硬盘中，相当于snapshot，它可以手动执行，也可以再redis.conf中配置，定期执行。
-相关配置   databases
-配置db文件的数目，可以用select dbid 指令为每个连接指定后续持久化时的db文件，新连接默认均使用db 0
-  save
-SNAPSHOTTING的持久化方式有多种save策略可供选择，而且支持混用，例如： save 900 1 save 300 100 save 60 10000 上述配置的效果是：snapshotting会在3个条件中的任何一个满足时被触发：
- 900s内至少1个key有变化； 300s内至少100个key有变化； 60s内至少有10000个key有变化  save条件被触发时，Redis通过fork子进程，由子进程在后台实现异步dump磁盘。根据fork的写时复制策略，若持久化过程中出现很多写入请求，在最坏的情况下，需要的内存是当前数据集所占内存的2倍。 备注1：上述配置的3个触发条件其实是逐次加强的，哪个条件先满足就先触发那个save策略。 备注2：如果业务不需要持久化或不需要RDB方式的持久化，可以通过注释掉save配置项来实现
-  stop-writes-on-bgsave-error
-指定Redis在后台dump磁盘出错时的行为，默认为yes，表示若后台dump出错，则RedisServer拒绝新的写入请求，通过这种方式来引起用户警觉，避免因用户未发现异常而引起更大的事故。
-  rdbcompression
-RDB文件是否压缩存储，若为yes，会在压缩时消耗一点CPU，但省磁盘空间。
-  rdbchecksum
-RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC64并将结果追加至文件尾，同样，Redis启动Load RDB时，也会先计算该文件的CRC64并与dump时的计算结果对比。 好处：可以严格保证RDB的完整性及安全性 代价：会在dump或load时损失10%的性能。如果要最大化Redis的性能，这个配置项应该用no关掉
-  dbfilename
-指定RDB文件名，默认为dump.rdb
-  dir
-指定RDB文件存放目录的路径，若包含多级路径，则相关父路径需事先mkdir出来，否则启动失败。
-  AOF持久化 AOF持久化（Append-Only-File），与RDB持久化不同，AOF持久化是通过保存Redis服务器锁执行的写状态来记录数据库的，即commandlog。
-具体来说，RDB持久化相当于备份数据库状态，而AOF持久化是备份数据库接收到的命令，所有被写入AOF的命令都是以redis的协议格式来保存的。
-在AOF持久化的文件中，数据库会记录下所有变更数据库状态的命令，除了指定数据库的select命令，其他的命令都是来自client的，这些命令会以追加(append)的形式保存到文件中。AOF的引入可以将数据损失的程度减少到1秒或1条写入指令。
-相关配置‘   appendonly
-配置是否启用AOF持久化，默认为no
-  appendfilename
-  
-  <div class="read-more-link">
-    <a href="/post/redis_mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">axios_发送post请求</a>
-  </h1>
-  <time datetime="0001-01-01T00:00:00Z" class="post-date">Mon, Jan 1, 0001</time>
-  [TOC]
-方案一 在node中使用axios以post的方式发送一张图片给某个server时:
-let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
-let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).
-  
-  <div class="read-more-link">
-    <a href="/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/error-inflating-class-fragment/">Error_inflating_class_fragment</a>
-  </h1>
-  <time datetime="0001-01-01T00:00:00Z" class="post-date">Mon, Jan 1, 0001</time>
-  [TOC]
-如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。
-@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/">redis_mongodb持久化的方式</a>
-  </h1>
-  <time datetime="0001-01-01T00:00:00Z" class="post-date">Mon, Jan 1, 0001</time>
-  [TOC]
-redis持久化方式(两种) RDB持久化 redis提供了RDB持久化的功能，这个功能可以将redis在内存中的的状态保存到硬盘中，相当于snapshot，它可以手动执行，也可以再redis.conf中配置，定期执行。
-相关配置   databases
-配置db文件的数目，可以用select dbid 指令为每个连接指定后续持久化时的db文件，新连接默认均使用db 0
-  save
-SNAPSHOTTING的持久化方式有多种save策略可供选择，而且支持混用，例如： save 900 1 save 300 100 save 60 10000 上述配置的效果是：snapshotting会在3个条件中的任何一个满足时被触发：
- 900s内至少1个key有变化； 300s内至少100个key有变化； 60s内至少有10000个key有变化  save条件被触发时，Redis通过fork子进程，由子进程在后台实现异步dump磁盘。根据fork的写时复制策略，若持久化过程中出现很多写入请求，在最坏的情况下，需要的内存是当前数据集所占内存的2倍。 备注1：上述配置的3个触发条件其实是逐次加强的，哪个条件先满足就先触发那个save策略。 备注2：如果业务不需要持久化或不需要RDB方式的持久化，可以通过注释掉save配置项来实现
-  stop-writes-on-bgsave-error
-指定Redis在后台dump磁盘出错时的行为，默认为yes，表示若后台dump出错，则RedisServer拒绝新的写入请求，通过这种方式来引起用户警觉，避免因用户未发现异常而引起更大的事故。
-  rdbcompression
-RDB文件是否压缩存储，若为yes，会在压缩时消耗一点CPU，但省磁盘空间。
-  rdbchecksum
-RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC64并将结果追加至文件尾，同样，Redis启动Load RDB时，也会先计算该文件的CRC64并与dump时的计算结果对比。 好处：可以严格保证RDB的完整性及安全性 代价：会在dump或load时损失10%的性能。如果要最大化Redis的性能，这个配置项应该用no关掉
-  dbfilename
-指定RDB文件名，默认为dump.rdb
-  dir
-指定RDB文件存放目录的路径，若包含多级路径，则相关父路径需事先mkdir出来，否则启动失败。
-  AOF持久化 AOF持久化（Append-Only-File），与RDB持久化不同，AOF持久化是通过保存Redis服务器锁执行的写状态来记录数据库的，即commandlog。
-具体来说，RDB持久化相当于备份数据库状态，而AOF持久化是备份数据库接收到的命令，所有被写入AOF的命令都是以redis的协议格式来保存的。
-在AOF持久化的文件中，数据库会记录下所有变更数据库状态的命令，除了指定数据库的select命令，其他的命令都是来自client的，这些命令会以追加(append)的形式保存到文件中。AOF的引入可以将数据损失的程度减少到1秒或1条写入指令。
-相关配置‘   appendonly
-配置是否启用AOF持久化，默认为no
-  appendfilename
-  
-  <div class="read-more-link">
-    <a href="/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">vue_跨域问题</a>
-  </h1>
-  <time datetime="0001-01-01T00:00:00Z" class="post-date">Mon, Jan 1, 0001</time>
-  [TOC]
-和后端联调时总是会面对恼人的跨域问题，最近基于Vue开发项目时也遇到了这个问题，两边各自想了一堆办法，查了一堆资料，加了一堆参数，最后还得我把自己的localhost映射成上线时将要使用的域名。
-今天翻看代码时，突然发现vue-cli的config文件里有一个参数叫proxyTable，看这个名字就感觉能解决问题，于是我就去搜了一下，果然。在vuejs-templates，也就是vue-cli的使用的模板插件里，有关于API proxy的说明，使用的就是这个参数。https://vuejs-templates.github.io/webpack/proxy.html
-这个参数主要是一个地址映射表，你可以通过设置将复杂的url简化，例如我们要请求的地址是api.xxxxxxxx.com/list/1，可以按照如下设置：
-proxyTable: {&lsquo;/list&rsquo;: {target: &lsquo;http://api.xxxxxxxx.com&rsquo;,pathRewrite: {&lsquo;^/list&rsquo;: &lsquo;/list&rsquo;}}}这样我们在写url的时候，只用写成/list/1就可以代表api.xxxxxxxx.com/list/1.那么又是如何解决跨域问题的呢？其实在上面的&rsquo;list&rsquo;的参数里有一个changeOrigin参数，接收一个布尔值，如果设置为true,那么本地会虚拟一个服务端接收你的请求并代你发送该请求，这样就不会有跨域问题了，当然这只适用于开发环境。增加的代码如下所示：
-proxyTable: {&lsquo;/list&rsquo;: {target: &lsquo;http://api.xxxxxxxx.com&rsquo;,changeOrigin: true,pathRewrite: {&lsquo;^/list&rsquo;: &lsquo;/list&rsquo;}}}
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E8%BD%AC%E5%88%A9%E7%94%A8%E5%8C%BF%E5%90%8Dnamespace%E8%A7%A3%E5%86%B3c&#43;&#43;%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%AE%9A%E4%B9%89%E7%9A%84%E9%97%AE%E9%A2%98/">【转】利用匿名namespace解决C&#43;&#43;中重复定义的问题</a>
-  </h1>
-  <time datetime="0001-01-01T00:00:00Z" class="post-date">Mon, Jan 1, 0001</time>
-  [TOC]
-原文:https://blog.csdn.net/pi9nc/article/details/11267031
-利用匿名namespace解决C++中重复定义的问题 今天写代码的时候又碰到了C++中多编译单元导致重复定义(multi definition)的链接问题。其实这个问题以前也碰到过几次，急着编译出代码也没有去深究背后的一些知识。今天系统的看了一些资料，算是把这个问题彻底搞清楚了。这里做下简单总结吧：
-  C++中有由于模版分离编译等问题，导致常常需要在头文件加入变量定义或者函数定义的代码，从而在链接多编译单元时导致multi-definition重复定义的问题。     传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。
-  在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。
-  在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。
-但是这种方法经常会导致一个问题就是multi-definition重复定义，在较大型的工程中往往会采用多编译单元的形式生成多个.o文件，然后再用ld链接生成可执行文件。如果多个.o中都include了同一个hpp文件，而该hpp文件又包含了全局变量，类的静态成员等一些变量的定义，那么就会导致gcc的multi-definition报错。在传统的C程序中可以通过static申明一个变量或者函数不生成全局符号来解决这个问题，但是C++中static关键字对于类的成员有了其他语义。因此C++中建议使用匿名namespace来替代static避免multi-definition的问题。看如下一个例子：
------------ test.hpp---------- #include &lt;string&gt; class A { public: static std::string y; }; std::string A::y = std::string(); ----------- test_comm.cpp---------- #include &#34;test.hpp&#34; void func() { } ----------- test_main.cpp---------- #include &#34;test.hpp&#34; void func(); int main(int argc, char *argv) { func(); } 我们在g++上编译就会出现如下错误：
-leoxiang@SEC38_64_sles10:~$ g++ -c test_comm.cpp leoxiang@SEC38_64_sles10:~$ g++ -c test_main.cpp leoxiang@SEC38_64_sles10:~$ g++ -o test test_comm.
-  
-  <div class="read-more-link">
-    <a href="/post/%E8%BD%AC%E5%88%A9%E7%94%A8%E5%8C%BF%E5%90%8Dnamespace%E8%A7%A3%E5%86%B3c&#43;&#43;%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%AE%9A%E4%B9%89%E7%9A%84%E9%97%AE%E9%A2%98/">Read More…</a>
-  </div>
-  
-</article>
-</div>
-    </main>
+  服务器收到客户端返回的加密信息后，使用自己的私钥进行解密，获取对称加密密钥;在接下来的会话中，服务器和客户端将会使用该密码进行对称加密，保证通信过程中信息的安全;……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
 
     
-      
+    <li  class="current">
+        <a href="https://siskinc.github.io/">1</a>
+    </li>
     
-  </body>
+    <li >
+        <a href="https://siskinc.github.io/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/3/">3</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/4/">4</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/6/">6</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/7/">7</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/page/2/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
