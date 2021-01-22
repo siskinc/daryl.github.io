@@ -4,12 +4,42 @@
   
   <url>
     <loc>https://siskinc.github.io/categories/</loc>
-    <lastmod>2020-11-09T23:49:58+00:00</lastmod>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://siskinc.github.io/</loc>
-    <lastmod>2020-11-09T23:49:58+00:00</lastmod>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/categories/linux/</loc>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/tags/linux/</loc>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/post/</loc>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/tags/</loc>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/tags/ubuntu/</loc>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/</loc>
+    <lastmod>2021-01-22T23:59:06+08:00</lastmod>
   </url>
   
   <url>
@@ -38,17 +68,7 @@
   </url>
   
   <url>
-    <loc>https://siskinc.github.io/post/</loc>
-    <lastmod>2020-11-09T23:49:58+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://siskinc.github.io/tags/redis/</loc>
-    <lastmod>2020-11-09T23:49:58+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://siskinc.github.io/tags/</loc>
     <lastmod>2020-11-09T23:49:58+00:00</lastmod>
   </url>
   
@@ -193,11 +213,6 @@
   </url>
   
   <url>
-    <loc>https://siskinc.github.io/categories/linux/</loc>
-    <lastmod>2020-04-06T17:36:42+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://siskinc.github.io/tags/uber-h3/</loc>
     <lastmod>2020-04-06T17:36:42+00:00</lastmod>
   </url>
@@ -225,16 +240,6 @@
   <url>
     <loc>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</loc>
     <lastmod>2020-03-14T17:33:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://siskinc.github.io/tags/linux/</loc>
-    <lastmod>2020-02-28T16:54:07+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://siskinc.github.io/tags/ubuntu/</loc>
-    <lastmod>2020-02-28T16:54:07+00:00</lastmod>
   </url>
   
   <url>

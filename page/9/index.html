@@ -65,6 +65,29 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式">C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/c&#43;&#43;'>C&#43;&#43;</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            1、直接使用字符串相加 std::string a = &quot;hello&quot;;std::string b = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a = b + a;}2、使用insert函数 std::string a = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a.insert(0, &quot;hello&quot;);}比较：通过Quick C++ Benchmarks 可得到结果 static void StringCreation(benchmark::State&amp; state) {// Code inside this loop is measured repeatedlystd::string x = &quot;hello&quot;;for (auto _ : state) {x.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2sdshdr/" title="redis源码解读--动态字符串SDSHDR">redis源码解读--动态字符串SDSHDR</a>
             </h1>
         </header>
@@ -364,6 +387,10 @@ target: 'http://api.xxxxxxxx.com',changeOrigin: true,pathRewrite: {'^/list': 
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
     </li>
     
@@ -399,10 +426,6 @@ target: 'http://api.xxxxxxxx.com',changeOrigin: true,pathRewrite: {'^/list': 
         <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -428,7 +451,7 @@ target: 'http://api.xxxxxxxx.com',changeOrigin: true,pathRewrite: {'^/list': 
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
     

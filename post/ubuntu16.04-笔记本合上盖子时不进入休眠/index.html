@@ -7,21 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
 
-    <title>gin | Daryl&#39;s Blog</title>
-    <meta property="og:title" content="gin - Daryl&#39;s Blog">
+    <title>Ubuntu16.04 笔记本合上盖子时不进入休眠 | Daryl&#39;s Blog</title>
+    <meta property="og:title" content="Ubuntu16.04 笔记本合上盖子时不进入休眠 - Daryl&#39;s Blog">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content='2021-01-22T23:59:06&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-01-22T23:59:06&#43;08:00'>
         
     <meta name="Keywords" content="">
-    <meta name="description" content="gin">
+    <meta name="description" content="Ubuntu16.04 笔记本合上盖子时不进入休眠">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/tags/gin/">
+    <meta property="og:url" content="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/tags/gin/index.xml" title="Daryl's Blog" />
     <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -47,7 +50,7 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="" href="https://siskinc.github.io/">首页</a>
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
                     
                 </nav>
             </div>
@@ -63,100 +66,75 @@
                     
 <div class="res-cons">
     
-    <h3 class="archive-title">
-        包含标签
-        <span class="keyword">gin</span>
-        的文章
-    </h3>
-    
-
-    
     <article class="post">
         <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/">Gin上传文件到MongoDB gridfs</a>
-            </h1>
+            <h1 class="post-title">Ubuntu16.04 笔记本合上盖子时不进入休眠</h1>
         </header>
         <date class="post-meta meta-date">
-            2019年7月25日
+            2021年1月22日
         </date>
         
-        <div class="post-meta meta-category">
-            |
+        <div class="post-meta">
+            <span>|</span>
             
-            <a href='/categories/go'>Go</a>
+            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
             
         </div>
         
+        
+        
         <div class="post-content">
-            上传图片 func imagePost(c *gin.Context) { image, err := c.FormFile(&#34;file&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } fileImage, err := image.Open() if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } defer fileImage.Close() imageGridFS, err := model.GetGridFS(&#34;image&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } now := self_time.GetNowTimeStamp() nowStr := strconv.FormatInt(now, 10) file, err := imageGridFS.Create(nowStr) if err !……
-            <p class="readmore"><a href="https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/">阅读全文</a></p>
+            <p>在笔记本上装ubuntu系统，也可以从事相关开发工作。但笔记本存在这样的情况，就是有时服务功能设好了，不需要操作了，但是希望机器一直开机提供服务，或者长期下载大文件。此时，为了省电，可将笔记本屏幕合上，静待其完成任务。
+但是，在默认情况下，笔记本合上屏幕后，ubuntu系统会休眠，我试着用GUI改了一下设置，实践证明没有效果，还是直接修改配置文件来得快，方法如下：
+修改 Login Manager的配置文件，<code>/etc/systemd/logind.conf</code>:
+然后将其中的：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#HandleLidSwitch=suspend</span>
+</code></pre></div><p>改成：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">HandleLidSwitch<span style="color:#f92672">=</span>ignore
+</code></pre></div><p>然后重启服务：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">service systemd-logind restart
+</code></pre></div><p>或者直接重启</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo shutdown -r now
+</code></pre></div><p>即可使设置生效。</p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">Ubuntu 18.04换国内源</a></li>
+        
+        <li><a href="/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">Linux进程的五个段</a></li>
+        
+        <li><a href="/post/linux_or_mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/">Linux or Mac 重启网络</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/linux'>linux</a></li>
+                
+                <li><a href='/tags/ubuntu'>ubuntu</a></li>
+                
+            </ul>
+            
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/">gin mongodb restful api设计: 动态的patch接口</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/go'>Go</a>
-            
-        </div>
-        
-        <div class="post-content">
-            什么是Patch?   Patch方法可以用来更新资源的一个组成部分
- 什么时候使用Patch?   当你仅需更新资源的某一项，即不完全也不幂等
- 那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？
-答案当然是有的，先说说如何去实现：
-  我们需要利用golang的map[string]interface{}结构
-  我们需要一个动态的结构
-  在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&quot;$set&quot;: xxxx})操作
-    使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）
-  来，开始贴代码：
-// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId `json:&#34;id&#34; bson:&#34;_id&#34; show:&#34;id&#34;` Author string `json:&#34;author&#34; bson:&#34;author&#34; show:&#34;author&#34;` Title string `json:&#34;title&#34; bson:&#34;title&#34; show:&#34;title&#34;` Content string `json:&#34;content&#34; bson:&#34;content&#34; show:&#34;content&#34;` Publish int `json:&#34;publish&#34; bson:&#34;publish&#34;` CreatedTime int64 `json:&#34;created_time&#34; bson:&#34;created_time&#34; show:&#34;created_time&#34;` ChangedTime int64 `json:&#34;changed_time&#34; bson:&#34;changed_time&#34; show:&#34;changed_time&#34;` PageView int64 `json:&#34;page_view&#34; bson:&#34;page_view&#34; show:&#34;page_view&#34;` // 浏览量  ArticleType string `json:&#34;article_type&#34; bson:&#34;article_type&#34; show:&#34;article_type&#34;` ArticleTags []string `json:&#34;article_tags&#34; bson:&#34;article_tags&#34; show:&#34;article_tags&#34;` Deleted int `json:&#34;deleted&#34; bson:&#34;deleted&#34;` } func ArticlePatch(c *gin.……
-            <p class="readmore"><a href="https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/">阅读全文</a></p>
-        </div>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/">gin PostForm 方法不起作用</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/go'>Go</a>
-            
-        </div>
-        
-        <div class="post-content">
-            情景: 在httpie post 下，在 axios post下，总的来说，就是在form-data下只有c.Bind()会有用
-如果一定要用c.PostForm() headers必须为x-www-form-urlencoded……
-            <p class="readmore"><a href="https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/">阅读全文</a></p>
-        </div>
-    </article>
     
 
     
-
-
-
-
-
+    
 </div>
 
                     <footer id="footer">
@@ -179,6 +157,16 @@
 </footer>
 
 
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
