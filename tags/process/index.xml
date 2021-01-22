@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>process on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/process/</link>
+    <description>Recent content in process on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 24 Aug 2019 08:06:58 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/process/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux进程的五个段</title>
+      <link>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</link>
+      <pubDate>Sat, 24 Aug 2019 08:06:58 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</guid>
+      <description>数据段  用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；
+ 代码段  代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&amp;mdash;&amp;ndash;它是不可写的；
+ BSS段  包含了程序中未初始化的全局变量，在内存中bss段全部置零；
+ 堆（heap）  堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可以动态扩展或者所建。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩展）；当利用free等函数释放内存时，被释放的内存从堆中被提出（堆被缩减）；
+ 栈  栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。
+ </description>
+    </item>
+    
+    <item>
+      <title>进程和线程有什么区别</title>
+      <link>https://siskinc.github.io/post/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Sat, 24 Aug 2019 07:33:48 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/</guid>
+      <description>定义 进程  是具有一定独立功能的程序、它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，也就是说进程是可以独 立运行的一段程序。
+ 线程  线程进程的一个实体，是CPU调度和分派的基本单位，他是比进程更小的能独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈 。
+ 关系   一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（通常说的主线程）。
+  资源分配给进程，同一进程的所有线程共享该进程的所有资源。用户进程主要段segment：stack（向低地址），heap，.rodata,data/bss,.text。一个进程，上面的5部分是主要的，必须的。线程只拥有stack（线程栈，线程栈是单个线程所独享的，2M），保存自己的函数调用过程，比如heap，.rodata,data/bss，text段都是共享的。
+  线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的办法实现同步。
+  处理机分给线程，即真正在处理机上运行的是线程。
+  线程是指进程内的一个执行单元，也是进程内的可调度实体。
+  区别   调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。
+  并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。
+  拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

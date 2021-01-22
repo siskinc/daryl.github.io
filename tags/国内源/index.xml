@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>国内源 on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/</link>
+    <description>Recent content in 国内源 on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 28 Feb 2020 16:54:07 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu 18.04换国内源</title>
+      <link>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</link>
+      <pubDate>Fri, 28 Feb 2020 16:54:07 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</guid>
+      <description>国内有很多Ubuntu的镜像源，例如阿里、网易、清华、中科大。
+我们这里以阿里云的源为例展示如何修改Ubuntu 18.04里面默认的源。
+编辑/etc/apt/sources.list文件：
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse中科大源 deb https://mirrors.</description>
+    </item>
+    
+  </channel>
+</rss>

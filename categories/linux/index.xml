@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/linux/</link>
+    <description>Recent content in Linux on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Apr 2020 17:36:42 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centos下，源码安装Python的h3包</title>
+      <link>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</link>
+      <pubDate>Mon, 06 Apr 2020 17:36:42 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</guid>
+      <description>公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
+ 检查cmake版本 cmake --version 如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
+下载文件  自己下载对于的master压缩包
+   https://github.com/uber/h3
+  https://github.com/uber/h3-py
+  解压文件 unzip h3-master.zip unzip h3-py-master.zip 修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
+#!/usr/bin/env bash set -ex VERSION=$1 IS_64BITS=$2 if [ &amp;#34;&amp;#34; == &amp;#34;$VERSION&amp;#34; ]; then echo &amp;#34;Failed to specify version required&amp;#34; exit 1 fi command -v cmake &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 || { echo &amp;#34;cmake required but not found.&amp;#34;; exit 1; } mkdir -p h3/out rm -rf h3c git clone https://github.</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 18.04换国内源</title>
+      <link>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</link>
+      <pubDate>Fri, 28 Feb 2020 16:54:07 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</guid>
+      <description>国内有很多Ubuntu的镜像源，例如阿里、网易、清华、中科大。
+我们这里以阿里云的源为例展示如何修改Ubuntu 18.04里面默认的源。
+编辑/etc/apt/sources.list文件：
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse中科大源 deb https://mirrors.</description>
+    </item>
+    
+    <item>
+      <title>xshell过期了怎么办，如何破解xshell</title>
+      <link>https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/</link>
+      <pubDate>Wed, 25 Dec 2019 20:35:41 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/</guid>
+      <description>  卸载xshell
+  删除xshell注册表
+  打开运行框（快捷键WIN+R）,输入regedit.exe
+  删除计算机\HKEY_CURRENT_USER\Software\Netscape目录
+    重新安装xshell
+  </description>
+    </item>
+    
+    <item>
+      <title>Linux进程的五个段</title>
+      <link>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</link>
+      <pubDate>Sat, 24 Aug 2019 08:06:58 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</guid>
+      <description>数据段  用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；
+ 代码段  代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&amp;mdash;&amp;ndash;它是不可写的；
+ BSS段  包含了程序中未初始化的全局变量，在内存中bss段全部置零；
+ 堆（heap）  堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可以动态扩展或者所建。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩展）；当利用free等函数释放内存时，被释放的内存从堆中被提出（堆被缩减）；
+ 栈  栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。
+ </description>
+    </item>
+    
+    <item>
+      <title>shell中通过eval执行一个字符串命令</title>
+      <link>https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Thu, 25 Jul 2019 20:39:15 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/</guid>
+      <description>#!/bin/bash echo &amp;#34;Switch Directory : /home/pktgen-2.9.0&amp;#34; dir=&amp;#34;/home/pktgen-2.9.0&amp;#34; cd $dir cmd=&amp;#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&amp;#34; eval $cmd </description>
+    </item>
+    
+  </channel>
+</rss>

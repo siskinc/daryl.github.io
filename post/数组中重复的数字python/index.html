@@ -65,7 +65,100 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
-    
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents"></nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
     <article class="post">
         <header>
             <h1 class="post-title">数组中重复的数字(Python)</h1>
@@ -74,23 +167,36 @@
             2019年8月13日
         </date>
         
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
         
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
         
         <div class="post-content">
-            <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
-<span style="color:#960050;background-color:#1e0010">#</span>!<span style="color:#f92672">/</span><span style="color:#a6e22e">usr</span><span style="color:#f92672">/</span><span style="color:#a6e22e">bin</span><span style="color:#f92672">/</span><span style="color:#a6e22e">env</span> <span style="color:#a6e22e">python</span> 
+            <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<span style="color:#75715e">#!/usr/bin/env python </span>
 
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#f92672">-*-</span> <span style="color:#a6e22e">coding</span>: <span style="color:#a6e22e">utf</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span> <span style="color:#f92672">-*-</span>
+<span style="color:#75715e"># -*- coding: utf-8 -*-</span>
 
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Time</span>    : <span style="color:#ae81ff">2019</span><span style="color:#f92672">-</span><span style="color:#ae81ff">08</span><span style="color:#f92672">-</span><span style="color:#ae81ff">13</span> <span style="color:#ae81ff">22</span>:<span style="color:#ae81ff">35</span>
+<span style="color:#75715e"># @Time    : 2019-08-13 22:35</span>
 
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">Author</span>  : <span style="color:#a6e22e">daryl</span>
+<span style="color:#75715e"># @Author  : daryl</span>
 
-<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">File</span>    : <span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">py</span>
+<span style="color:#75715e"># @File    : main.py</span>
 
 
 
-<span style="color:#a6e22e">def</span> <span style="color:#a6e22e">use_map</span>(<span style="color:#a6e22e">numbers</span>):
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">use_map</span>(numbers):
 
     <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">
@@ -102,21 +208,21 @@
 </span><span style="color:#e6db74">
 </span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
-    <span style="color:#a6e22e">num_map</span> = <span style="color:#a6e22e">dict</span>()
+    num_map <span style="color:#f92672">=</span> dict()
 
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">number</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">numbers</span>:
+    <span style="color:#66d9ef">for</span> number <span style="color:#f92672">in</span> numbers:
 
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">number</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">num_map</span>:
+        <span style="color:#66d9ef">if</span> number <span style="color:#f92672">in</span> num_map:
 
-            print(<span style="color:#a6e22e">number</span>)
+            <span style="color:#66d9ef">print</span>(number)
 
         <span style="color:#66d9ef">else</span>:
 
-            <span style="color:#a6e22e">num_map</span>[<span style="color:#a6e22e">number</span>] = <span style="color:#a6e22e">True</span>
+            num_map[number] <span style="color:#f92672">=</span> True
 
 
 
-<span style="color:#a6e22e">def</span> <span style="color:#a6e22e">use_set</span>(<span style="color:#a6e22e">numbers</span>):
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">use_set</span>(numbers):
 
     <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">
@@ -128,21 +234,21 @@
 </span><span style="color:#e6db74">
 </span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
-    <span style="color:#a6e22e">num_set</span> = <span style="color:#a6e22e">set</span>()
+    num_set <span style="color:#f92672">=</span> set()
 
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">number</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">numbers</span>:
+    <span style="color:#66d9ef">for</span> number <span style="color:#f92672">in</span> numbers:
 
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">number</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">num_set</span>:
+        <span style="color:#66d9ef">if</span> number <span style="color:#f92672">in</span> num_set:
 
-            print(<span style="color:#a6e22e">number</span>)
+            <span style="color:#66d9ef">print</span>(number)
 
         <span style="color:#66d9ef">else</span>:
 
-            <span style="color:#a6e22e">num_set</span>.<span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">number</span>)
+            num_set<span style="color:#f92672">.</span>add(number)
 
 
 
-<span style="color:#a6e22e">def</span> <span style="color:#a6e22e">use_sort</span>(<span style="color:#a6e22e">numbers</span>):
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">use_sort</span>(numbers):
 
     <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">
@@ -154,35 +260,35 @@
 </span><span style="color:#e6db74">
 </span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
-    <span style="color:#a6e22e">numbers</span> = <span style="color:#a6e22e">sorted</span>(<span style="color:#a6e22e">numbers</span>)
+    numbers <span style="color:#f92672">=</span> sorted(numbers)
 
-    print(<span style="color:#a6e22e">numbers</span>)
+    <span style="color:#66d9ef">print</span>(numbers)
 
-    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">index</span>, <span style="color:#a6e22e">number</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">enumerate</span>(<span style="color:#a6e22e">numbers</span>):
+    <span style="color:#66d9ef">for</span> index, number <span style="color:#f92672">in</span> enumerate(numbers):
 
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">index</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">number</span>:
+        <span style="color:#66d9ef">if</span> index <span style="color:#f92672">!=</span> number:
 
             <span style="color:#66d9ef">continue</span>
 
-        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">number</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">numbers</span>[<span style="color:#a6e22e">number</span>]:
+        <span style="color:#66d9ef">if</span> number <span style="color:#f92672">==</span> numbers[number]:
 
-            print(<span style="color:#a6e22e">number</span>)
+            <span style="color:#66d9ef">print</span>(number)
 
         <span style="color:#66d9ef">else</span>:
 
-            <span style="color:#a6e22e">numbers</span>[<span style="color:#a6e22e">index</span>], <span style="color:#a6e22e">numbers</span>[<span style="color:#a6e22e">number</span>] = <span style="color:#a6e22e">numbers</span>[<span style="color:#a6e22e">number</span>], <span style="color:#a6e22e">numbers</span>[<span style="color:#a6e22e">index</span>]
+            numbers[index], numbers[number] <span style="color:#f92672">=</span> numbers[number], numbers[index]
 
 
 
-<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">__name__</span> <span style="color:#f92672">==</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#960050;background-color:#1e0010">&#39;</span>:
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
 
-    <span style="color:#a6e22e">numbers</span> = [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>]
+    numbers <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>]
 
-    <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">use_map</span>(<span style="color:#a6e22e">numbers</span>)
+    <span style="color:#75715e"># use_map(numbers)</span>
 
-    <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">use_set</span>(<span style="color:#a6e22e">numbers</span>)
+    <span style="color:#75715e"># use_set(numbers)</span>
 
-    <span style="color:#a6e22e">use_sort</span>(<span style="color:#a6e22e">numbers</span>)
+    use_sort(numbers)
 
 </code></pre></div>
         </div>
@@ -192,10 +298,31 @@
 
         
 
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Python实现单例模式</a></li>
+        
+        <li><a href="/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/">如何在mongoengine中使用referencefield引用本类</a></li>
+        
+        <li><a href="/post/python%E4%B8%AD%E6%A3%80%E6%B5%8B%E6%9F%90%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E6%9C%89%E5%AE%9A%E4%B9%89/">python中检测某个变量是否有定义</a></li>
+        
+        <li><a href="/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a></li>
+        
+        <li><a href="/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a></li>
+        
+    </ul>
+</div>
+
 
         <div class="post-meta meta-tags">
             
-            没有标签
+            <ul class="clearfix">
+                
+                <li><a href='/tags/python'>python</a></li>
+                
+            </ul>
             
         </div>
     </article>
@@ -310,12 +437,216 @@
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
+    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (5)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/">经验 (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/">编码 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
 </ul>
     </section>
 
     <section class="widget">
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    
+    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    
+    <a href="https://siskinc.github.io/tags/branch/">branch</a>
+    
+    <a href="https://siskinc.github.io/tags/bug/">bug</a>
+    
+    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/centos/">centos</a>
+    
+    <a href="https://siskinc.github.io/tags/convert/">convert</a>
+    
+    <a href="https://siskinc.github.io/tags/coverage/">coverage</a>
+    
+    <a href="https://siskinc.github.io/tags/cron-task/">cron task</a>
+    
+    <a href="https://siskinc.github.io/tags/css/">css</a>
+    
+    <a href="https://siskinc.github.io/tags/datetime/">datetime</a>
+    
+    <a href="https://siskinc.github.io/tags/dict/">dict</a>
+    
+    <a href="https://siskinc.github.io/tags/django/">django</a>
+    
+    <a href="https://siskinc.github.io/tags/docker/">docker</a>
+    
+    <a href="https://siskinc.github.io/tags/docker-compose/">docker-compose</a>
+    
+    <a href="https://siskinc.github.io/tags/eval/">eval</a>
+    
+    <a href="https://siskinc.github.io/tags/flask/">flask</a>
+    
+    <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gin/">gin</a>
+    
+    <a href="https://siskinc.github.io/tags/git/">git</a>
+    
+    <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
+    
+    <a href="https://siskinc.github.io/tags/golang/">golang</a>
+    
+    <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
+    
+    <a href="https://siskinc.github.io/tags/goroutine/">goroutine</a>
+    
+    <a href="https://siskinc.github.io/tags/gridfs/">gridfs</a>
+    
+    <a href="https://siskinc.github.io/tags/hash/">hash</a>
+    
+    <a href="https://siskinc.github.io/tags/hooks/">hooks</a>
+    
+    <a href="https://siskinc.github.io/tags/http/">http</a>
+    
+    <a href="https://siskinc.github.io/tags/https/">https</a>
+    
+    <a href="https://siskinc.github.io/tags/import/">import</a>
+    
+    <a href="https://siskinc.github.io/tags/init/">init</a>
+    
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    
+    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    
+    <a href="https://siskinc.github.io/tags/json/">json</a>
+    
+    <a href="https://siskinc.github.io/tags/k8s/">k8s</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka-go/">kafka-go</a>
+    
+    <a href="https://siskinc.github.io/tags/linux/">linux</a>
+    
+    <a href="https://siskinc.github.io/tags/lua/">lua</a>
+    
+    <a href="https://siskinc.github.io/tags/mac/">mac</a>
+    
+    <a href="https://siskinc.github.io/tags/map/">map</a>
+    
+    <a href="https://siskinc.github.io/tags/mgo/">mgo</a>
+    
+    <a href="https://siskinc.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://siskinc.github.io/tags/mongoengine/">mongoengine</a>
+    
+    <a href="https://siskinc.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://siskinc.github.io/tags/nodejs/">nodejs</a>
+    
+    <a href="https://siskinc.github.io/tags/pipeline/">pipeline</a>
+    
+    <a href="https://siskinc.github.io/tags/process/">process</a>
+    
+    <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
+    
+    <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python2/">python2</a>
+    
+    <a href="https://siskinc.github.io/tags/python3/">python3</a>
+    
+    <a href="https://siskinc.github.io/tags/redis/">redis</a>
+    
+    <a href="https://siskinc.github.io/tags/referencefield/">referencefield</a>
+    
+    <a href="https://siskinc.github.io/tags/restful/">restful</a>
+    
+    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/shell/">shell</a>
+    
+    <a href="https://siskinc.github.io/tags/source-code/">source code</a>
+    
+    <a href="https://siskinc.github.io/tags/ss/">ss</a>
+    
+    <a href="https://siskinc.github.io/tags/ssh/">ssh</a>
+    
+    <a href="https://siskinc.github.io/tags/svn/">svn</a>
+    
+    <a href="https://siskinc.github.io/tags/thread/">thread</a>
+    
+    <a href="https://siskinc.github.io/tags/trap/">trap</a>
+    
+    <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
+    
+    <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
+    
+    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
+    
+    <a href="https://siskinc.github.io/tags/uwsgi/">uwsgi</a>
+    
+    <a href="https://siskinc.github.io/tags/vue/">vue</a>
+    
+    <a href="https://siskinc.github.io/tags/windows/">windows</a>
+    
+    <a href="https://siskinc.github.io/tags/wordpress/">wordpress</a>
+    
+    <a href="https://siskinc.github.io/tags/xshell/">xshell</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">二叉搜索树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/">插件</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%B7%A8%E5%9F%9F/">跨域</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
     
 </div>
     </section>

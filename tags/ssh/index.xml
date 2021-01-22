@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ssh on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/ssh/</link>
+    <description>Recent content in ssh on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 05 Nov 2020 13:59:29 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python远程操作SSH</title>
+      <link>https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/</link>
+      <pubDate>Thu, 05 Nov 2020 13:59:29 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/</guid>
+      <description>三方组件 paramiko
+创建ssh 连接 def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh 执行命令 def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&amp;#39;command&amp;#39;) for line in stdout.readlines(): print(line) </description>
+    </item>
+    
+    <item>
+      <title>git使用ssh自动替代https</title>
+      <link>https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/</link>
+      <pubDate>Thu, 12 Dec 2019 22:40:31 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/</guid>
+      <description> 在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
+ 本地执行git命令: git config --global url.&amp;#34;git@github.com:&amp;#34;.insteadOf &amp;#34;https://github.com/&amp;#34; git config --global url.&amp;#34;git@git.company.com:&amp;#34;.insteadOf &amp;#34;https://git.company.com/&amp;#34;  company.com换成你自己公司的地址即可。
+  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： git config --global url.&amp;#34;git@github.com:golang/&amp;#34;.insteadOf &amp;#34;https://go.googlesource.com/&amp;#34; </description>
+    </item>
+    
+  </channel>
+</rss>

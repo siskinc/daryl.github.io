@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MongoDB on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/mongodb/</link>
+    <description>Recent content in MongoDB on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://siskinc.github.io/categories/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>redis_mongodb持久化的方式</title>
+      <link>https://siskinc.github.io/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
+      <description>redis持久化方式(两种) RDB持久化 redis提供了RDB持久化的功能，这个功能可以将redis在内存中的的状态保存到硬盘中，相当于snapshot，它可以手动执行，也可以再redis.conf中配置，定期执行。
+相关配置   databases
+配置db文件的数目，可以用select dbid 指令为每个连接指定后续持久化时的db文件，新连接默认均使用db 0
+  save
+SNAPSHOTTING的持久化方式有多种save策略可供选择，而且支持混用，例如：
+save 900 1
+save 300 100
+save 60 10000
+上述配置的效果是：snapshotting会在3个条件中的任何一个满足时被触发：
+  900s内至少1个key有变化；
+  300s内至少100个key有变化；
+  60s内至少有10000个key有变化
+  save条件被触发时，Redis通过fork子进程，由子进程在后台实现异步dump磁盘。根据fork的写时复制策略，若持久化过程中出现很多写入请求，在最坏的情况下，需要的内存是当前数据集所占内存的2倍。
+备注1：上述配置的3个触发条件其实是逐次加强的，哪个条件先满足就先触发那个save策略。
+备注2：如果业务不需要持久化或不需要RDB方式的持久化，可以通过注释掉save配置项来实现
+  stop-writes-on-bgsave-error
+指定Redis在后台dump磁盘出错时的行为，默认为yes，表示若后台dump出错，则RedisServer拒绝新的写入请求，通过这种方式来引起用户警觉，避免因用户未发现异常而引起更大的事故。
+  rdbcompression
+RDB文件是否压缩存储，若为yes，会在压缩时消耗一点CPU，但省磁盘空间。
+  rdbchecksum
+RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC64并将结果追加至文件尾，同样，Redis启动Load RDB时，也会先计算该文件的CRC64并与dump时的计算结果对比。
+   好处：可以严格保证RDB的完整性及安全性
+ 代价：会在dump或load时损失10%的性能。如果要最大化Redis的性能，这个配置项应该用no关掉
+ dbfilename
+指定RDB文件名，默认为dump.rdb
+  dir
+指定RDB文件存放目录的路径，若包含多级路径，则相关父路径需事先mkdir出来，否则启动失败。
+  AOF持久化 AOF持久化（Append-Only-File），与RDB持久化不同，AOF持久化是通过保存Redis服务器锁执行的写状态来记录数据库的，即commandlog。</description>
+    </item>
+    
+  </channel>
+</rss>

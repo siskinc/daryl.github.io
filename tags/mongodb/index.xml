@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mongodb on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/mongodb/</link>
+    <description>Recent content in mongodb on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 20:25:30 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gin上传文件到MongoDB gridfs</title>
+      <link>https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/</link>
+      <pubDate>Thu, 25 Jul 2019 20:25:30 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/</guid>
+      <description>上传图片 func imagePost(c *gin.Context) { image, err := c.FormFile(&amp;#34;file&amp;#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } fileImage, err := image.Open() if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } defer fileImage.Close() imageGridFS, err := model.GetGridFS(&amp;#34;image&amp;#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } now := self_time.GetNowTimeStamp() nowStr := strconv.FormatInt(now, 10) file, err := imageGridFS.Create(nowStr) if err !</description>
+    </item>
+    
+    <item>
+      <title>Golang mgo 模糊查询的使用</title>
+      <link>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 25 Jul 2019 17:35:04 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
+db.article.find({&amp;quot;title&amp;quot;: {$regex: /a/, $options: &amp;quot;im&amp;quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
+query := bson.M{&amp;#34;title&amp;#34;: bson.M{&amp;#34;$regex&amp;#34;: &amp;#34;/a/&amp;#34;, &amp;#34;$options&amp;#34;: &amp;#34;im&amp;#34;}} 大家用这个方式去查询，能查询到算我输！
+下面总结一下，正真使用的方式：
+ 在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&amp;quot;\a&amp;quot;，而不是\a\。   根据第一点，我们将代码修改一下。
+ query := bson.M{&amp;#34;title&amp;#34;: bson.M{&amp;#34;$regex&amp;#34;: &amp;#34;a&amp;#34;, &amp;#34;$options&amp;#34;: &amp;#34;im&amp;#34;}}  但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
+ 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  // RegEx represents a regular expression. The Options field may contain  // individual characters defining the way in which the pattern should be  // applied, and must be sorted. Valid options as of this writing are &amp;#39;i&amp;#39; for  // case insensitive matching, &amp;#39;m&amp;#39; for multi-line matching, &amp;#39;x&amp;#39; for verbose  // mode, &amp;#39;l&amp;#39; to make \w, \W, and similar be locale-dependent, &amp;#39;s&amp;#39; for dot-all  // mode (a &amp;#39;.</description>
+    </item>
+    
+    <item>
+      <title>gin mongodb restful api设计: 动态的patch接口</title>
+      <link>https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Thu, 25 Jul 2019 17:31:19 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/</guid>
+      <description>什么是Patch?   Patch方法可以用来更新资源的一个组成部分
+ 什么时候使用Patch?   当你仅需更新资源的某一项，即不完全也不幂等
+ 那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？
+答案当然是有的，先说说如何去实现：
+  我们需要利用golang的map[string]interface{}结构
+  我们需要一个动态的结构
+  在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&amp;quot;$set&amp;quot;: xxxx})操作
+    使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）
+  来，开始贴代码：
+// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId `json:&amp;#34;id&amp;#34; bson:&amp;#34;_id&amp;#34; show:&amp;#34;id&amp;#34;` Author string `json:&amp;#34;author&amp;#34; bson:&amp;#34;author&amp;#34; show:&amp;#34;author&amp;#34;` Title string `json:&amp;#34;title&amp;#34; bson:&amp;#34;title&amp;#34; show:&amp;#34;title&amp;#34;` Content string `json:&amp;#34;content&amp;#34; bson:&amp;#34;content&amp;#34; show:&amp;#34;content&amp;#34;` Publish int `json:&amp;#34;publish&amp;#34; bson:&amp;#34;publish&amp;#34;` CreatedTime int64 `json:&amp;#34;created_time&amp;#34; bson:&amp;#34;created_time&amp;#34; show:&amp;#34;created_time&amp;#34;` ChangedTime int64 `json:&amp;#34;changed_time&amp;#34; bson:&amp;#34;changed_time&amp;#34; show:&amp;#34;changed_time&amp;#34;` PageView int64 `json:&amp;#34;page_view&amp;#34; bson:&amp;#34;page_view&amp;#34; show:&amp;#34;page_view&amp;#34;` // 浏览量  ArticleType string `json:&amp;#34;article_type&amp;#34; bson:&amp;#34;article_type&amp;#34; show:&amp;#34;article_type&amp;#34;` ArticleTags []string `json:&amp;#34;article_tags&amp;#34; bson:&amp;#34;article_tags&amp;#34; show:&amp;#34;article_tags&amp;#34;` Deleted int `json:&amp;#34;deleted&amp;#34; bson:&amp;#34;deleted&amp;#34;` } func ArticlePatch(c *gin.</description>
+    </item>
+    
+    <item>
+      <title>redis_mongodb持久化的方式</title>
+      <link>https://siskinc.github.io/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
+      <description>redis持久化方式(两种) RDB持久化 redis提供了RDB持久化的功能，这个功能可以将redis在内存中的的状态保存到硬盘中，相当于snapshot，它可以手动执行，也可以再redis.conf中配置，定期执行。
+相关配置   databases
+配置db文件的数目，可以用select dbid 指令为每个连接指定后续持久化时的db文件，新连接默认均使用db 0
+  save
+SNAPSHOTTING的持久化方式有多种save策略可供选择，而且支持混用，例如：
+save 900 1
+save 300 100
+save 60 10000
+上述配置的效果是：snapshotting会在3个条件中的任何一个满足时被触发：
+  900s内至少1个key有变化；
+  300s内至少100个key有变化；
+  60s内至少有10000个key有变化
+  save条件被触发时，Redis通过fork子进程，由子进程在后台实现异步dump磁盘。根据fork的写时复制策略，若持久化过程中出现很多写入请求，在最坏的情况下，需要的内存是当前数据集所占内存的2倍。
+备注1：上述配置的3个触发条件其实是逐次加强的，哪个条件先满足就先触发那个save策略。
+备注2：如果业务不需要持久化或不需要RDB方式的持久化，可以通过注释掉save配置项来实现
+  stop-writes-on-bgsave-error
+指定Redis在后台dump磁盘出错时的行为，默认为yes，表示若后台dump出错，则RedisServer拒绝新的写入请求，通过这种方式来引起用户警觉，避免因用户未发现异常而引起更大的事故。
+  rdbcompression
+RDB文件是否压缩存储，若为yes，会在压缩时消耗一点CPU，但省磁盘空间。
+  rdbchecksum
+RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC64并将结果追加至文件尾，同样，Redis启动Load RDB时，也会先计算该文件的CRC64并与dump时的计算结果对比。
+   好处：可以严格保证RDB的完整性及安全性
+ 代价：会在dump或load时损失10%的性能。如果要最大化Redis的性能，这个配置项应该用no关掉
+ dbfilename
+指定RDB文件名，默认为dump.rdb
+  dir
+指定RDB文件存放目录的路径，若包含多级路径，则相关父路径需事先mkdir出来，否则启动失败。
+  AOF持久化 AOF持久化（Append-Only-File），与RDB持久化不同，AOF持久化是通过保存Redis服务器锁执行的写状态来记录数据库的，即commandlog。</description>
+    </item>
+    
+  </channel>
+</rss>

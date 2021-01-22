@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>referencefield on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/referencefield/</link>
+    <description>Recent content in referencefield on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 20:35:44 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/referencefield/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何在mongoengine中使用referencefield引用本类</title>
+      <link>https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/</link>
+      <pubDate>Thu, 25 Jul 2019 20:35:44 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/</guid>
+      <description>引用：原文
+from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&amp;#34;self&amp;#34;, reverse_delete_rule = NULLIFY) </description>
+    </item>
+    
+  </channel>
+</rss>

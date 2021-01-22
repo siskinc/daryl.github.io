@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>插件 on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/</link>
+    <description>Recent content in 插件 on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 06 Dec 2019 16:53:30 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>wordpress,docker,插件升级</title>
+      <link>https://siskinc.github.io/post/wordpressdocker%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7/</link>
+      <pubDate>Fri, 06 Dec 2019 16:53:30 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/wordpressdocker%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7/</guid>
+      <description>  wp-config.php最后一行添加define(&#39;FS_METHOD&#39;, &amp;quot;direct&amp;quot;);
+  设置文件权限chown -R www-data:www-data ./
+  </description>
+    </item>
+    
+  </channel>
+</rss>

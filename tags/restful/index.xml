@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>restful on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/restful/</link>
+    <description>Recent content in restful on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 17:31:19 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/restful/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gin mongodb restful api设计: 动态的patch接口</title>
+      <link>https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Thu, 25 Jul 2019 17:31:19 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/</guid>
+      <description>什么是Patch?   Patch方法可以用来更新资源的一个组成部分
+ 什么时候使用Patch?   当你仅需更新资源的某一项，即不完全也不幂等
+ 那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？
+答案当然是有的，先说说如何去实现：
+  我们需要利用golang的map[string]interface{}结构
+  我们需要一个动态的结构
+  在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&amp;quot;$set&amp;quot;: xxxx})操作
+    使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）
+  来，开始贴代码：
+// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId `json:&amp;#34;id&amp;#34; bson:&amp;#34;_id&amp;#34; show:&amp;#34;id&amp;#34;` Author string `json:&amp;#34;author&amp;#34; bson:&amp;#34;author&amp;#34; show:&amp;#34;author&amp;#34;` Title string `json:&amp;#34;title&amp;#34; bson:&amp;#34;title&amp;#34; show:&amp;#34;title&amp;#34;` Content string `json:&amp;#34;content&amp;#34; bson:&amp;#34;content&amp;#34; show:&amp;#34;content&amp;#34;` Publish int `json:&amp;#34;publish&amp;#34; bson:&amp;#34;publish&amp;#34;` CreatedTime int64 `json:&amp;#34;created_time&amp;#34; bson:&amp;#34;created_time&amp;#34; show:&amp;#34;created_time&amp;#34;` ChangedTime int64 `json:&amp;#34;changed_time&amp;#34; bson:&amp;#34;changed_time&amp;#34; show:&amp;#34;changed_time&amp;#34;` PageView int64 `json:&amp;#34;page_view&amp;#34; bson:&amp;#34;page_view&amp;#34; show:&amp;#34;page_view&amp;#34;` // 浏览量  ArticleType string `json:&amp;#34;article_type&amp;#34; bson:&amp;#34;article_type&amp;#34; show:&amp;#34;article_type&amp;#34;` ArticleTags []string `json:&amp;#34;article_tags&amp;#34; bson:&amp;#34;article_tags&amp;#34; show:&amp;#34;article_tags&amp;#34;` Deleted int `json:&amp;#34;deleted&amp;#34; bson:&amp;#34;deleted&amp;#34;` } func ArticlePatch(c *gin.</description>
+    </item>
+    
+  </channel>
+</rss>

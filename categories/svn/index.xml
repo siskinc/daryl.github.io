@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SVN on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/svn/</link>
+    <description>Recent content in SVN on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 26 Jul 2019 09:49:33 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/svn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>svn branch 创建分支</title>
+      <link>https://siskinc.github.io/post/svn_branch_%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF/</link>
+      <pubDate>Fri, 26 Jul 2019 09:49:33 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/svn_branch_%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF/</guid>
+      <description>  </description>
+    </item>
+    
+    <item>
+      <title>svn钩子(hooks)</title>
+      <link>https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/</link>
+      <pubDate>Thu, 25 Jul 2019 20:37:23 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/</guid>
+      <description>钩子脚本的具体写法就是操作系统中shell脚本程序的写法,请根据自己SVN所在的操作系统和shell程序进行相应的写作
+所谓钩子就是与一些版本库事件触发的程序，例如新修订版本的创建，或是未版本化属性的修改。每个钩子都会被告知足够多的信息，包括那是什么事件，所操作的对象，和触发事件的用户名。通过钩子的输出或返回状态，钩子程序能让工作继续、停止或是以某种方式挂起。
+svn在每个代码仓库下有一个hooks目录用于放hook脚本, svn为我们提供了模板
+[root@idcflow2175 hooks]# pwd /home/svn/csvn/data/repositories/tr2/hooks [root@idcflow2175 hooks]# ll -rw-r--r-- 1 svn svn 1977 Jul 1 2013 post-commit.tmpl -rw-r--r-- 1 svn svn 1638 Jul 1 2013 post-lock.tmpl -rw-r--r-- 1 svn svn 2289 Jul 1 2013 post-revprop-change.tmpl -rw-r--r-- 1 svn svn 1567 Jul 1 2013 post-unlock.tmpl -rw-r--r-- 1 svn svn 3447 Jul 1 2013 pre-commit.tmpl -rw-r--r-- 1 svn svn 2455 Jul 1 2013 pre-lock.tmpl -rw-r--r-- 1 svn svn 2786 Jul 1 2013 pre-revprop-change.</description>
+    </item>
+    
+  </channel>
+</rss>

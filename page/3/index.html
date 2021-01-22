@@ -65,23 +65,6 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/nexus_5x_api_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/" title="Nexus 5X API 29 x86模拟器无法联网，无法打开chrome">Nexus 5X API 29 x86模拟器无法联网，无法打开chrome</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年2月5日
-        </date>
-        
-        <div class="post-content">
-             在Android Studio中打开AVD Manager 点击Create Virtual Device&hellip;按钮   无法联网的原因没找到，但是无法打开chrome视乎是应为用了Play Store套件，选择没有Play Store的虚拟机即可，亲测有效
- ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/nexus_5x_api_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/">阅读全文</a></p>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC%E7%9A%84%E4%BC%98%E5%8A%A3/" title="远程办公的优劣">远程办公的优劣</a>
             </h1>
         </header>
@@ -89,8 +72,22 @@
             2020年2月3日
         </date>
         
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E7%BB%8F%E9%AA%8C'>经验</a></span>
+            
+        </div>
+        
         <div class="post-content">
-            优势  起床就能工作，累了就能马上躺下休息。 事儿干完了能够开心的摸鱼，想看书看书，想刷题刷题。 遇到烦心事可以破口大骂不怕人听见，哈哈。  劣势  如果自制力不够，无法专心工作，容易摸鱼。 沟通困难，可能你想找的人也找不到。 没有工作氛围，没有工作节奏，等12点的时候，你发现厨房里面没饭吃。 生活容易被打扰，有些人会更加容易把工作和生活混在一起，那你的休息时间可就没了！  ……
+            优势   起床就能工作，累了就能马上躺下休息。
+  事儿干完了能够开心的摸鱼，想看书看书，想刷题刷题。
+  遇到烦心事可以破口大骂不怕人听见，哈哈。
+  劣势   如果自制力不够，无法专心工作，容易摸鱼。
+  沟通困难，可能你想找的人也找不到。
+  没有工作氛围，没有工作节奏，等12点的时候，你发现厨房里面没饭吃。
+  生活容易被打扰，有些人会更加容易把工作和生活混在一起，那你的休息时间可就没了！
+  ……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC%E7%9A%84%E4%BC%98%E5%8A%A3/">阅读全文</a></p>
     </article>
@@ -105,8 +102,20 @@
             2019年12月25日
         </date>
         
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
+            
+        </div>
+        
         <div class="post-content">
-             卸载xshell 删除xshell注册表  打开运行框（快捷键WIN+R）,输入regedit.exe 删除计算机\HKEY_CURRENT_USER\Software\Netscape目录   重新安装xshell  ……
+              卸载xshell
+  删除xshell注册表
+  打开运行框（快捷键WIN+R）,输入regedit.exe
+  删除计算机\HKEY_CURRENT_USER\Software\Netscape目录
+    重新安装xshell
+  ……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/">阅读全文</a></p>
     </article>
@@ -120,6 +129,13 @@
         <date class="post-meta meta-date">
             2019年12月17日
         </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
         
         <div class="post-content">
             rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&#34;scan have an err: %v, sql string: %s&#34;, err, sqlStr) } } ……
@@ -153,6 +169,13 @@
             2019年12月12日
         </date>
         
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/git'>Git</a></span>
+            
+        </div>
+        
         <div class="post-content">
              在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
  本地执行git命令: git config --global url.&#34;git@github.com:&#34;.insteadOf &#34;https://github.com/&#34; git config --global url.&#34;git@git.company.com:&#34;.insteadOf &#34;https://git.company.com/&#34;  company.com换成你自己公司的地址即可。
@@ -171,8 +194,17 @@
             2019年12月12日
         </date>
         
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
+        
         <div class="post-content">
-            Mac 下编译 Linux 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Linux 下编译 Mac 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go  GOOS：目标平台的操作系统（darwin、freebsd、linux、windows） GOARCH：目标平台的体系架构（386、amd64、arm） 交叉编译不支持 CGO 所以要禁用它   上面的命令编译 64 位可执行程序，你当然应该也会使用 386 编译 32 位可执行程序很多博客都提到要先增加对其它平台的支持，但是我跳过那一步，上面所列的命令也都能成功，且得到我想要的结果，可见那一步应该是非必须的，或是我所使用的 Go 版本已默认支持所有平台。……
+            Mac 下编译 Linux 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Linux 下编译 Mac 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go   GOOS：目标平台的操作系统（darwin、freebsd、linux、windows）
+  GOARCH：目标平台的体系架构（386、amd64、arm）
+  交叉编译不支持 CGO 所以要禁用它……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">阅读全文</a></p>
     </article>
@@ -187,9 +219,18 @@
             2019年12月12日
         </date>
         
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/k8s'>k8s</a></span>
+            
+        </div>
+        
         <div class="post-content">
              首先要确定一点，在本地环境，配置一模一样，程序跑起来是正常的，但是一放到k8s就会直接挂掉，目前收集到两种原因
-  内存不够，OOM CPU不够  ……
+   内存不够，OOM
+  CPU不够
+  ……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/k8s%E6%9C%8D%E5%8A%A1%E7%9B%B4%E6%8E%A5%E6%8C%82%E6%8E%89%E7%9A%84%E5%8E%9F%E5%9B%A0/">阅读全文</a></p>
     </article>
@@ -203,6 +244,13 @@
         <date class="post-meta meta-date">
             2019年12月9日
         </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
         
         <div class="post-content">
              如果直接使用gorm.Model嵌入到自己的model中，就无法对DeletedAt进行附加的操作，最简单的方式就是将gorm.Model的内容拷贝出来，将DeletedAt加入到自己的unique_index中  ……
@@ -220,10 +268,42 @@
             2019年12月6日
         </date>
         
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/docker'>Docker</a></span>
+            
+        </div>
+        
         <div class="post-content">
-             wp-config.php最后一行添加define('FS_METHOD', &quot;direct&quot;); 设置文件权限chown -R www-data:www-data ./  ……
+              wp-config.php最后一行添加define('FS_METHOD', &quot;direct&quot;);
+  设置文件权限chown -R www-data:www-data ./
+  ……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/wordpressdocker%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/" title="Run jQuery in Chrome Console">Run jQuery in Chrome Console</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年11月28日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/javascript'>JavaScript</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            var jqry = document.createElement(&#39;script&#39;); jqry.src = &#34;https://code.jquery.com/jquery-3.3.1.min.js&#34;; document.getElementsByTagName(&#39;head&#39;)[0].appendChild(jqry); jQuery.noConflict(); ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/">阅读全文</a></p>
     </article>
     
     
@@ -272,10 +352,6 @@
     
     <li >
         <a href="https://siskinc.github.io/page/9/">9</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/page/10/">10</a>
     </li>
     
 
@@ -384,12 +460,216 @@
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
+    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (5)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/">经验 (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/">编码 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
 </ul>
     </section>
 
     <section class="widget">
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    
+    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    
+    <a href="https://siskinc.github.io/tags/branch/">branch</a>
+    
+    <a href="https://siskinc.github.io/tags/bug/">bug</a>
+    
+    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/centos/">centos</a>
+    
+    <a href="https://siskinc.github.io/tags/convert/">convert</a>
+    
+    <a href="https://siskinc.github.io/tags/coverage/">coverage</a>
+    
+    <a href="https://siskinc.github.io/tags/cron-task/">cron task</a>
+    
+    <a href="https://siskinc.github.io/tags/css/">css</a>
+    
+    <a href="https://siskinc.github.io/tags/datetime/">datetime</a>
+    
+    <a href="https://siskinc.github.io/tags/dict/">dict</a>
+    
+    <a href="https://siskinc.github.io/tags/django/">django</a>
+    
+    <a href="https://siskinc.github.io/tags/docker/">docker</a>
+    
+    <a href="https://siskinc.github.io/tags/docker-compose/">docker-compose</a>
+    
+    <a href="https://siskinc.github.io/tags/eval/">eval</a>
+    
+    <a href="https://siskinc.github.io/tags/flask/">flask</a>
+    
+    <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gin/">gin</a>
+    
+    <a href="https://siskinc.github.io/tags/git/">git</a>
+    
+    <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
+    
+    <a href="https://siskinc.github.io/tags/golang/">golang</a>
+    
+    <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
+    
+    <a href="https://siskinc.github.io/tags/goroutine/">goroutine</a>
+    
+    <a href="https://siskinc.github.io/tags/gridfs/">gridfs</a>
+    
+    <a href="https://siskinc.github.io/tags/hash/">hash</a>
+    
+    <a href="https://siskinc.github.io/tags/hooks/">hooks</a>
+    
+    <a href="https://siskinc.github.io/tags/http/">http</a>
+    
+    <a href="https://siskinc.github.io/tags/https/">https</a>
+    
+    <a href="https://siskinc.github.io/tags/import/">import</a>
+    
+    <a href="https://siskinc.github.io/tags/init/">init</a>
+    
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    
+    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    
+    <a href="https://siskinc.github.io/tags/json/">json</a>
+    
+    <a href="https://siskinc.github.io/tags/k8s/">k8s</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka-go/">kafka-go</a>
+    
+    <a href="https://siskinc.github.io/tags/linux/">linux</a>
+    
+    <a href="https://siskinc.github.io/tags/lua/">lua</a>
+    
+    <a href="https://siskinc.github.io/tags/mac/">mac</a>
+    
+    <a href="https://siskinc.github.io/tags/map/">map</a>
+    
+    <a href="https://siskinc.github.io/tags/mgo/">mgo</a>
+    
+    <a href="https://siskinc.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://siskinc.github.io/tags/mongoengine/">mongoengine</a>
+    
+    <a href="https://siskinc.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://siskinc.github.io/tags/nodejs/">nodejs</a>
+    
+    <a href="https://siskinc.github.io/tags/pipeline/">pipeline</a>
+    
+    <a href="https://siskinc.github.io/tags/process/">process</a>
+    
+    <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
+    
+    <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python2/">python2</a>
+    
+    <a href="https://siskinc.github.io/tags/python3/">python3</a>
+    
+    <a href="https://siskinc.github.io/tags/redis/">redis</a>
+    
+    <a href="https://siskinc.github.io/tags/referencefield/">referencefield</a>
+    
+    <a href="https://siskinc.github.io/tags/restful/">restful</a>
+    
+    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/shell/">shell</a>
+    
+    <a href="https://siskinc.github.io/tags/source-code/">source code</a>
+    
+    <a href="https://siskinc.github.io/tags/ss/">ss</a>
+    
+    <a href="https://siskinc.github.io/tags/ssh/">ssh</a>
+    
+    <a href="https://siskinc.github.io/tags/svn/">svn</a>
+    
+    <a href="https://siskinc.github.io/tags/thread/">thread</a>
+    
+    <a href="https://siskinc.github.io/tags/trap/">trap</a>
+    
+    <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
+    
+    <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
+    
+    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
+    
+    <a href="https://siskinc.github.io/tags/uwsgi/">uwsgi</a>
+    
+    <a href="https://siskinc.github.io/tags/vue/">vue</a>
+    
+    <a href="https://siskinc.github.io/tags/windows/">windows</a>
+    
+    <a href="https://siskinc.github.io/tags/wordpress/">wordpress</a>
+    
+    <a href="https://siskinc.github.io/tags/xshell/">xshell</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">二叉搜索树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/">插件</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%B7%A8%E5%9F%9F/">跨域</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
     
 </div>
     </section>

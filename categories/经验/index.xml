@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>经验 on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/</link>
+    <description>Recent content in 经验 on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Feb 2020 22:19:09 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>远程办公的优劣</title>
+      <link>https://siskinc.github.io/post/%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC%E7%9A%84%E4%BC%98%E5%8A%A3/</link>
+      <pubDate>Mon, 03 Feb 2020 22:19:09 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E8%BF%9C%E7%A8%8B%E5%8A%9E%E5%85%AC%E7%9A%84%E4%BC%98%E5%8A%A3/</guid>
+      <description>优势   起床就能工作，累了就能马上躺下休息。
+  事儿干完了能够开心的摸鱼，想看书看书，想刷题刷题。
+  遇到烦心事可以破口大骂不怕人听见，哈哈。
+  劣势   如果自制力不够，无法专心工作，容易摸鱼。
+  沟通困难，可能你想找的人也找不到。
+  没有工作氛围，没有工作节奏，等12点的时候，你发现厨房里面没饭吃。
+  生活容易被打扰，有些人会更加容易把工作和生活混在一起，那你的休息时间可就没了！
+  </description>
+    </item>
+    
+    <item>
+      <title>定时统计任务参考</title>
+      <link>https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/</link>
+      <pubDate>Fri, 01 Nov 2019 22:12:47 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/</guid>
+      <description>  时间的触发，过期的数据不再使用（数据来源是消息中间件）
+  相关联的任务使用事件的方式，例如一天的统计数据是需要小时的数据来生成的，当一天的小时数据生成完了，再去触发生成一天的数据，请勿使用延时的观念，是神坑，勿入。
+  数据的读取，采用批量的方式读取，一次读取一个限定的值的数量。
+  数据的写入，采用批量的方式写入，最好有ticker来触发写入未到阈值数量的数据。
+  撸数据是一次sql撸完，还是分页撸？DBA告诉我让我一次撸完。
+  </description>
+    </item>
+    
+    <item>
+      <title>当我们接到一个需求时，我们应该做一些什么呢？</title>
+      <link>https://siskinc.github.io/post/%E5%BD%93%E6%88%91%E4%BB%AC%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E4%BB%AC%E5%BA%94%E8%AF%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BB%80%E4%B9%88%E5%91%A2/</link>
+      <pubDate>Thu, 25 Jul 2019 20:24:04 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E5%BD%93%E6%88%91%E4%BB%AC%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E4%BB%AC%E5%BA%94%E8%AF%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BB%80%E4%B9%88%E5%91%A2/</guid>
+      <description>沟通需求  不论是什么样的团队，按照道理来说一定会有一个和你对接的产品
+   沟通大致的轮廓，一般来说，产品不会把东西都会给你说清楚，因为很多人都是很被动的，喜欢一问一答的方式。
+  知道了一个需求的大致内容，现在应该去每一句话的去分享需求文档，然后发掘里面的细节，查看会不会影响到程序的实现，或者会影响到其他的功能，这些都是我们开发人员需要去注意的。
+  现在已经确认程序能够去实现这个需求，那么我们应该做什么呢？先分析我们需要如何去实现，并且应该多想想能不能有其他的实现方案，哪一个更好？
+  要保证一个功能完美的在线上运行，我们最需要的是测试，我们在开发前就应该我们应该测试的案例，一开始你可能写不出来，无所谓，等你慢慢成为老油条，你一眼就知道要做些啥，而且这个东西不要只停留在想想中，一定要记下来，在开发过程中你还会想到许许多多的测试案例，也都记下来，不要偷懒，偷懒的后果出现bug会导致你被好几个人怼，包括测试。
+  开发，有前面的测试案例的发散，在写代码的过程你会发现，你会注意很多问题，包括边界条件。
+  自主测试，其实一个功能，最了解他的除了产品，可能就是你自己了，你知道怎么实现的，你最应该知道怎么测试，而且，测试人员也会有打盹的时候，很多时候我自己测试过后给了测试，依然会有bug，也就是说，测试人员的测试案例依然还是在我写的测试案例中，在不断积累的下，你会发现你的一个小需求可能会测试很多个测试案例，这是一个好事，这样你的功能才会在线上健壮的跑下去。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

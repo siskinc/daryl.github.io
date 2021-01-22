@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kafka-go on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/kafka-go/</link>
+    <description>Recent content in kafka-go on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 06 Nov 2019 05:33:44 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/kafka-go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>记一次kafka-go使用踩坑（多个partition只会写入一个partition）</title>
+      <link>https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/</link>
+      <pubDate>Wed, 06 Nov 2019 05:33:44 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/</guid>
+      <description>kafka-go地址: https://github.com/segmentio/kafka-go
+ 注意：本文解决的问题不是因为kafka配置造成的，是因为代码写得有问题。
+今天查看公司某kafka group消费情况的时候，发现该group消费的topic大多数的message写入了同一个partition，先从配置问题查找，后来又去看公司包装的kafka的库的源码查找，看起来都没啥问题。
+并且，该问题就出现在一个服务里面，很是让人迷惑。该服务和其他服务最大的不同在于，它每一次都只会发送一个message给kafka。
+先看看，kafka-go的demo：
+w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&amp;#34;localhost:9092&amp;#34;}, Topic: &amp;#34;topic-A&amp;#34;, Balancer: &amp;amp;kafka.LeastBytes{}, }) 第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
+因为代码是每次都发送一个message，每次都是一个新的Balancer，所以Balancer每次只需Balance的状态都是一致，所以会造成只写入一个partition中。
+总结一下，这个问题可大可小，数据量不大，程序抗得住当然没什么，但是总有一天会扛不住。所以奉劝一句，写完代码记得认认真真测试，程序跑得起来不代表正确。</description>
+    </item>
+    
+  </channel>
+</rss>

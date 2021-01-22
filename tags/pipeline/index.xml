@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pipeline on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/pipeline/</link>
+    <description>Recent content in pipeline on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 09 Nov 2020 23:49:58 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/pipeline/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go-redis批量(pipeline)拉取数据的操作</title>
+      <link>https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 09 Nov 2020 23:49:58 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/</guid>
+      <description>主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了
+ 原理 在调用pipeline每次append命令时，会返回一个对应的xxxxCmd对象指针，保留这个指针即可，在Exec()函数执行完成后，会将结果写入对应的对象内
+demo package main import ( &amp;#34;context&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;github.com/go-redis/redis/v8&amp;#34; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;amp;redis.Options{ Addr: &amp;#34;local.arch:6379&amp;#34;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &amp;lt; 100; i++ { key := fmt.Sprintf(&amp;#34;%d&amp;#34;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.</description>
+    </item>
+    
+  </channel>
+</rss>

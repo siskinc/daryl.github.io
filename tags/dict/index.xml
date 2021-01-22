@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dict on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/dict/</link>
+    <description>Recent content in dict on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 17:50:14 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/dict/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python如何合并两个字典</title>
+      <link>https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/</link>
+      <pubDate>Thu, 25 Jul 2019 17:50:14 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/</guid>
+      <description>Python 3
+x = {&amp;#39;a&amp;#39;: 1, &amp;#39;b&amp;#39;: 2} y = {&amp;#39;b&amp;#39;: 3, &amp;#39;c&amp;#39;: 4} z = {**x, **y} Python 2
+z = dict(x, **y)  Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖
+ </description>
+    </item>
+    
+  </channel>
+</rss>

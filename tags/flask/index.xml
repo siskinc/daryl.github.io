@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>flask on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/flask/</link>
+    <description>Recent content in flask on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 20:33:29 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/flask/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>uwsgi flask gevent 测试代码覆盖率（coverage）</title>
+      <link>https://siskinc.github.io/post/uwsgi_flask_gevent_%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87coverage/</link>
+      <pubDate>Thu, 25 Jul 2019 20:33:29 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/uwsgi_flask_gevent_%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87coverage/</guid>
+      <description>可能出现的问题   多进程启动
+  gevent启动
+  运行的服务可能不会停止
+  解决 我先参考了一下这一篇文章使用Coverage分析WSGI项目的代码覆盖率，他基本能够解决掉1.2两个问题，第三个问题我是使用了一个接口来停止当前进程的coverage，接口返回一个当前进程的work_id，可以判断是否所以进程都结束了，然后进行coverage combine就行了</description>
+    </item>
+    
+    <item>
+      <title>flask返回自定义的Response</title>
+      <link>https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/</link>
+      <pubDate>Thu, 25 Jul 2019 20:26:43 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/</guid>
+      <description>from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=&#39;&#39;):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype=&#39;application/json&#39;)class JSONResponse(Response):def __init__(self, data, msg=&#39;&#39;):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype=&#39;application/json&#39;)class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&amp;quot;need login&amp;quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype=&#39;application/json&#39;, status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果</description>
+    </item>
+    
+  </channel>
+</rss>

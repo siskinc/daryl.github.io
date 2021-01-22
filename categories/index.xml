@@ -5,6 +5,187 @@
     <link>https://siskinc.github.io/categories/</link>
     <description>Recent content in Categories on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://siskinc.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Mon, 09 Nov 2020 23:49:58 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go</title>
+      <link>https://siskinc.github.io/categories/go/</link>
+      <pubDate>Mon, 09 Nov 2020 23:49:58 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://siskinc.github.io/categories/python/</link>
+      <pubDate>Thu, 05 Nov 2020 13:59:29 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis</title>
+      <link>https://siskinc.github.io/categories/redis/</link>
+      <pubDate>Sat, 12 Sep 2020 16:45:46 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>计算机网络</title>
+      <link>https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+      <pubDate>Sat, 25 Apr 2020 22:00:23 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://siskinc.github.io/categories/linux/</link>
+      <pubDate>Mon, 06 Apr 2020 17:36:42 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Algorithm</title>
+      <link>https://siskinc.github.io/categories/algorithm/</link>
+      <pubDate>Sat, 14 Mar 2020 17:33:17 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows</title>
+      <link>https://siskinc.github.io/categories/windows/</link>
+      <pubDate>Wed, 26 Feb 2020 17:21:02 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Android</title>
+      <link>https://siskinc.github.io/categories/android/</link>
+      <pubDate>Wed, 05 Feb 2020 21:40:19 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>经验</title>
+      <link>https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/</link>
+      <pubDate>Mon, 03 Feb 2020 22:19:09 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>https://siskinc.github.io/categories/git/</link>
+      <pubDate>Thu, 12 Dec 2019 22:40:31 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k8s</title>
+      <link>https://siskinc.github.io/categories/k8s/</link>
+      <pubDate>Thu, 12 Dec 2019 09:28:32 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/k8s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://siskinc.github.io/categories/docker/</link>
+      <pubDate>Fri, 06 Dec 2019 16:53:30 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>JavaScript</title>
+      <link>https://siskinc.github.io/categories/javascript/</link>
+      <pubDate>Thu, 28 Nov 2019 00:57:49 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>前端</title>
+      <link>https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/</link>
+      <pubDate>Fri, 25 Oct 2019 14:29:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>操作系统</title>
+      <link>https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Sat, 24 Aug 2019 07:33:48 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SVN</title>
+      <link>https://siskinc.github.io/categories/svn/</link>
+      <pubDate>Fri, 26 Jul 2019 09:49:33 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/svn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://siskinc.github.io/categories/c&#43;&#43;/</link>
+      <pubDate>Thu, 25 Jul 2019 17:44:31 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>编码</title>
+      <link>https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Thu, 25 Jul 2019 17:34:19 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mysql</title>
+      <link>https://siskinc.github.io/categories/mysql/</link>
+      <pubDate>Thu, 25 Jul 2019 17:33:47 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MongoDB</title>
+      <link>https://siskinc.github.io/categories/mongodb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/categories/mongodb/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

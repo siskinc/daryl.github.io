@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端 on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/</link>
+    <description>Recent content in 前端 on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 25 Oct 2019 14:29:00 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CSS清除浮动</title>
+      <link>https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/</link>
+      <pubDate>Fri, 25 Oct 2019 14:29:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/</guid>
+      <description>使用方法：.clearfix:after { content: &amp;#34;&amp;#34;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; } .clearfix:before, .clearfix:after { content: &amp;#34;&amp;#34;; display: table; } .clearfix:after { clear: both; } .clearfix { *zoom: 1; } </description>
+    </item>
+    
+    <item>
+      <title>vue-lazyload插件</title>
+      <link>https://siskinc.github.io/post/vue-lazyload%E6%8F%92%E4%BB%B6/</link>
+      <pubDate>Thu, 25 Jul 2019 20:28:20 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/vue-lazyload%E6%8F%92%E4%BB%B6/</guid>
+      <description>使用 npm install vue-lazyload --save //注册插件  import vueLazyload from &amp;#39;vue-lazyload&amp;#39; Vue.use(vueLazyload); //在需要懒加载的图片上 &amp;lt;img v-lazy=&amp;#34;imgUrl&amp;#34;&amp;gt; 参数说明 注册插件的时候，是可以传入第二个配置参数的
+Vue.use(vueLazyload,{}) 可选的参数如下：
+preLoad:类型Number,默认1.3. 表示lazyload的元素距离页面底部距离的百分比.计算值为(preload - 1).
+attempt:图片加载失败后的重试次数.默认为3.
+error:类型string.图片加载失败后的显示的失败图片路径.
+loading:类型string.图片正在加载中显示的loading图片的路径.
+listenEvents:类型array.默认[&amp;lsquo;scroll&amp;rsquo;, &amp;lsquo;wheel&amp;rsquo;, &amp;lsquo;mousewheel&amp;rsquo;, &amp;lsquo;resize&amp;rsquo;, &amp;lsquo;animationend&amp;rsquo;, &amp;lsquo;transitionend&amp;rsquo;, &amp;lsquo;touchmove&amp;rsquo;].即是在监听上述事件中,判断图片是否在preload的位置.如果你不想在那么多事件中判断,可以指定一个或者几个.例如如果你给这个属性只指定[&amp;lsquo;touchmove&amp;rsquo;].那么scroll 屏幕不会加载图片,只有手指滑动屏幕才会加载图片.
+adapter:注册img 的loading,loaded,error三个状态的回调函数,参数会暴露懒加载的img元素,可以对其进行操作.
+filter: img未加载之前,解析到src 的时候注册的回调函数.可以在加载图片之前,对src进行修改.注册在filter下的所有的函数都会执行
+lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.挖坑(vue懒加载组件)
+observer:是否启用IntersectionObserver,这个api有兼容问题
+observerOptions:默认{ rootMargin: &amp;lsquo;0px&amp;rsquo;, threshold: 0.1 } 主要是我对这个pai不熟,按照vue-lazyload的说法是开启之后,对很多节点的情况会优化性能.挖坑吧</description>
+    </item>
+    
+    <item>
+      <title>axios_发送post请求</title>
+      <link>https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/</guid>
+      <description>方案一 在node中使用axios以post的方式发送一张图片给某个server时:
+let data = fs.createReadStream(__dirname + &#39;/test.jpg&#39;)axios.post(url,{media:data,type:&amp;quot;image&amp;quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
+let data = fs.createReadStream(__dirname + &#39;/test.jpg&#39;)let form = {type:&amp;quot;image&amp;quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&amp;gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &amp;quot;/user/signup&amp;quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&amp;gt; {if(response.</description>
+    </item>
+    
+    <item>
+      <title>vue_跨域问题</title>
+      <link>https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</guid>
+      <description>和后端联调时总是会面对恼人的跨域问题，最近基于Vue开发项目时也遇到了这个问题，两边各自想了一堆办法，查了一堆资料，加了一堆参数，最后还得我把自己的localhost映射成上线时将要使用的域名。
+今天翻看代码时，突然发现vue-cli的config文件里有一个参数叫proxyTable，看这个名字就感觉能解决问题，于是我就去搜了一下，果然。在vuejs-templates，也就是vue-cli的使用的模板插件里，有关于API proxy的说明，使用的就是这个参数。
+https://vuejs-templates.github.io/webpack/proxy.html
+这个参数主要是一个地址映射表，你可以通过设置将复杂的url简化，例如我们要请求的地址是api.xxxxxxxx.com/list/1，可以按照如下设置：
+proxyTable: {
+&amp;lsquo;/list&amp;rsquo;: {
+target: &#39;http://api.xxxxxxxx.com&#39;,pathRewrite: {&#39;^/list&#39;: &#39;/list&#39;} }
+}
+这样我们在写url的时候，只用写成/list/1就可以代表api.xxxxxxxx.com/list/1.
+那么又是如何解决跨域问题的呢？其实在上面的&amp;rsquo;list&amp;rsquo;的参数里有一个changeOrigin参数，接收一个布尔值，如果设置为true,那么本地会虚拟一个服务端接收你的请求并代你发送该请求，这样就不会有跨域问题了，当然这只适用于开发环境。增加的代码如下所示：
+proxyTable: {
+&amp;lsquo;/list&amp;rsquo;: {
+target: &#39;http://api.xxxxxxxx.com&#39;,changeOrigin: true,pathRewrite: {&#39;^/list&#39;: &#39;/list&#39;} }
+}</description>
+    </item>
+    
+  </channel>
+</rss>

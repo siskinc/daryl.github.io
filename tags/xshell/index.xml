@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xshell on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/xshell/</link>
+    <description>Recent content in xshell on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 25 Dec 2019 20:35:41 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/xshell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>xshell过期了怎么办，如何破解xshell</title>
+      <link>https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/</link>
+      <pubDate>Wed, 25 Dec 2019 20:35:41 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/</guid>
+      <description>  卸载xshell
+  删除xshell注册表
+  打开运行框（快捷键WIN+R）,输入regedit.exe
+  删除计算机\HKEY_CURRENT_USER\Software\Netscape目录
+    重新安装xshell
+  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/go/</link>
+    <description>Recent content in Go on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 09 Nov 2020 23:49:58 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go-redis批量(pipeline)拉取数据的操作</title>
+      <link>https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 09 Nov 2020 23:49:58 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/</guid>
+      <description>主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了
+ 原理 在调用pipeline每次append命令时，会返回一个对应的xxxxCmd对象指针，保留这个指针即可，在Exec()函数执行完成后，会将结果写入对应的对象内
+demo package main import ( &amp;#34;context&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;github.com/go-redis/redis/v8&amp;#34; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;amp;redis.Options{ Addr: &amp;#34;local.arch:6379&amp;#34;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &amp;lt; 100; i++ { key := fmt.Sprintf(&amp;#34;%d&amp;#34;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.</description>
+    </item>
+    
+    <item>
+      <title>Golang map数据结构接受json中的uint64数据</title>
+      <link>https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Wed, 27 May 2020 13:16:11 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</guid>
+      <description>例如有一个json数据：
+{ &amp;#34;name&amp;#34;: &amp;#34;小明&amp;#34;, &amp;#34;money&amp;#34;: 1111111111111111111 } 但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
+package main import ( &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; ) type Info struct { Name string `json:&amp;#34;name&amp;#34;` Money uint64 `json:&amp;#34;money&amp;#34;` } func main() { info := &amp;amp;Info{} json.Unmarshal([]byte(` { &amp;#34;name&amp;#34;: &amp;#34;小明&amp;#34;, &amp;#34;money&amp;#34;: 1111111111111111111 }`), info) fmt.Println(info) } 但是在某些情况下，你不得不用一个map去接收数据怎么办？
+有几个坑需要注意一下：
+  JSON的规范中，对于数字类型，并不区分是整型还是浮点型。
+  如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型
+  如何解决这个问题，先看下面程序：
+package main import ( &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;strconv&amp;#34; &amp;#34;strings&amp;#34; ) func main() { const jsonStream = ` { &amp;#34;name&amp;#34;: &amp;#34;小明&amp;#34;, &amp;#34;money&amp;#34;: 1111111111111111111 } ` decoder := json.</description>
+    </item>
+    
+    <item>
+      <title>Golang源码阅读之map</title>
+      <link>https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/</link>
+      <pubDate>Fri, 15 May 2020 23:33:35 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/</guid>
+      <description>源码地址:src/runtime/map.go
+描述   Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。
+  Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。
+  </description>
+    </item>
+    
+    <item>
+      <title>Golang重复对一个slice进行append造成数据错误</title>
+      <link>https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</link>
+      <pubDate>Sat, 04 Apr 2020 20:06:21 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</guid>
+      <description>slice的属性   切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。
+  切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。
+  那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
+问题实例 slice的cap是怎么增长的   参考文章:How does Go slice capacity change on append? [duplicate]
+  有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go
+  slice的结构 type slice struct { array unsafe.Pointer len int cap int } 多次append造成的数据错误 代码 package main import &amp;#34;fmt&amp;#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&amp;#34;temp&amp;#34;, temp) temp = append(temp, 2) printSlice(&amp;#34;temp&amp;#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&amp;#34;temp&amp;#34;, temp) temp2 := append(temp, 4) printSlice(&amp;#34;temp2&amp;#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&amp;#34;temp4&amp;#34;, temp4) temp3 := append(temp, 5) printSlice(&amp;#34;temp3&amp;#34;, temp3) printSlice(&amp;#34;temp2&amp;#34;, temp2) } func printSlice(valName string, s []int) { fmt.</description>
+    </item>
+    
+    <item>
+      <title>golang scan rows to []string，golang使用mysql，将结果写入到string列表中</title>
+      <link>https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/</link>
+      <pubDate>Tue, 17 Dec 2019 19:36:31 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/</guid>
+      <description>rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&amp;#34;scan have an err: %v, sql string: %s&amp;#34;, err, sqlStr) } } </description>
+    </item>
+    
+    <item>
+      <title>Golang交叉编译</title>
+      <link>https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <pubDate>Thu, 12 Dec 2019 09:31:27 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <description>Mac 下编译 Linux 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Linux 下编译 Mac 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go   GOOS：目标平台的操作系统（darwin、freebsd、linux、windows）
+  GOARCH：目标平台的体系架构（386、amd64、arm）
+  交叉编译不支持 CGO 所以要禁用它</description>
+    </item>
+    
+    <item>
+      <title>gorm软删除和唯一键冲突的问题</title>
+      <link>https://siskinc.github.io/post/gorm%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E5%94%AF%E4%B8%80%E9%94%AE%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 09 Dec 2019 21:27:01 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gorm%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E5%94%AF%E4%B8%80%E9%94%AE%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description> 如果直接使用gorm.Model嵌入到自己的model中，就无法对DeletedAt进行附加的操作，最简单的方式就是将gorm.Model的内容拷贝出来，将DeletedAt加入到自己的unique_index中  </description>
+    </item>
+    
+    <item>
+      <title>golang http.client 的 Connection reset by peer 问题</title>
+      <link>https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 28 Nov 2019 00:28:26 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/</guid>
+      <description>func main() { req, err := http.NewRequest(&amp;#34;GET&amp;#34;, &amp;#34;http://www.baidu.com&amp;#34;,nil ) if err != nil { log.Errorf(&amp;#34;&amp;#34;) } req.Close = true resp, err := http.Client.Do(req) } func main() { req, err := http.NewRequest(&amp;#34;GET&amp;#34;, &amp;#34;http://www.baidu.com&amp;#34;,nil ) if err != nil { log.Errorf(&amp;#34;&amp;#34;) } req.Header.Add(&amp;#34;Connection&amp;#34;, &amp;#34;close&amp;#34;) resp, err := http.Client.Do(req) } func main() { tr := http.Transport{DisableKeepAlives: true} client := http.Client{Transport: &amp;amp;tr} resp, err := client.Get(&amp;#34;https://www.baidu.com/&amp;#34;) if resp != nil { defer resp.Body.Close() } checkError(err) fmt.</description>
+    </item>
+    
+    <item>
+      <title>记一次kafka-go使用踩坑（多个partition只会写入一个partition）</title>
+      <link>https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/</link>
+      <pubDate>Wed, 06 Nov 2019 05:33:44 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/</guid>
+      <description>kafka-go地址: https://github.com/segmentio/kafka-go
+ 注意：本文解决的问题不是因为kafka配置造成的，是因为代码写得有问题。
+今天查看公司某kafka group消费情况的时候，发现该group消费的topic大多数的message写入了同一个partition，先从配置问题查找，后来又去看公司包装的kafka的库的源码查找，看起来都没啥问题。
+并且，该问题就出现在一个服务里面，很是让人迷惑。该服务和其他服务最大的不同在于，它每一次都只会发送一个message给kafka。
+先看看，kafka-go的demo：
+w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&amp;#34;localhost:9092&amp;#34;}, Topic: &amp;#34;topic-A&amp;#34;, Balancer: &amp;amp;kafka.LeastBytes{}, }) 第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
+因为代码是每次都发送一个message，每次都是一个新的Balancer，所以Balancer每次只需Balance的状态都是一致，所以会造成只写入一个partition中。
+总结一下，这个问题可大可小，数据量不大，程序抗得住当然没什么，但是总有一天会扛不住。所以奉劝一句，写完代码记得认认真真测试，程序跑得起来不代表正确。</description>
+    </item>
+    
+    <item>
+      <title>golang自动调用结构体中内嵌字段的Init()函数</title>
+      <link>https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Thu, 26 Sep 2019 13:31:39 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/</guid>
+      <description>package main import ( &amp;#34;fmt&amp;#34; &amp;#34;reflect&amp;#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.ValueOf(c) if rv.Kind() == reflect.Ptr { rv = rv.Elem() } for i := 0; i &amp;lt; rv.NumField(); i++ { value := rv.Field(i) if conf, ok := value.Interface().(initial); ok { conf.Init() } } } type A struct { } func (a *A) Init() { fmt.Println(&amp;#34;Init A&amp;#34;) } type B struct { AA *A } func main() { b := B{} triggerInitials(b) } </description>
+    </item>
+    
+    <item>
+      <title>Goroutines和线程对比</title>
+      <link>https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/</link>
+      <pubDate>Thu, 15 Aug 2019 22:31:52 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/</guid>
+      <description>栈不同   线程：每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。固定大小的栈对于更复杂或者更深层次的递归函数调用来说显然是不够的。修改固定的大小可以提升空间的利用率允许创建更多的线程，并且可以允许更深的递归调用，不过这两者是没法同时兼备的。
+  goroutine：一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。一个goroutine的栈，和操作系统线程一样，会保存其活跃或挂起的函数调用的本地变量，但是和OS线程不太一样的是一个goroutine的栈大小并不是固定的；栈的大小会根据需要动态地伸缩。而goroutine的栈的最大值有1GB，比传统的固定大小的线程栈要大得多，尽管一般情况下，大多goroutine都不需要这么大的栈。
+  调度不同   线程：OS线程会被操作系统内核调度。每几毫秒，一个硬件计时器会中断处理器，这会调用一个叫作scheduler的内核函数。这个函数会挂起当前执行的线程并保存内存中它的寄存器内容，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。因为操作系统线程是被内核所调度，所以从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。
+  goroutine：Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine。和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器而是被Go语言&amp;quot;建筑&amp;quot;本身进行调度的。例如当一个goroutine调用了time.Sleep或者被channel调用或者mutex操作阻塞时，调度器会使其进入休眠并开始执行另一个goroutine直到时机到了再去唤醒第一个goroutine。因为这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。
+  GOMAXPROCS Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。(GOMAXPROCS是前面说的m:n调度中的n)。在休眠中的或者在通信中被阻塞的goroutine是不需要一个对应的线程来做调度的。在I/O中或系统调用中或调用非Go语言函数时，是需要一个对应的操作系统线程的，但是GOMAXPROCS并不需要将这几种情况计算在内。
+你可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它。我们在下面的小程序中会看到GOMAXPROCS的效果，这个程序会无限打印0和1。
+for { go fmt.Print(0) fmt.Print(1) } $ GOMAXPROCS=1 go run hacker-cliché.go 111111111111111111110000000000000000000011111... $ GOMAXPROCS=2 go run hacker-cliché.go 010101010101010101011001100101011010010100110... 在第一次执行时，最多同时只能有一个goroutine被执行。初始情况下只有main goroutine被执行，所以会打印很多1。过了一段时间后，GO调度器会将其置为休眠，并唤醒另一个goroutine，这时候就开始打印很多0了，在打印的时候，goroutine是被调度到操作系统线程上的。在第二次执行时，我们使用了两个操作系统线程，所以两个goroutine可以一起被执行，以同样的频率交替打印0和1。我们必须强调的是goroutine的调度是受很多因子影响的，而runtime也是在不断地发展演进的，所以这里的你实际得到的结果可能会因为版本的不同而与我们运行的结果有所不同。
+Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言中，当前的线程都有一个独特的身份(id)，并且这个身份信息可以以一个普通值的形式被被很容易地获取到，典型的可以是一个integer或者指针值。这种情况下我们做一个抽象化的thread-local storage(线程本地存储，多线程编程中不希望其它线程访问的内容)就很容易，只需要以线程的id作为key的一个map就可以解决问题，每一个线程以其id就能从中获取到值，且和其它线程互不冲突。
+goroutine没有可以被程序员获取到的身份(id)的概念。这一点是设计上故意而为之，由于thread-local storage总是会被滥用。比如说，一个web server是用一种支持tls的语言实现的，而非常普遍的是很多函数会去寻找HTTP请求的信息，这代表它们就是去其存储层(这个存储层有可能是tls)查找的。这就像是那些过分依赖全局变量的程序一样，会导致一种非健康的“距离外行为”，在这种行为下，一个函数的行为可能不是由其自己内部的变量所决定，而是由其所运行在的线程所决定。因此，如果线程本身的身份会改变——比如一些worker线程之类的——那么函数的行为就会变得神秘莫测。
+Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显式的。这样不仅使程序变得更易读，而且会让我们自由地向一些给定的函数分配子任务时不用担心其身份信息影响行为。
+你现在应该已经明白了写一个Go程序所需要的所有语言特性信息。在后面两章节中，我们会回顾一些之前的实例和工具，支持我们写出更大规模的程序：如何将一个工程组织成一系列的包，如何获取，构建，测试，性能测试，剖析，写文档，并且将这些包分享出去。</description>
+    </item>
+    
+    <item>
+      <title>数组中重复的数字(Golang)</title>
+      <link>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/</link>
+      <pubDate>Tue, 13 Aug 2019 22:26:43 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/</guid>
+      <description>使用哈希表 import &amp;#34;fmt&amp;#34; func main() { a := [...]int{2,3,1,0,2,5,3} num := make(map[int]bool) for _, v := range a { if !num[v] { num[v] = true } else { fmt.Println(v) } } } 排序查找 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;sort&amp;#34; ) func main() { a := []int{2,3,1,0,2,5,3} sort.Ints(a) for i, v := range a { if i != v { if v == a[v] { fmt.Println(v) } else { a[i], a[v] = a[v], a[i] } } } } </description>
+    </item>
+    
+    <item>
+      <title>Golang 实现单例模式</title>
+      <link>https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Tue, 13 Aug 2019 21:47:01 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <description>package main import &amp;#34;fmt&amp;#34; type Single struct { } var single *Single func GetSingle() *Single { if single == nil { single = &amp;amp;Single{} } return single } func main() { fmt.Printf(&amp;#34;%p\n&amp;#34;, GetSingle()) fmt.Printf(&amp;#34;%p\n&amp;#34;, GetSingle()) fmt.Printf(&amp;#34;%p\n&amp;#34;, GetSingle()) } package main import ( &amp;#34;fmt&amp;#34; &amp;#34;sync&amp;#34; &amp;#34;time&amp;#34; ) type Single2 struct { } var single2 *Single2 var lock *sync.Mutex = &amp;amp;sync.Mutex{} func GetSingle2() *Single2 { lock.Lock() defer lock.Unlock() if single2 == nil { single2 = &amp;amp;Single2{} } return single2 } func main() { go fmt.</description>
+    </item>
+    
+    <item>
+      <title>Gin上传文件到MongoDB gridfs</title>
+      <link>https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/</link>
+      <pubDate>Thu, 25 Jul 2019 20:25:30 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/</guid>
+      <description>上传图片 func imagePost(c *gin.Context) { image, err := c.FormFile(&amp;#34;file&amp;#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } fileImage, err := image.Open() if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } defer fileImage.Close() imageGridFS, err := model.GetGridFS(&amp;#34;image&amp;#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } now := self_time.GetNowTimeStamp() nowStr := strconv.FormatInt(now, 10) file, err := imageGridFS.Create(nowStr) if err !</description>
+    </item>
+    
+    <item>
+      <title>Golang不会自动把slice转换成interface{}类型的slice</title>
+      <link>https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</link>
+      <pubDate>Thu, 25 Jul 2019 17:46:17 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</guid>
+      <description>例子 我们时常会写一些interface，例如：
+type A interface{ Print() } type B struct { } func (b *B) Print() { fmt.Println(&amp;#34;Here is *B&amp;#34;) } 赋值的时候:
+var a A a = &amp;amp;B{} 诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码
+var aa []A aa = make([]*B, 10) 好的，现在翻车了，会得到一个这样的报错：
+cannot use make([]*B, 10) (type []*B) as type []A in assignment原因   []A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。
+  []A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。
+  如何去实现 bb := []*B{&amp;amp;B{}, &amp;amp;B{}} var aa []AA = make([]AA, len(bb)) for i, d := range bb { aa[i] = d } </description>
+    </item>
+    
+    <item>
+      <title>Golang mgo 模糊查询的使用</title>
+      <link>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 25 Jul 2019 17:35:04 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
+db.article.find({&amp;quot;title&amp;quot;: {$regex: /a/, $options: &amp;quot;im&amp;quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
+query := bson.M{&amp;#34;title&amp;#34;: bson.M{&amp;#34;$regex&amp;#34;: &amp;#34;/a/&amp;#34;, &amp;#34;$options&amp;#34;: &amp;#34;im&amp;#34;}} 大家用这个方式去查询，能查询到算我输！
+下面总结一下，正真使用的方式：
+ 在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&amp;quot;\a&amp;quot;，而不是\a\。   根据第一点，我们将代码修改一下。
+ query := bson.M{&amp;#34;title&amp;#34;: bson.M{&amp;#34;$regex&amp;#34;: &amp;#34;a&amp;#34;, &amp;#34;$options&amp;#34;: &amp;#34;im&amp;#34;}}  但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
+ 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  // RegEx represents a regular expression. The Options field may contain  // individual characters defining the way in which the pattern should be  // applied, and must be sorted. Valid options as of this writing are &amp;#39;i&amp;#39; for  // case insensitive matching, &amp;#39;m&amp;#39; for multi-line matching, &amp;#39;x&amp;#39; for verbose  // mode, &amp;#39;l&amp;#39; to make \w, \W, and similar be locale-dependent, &amp;#39;s&amp;#39; for dot-all  // mode (a &amp;#39;.</description>
+    </item>
+    
+    <item>
+      <title>gin mongodb restful api设计: 动态的patch接口</title>
+      <link>https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Thu, 25 Jul 2019 17:31:19 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/</guid>
+      <description>什么是Patch?   Patch方法可以用来更新资源的一个组成部分
+ 什么时候使用Patch?   当你仅需更新资源的某一项，即不完全也不幂等
+ 那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？
+答案当然是有的，先说说如何去实现：
+  我们需要利用golang的map[string]interface{}结构
+  我们需要一个动态的结构
+  在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&amp;quot;$set&amp;quot;: xxxx})操作
+    使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）
+  来，开始贴代码：
+// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId `json:&amp;#34;id&amp;#34; bson:&amp;#34;_id&amp;#34; show:&amp;#34;id&amp;#34;` Author string `json:&amp;#34;author&amp;#34; bson:&amp;#34;author&amp;#34; show:&amp;#34;author&amp;#34;` Title string `json:&amp;#34;title&amp;#34; bson:&amp;#34;title&amp;#34; show:&amp;#34;title&amp;#34;` Content string `json:&amp;#34;content&amp;#34; bson:&amp;#34;content&amp;#34; show:&amp;#34;content&amp;#34;` Publish int `json:&amp;#34;publish&amp;#34; bson:&amp;#34;publish&amp;#34;` CreatedTime int64 `json:&amp;#34;created_time&amp;#34; bson:&amp;#34;created_time&amp;#34; show:&amp;#34;created_time&amp;#34;` ChangedTime int64 `json:&amp;#34;changed_time&amp;#34; bson:&amp;#34;changed_time&amp;#34; show:&amp;#34;changed_time&amp;#34;` PageView int64 `json:&amp;#34;page_view&amp;#34; bson:&amp;#34;page_view&amp;#34; show:&amp;#34;page_view&amp;#34;` // 浏览量  ArticleType string `json:&amp;#34;article_type&amp;#34; bson:&amp;#34;article_type&amp;#34; show:&amp;#34;article_type&amp;#34;` ArticleTags []string `json:&amp;#34;article_tags&amp;#34; bson:&amp;#34;article_tags&amp;#34; show:&amp;#34;article_tags&amp;#34;` Deleted int `json:&amp;#34;deleted&amp;#34; bson:&amp;#34;deleted&amp;#34;` } func ArticlePatch(c *gin.</description>
+    </item>
+    
+    <item>
+      <title>gin PostForm 方法不起作用</title>
+      <link>https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/</link>
+      <pubDate>Thu, 25 Jul 2019 17:30:08 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/</guid>
+      <description>情景: 在httpie post 下，在 axios post下，总的来说，就是在form-data下只有c.Bind()会有用
+如果一定要用c.PostForm() headers必须为x-www-form-urlencoded</description>
+    </item>
+    
+  </channel>
+</rss>

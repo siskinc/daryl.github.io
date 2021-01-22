@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mysql on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/mysql/</link>
+    <description>Recent content in mysql on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Dec 2019 19:36:31 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>golang scan rows to []string，golang使用mysql，将结果写入到string列表中</title>
+      <link>https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/</link>
+      <pubDate>Tue, 17 Dec 2019 19:36:31 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/</guid>
+      <description>rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&amp;#34;scan have an err: %v, sql string: %s&amp;#34;, err, sqlStr) } } </description>
+    </item>
+    
+    <item>
+      <title>gorm软删除和唯一键冲突的问题</title>
+      <link>https://siskinc.github.io/post/gorm%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E5%94%AF%E4%B8%80%E9%94%AE%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 09 Dec 2019 21:27:01 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gorm%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E5%94%AF%E4%B8%80%E9%94%AE%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description> 如果直接使用gorm.Model嵌入到自己的model中，就无法对DeletedAt进行附加的操作，最简单的方式就是将gorm.Model的内容拷贝出来，将DeletedAt加入到自己的unique_index中  </description>
+    </item>
+    
+    <item>
+      <title>mysql查看数据库和表的占用空间大小</title>
+      <link>https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/</link>
+      <pubDate>Thu, 25 Jul 2019 17:33:47 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/</guid>
+      <description>查看数据库的大小 use 数据库名
+SELECT sum(DATA_LENGTH)+sum(INDEX_LENGTH)
+FROM information_schema.TABLES where TABLE_SCHEMA=&amp;lsquo;数据库名&amp;rsquo;;
+得到的结果是以字节为单位，除1024为K，除1048576为M。
+查看表的最后mysql修改时间 select TABLE_NAME,UPDATE_TIME from INFORMATION_SCHEMA.tables where TABLE_SCHEMA=&amp;lsquo;数据库名&amp;rsquo;;
+可以通过查看数据库中表的mysql修改时间，来确定mysql数据库是否已经长期不再使用。
+查看数据库中各个表占用的空间大小 如果想知道MySQL数据库中每个表占用的空间、表记录的行数的话，可以打开MySQL的 information_schema 数据库。在该库中有一个 TABLES 表，这个表主要字段分别是：
+TABLE_SCHEMA : 数据库名
+TABLE_NAME：表名
+ENGINE：所使用的存储引擎
+TABLES_ROWS：记录数
+DATA_LENGTH：数据大小
+INDEX_LENGTH：索引大小
+其他字段请参考MySQL的手册，我们只需要了解这几个就足够了。
+所以要知道一个表占用空间的大小，那就相当于是 数据大小 + 索引大小 即可。
+SQL:
+SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SCHEMA=&amp;lsquo;数据库名&amp;rsquo; AND TABLE_NAME=&amp;lsquo;表名&amp;rsquo;</description>
+    </item>
+    
+  </channel>
+</rss>

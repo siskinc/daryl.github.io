@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>json on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/json/</link>
+    <description>Recent content in json on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 May 2020 13:16:11 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/json/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang map数据结构接受json中的uint64数据</title>
+      <link>https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Wed, 27 May 2020 13:16:11 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</guid>
+      <description>例如有一个json数据：
+{ &amp;#34;name&amp;#34;: &amp;#34;小明&amp;#34;, &amp;#34;money&amp;#34;: 1111111111111111111 } 但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
+package main import ( &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; ) type Info struct { Name string `json:&amp;#34;name&amp;#34;` Money uint64 `json:&amp;#34;money&amp;#34;` } func main() { info := &amp;amp;Info{} json.Unmarshal([]byte(` { &amp;#34;name&amp;#34;: &amp;#34;小明&amp;#34;, &amp;#34;money&amp;#34;: 1111111111111111111 }`), info) fmt.Println(info) } 但是在某些情况下，你不得不用一个map去接收数据怎么办？
+有几个坑需要注意一下：
+  JSON的规范中，对于数字类型，并不区分是整型还是浮点型。
+  如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型
+  如何解决这个问题，先看下面程序：
+package main import ( &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;strconv&amp;#34; &amp;#34;strings&amp;#34; ) func main() { const jsonStream = ` { &amp;#34;name&amp;#34;: &amp;#34;小明&amp;#34;, &amp;#34;money&amp;#34;: 1111111111111111111 } ` decoder := json.</description>
+    </item>
+    
+  </channel>
+</rss>

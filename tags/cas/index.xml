@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CAS on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/cas/</link>
+    <description>Recent content in CAS on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Mar 2020 17:33:17 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/cas/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>乐观锁（CAS）</title>
+      <link>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</link>
+      <pubDate>Sat, 14 Mar 2020 17:33:17 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</guid>
+      <description>什么是CAS   CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术
+  CAS是原子操作，保证并发安全，而不是保证并发同步
+  CAS是CPU的一个指令
+  CAS是非阻塞的、轻量级的乐观锁
+  为什么说CAS是乐观锁  乐观锁，严格来说并不是锁，通过原子性来保证数据的同步，比如说数据库的乐观锁，通过版本控制来实现等，所以CAS不会保证线程同步。乐观的认为在数据更新期间没有其他线程影响
+ CAS原理  CAS(compare and swap) 比较并替换，就是将内存值更新为需要的值，但是有个条件，内存值必须与期望值相同。举个例子，期望值 E、内存值M、更新值U，当E == M的时候将M更新为U。
+ CAS优缺点   优点
+ 非阻塞的轻量级的乐观锁，通过CPU指令实现，在资源竞争不激烈的情况下性能高，相比synchronized重量锁，synchronized会进行比较复杂的加锁，解锁和唤醒操作。    缺点
+  ABA问题 线程C、D,线程D将A修改为B后又修改为A,此时C线程以为A没有改变过，java的原子类AtomicStampedReference，通过控制变量值的版本来保证CAS的正确性。
+  自旋时间过长，消耗CPU资源， 如果资源竞争激烈，多线程自旋长时间消耗资源。
+    CAS例子 不加锁 代码：
+package main import &amp;#34;fmt&amp;#34; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &amp;lt; 100000; i++ { p++ } end &amp;lt;- struct{}{} } func main() { go changeP() go changeP() &amp;lt;-end &amp;lt;-end fmt.</description>
+    </item>
+    
+  </channel>
+</rss>

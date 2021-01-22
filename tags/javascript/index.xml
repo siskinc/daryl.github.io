@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/javascript/</link>
+    <description>Recent content in javascript on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Nov 2019 00:57:49 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Run jQuery in Chrome Console</title>
+      <link>https://siskinc.github.io/post/run_jquery_in_chrome_console/</link>
+      <pubDate>Thu, 28 Nov 2019 00:57:49 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/run_jquery_in_chrome_console/</guid>
+      <description>var jqry = document.createElement(&amp;#39;script&amp;#39;); jqry.src = &amp;#34;https://code.jquery.com/jquery-3.3.1.min.js&amp;#34;; document.getElementsByTagName(&amp;#39;head&amp;#39;)[0].appendChild(jqry); jQuery.noConflict(); </description>
+    </item>
+    
+  </channel>
+</rss>

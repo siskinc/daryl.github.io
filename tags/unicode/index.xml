@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unicode on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/unicode/</link>
+    <description>Recent content in Unicode on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 17:33:08 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/unicode/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unicode 编码 范围</title>
+      <link>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</link>
+      <pubDate>Thu, 25 Jul 2019 17:33:08 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</guid>
+      <description>文字部分
+（ U+0000 – U+007F） 基本拉丁字符
+（ U+0080 – U+00FF） 增补拉丁字符集 1
+（ U+0100 – U+017F） 拉丁字符扩展集 A
+（ U+0180 – U+024F） 拉丁字符扩展集 B
+（ U+0370 – U+03FF） 希腊文字中的科普特字符
+（ U+0370 – U+03FF） 希腊字符
+（ U+0400 – U+04FF） 西里尔字符
+（ U+0500 – U+052F） 增补西里尔字符
+（ U+0530 – U+058F） 亚美尼亚字符
+（ U+0590 – U+059F） 希伯来字符
+（ U+0600 – U+06FF） 阿拉伯字符
+（ U+0700 – U+074F） 叙利亚字符
+（ U+0750 – U+077F） 增补阿拉伯字符
+（ U+0780 – U+07BF） 塔纳字符</description>
+    </item>
+    
+  </channel>
+</rss>

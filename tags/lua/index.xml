@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lua on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/lua/</link>
+    <description>Recent content in lua on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 16 Aug 2020 22:26:29 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/lua/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>redis lua script注意点</title>
+      <link>https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/</link>
+      <pubDate>Sun, 16 Aug 2020 22:26:29 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/</guid>
+      <description>脚本死循环 Redis 的指令执行是个单线程，这个单线程还要执行来自客户端的 lua 脚本。如果 lua 脚本中来一个死循环，在脚本没有对 Redis 的内部数据状态进行修改时，可以使用script kill指令用于动态杀死一个执行时间超时的 lua 脚本。因为 Redis 不允许 script kill 破坏脚本执行的原子性。比如脚本内部使用了 redis.call(&amp;ldquo;set&amp;rdquo;, key, value) 修改了内部的数据，那么 script kill 执行时服务器会返回错误。
+Script Kill 的原理 lua 脚本引擎功能太强大了，它提供了各式各样的钩子函数，它允许在内部虚拟机执行指令时运行钩子代码。比如每执行 N 条指令执行一次某个钩子函数，Redis 正是使用了这个钩子函数。
+
+void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w条指令，执行一次钩子函数 luaMaskCountHook  lua_sethook(lua,luaMaskCountHook,LUA_MASKCOUNT,100000); ... } </description>
+    </item>
+    
+  </channel>
+</rss>

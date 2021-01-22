@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>django on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/django/</link>
+    <description>Recent content in django on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 20:24:51 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/django/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Django上传图片</title>
+      <link>https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</link>
+      <pubDate>Thu, 25 Jul 2019 20:24:51 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</guid>
+      <description>model from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&amp;#39;share_pictures/&amp;#39;) name = models.CharField(max_length = 50) class Meta: db_table = &amp;#34;picture&amp;#34; def __str__(self): return self.name forms from django import forms class ImageForm(forms.Form): name = forms.CharField(max_length = 100, label=&amp;#39;名字：&amp;#39;) picture = forms.ImageField(label=&amp;#39;图片：&amp;#39;) Views class PictureView(APIView): def get(self, request): name = request.GET.get(&amp;#39;name&amp;#39;, &amp;#39;&amp;#39;) try: picture = Picture.objects.get(name=name) except Picture.DoesNotExist: return Response(status=status.HTTP_404_NOT_FOUND) image = open(picture.path.url[1:], &amp;#39;rb&amp;#39;).read() return HttpResponse(image, content_type=&amp;#39;image/png&amp;#39;) def post(self, request): MyImageForm = ImageForm(request.</description>
+    </item>
+    
+    <item>
+      <title>Django dumpdata and loaddata</title>
+      <link>https://siskinc.github.io/post/django_dumpdata_and_loaddata/</link>
+      <pubDate>Thu, 25 Jul 2019 17:29:18 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/django_dumpdata_and_loaddata/</guid>
+      <description>原文来自于: https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata
+ dumpdata 命令  这个是Django自带的管理命令，可以用来备份你的模型实例和数据库  dumpdata 基本数据库的转存  下面的命令将把整个数据转存到db.json文件中   ./manage.py dumpdata &amp;gt; db.json
+ dumpdata 备份特定的 app  下面的命令将在django admin app 转存到 admin.json文件中   ./manage.py dumpdata admin &amp;gt; admin.json
+ dumpdata 备份特定的表  下面的命令将只转存django admin.logentry 表中的内容   ./manage.py dumpdata admin.logentry &amp;gt; logentry.json
+  下面的命令将只转存django auth.user 表中的内容   ./manage.py dumpdata auth.user &amp;gt; user.json
+ dumpdata (&amp;ndash;exclude)   你可以使用 &amp;ndash;exclude 选择不需要备份的app或者表</description>
+    </item>
+    
+  </channel>
+</rss>

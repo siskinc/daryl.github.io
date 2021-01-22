@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cron task on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/cron-task/</link>
+    <description>Recent content in cron task on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Nov 2019 22:12:47 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/cron-task/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>定时统计任务参考</title>
+      <link>https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/</link>
+      <pubDate>Fri, 01 Nov 2019 22:12:47 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/</guid>
+      <description>  时间的触发，过期的数据不再使用（数据来源是消息中间件）
+  相关联的任务使用事件的方式，例如一天的统计数据是需要小时的数据来生成的，当一天的小时数据生成完了，再去触发生成一天的数据，请勿使用延时的观念，是神坑，勿入。
+  数据的读取，采用批量的方式读取，一次读取一个限定的值的数量。
+  数据的写入，采用批量的方式写入，最好有ticker来触发写入未到阈值数量的数据。
+  撸数据是一次sql撸完，还是分页撸？DBA告诉我让我一次撸完。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

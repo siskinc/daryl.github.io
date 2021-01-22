@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编码 on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/</link>
+    <description>Recent content in 编码 on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jul 2019 17:34:19 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于Basic Latin踩到的一些坑</title>
+      <link>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</link>
+      <pubDate>Thu, 25 Jul 2019 17:34:19 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</guid>
+      <description>在wiki中，很多语言的字符集都包含了Basic Latin，一开始我没有细看，以为Basic Latin里面都是正常的字符集，后来在线上环境出现了问题
+ 博主某天接到一个需求，需要过滤出某国语言的字符集（避免出现Unicode中的不可见字符），于是高高兴兴的在维基百科上找到该语言字符集抄了下来
+嗯，于是，线上环境出了一点小问题，由于我们某些功能是依赖于Basic Latin里面的特殊字符来做分割的，博主过于年轻，没有细看，于是翻车，卒，享年22岁。
+先看看Basic Latin里面到底是什么：https://jrgraphix.net/r/Unicode/0020-007F
+仔细看里面其实有很多特殊字符的，所以大多数程序员一般都会在正则表达式里面写0-9a-zA-Z来表示Basic Latin里面的东西，为什么不直接写\x0020-\x007F是有用意，以后看见一些东西还是不要随意忽略，就像为什么写0-9a-zA-Z来表示\x0020-\x007F，你以为别人是傻逼，写这么一长串干啥，实际上你是傻逼。</description>
+    </item>
+    
+    <item>
+      <title>Unicode 编码 范围</title>
+      <link>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</link>
+      <pubDate>Thu, 25 Jul 2019 17:33:08 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</guid>
+      <description>文字部分
+（ U+0000 – U+007F） 基本拉丁字符
+（ U+0080 – U+00FF） 增补拉丁字符集 1
+（ U+0100 – U+017F） 拉丁字符扩展集 A
+（ U+0180 – U+024F） 拉丁字符扩展集 B
+（ U+0370 – U+03FF） 希腊文字中的科普特字符
+（ U+0370 – U+03FF） 希腊字符
+（ U+0400 – U+04FF） 西里尔字符
+（ U+0500 – U+052F） 增补西里尔字符
+（ U+0530 – U+058F） 亚美尼亚字符
+（ U+0590 – U+059F） 希伯来字符
+（ U+0600 – U+06FF） 阿拉伯字符
+（ U+0700 – U+074F） 叙利亚字符
+（ U+0750 – U+077F） 增补阿拉伯字符
+（ U+0780 – U+07BF） 塔纳字符</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/categories/algorithm/</link>
+    <description>Recent content in Algorithm on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Mar 2020 17:33:17 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>乐观锁（CAS）</title>
+      <link>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</link>
+      <pubDate>Sat, 14 Mar 2020 17:33:17 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</guid>
+      <description>什么是CAS   CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术
+  CAS是原子操作，保证并发安全，而不是保证并发同步
+  CAS是CPU的一个指令
+  CAS是非阻塞的、轻量级的乐观锁
+  为什么说CAS是乐观锁  乐观锁，严格来说并不是锁，通过原子性来保证数据的同步，比如说数据库的乐观锁，通过版本控制来实现等，所以CAS不会保证线程同步。乐观的认为在数据更新期间没有其他线程影响
+ CAS原理  CAS(compare and swap) 比较并替换，就是将内存值更新为需要的值，但是有个条件，内存值必须与期望值相同。举个例子，期望值 E、内存值M、更新值U，当E == M的时候将M更新为U。
+ CAS优缺点   优点
+ 非阻塞的轻量级的乐观锁，通过CPU指令实现，在资源竞争不激烈的情况下性能高，相比synchronized重量锁，synchronized会进行比较复杂的加锁，解锁和唤醒操作。    缺点
+  ABA问题 线程C、D,线程D将A修改为B后又修改为A,此时C线程以为A没有改变过，java的原子类AtomicStampedReference，通过控制变量值的版本来保证CAS的正确性。
+  自旋时间过长，消耗CPU资源， 如果资源竞争激烈，多线程自旋长时间消耗资源。
+    CAS例子 不加锁 代码：
+package main import &amp;#34;fmt&amp;#34; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &amp;lt; 100000; i++ { p++ } end &amp;lt;- struct{}{} } func main() { go changeP() go changeP() &amp;lt;-end &amp;lt;-end fmt.</description>
+    </item>
+    
+    <item>
+      <title>次优二叉树</title>
+      <link>https://siskinc.github.io/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+      <pubDate>Thu, 25 Jul 2019 20:31:14 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/</guid>
+      <description>原理  首先取出查找表中每个关键字及其对应的权值，采用如下公式计算出每个关键字对应的一个值：
+  其中 wj 表示每个关键字的权值（被查找到的概率），h 表示关键字的个数。
+ 表中有多少关键字，就会有多少个 △Pi ，取其中最小的做为次优查找树的根结点，然后将表中关键字从第 i 个关键字的位置分成两部分，分别作为该根结点的左子树和右子树。同理，左子树和右子树也这么处理，直到最后构成次优查找树完成。
+typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemType;//定义元素类型  typedef struct BiTNode{ ElemType data; struct BiTNode *lchild, *rchild; }BiTNode, *BiTree; //定义变量  int i; int min; int dw; //创建次优查找树，R数组为查找表，sw数组为存储的各关键字的概率（权值），low和high表示的sw数组中的权值的范围  void SecondOptimal(BiTree T, ElemType R[], float sw[], int low, int high){ //由有序表R[low...high]及其累计权值表sw（其中sw[0]==0）递归构造次优查找树  i = low; min = abs(sw[high] - sw[low]); dw = sw[high] + sw[low - 1]; //选择最小的△Pi值  for (int j = low+1; j &amp;lt;=high; j++){ if (abs(dw-sw[j]-sw[j-1])&amp;lt;min){ i = j; min = abs(dw - sw[j] - sw[j - 1]); } } T = (BiTree)malloc(sizeof(BiTNode)); T-&amp;gt;data = R[i];//生成结点（第一次生成根）  if (i == low) T-&amp;gt;lchild = NULL;//左子树空  else SecondOptimal(T-&amp;gt;lchild, R, sw, low, i - 1);//构造左子树  if (i == high) T-&amp;gt;rchild = NULL;//右子树空  else SecondOptimal(T-&amp;gt;rchild, R, sw, i + 1, high);//构造右子树  } 完整事例演示 例如，一含有 9 个关键字的查找表及其相应权值如下表所示：</description>
+    </item>
+    
+    <item>
+      <title>二叉搜索树</title>
+      <link>https://siskinc.github.io/post/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/</link>
+      <pubDate>Thu, 25 Jul 2019 20:29:05 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/</guid>
+      <description> 二叉查找树（英语：Binary Search Tree），也称为二叉搜索树、有序二叉树（ordered binary tree）或排序二叉树（sorted binary tree）
+ 性质 指一棵空树或者具有下列性质的二叉树：
+  若任意节点的左子树不空，则左子树上所有节点的值均小于它的根节点的值
+  若任意节点的右子树不空，则右子树上所有节点的值均大于它的根节点的值；
+  任意节点的左、右子树也分别为二叉查找树；
+  没有键值相等的节点。
+  优势 二叉查找树相比于其他数据结构的优势在于查找、插入的时间复杂度较低。为O(logn)
+。二叉查找树是基础性数据结构，用于构建更为抽象的数据结构，如集合、多重集、关联数组等。
+二叉搜索树的查找算法 在二叉搜索树b中查找x的过程为：
+  若b是空树，则搜索失败，否则：
+  若x等于b的根节点的数据域之值，则查找成功；否则：
+  若x小于b的根节点的数据域之值，则搜索左子树；否则：
+  查找右子树。
+  在二叉搜索树插入节点的算法 向一个二叉搜索树b中插入一个节点s的算法，过程为：
+  若b是空树，则将s所指节点作为根节点插入，否则：
+  若s-&amp;gt;data等于b的根节点的数据域之值，则返回，否则：
+  若s-&amp;gt;data小于b的根节点的数据域之值，则把s所指节点插入到左子树中，否则：
+  把s所指节点插入到右子树中。（新插入节点总是叶子节点）
+  </description>
+    </item>
+    
+  </channel>
+</rss>

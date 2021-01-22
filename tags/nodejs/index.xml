@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nodejs on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/nodejs/</link>
+    <description>Recent content in nodejs on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://siskinc.github.io/tags/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>axios_发送post请求</title>
+      <link>https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/</guid>
+      <description>方案一 在node中使用axios以post的方式发送一张图片给某个server时:
+let data = fs.createReadStream(__dirname + &#39;/test.jpg&#39;)axios.post(url,{media:data,type:&amp;quot;image&amp;quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
+let data = fs.createReadStream(__dirname + &#39;/test.jpg&#39;)let form = {type:&amp;quot;image&amp;quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&amp;gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &amp;quot;/user/signup&amp;quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&amp;gt; {if(response.</description>
+    </item>
+    
+  </channel>
+</rss>

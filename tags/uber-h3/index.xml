@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>uber h3 on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/uber-h3/</link>
+    <description>Recent content in uber h3 on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Apr 2020 17:36:42 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/uber-h3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centos下，源码安装Python的h3包</title>
+      <link>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</link>
+      <pubDate>Mon, 06 Apr 2020 17:36:42 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</guid>
+      <description>公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
+ 检查cmake版本 cmake --version 如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
+下载文件  自己下载对于的master压缩包
+   https://github.com/uber/h3
+  https://github.com/uber/h3-py
+  解压文件 unzip h3-master.zip unzip h3-py-master.zip 修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
+#!/usr/bin/env bash set -ex VERSION=$1 IS_64BITS=$2 if [ &amp;#34;&amp;#34; == &amp;#34;$VERSION&amp;#34; ]; then echo &amp;#34;Failed to specify version required&amp;#34; exit 1 fi command -v cmake &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 || { echo &amp;#34;cmake required but not found.&amp;#34;; exit 1; } mkdir -p h3/out rm -rf h3c git clone https://github.</description>
+    </item>
+    
+    <item>
+      <title>Windows下如何使用pip安装Uber H3</title>
+      <link>https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/</link>
+      <pubDate>Wed, 26 Feb 2020 17:21:02 +0000</pubDate>
+      
+      <guid>https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/</guid>
+      <description>最近项目中会用到uber h3，而我写一个小工具或者去验证一些思路的时候常常会使用Python来着，方便嘛！而Uber H3是C写的，只是为Python提供了拓展，所以需要安装Vs14。这个需要自己提前安装好。
+在使用pip安装时直接报错了！
+大概的报错内容就是需要cmake，bash等东西，cmake好解决，自己下载到本地，放到环境变量里面就行，bash可以使用git bash来代替，所以只能跟Power shell暂时说拜拜，使用Git Bash来安装H3。Ok， 你运行pip install h3就会看见如下界面</description>
+    </item>
+    
+  </channel>
+</rss>
