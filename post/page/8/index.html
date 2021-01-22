@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Posts | Daryl&#39;s Blog</title>
+    <meta property="og:title" content="Posts - Daryl&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="Posts">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://siskinc.github.io/post/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/post/index.xml" title="Daryl's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://siskinc.github.io/">
+                        Daryl&#39;s Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="关于Python的导入覆盖解决办法">关于Python的导入覆盖解决办法</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            这种问题一般来说还是不会引起的，可能会出现在datetime和time这样类型的模块中。例如：
+import datetime from datetime import datetime 如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。我的建议是将系统的模块放在最后面导入，自己写的模块放在前面，不过最好跟公司的人统一一下，统一使用import datetime就行。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/" title="Python使用datetime来判断近七天">Python使用datetime来判断近七天</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+strptime 使用strptime来格式化字符串
+datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) # datetime.datetime(2019, 1, 2, 0, 10) timedelta 使用timedelta来进行计算天数
+a = datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) b = datetime.datetime.strptime(&#34;2019-10-01&#34;, &#34;%Y-%m-%d&#34;) a - b # datetime.timedelta(1) (a - b).days # 1 ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Golang mgo 模糊查询的使用">Golang mgo 模糊查询的使用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
+db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
+query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;/a/&#34;, &#34;$options&#34;: &#34;im&#34;}} 大家用这个方式去查询，能查询到算我输！
+下面总结一下，正真使用的方式：
+ 在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&quot;\a&quot;，而不是\a\。   根据第一点，我们将代码修改一下。
+ query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;a&#34;, &#34;$options&#34;: &#34;im&#34;}}  但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
+ 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  // RegEx represents a regular expression. The Options field may contain  // individual characters defining the way in which the pattern should be  // applied, and must be sorted. Valid options as of this writing are &#39;i&#39; for  // case insensitive matching, &#39;m&#39; for multi-line matching, &#39;x&#39; for verbose  // mode, &#39;l&#39; to make \w, \W, and similar be locale-dependent, &#39;s&#39; for dot-all  // mode (a &#39;.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/" title="关于Basic Latin踩到的一些坑">关于Basic Latin踩到的一些坑</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+ 在wiki中，很多语言的字符集都包含了Basic Latin，一开始我没有细看，以为Basic Latin里面都是正常的字符集，后来在线上环境出现了问题
+ 博主某天接到一个需求，需要过滤出某国语言的字符集（避免出现Unicode中的不可见字符），于是高高兴兴的在维基百科上找到该语言字符集抄了下来
+嗯，于是，线上环境出了一点小问题，由于我们某些功能是依赖于Basic Latin里面的特殊字符来做分割的，博主过于年轻，没有细看，于是翻车，卒，享年22岁。
+先看看Basic Latin里面到底是什么：https://jrgraphix.net/r/Unicode/0020-007F
+仔细看里面其实有很多特殊字符的，所以大多数程序员一般都会在正则表达式里面写0-9a-zA-Z来表示Basic Latin里面的东西，为什么不直接写\x0020-\x007F是有用意，以后看见一些东西还是不要随意忽略，就像为什么写0-9a-zA-Z来表示\x0020-\x007F，你以为别人是傻逼，写这么一长串干啥，实际上你是傻逼。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" title="mysql查看数据库和表的占用空间大小">mysql查看数据库和表的占用空间大小</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+查看数据库的大小 use 数据库名SELECT sum(DATA_LENGTH)+sum(INDEX_LENGTH)FROM information_schema.TABLES where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;得到的结果是以字节为单位，除1024为K，除1048576为M。
+查看表的最后mysql修改时间 select TABLE_NAME,UPDATE_TIME from INFORMATION_SCHEMA.tables where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;可以通过查看数据库中表的mysql修改时间，来确定mysql数据库是否已经长期不再使用。
+查看数据库中各个表占用的空间大小 如果想知道MySQL数据库中每个表占用的空间、表记录的行数的话，可以打开MySQL的 information_schema 数据库。在该库中有一个 TABLES 表，这个表主要字段分别是：
+TABLE_SCHEMA : 数据库名TABLE_NAME：表名ENGINE：所使用的存储引擎TABLES_ROWS：记录数DATA_LENGTH：数据大小INDEX_LENGTH：索引大小
+其他字段请参考MySQL的手册，我们只需要了解这几个就足够了。
+所以要知道一个表占用空间的大小，那就相当于是 数据大小 + 索引大小 即可。
+SQL:
+SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SCHEMA=&lsquo;数据库名&rsquo; AND TABLE_NAME=&lsquo;表名&rsquo;……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/" title="Unicode 编码 范围">Unicode 编码 范围</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]文字部分（ U+0000 – U+007F） 基本拉丁字符 （ U+0080 – U+00FF） 增补拉丁字符集 1 （ U+0100 – U+017F） 拉丁字符扩展集 A （ U+0180 – U+024F） 拉丁字符扩展集 B （ U+0370 – U+03FF） 希腊文字中的科普特字符 （ U+0370 – U+03FF） 希腊字符 （ U+0400 – U+04FF） 西里尔字符 （ U+0500 – U+052F） 增补西里尔字符 （ U+0530 – U+058F） 亚美尼亚字符 （ U+0590 – U+059F） 希伯来字符（ U+0600 – U+06FF） 阿拉伯字符 （ U+0700 – U+074F） 叙利亚字符 （ U+0750 – U+077F） 增补阿拉伯字符 （ U+0780 – U+07BF） 塔纳字符 （ U+07C0 – U+07FF） N’Ko （ U+0900 – U+097F） 梵文字符（ U+0980 – U+09FF） 孟加拉字符（ U+0A00 – U+0A7F） 果鲁穆奇字符 （ U+0A80 – U+0AFF） 古吉拉特字符 （ U+0B00 – U+0B7F） 奥里亚字符 （ U+0B80 – U+0BFF） 泰米尔字符 （ U+0C00 – U+0C7F） 泰卢固字符 （ U+0C80 – U+0CFF） 埃纳德字符 （ U+0D00 – U+0D7F） 马拉亚拉姆字符 （ U+0D80 - U+0DFF） 僧伽罗字符 （ U+0E00 – U+0E7F） 泰语字符（ U+0E80 – U+0EFF） 老挝语字符（ U+0F00 – U+0FFF） 藏语字符……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/" title="gin mongodb restful api设计: 动态的patch接口">gin mongodb restful api设计: 动态的patch接口</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+ 什么是Patch?   Patch方法可以用来更新资源的一个组成部分
+ 什么时候使用Patch?   当你仅需更新资源的某一项，即不完全也不幂等
+ 那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？
+答案当然是有的，先说说如何去实现：
+  我们需要利用golang的map[string]interface{}结构
+  我们需要一个动态的结构
+  在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&quot;$set&quot;: xxxx})操作
+    使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）
+  来，开始贴代码：
+// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId `json:&#34;id&#34; bson:&#34;_id&#34; show:&#34;id&#34;` Author string `json:&#34;author&#34; bson:&#34;author&#34; show:&#34;author&#34;` Title string `json:&#34;title&#34; bson:&#34;title&#34; show:&#34;title&#34;` Content string `json:&#34;content&#34; bson:&#34;content&#34; show:&#34;content&#34;` Publish int `json:&#34;publish&#34; bson:&#34;publish&#34;` CreatedTime int64 `json:&#34;created_time&#34; bson:&#34;created_time&#34; show:&#34;created_time&#34;` ChangedTime int64 `json:&#34;changed_time&#34; bson:&#34;changed_time&#34; show:&#34;changed_time&#34;` PageView int64 `json:&#34;page_view&#34; bson:&#34;page_view&#34; show:&#34;page_view&#34;` // 浏览量  ArticleType string `json:&#34;article_type&#34; bson:&#34;article_type&#34; show:&#34;article_type&#34;` ArticleTags []string `json:&#34;article_tags&#34; bson:&#34;article_tags&#34; show:&#34;article_tags&#34;` Deleted int `json:&#34;deleted&#34; bson:&#34;deleted&#34;` } func ArticlePatch(c *gin.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/" title="gin PostForm 方法不起作用">gin PostForm 方法不起作用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            情景: 在httpie post 下，在 axios post下，总的来说，就是在form-data下只有c.Bind()会有用如果一定要用c.PostForm() headers必须为x-www-form-urlencoded……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/django_dumpdata_and_loaddata/" title="Django dumpdata and loaddata">Django dumpdata and loaddata</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+ 原文来自于: https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata
+ dumpdata 命令  这个是Django自带的管理命令，可以用来备份你的模型实例和数据库  dumpdata 基本数据库的转存  下面的命令将把整个数据转存到db.json文件中   ./manage.py dumpdata &gt; db.json
+ dumpdata 备份特定的 app  下面的命令将在django admin app 转存到 admin.json文件中   ./manage.py dumpdata admin &gt; admin.json
+ dumpdata 备份特定的表  下面的命令将只转存django admin.logentry 表中的内容   ./manage.py dumpdata admin.logentry &gt; logentry.json
+  下面的命令将只转存django auth.user 表中的内容   ./manage.py dumpdata auth.user &gt; user.json
+ dumpdata (&ndash;exclude)  你可以使用 &ndash;exclude 选择不需要备份的app或者表 你可以使用 &ndash;indent 加上一个代表空格数的数字 格式化输出   .……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/django_dumpdata_and_loaddata/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/cplusplus_%E4%B8%AD%E4%B8%8D%E8%83%BD%E5%A3%B0%E6%98%8E%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%9C%89%E5%93%AA%E4%BA%9B/" title="C&#43;&#43; 中不能声明为虚函数的函数有哪些？">C&#43;&#43; 中不能声明为虚函数的函数有哪些？</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+普通函数  普通函数（非成员函数）只能被overload，不能被override，而且编译器会在编译时绑定函数。 多态的运行期行为体现在虚函数上，虚函数通过继承方式来体现出多态作用，顶层函数不属于成员函数，是不能被继承的
+ 构造函数  因为构造函数本来就是为了明确初始化对象成员才产生的，然而virtual function主要是为了在不完全了解细节的情况下也能正确处理对象。另外，virtual函数是在不同类型的对象产生不同的动作，现在对象还没有产生，如何使用virtual函数来完成你想完成的动作。
+ 内联成员函数  内联函数就是为了在代码中直接展开，减少函数调用花费的代价，虚函数是为了在继承后对象能够准确的执行自己的动作，这是不可能统一的。
+ 静态成员函数  静态成员函数对于每个类来说只有一份代码，所有的对象都共享这一份代码，他也没有要动态邦定的必要性。不能被继承，只属于该类。
+ 友元函数  C++不支持友元函数的继承，对于没有继承特性的函数没有虚函数的说法。友元函数不属于类的成员函数，不能被继承。
+ ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/cplusplus_%E4%B8%AD%E4%B8%8D%E8%83%BD%E5%A3%B0%E6%98%8E%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%9C%89%E5%93%AA%E4%BA%9B/">阅读全文</a></p>
+    </article>
+    
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://siskinc.github.io/post/page/7/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://siskinc.github.io/post/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/3/">3</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/4/">4</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/6/">6</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/7/">7</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://siskinc.github.io/post/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/post/page/9/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

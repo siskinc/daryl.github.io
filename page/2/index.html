@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+	<meta name="generator" content="Hugo 0.81.0-DEV" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Daryl&#39;s Blog | </title>
+    <meta property="og:title" content="Daryl&#39;s Blog | ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="">
+    <meta name="description" content="">
+    <meta property="og:url" content="https://siskinc.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/index.xml" title="Daryl's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://siskinc.github.io/">
+                            Daryl&#39;s Blog
+                        </a>
+                    </h1>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/" title="Redis源码阅读之内存分配">Redis源码阅读之内存分配</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月22日
+        </date>
+        
+        <div class="post-content">
+            zmalloc是什么  zmalloc是redis内存分配的基本操作，相当于包了一层malloc的操作，分配出来的内存不只是裸露的
+ API void *zmalloc(size_t size); void *zcalloc(size_t size); void *zrealloc(void *ptr, size_t size); void zfree(void *ptr); char *zstrdup(const char *s); size_t zmalloc_used_memory(void); void zmalloc_set_oom_handler(void (*oom_handler)(size_t)); size_t zmalloc_get_rss(void); int zmalloc_get_allocator_info(size_t *allocated, size_t *active, size_t *resident); void set_jemalloc_bg_thread(int enable); int jemalloc_purge(); size_t zmalloc_get_private_dirty(long pid); size_t zmalloc_get_smap_bytes_by_field(char *field, long pid); size_t zmalloc_get_memory_size(void); void zlibc_free(void *ptr); 内存分配zmalloc，zcalloc void *zmalloc(size_t size) { void *ptr = malloc(size+PREFIX_SIZE); if (!ptr) zmalloc_oom_handler(size); #ifdef HAVE_MALLOC_SIZE  update_zmalloc_stat_alloc(zmalloc_size(ptr)); return ptr; #else  *((size_t*)ptr) = size; update_zmalloc_stat_alloc(size+PREFIX_SIZE); return (char*)ptr+PREFIX_SIZE; #endif  } 在zmalloc的内存分配中，会多分配PREFIX_SIZE（sizeof(size_t)）个字节，多分配的是用来存储分配的字节数大小的。zcalloc其实和zmalloc做的事情差不多的，不作太多的赘余。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%BA%8Crehash/" title="Redis源码阅读之字典（二）——Rehash">Redis源码阅读之字典（二）——Rehash</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月21日
+        </date>
+        
+        <div class="post-content">
+            历史文章 Redis源码阅读之字典（一）
+Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不断的增加，dict的size也在不断的增加，当dict.used == dict.size或者used*100/size &lt; HASHTABLE_MIN_FILL,HASHTABLE_MIN_FILL一般为10，也就是说，要么容量不够，要么容量使用率小于10%了，就会调用dictExpand进行重新分配内存，这个时候就会触发rehash了。但是rehash不行一次性就操作完成了，试想一下，如果一个dict里面含有数百万的key，rehash一次可能会很久，就可能造成服务假死的情况。所以rehashing是一个长时间的过程，每一次可能只进行几个key的迁移。
+ 哪些操作会触发rehashing的step dictRehashMilliseconds  redis server的定时任务会去执行dictRehashMilliseconds，但是都是传入的ms==1，主要是rehashing一下redis的dict和expired相关的键
+ dictAddRaw  在给dict增加key的时候，新增的key会直接放入dict.ht[1]中
+ dictGenericDelete  删除key时
+ dictFind  查找key
+ dictGetRandomKey 和 dictGetSomeKeys  获取随机key
+ dictScan  遍历dict
+ 每次rehash的过程 源码 /* Performs N steps of incremental rehashing. Returns 1 if there are still * keys to move from the old to the new hash table, otherwise 0 is returned. * * Note that a rehashing step consists in moving a bucket (that may have more * than one key as we use chaining) from the old to the new hash table, however * since part of the hash table may be composed of empty spaces, it is not * guaranteed that this function will rehash even a single bucket, since it * will visit at max N*10 empty buckets in total, otherwise the amount of * work it does would be unbound and the function may block for a long time.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%BA%8Crehash/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBdict/" title="Redis源码阅读——DICT">Redis源码阅读——DICT</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月21日
+        </date>
+        
+        <div class="post-content">
+            数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
+哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBdict/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/" title="Redis源码阅读-dict">Redis源码阅读-dict</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月21日
+        </date>
+        
+        <div class="post-content">
+            数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
+哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/" title="Redis源码阅读之字典（一）">Redis源码阅读之字典（一）</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月21日
+        </date>
+        
+        <div class="post-content">
+            数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
+哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/" title="Centos下，源码安装Python的h3包">Centos下，源码安装Python的h3包</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月6日
+        </date>
+        
+        <div class="post-content">
+            公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
+ 检查cmake版本 cmake --version 如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
+下载文件  自己下载对于的master压缩包
+  https://github.com/uber/h3 https://github.com/uber/h3-py  解压文件 unzip h3-master.zip unzip h3-py-master.zip 修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
+#!/usr/bin/env bash  set -ex VERSION=$1 IS_64BITS=$2 if [ &#34;&#34; == &#34;$VERSION&#34; ]; then echo &#34;Failed to specify version required&#34; exit 1 fi command -v cmake &gt;/dev/null 2&gt;&amp;1 || { echo &#34;cmake required but not found.&#34;; exit 1; } mkdir -p h3/out rm -rf h3c git clone https://github.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/" title="Golang重复对一个slice进行append造成数据错误">Golang重复对一个slice进行append造成数据错误</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月4日
+        </date>
+        
+        <div class="post-content">
+            slice的属性   切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。
+  切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。
+  那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
+问题实例 slice的cap是怎么增长的   参考文章:How does Go slice capacity change on append? [duplicate]
+  有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go
+  slice的结构 type slice struct { array unsafe.Pointer len int cap int } 多次append造成的数据错误 代码 package main import &#34;fmt&#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&#34;temp&#34;, temp) temp = append(temp, 2) printSlice(&#34;temp&#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&#34;temp&#34;, temp) temp2 := append(temp, 4) printSlice(&#34;temp2&#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&#34;temp4&#34;, temp4) temp3 := append(temp, 5) printSlice(&#34;temp3&#34;, temp3) printSlice(&#34;temp2&#34;, temp2) } func printSlice(valName string, s []int) { fmt.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/" title="乐观锁（CAS）">乐观锁（CAS）</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年3月14日
+        </date>
+        
+        <div class="post-content">
+            什么是CAS   CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术
+  CAS是原子操作，保证并发安全，而不是保证并发同步
+  CAS是CPU的一个指令
+  CAS是非阻塞的、轻量级的乐观锁
+  为什么说CAS是乐观锁  乐观锁，严格来说并不是锁，通过原子性来保证数据的同步，比如说数据库的乐观锁，通过版本控制来实现等，所以CAS不会保证线程同步。乐观的认为在数据更新期间没有其他线程影响
+ CAS原理  CAS(compare and swap) 比较并替换，就是将内存值更新为需要的值，但是有个条件，内存值必须与期望值相同。举个例子，期望值 E、内存值M、更新值U，当E == M的时候将M更新为U。
+ CAS优缺点   优点
+ 非阻塞的轻量级的乐观锁，通过CPU指令实现，在资源竞争不激烈的情况下性能高，相比synchronized重量锁，synchronized会进行比较复杂的加锁，解锁和唤醒操作。    缺点
+  ABA问题 线程C、D,线程D将A修改为B后又修改为A,此时C线程以为A没有改变过，java的原子类AtomicStampedReference，通过控制变量值的版本来保证CAS的正确性。
+  自旋时间过长，消耗CPU资源， 如果资源竞争激烈，多线程自旋长时间消耗资源。
+    CAS例子 不加锁 代码：
+package main import &#34;fmt&#34; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &lt; 100000; i++ { p++ } end &lt;- struct{}{} } func main() { go changeP() go changeP() &lt;-end &lt;-end fmt.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/" title="Ubuntu 18.04换国内源">Ubuntu 18.04换国内源</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年2月28日
+        </date>
+        
+        <div class="post-content">
+            国内有很多Ubuntu的镜像源，例如阿里、网易、清华、中科大。我们这里以阿里云的源为例展示如何修改Ubuntu 18.04里面默认的源。编辑/etc/apt/sources.list文件：
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse中科大源 deb https://mirrors.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/" title="Windows下如何使用pip安装Uber H3">Windows下如何使用pip安装Uber H3</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年2月26日
+        </date>
+        
+        <div class="post-content">
+            最近项目中会用到uber h3，而我写一个小工具或者去验证一些思路的时候常常会使用Python来着，方便嘛！而Uber H3是C写的，只是为Python提供了拓展，所以需要安装Vs14。这个需要自己提前安装好。在使用pip安装时直接报错了！大概的报错内容就是需要cmake，bash等东西，cmake好解决，自己下载到本地，放到环境变量里面就行，bash可以使用git bash来代替，所以只能跟Power shell暂时说拜拜，使用Git Bash来安装H3。Ok， 你运行pip install h3就会看见如下界面……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://siskinc.github.io/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://siskinc.github.io/">1</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://siskinc.github.io/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/3/">3</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/4/">4</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/6/">6</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/7/">7</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/page/3/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

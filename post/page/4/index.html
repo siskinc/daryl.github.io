@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Posts | Daryl&#39;s Blog</title>
+    <meta property="og:title" content="Posts - Daryl&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="">
+    <meta name="description" content="Posts">
+        
+    <meta name="author" content="">
+    <meta property="og:url" content="https://siskinc.github.io/post/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/post/index.xml" title="Daryl's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://siskinc.github.io/">
+                        Daryl&#39;s Blog
+                    </a>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/" title="Run jQuery in Chrome Console">Run jQuery in Chrome Console</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年11月28日
+        </date>
+        
+        <div class="post-content">
+            var jqry = document.createElement(&#39;script&#39;); jqry.src = &#34;https://code.jquery.com/jquery-3.3.1.min.js&#34;; document.getElementsByTagName(&#39;head&#39;)[0].appendChild(jqry); jQuery.noConflict(); ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/" title="golang http.client 的 Connection reset by peer 问题">golang http.client 的 Connection reset by peer 问题</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年11月28日
+        </date>
+        
+        <div class="post-content">
+            func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Close = true resp, err := http.Client.Do(req) } func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Header.Add(&#34;Connection&#34;, &#34;close&#34;) resp, err := http.Client.Do(req) } func main() { tr := http.Transport{DisableKeepAlives: true} client := http.Client{Transport: &amp;tr} resp, err := client.Get(&#34;https://www.baidu.com/&#34;) if resp != nil { defer resp.Body.Close() } checkError(err) fmt.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/" title="记一次kafka-go使用踩坑（多个partition只会写入一个partition）">记一次kafka-go使用踩坑（多个partition只会写入一个partition）</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年11月6日
+        </date>
+        
+        <div class="post-content">
+            w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, }) ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/" title="定时统计任务参考">定时统计任务参考</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年11月1日
+        </date>
+        
+        <div class="post-content">
+             时间的触发，过期的数据不再使用（数据来源是消息中间件） 相关联的任务使用事件的方式，例如一天的统计数据是需要小时的数据来生成的，当一天的小时数据生成完了，再去触发生成一天的数据，请勿使用延时的观念，是神坑，勿入。 数据的读取，采用批量的方式读取，一次读取一个限定的值的数量。 数据的写入，采用批量的方式写入，最好有ticker来触发写入未到阈值数量的数据。 撸数据是一次sql撸完，还是分页撸？DBA告诉我让我一次撸完。  ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/" title="CSS清除浮动">CSS清除浮动</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年10月25日
+        </date>
+        
+        <div class="post-content">
+            使用方法：.clearfix:after { content: &#34;&#34;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; } .clearfix:before, .clearfix:after { content: &#34;&#34;; display: table; } .clearfix:after { clear: both; } .clearfix { *zoom: 1; } ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/" title="golang自动调用结构体中内嵌字段的Init()函数">golang自动调用结构体中内嵌字段的Init()函数</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年9月26日
+        </date>
+        
+        <div class="post-content">
+            package main import ( &#34;fmt&#34; &#34;reflect&#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.ValueOf(c) if rv.Kind() == reflect.Ptr { rv = rv.Elem() } for i := 0; i &lt; rv.NumField(); i++ { value := rv.Field(i) if conf, ok := value.Interface().(initial); ok { conf.Init() } } } type A struct { } func (a *A) Init() { fmt.Println(&#34;Init A&#34;) } type B struct { AA *A } func main() { b := B{} triggerInitials(b) } ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/" title="Linux进程的五个段">Linux进程的五个段</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月24日
+        </date>
+        
+        <div class="post-content">
+            数据段  用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；
+ 代码段  代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&mdash;&ndash;它是不可写的；
+ BSS段  包含了程序中未初始化的全局变量，在内存中bss段全部置零；
+ 堆（heap）  堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可以动态扩展或者所建。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩展）；当利用free等函数释放内存时，被释放的内存从堆中被提出（堆被缩减）；
+ 栈  栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。
+ ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/" title="进程和线程有什么区别">进程和线程有什么区别</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月24日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+定义 进程  是具有一定独立功能的程序、它是系统进行资源分配和调度的一个独立单位，重点在系统调度和单独的单位，也就是说进程是可以独 立运行的一段程序。
+ 线程  线程进程的一个实体，是CPU调度和分派的基本单位，他是比进程更小的能独立运行的基本单位，线程自己基本上不拥有系统资源。在运行时，只是暂用一些计数器、寄存器和栈 。
+ 关系  一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程（通常说的主线程）。 资源分配给进程，同一进程的所有线程共享该进程的所有资源。用户进程主要段segment：stack（向低地址），heap，.rodata,data/bss,.text。一个进程，上面的5部分是主要的，必须的。线程只拥有stack（线程栈，线程栈是单个线程所独享的，2M），保存自己的函数调用过程，比如heap，.rodata,data/bss，text段都是共享的。 线程在执行过程中，需要协作同步。不同进程的线程间要利用消息通信的办法实现同步。 处理机分给线程，即真正在处理机上运行的是线程。 线程是指进程内的一个执行单元，也是进程内的可调度实体。  区别  调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。 并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。 拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源。  ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" title="Goroutines和线程对比">Goroutines和线程对比</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月15日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+栈不同  线程：每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。固定大小的栈对于更复杂或者更深层次的递归函数调用来说显然是不够的。修改固定的大小可以提升空间的利用率允许创建更多的线程，并且可以允许更深的递归调用，不过这两者是没法同时兼备的。 goroutine：一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。一个goroutine的栈，和操作系统线程一样，会保存其活跃或挂起的函数调用的本地变量，但是和OS线程不太一样的是一个goroutine的栈大小并不是固定的；栈的大小会根据需要动态地伸缩。而goroutine的栈的最大值有1GB，比传统的固定大小的线程栈要大得多，尽管一般情况下，大多goroutine都不需要这么大的栈。  调度不同  线程：OS线程会被操作系统内核调度。每几毫秒，一个硬件计时器会中断处理器，这会调用一个叫作scheduler的内核函数。这个函数会挂起当前执行的线程并保存内存中它的寄存器内容，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。因为操作系统线程是被内核所调度，所以从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。 goroutine：Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine。和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器而是被Go语言&quot;建筑&quot;本身进行调度的。例如当一个goroutine调用了time.Sleep或者被channel调用或者mutex操作阻塞时，调度器会使其进入休眠并开始执行另一个goroutine直到时机到了再去唤醒第一个goroutine。因为这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。  GOMAXPROCS Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。(GOMAXPROCS是前面说的m:n调度中的n)。在休眠中的或者在通信中被阻塞的goroutine是不需要一个对应的线程来做调度的。在I/O中或系统调用中或调用非Go语言函数时，是需要一个对应的操作系统线程的，但是GOMAXPROCS并不需要将这几种情况计算在内。
+你可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它。我们在下面的小程序中会看到GOMAXPROCS的效果，这个程序会无限打印0和1。
+for { go fmt.Print(0) fmt.Print(1) } $ GOMAXPROCS=1 go run hacker-cliché.go 111111111111111111110000000000000000000011111... $ GOMAXPROCS=2 go run hacker-cliché.go 010101010101010101011001100101011010010100110... 在第一次执行时，最多同时只能有一个goroutine被执行。初始情况下只有main goroutine被执行，所以会打印很多1。过了一段时间后，GO调度器会将其置为休眠，并唤醒另一个goroutine，这时候就开始打印很多0了，在打印的时候，goroutine是被调度到操作系统线程上的。在第二次执行时，我们使用了两个操作系统线程，所以两个goroutine可以一起被执行，以同样的频率交替打印0和1。我们必须强调的是goroutine的调度是受很多因子影响的，而runtime也是在不断地发展演进的，所以这里的你实际得到的结果可能会因为版本的不同而与我们运行的结果有所不同。
+Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言中，当前的线程都有一个独特的身份(id)，并且这个身份信息可以以一个普通值的形式被被很容易地获取到，典型的可以是一个integer或者指针值。这种情况下我们做一个抽象化的thread-local storage(线程本地存储，多线程编程中不希望其它线程访问的内容)就很容易，只需要以线程的id作为key的一个map就可以解决问题，每一个线程以其id就能从中获取到值，且和其它线程互不冲突。
+goroutine没有可以被程序员获取到的身份(id)的概念。这一点是设计上故意而为之，由于thread-local storage总是会被滥用。比如说，一个web server是用一种支持tls的语言实现的，而非常普遍的是很多函数会去寻找HTTP请求的信息，这代表它们就是去其存储层(这个存储层有可能是tls)查找的。这就像是那些过分依赖全局变量的程序一样，会导致一种非健康的“距离外行为”，在这种行为下，一个函数的行为可能不是由其自己内部的变量所决定，而是由其所运行在的线程所决定。因此，如果线程本身的身份会改变——比如一些worker线程之类的——那么函数的行为就会变得神秘莫测。
+Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显式的。这样不仅使程序变得更易读，而且会让我们自由地向一些给定的函数分配子任务时不用担心其身份信息影响行为。
+你现在应该已经明白了写一个Go程序所需要的所有语言特性信息。在后面两章节中，我们会回顾一些之前的实例和工具，支持我们写出更大规模的程序：如何将一个工程组织成一系列的包，如何获取，构建，测试，性能测试，剖析，写文档，并且将这些包分享出去。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/" title="数组中重复的数字(Python)">数组中重复的数字(Python)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月13日
+        </date>
+        
+        <div class="post-content">
+            #!/usr/bin/env python # -*- coding: utf-8 -*- # @Time : 2019-08-13 22:35 # @Author : daryl # @File : main.py def use_map(numbers): &#34;&#34;&#34; 使用哈希表结构 :param numbers: :return: &#34;&#34;&#34; num_map = dict() for number in numbers: if number in num_map: print(number) else: num_map[number] = True def use_set(numbers): &#34;&#34;&#34; 使用set结构 :param numbers: :return: &#34;&#34;&#34; num_set = set() for number in numbers: if number in num_set: print(number) else: num_set.add(number) def use_sort(numbers): &#34;&#34;&#34; 排序后查找 :param numbers: :return: &#34;&#34;&#34; numbers = sorted(numbers) print(numbers) for index, number in enumerate(numbers): if index !……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">阅读全文</a></p>
+    </article>
+    
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://siskinc.github.io/post/page/3/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://siskinc.github.io/post/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/3/">3</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://siskinc.github.io/post/page/4/">4</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/6/">6</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/7/">7</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/post/page/5/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

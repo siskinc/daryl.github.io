@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+	<meta name="generator" content="Hugo 0.81.0-DEV" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Daryl&#39;s Blog | </title>
+    <meta property="og:title" content="Daryl&#39;s Blog | ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="">
+    <meta name="description" content="">
+    <meta property="og:url" content="https://siskinc.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/index.xml" title="Daryl's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://siskinc.github.io/">
+                            Daryl&#39;s Blog
+                        </a>
+                    </h1>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/" title="数组中重复的数字(Golang)">数组中重复的数字(Golang)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月13日
+        </date>
+        
+        <div class="post-content">
+            import &#34;fmt&#34; func main() { a := [...]int{2,3,1,0,2,5,3} num := make(map[int]bool) for _, v := range a { if !num[v] { num[v] = true } else { fmt.Println(v) } } } package main import ( &#34;fmt&#34; &#34;sort&#34; ) func main() { a := []int{2,3,1,0,2,5,3} sort.Ints(a) for i, v := range a { if i != v { if v == a[v] { fmt.Println(v) } else { a[i], a[v] = a[v], a[i] } } } } ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Golang 实现单例模式">Golang 实现单例模式</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月13日
+        </date>
+        
+        <div class="post-content">
+            package main import &#34;fmt&#34; type Single struct { } var single *Single func GetSingle() *Single { if single == nil { single = &amp;Single{} } return single } func main() { fmt.Printf(&#34;%p\n&#34;, GetSingle()) fmt.Printf(&#34;%p\n&#34;, GetSingle()) fmt.Printf(&#34;%p\n&#34;, GetSingle()) } package main import ( &#34;fmt&#34; &#34;sync&#34; &#34;time&#34; ) type Single2 struct { } var single2 *Single2 var lock *sync.Mutex = &amp;sync.Mutex{} func GetSingle2() *Single2 { lock.Lock() defer lock.Unlock() if single2 == nil { single2 = &amp;Single2{} } return single2 } func main() { go fmt.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Python实现单例模式">Python实现单例模式</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月13日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+使用__new__方法 class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &#39;_instance&#39;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass 共享属性 class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).__new__(cls, *args, **kw) ob.__dict__ = cls._state return ob class MyClass2(Borg): pass 装饰器版本 def singleton(cls): instances = {} def getinstance(*args, **kw): if cls not in instances: instances[cls] = cls(*args, **kw) return instances[cls] return getinstance @singleton class MyClass: pass import方法 # mysingleton.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/svn_branch_%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF/" title="svn branch 创建分支">svn branch 创建分支</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月26日
+        </date>
+        
+        <div class="post-content">
+            ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/svn_branch_%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/" title="使用docker-compose搭建WordPress">使用docker-compose搭建WordPress</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            version: &#39;3&#39; services: nginx: image: nginx:1.13.9-alpine ports: - &#34;80:80&#34; - &#34;443:443&#34; restart: always volumes: - ./wordpress.conf:/etc/nginx/conf.d/default.conf - ./nginx_logs:/var/log/nginx - ./letsencrypt:/etc/letsencrypt depends_on: - wordpress networks: - daryl_blog_net wordpress: image: wordpress:latest restart: always volumes: - ./html:/var/www/html networks: - daryl_blog_net depends_on: - db environment: WORDPRESS_DB_HOST: db:3306 WORDPRESS_DB_USER: wordpress WORDPRESS_DB_PASSWORD: password db: image: mysql:5.7.23 volumes: - ./mysql:/var/lib/mysql - ./mysql_logs:/var/logs/mysql restart: always env_file: - mysql.env ports: - &#34;3306:3306&#34; networks: - daryl_blog_net networks: daryl_blog_net: driver: bridge ipam: config: - subnet: 192.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/" title="shell中通过eval执行一个字符串命令">shell中通过eval执行一个字符串命令</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            #!/bin/bash echo &#34;Switch Directory : /home/pktgen-2.9.0&#34; dir=&#34;/home/pktgen-2.9.0&#34; cd $dir cmd=&#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&#34; eval $cmd ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/" title="svn钩子(hooks)">svn钩子(hooks)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+钩子脚本的具体写法就是操作系统中shell脚本程序的写法,请根据自己SVN所在的操作系统和shell程序进行相应的写作
+所谓钩子就是与一些版本库事件触发的程序，例如新修订版本的创建，或是未版本化属性的修改。每个钩子都会被告知足够多的信息，包括那是什么事件，所操作的对象，和触发事件的用户名。通过钩子的输出或返回状态，钩子程序能让工作继续、停止或是以某种方式挂起。
+svn在每个代码仓库下有一个hooks目录用于放hook脚本, svn为我们提供了模板
+[root@idcflow2175 hooks]# pwd /home/svn/csvn/data/repositories/tr2/hooks [root@idcflow2175 hooks]# ll -rw-r--r-- 1 svn svn 1977 Jul 1 2013 post-commit.tmpl -rw-r--r-- 1 svn svn 1638 Jul 1 2013 post-lock.tmpl -rw-r--r-- 1 svn svn 2289 Jul 1 2013 post-revprop-change.tmpl -rw-r--r-- 1 svn svn 1567 Jul 1 2013 post-unlock.tmpl -rw-r--r-- 1 svn svn 3447 Jul 1 2013 pre-commit.tmpl -rw-r--r-- 1 svn svn 2455 Jul 1 2013 pre-lock.tmpl -rw-r--r-- 1 svn svn 2786 Jul 1 2013 pre-revprop-change.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/" title="使用Docker搭建svn服务器教程">使用Docker搭建svn服务器教程</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            svn简介 SVN是Subversion的简称，是一个开放源代码的版本控制系统，相较于RCS、CVS，它采用了分支管理系统，它的设计目标就是取代CVS。互联网上很多版本控制服务已从CVS迁移到Subversion。说得简单一点SVN就是用于多个人共同开发同一个项目，共用资源的目的。
+svn的docker搭建方法  请提前在服务器安装好docker服务 本篇教程选用的docker镜像为garethflowers/svn-server 安装并启动容器代码  docker run --restart always --name svn -d -v /root/dockers/svn:/var/opt/svn -p 3690:3690 garethflowers/svn-server 简析  /root/dockers/svn为宿主机的文件目录，/var/opt/svn为容器内的文件目录 &ndash;restart always命令可以实现容器在宿主机开机时自启动 -p 3690:3690表示将宿主机的3690端口映射到容器的3690端口，此端口为svn服务的默认端口，可以根据需要自行修改  创建svn仓库和账户 进入容器中进行配置 docker exec -it svn /bin/sh 创建名称为svn的资源仓库 svnadmin create svn 创建成功后svn目录内应该包含以下文件: README.txt conf db format hooks locks
+资源仓库配置，修改svnserve.conf anon-access = none # 匿名用户不可读写，也可设置为只读 readauth-access = write # 授权用户可写password-db = passwd # 密码文件路径，相对于当前目录authz-db = authz # 访问控制文件realm = /var/opt/svn/svn # 认证命名空间，会在认证提示界面显示，并作为凭证缓存的关键字，可以写仓库名称比如svn配置账号与密码，修改 passwd文件，格式为“账号 = 密码” [users]# harry = harryssecret# sally = sallyssecretadmin = 123456配置账户权限，修改 authz文件 [groups]owner = admin[/] # / 表示所有仓库admin = rw # 用户 admin 在所有仓库拥有读写权限[svn:/] # 表示以下用户在仓库 svn 的所有目录有相应权限@owner = rw # 表示 owner 组下的用户拥有读写权限拉取svn svn co svn://127.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/docker_xfs%E5%8D%A1%E6%AD%BB/" title="docker xfs卡死">docker xfs卡死</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            原因 docker在xfs文件系统中，过于频繁create/destory container、pull/push image，当thin pool满时，DeviceMapper后端默认文件系统xfs会不断retry 失败的IO，导致进程挂起。
+解决办法  不用xfs文件系统 加入启动参数 dm.xfs_nospace_max_retries=0  ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/docker_xfs%E5%8D%A1%E6%AD%BB/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/" title="如何在mongoengine中使用referencefield引用本类">如何在mongoengine中使用referencefield引用本类</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            引用：原文
+from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&#34;self&#34;, reverse_delete_rule = NULLIFY) ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://siskinc.github.io/page/4/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://siskinc.github.io/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/3/">3</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/4/">4</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://siskinc.github.io/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/6/">6</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/7/">7</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/page/6/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

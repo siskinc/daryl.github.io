@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+	<meta name="generator" content="Hugo 0.81.0-DEV" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>Daryl&#39;s Blog | </title>
+    <meta property="og:title" content="Daryl&#39;s Blog | ">
+    <meta property="og:type" content="website">
+    <meta name="Keywords" content="">
+    <meta name="description" content="">
+    <meta property="og:url" content="https://siskinc.github.io/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/index.xml" title="Daryl's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <h1>
+                        <a id="logo" href="https://siskinc.github.io/">
+                            Daryl&#39;s Blog
+                        </a>
+                    </h1>
+                
+                
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/" title="Django上传图片">Django上传图片</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            model from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&#39;share_pictures/&#39;) name = models.CharField(max_length = 50) class Meta: db_table = &#34;picture&#34; def __str__(self): return self.name forms from django import forms class ImageForm(forms.Form): name = forms.CharField(max_length = 100, label=&#39;名字：&#39;) picture = forms.ImageField(label=&#39;图片：&#39;) Views class PictureView(APIView): def get(self, request): name = request.GET.get(&#39;name&#39;, &#39;&#39;) try: picture = Picture.objects.get(name=name) except Picture.DoesNotExist: return Response(status=status.HTTP_404_NOT_FOUND) image = open(picture.path.url[1:], &#39;rb&#39;).read() return HttpResponse(image, content_type=&#39;image/png&#39;) def post(self, request): MyImageForm = ImageForm(request.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%BD%93%E6%88%91%E4%BB%AC%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E4%BB%AC%E5%BA%94%E8%AF%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BB%80%E4%B9%88%E5%91%A2/" title="当我们接到一个需求时，我们应该做一些什么呢？">当我们接到一个需求时，我们应该做一些什么呢？</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+沟通需求  不论是什么样的团队，按照道理来说一定会有一个和你对接的产品
+  沟通大致的轮廓，一般来说，产品不会把东西都会给你说清楚，因为很多人都是很被动的，喜欢一问一答的方式。 知道了一个需求的大致内容，现在应该去每一句话的去分享需求文档，然后发掘里面的细节，查看会不会影响到程序的实现，或者会影响到其他的功能，这些都是我们开发人员需要去注意的。 现在已经确认程序能够去实现这个需求，那么我们应该做什么呢？先分析我们需要如何去实现，并且应该多想想能不能有其他的实现方案，哪一个更好？ 要保证一个功能完美的在线上运行，我们最需要的是测试，我们在开发前就应该我们应该测试的案例，一开始你可能写不出来，无所谓，等你慢慢成为老油条，你一眼就知道要做些啥，而且这个东西不要只停留在想想中，一定要记下来，在开发过程中你还会想到许许多多的测试案例，也都记下来，不要偷懒，偷懒的后果出现bug会导致你被好几个人怼，包括测试。 开发，有前面的测试案例的发散，在写代码的过程你会发现，你会注意很多问题，包括边界条件。 自主测试，其实一个功能，最了解他的除了产品，可能就是你自己了，你知道怎么实现的，你最应该知道怎么测试，而且，测试人员也会有打盹的时候，很多时候我自己测试过后给了测试，依然会有bug，也就是说，测试人员的测试案例依然还是在我写的测试案例中，在不断积累的下，你会发现你的一个小需求可能会测试很多个测试案例，这是一个好事，这样你的功能才会在线上健壮的跑下去。  ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%BD%93%E6%88%91%E4%BB%AC%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E4%BB%AC%E5%BA%94%E8%AF%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BB%80%E4%B9%88%E5%91%A2/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/" title="Python any() 函数">Python any() 函数</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。
+元素除了是 0、空、FALSE 外都算 TRUE。
+如果想要测试一个list中是否有一个是1可以使用any，例如：
+x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&#39;passed&#39;) if 1 in (x, y, z): print(&#39;passed&#39;) # These only test for truthiness: if x or y or z: print(&#39;passed&#39;) if any((x, y, z)): print(&#39;passed&#39;) ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/" title="Python如何合并两个字典">Python如何合并两个字典</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            Python 3
+x = {&#39;a&#39;: 1, &#39;b&#39;: 2} y = {&#39;b&#39;: 3, &#39;c&#39;: 4} z = {**x, **y} Python 2
+z = dict(x, **y)  Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖
+ ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/" title="Python中下划线的5种含义">Python中下划线的5种含义</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+单前导下划线 _var 当涉及到变量和方法名称时，单个下划线前缀有一个约定俗成的含义。 它是对程序员的一个提示 - 意味着Python社区一致认为它应该是什么意思，但程序的行为不受影响。
+下划线前缀的含义是告知其他程序员：以单个下划线开头的变量或方法仅供内部使用。 该约定在PEP 8中有定义。
+单末尾下划线 var_ 有时候，一个变量的最合适的名称已经被一个关键字所占用。 因此，像class或def这样的名称不能用作Python中的变量名称。 在这种情况下，你可以附加一个下划线来解决命名冲突。总之，单个末尾下划线（后缀）是一个约定，用来避免与Python关键字产生命名冲突。 PEP 8解释了这个约定。
+双前导下划线 __var 到目前为止，我们所涉及的所有命名模式的含义，来自于已达成共识的约定。 而对于以双下划线开头的Python类的属性（包括变量和方法），情况就有点不同了。
+双下划线前缀会导致Python解释器重写属性名称，以避免子类中的命名冲突。
+这也叫做名称修饰（name mangling） - 解释器更改变量的名称（例如：class名为Test, 变量名为__a,那么__a会被Python解释器重写属性名为_Test__a），以便在类被扩展的时候不容易产生冲突。名称修饰会影响在一个类的上下文中，以两个下划线字符（&ldquo;dunders&rdquo;）开头的所有名称。
+双前导和双末尾下划线 var 如果一个名字同时以双下划线开始和结束，则不会应用名称修饰。 由双下划线前缀和后缀包围的变量不会被Python解释器修改。
+单下划线 _ 按照习惯，有时候单个独立下划线是用作一个名字，来表示某个变量是临时的或无关紧要的。你也可以在拆分(unpacking)表达式中将单个下划线用作“不关心的”变量，以忽略特定的值。 同样，这个含义只是“依照约定”，并不会在Python解释器中触发特殊的行为。 单个下划线仅仅是一个有效的变量名称，会有这个用途而已。
+除了用作临时变量之外，“_”是大多数Python REPL中的一个特殊变量，它表示由解释器评估的最近一个表达式的结果。
+Python下划线命名模式 - 小结 evernotecid://9326179B-5200-4478-B32E-B919B94B243C/appyinxiangcom/21231346/ENResource/p4……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/" title="Golang不会自动把slice转换成interface{}类型的slice">Golang不会自动把slice转换成interface{}类型的slice</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+例子 我们时常会写一些interface，例如：
+type A interface{ Print() } type B struct { } func (b *B) Print() { fmt.Println(&#34;Here is *B&#34;) } 赋值的时候:
+var a A a = &amp;B{} 诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码
+var aa []A aa = make([]*B, 10) 好的，现在翻车了，会得到一个这样的报错：
+cannot use make([]*B, 10) (type []*B) as type []A in assignment原因   []A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。
+  []A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。
+  如何去实现 bb := []*B{&amp;B{}, &amp;B{}} var aa []AA = make([]AA, len(bb)) for i, d := range bb { aa[i] = d } ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/" title="Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC">Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+ PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型
+ PyAPI_DATA(type): 声明公共的Python数据和类型
+PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接
+/* All windows ports, except cygwin, are handled in PC/pyconfig.h. Cygwin is the only other autoconf platform requiring special linkage handling and it uses __declspec(). */ /* 除了cygwin之外的所有Windows socket 文件都在PC / pyconfig.h中处理。 */ #if defined(__CYGWIN__)  # define HAVE_DECLSPEC_DLL  #endif  /* only get special linkage if built as shared or platform is Cygwin */ #if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__)  # if defined(HAVE_DECLSPEC_DLL)  # if defined(Py_BUILD_CORE) || defined(Py_BUILD_CORE_BUILTIN)  # define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE  # define PyAPI_DATA(RTYPE) extern __declspec(dllexport) RTYPE  /* module init functions inside the core need no external linkage */ /* except for Cygwin to handle embedding */ # if defined(__CYGWIN__)  # define PyMODINIT_FUNC __declspec(dllexport) PyObject*  # else /* __CYGWIN__ */ # define PyMODINIT_FUNC PyObject*  # endif /* __CYGWIN__ */ # else /* Py_BUILD_CORE */ /* Building an extension module, or an embedded situation */ /* public Python functions and data are imported */ /* Under Cygwin, auto-import functions to prevent compilation */ /* failures similar to those described at the bottom of 4.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/" title="Python源码阅读——基础">Python源码阅读——基础</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+ 阅读源码的版本: cmmit id: 9e4f2f3a6b8ee995c365e86d976937c141d867f8
+ 在阅读Python的源码时，我们第一个想到的就是先去阅读Python的数据结构的源码。
+那么，我们先去挨着看看。
+数据结构 long struct _longobject { PyObject_VAR_HEAD digit ob_digit[1]; }; list typedef struct { PyObject_VAR_HEAD /* Vector of pointers to list elements. list[0] is ob_item[0], etc. */ PyObject **ob_item; /* ob_item contains space for &#39;allocated&#39; elements. The number * currently in use is ob_size. * Invariants: * 0 &lt;= ob_size &lt;= allocated * len(list) == ob_size * ob_item == NULL implies ob_size == allocated == 0 * list.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/rtti/" title="RTTI">RTTI</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+ RTTI是”Runtime Type Information”的缩写，意思是运行时类型信息，它提供了运行时确定对象类型的方法。
+ typeid函数  对于c++的内置数据类型，typeid可以方便的输出它们的数据类型。
+ #include &lt;iostream&gt; #include &lt;typeinfo&gt; using namespace std; int main() { short s = 2; unsigned ui = 10; int i = 10; char ch = &#39;a&#39;; wchar_t wch = L&#39;b&#39;; float f = 1.0f; double d = 2; cout&lt;&lt;typeid(s).name()&lt;&lt;endl; // short  cout&lt;&lt;typeid(ui).name()&lt;&lt;endl; // unsigned int  cout&lt;&lt;typeid(i).name()&lt;&lt;endl; // int  cout&lt;&lt;typeid(ch).name()&lt;&lt;endl; // char  cout&lt;&lt;typeid(wch).name()&lt;&lt;endl; // wchar_t  cout&lt;&lt;typeid(f).name()&lt;&lt;endl; // float  cout&lt;&lt;typeid(d).……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/rtti/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/" title="Python3 和 Python2的区别">Python3 和 Python2的区别</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-content">
+            [TOC]
+print   Python2.7的print不是一个function
+  Python3里的print是一个function。
+  Unicode   Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。
+  Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。
+  由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：
+&gt;&gt;&gt; 中国 = &#39;china&#39; &gt;&gt;&gt;print(中国) china Python 2.x
+&gt;&gt;&gt; str = &#34;我爱北京天安门&#34; &gt;&gt;&gt; str &#39;\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8&#39; &gt;&gt;&gt; str = u&#34;我爱北京天安门&#34; &gt;&gt;&gt; str u&#39;\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8&#39; Python 3.x
+&gt;&gt;&gt; str = &#34;我爱北京天安门&#34; &gt;&gt;&gt; str &#39;我爱北京天安门&#39; 除法运算 Python中的除法较其它语言显得非常高端，有套很复杂的规则。Python中的除法有两个运算符，/和//
+首先来说/除法:……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/">阅读全文</a></p>
+    </article>
+    
+    
+
+
+
+<ol class="page-navigator">
+    
+    <li class="prev">
+        <a href="https://siskinc.github.io/page/6/">上一页</a>
+    </li>
+    
+
+    
+    <li >
+        <a href="https://siskinc.github.io/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/2/">2</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/3/">3</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/4/">4</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/5/">5</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/6/">6</a>
+    </li>
+    
+    <li  class="current">
+        <a href="https://siskinc.github.io/page/7/">7</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/8/">8</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/page/10/">10</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/page/8/">下一页</a>
+    </li>
+    
+</ol>
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By </a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/" title="HTTP 与 HTTPS 的区别">HTTP 与 HTTPS 的区别</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
