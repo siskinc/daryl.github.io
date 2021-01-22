@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式</h1>
+  <time datetime=2019-07-25T17:03:24Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<h2 id="1直接使用字符串相加">1、直接使用字符串相加</h2>
+<pre><code>std::string a = &amp;quot;hello&amp;quot;;
+std::string b = &amp;quot;hello&amp;quot;;
+for(int i = 0; i &amp;lt; 100; ++i)
+{
+	a = b + a;
+}
+</code></pre><h2 id="2使用insert函数">2、使用insert函数</h2>
+<pre><code>std::string a = &amp;quot;hello&amp;quot;;
+for(int i = 0; i &amp;lt; 100; ++i)
+{
+	a.insert(0, &amp;quot;hello&amp;quot;);
+}
+</code></pre><h2 id="比较通过quick-c-benchmarks-可得到结果">比较：通过Quick C++ Benchmarks 可得到结果</h2>
+<pre><code>static void StringCreation(benchmark::State&amp;amp; state) {
+  // Code inside this loop is measured repeatedly
+  std::string x = &amp;quot;hello&amp;quot;;
+  for (auto _ : state) {
+    x.insert(0,&amp;quot;hello&amp;quot;);
+    // Make sure the variable is not optimized away by compiler
+    benchmark::DoNotOptimize(x);
+  }
+}
+// Register the function as a benchmark
+BENCHMARK(StringCreation);
+
+static void StringCopy(benchmark::State&amp;amp; state) {
+  // Code before the loop is not measured
+  std::string x = &amp;quot;hello&amp;quot;;
+  for (auto _ : state) {
+    x = &amp;quot;hello&amp;quot; + x;
+  }
+}
+BENCHMARK(StringCopy);
+
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4779802-ac7c040de5c3a024.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>axios_发送post请求 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>axios_发送post请求</h1>
+  <time datetime=0001-01-01T00:00:00Z class="post-date">Mon, Jan 1, 0001</time>
+  <p>[TOC]</p>
+<h2 id="方案一">方案一</h2>
+<p><strong>在node中使用axios以post的方式发送一张图片给某个server时:</strong></p>
+<pre><code>let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)
+		axios.post(url,{media:data,type:&amp;quot;image&amp;quot;})
+		.then(function (response) {
+		console.log(response.data);
+		})
+		.catch(function (error) {
+		console.log(error);
+		})
+</code></pre><h2 id="方案二">方案二</h2>
+<p><strong>事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：</strong></p>
+<pre><code>let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)
+let form = {
+type:&amp;quot;image&amp;quot;,
+media:data
+}
+request.post({url:url,formData:form},(err,res,body)=&amp;gt;{
+if(err) console.log(err)
+console.log(body)
+})
+</code></pre><pre><code>// 注册事件方法
+    register: function() {
+      let registerUrl = this.GetServerUrl() + &amp;quot;/user/signup&amp;quot;;
+      let params = {
+        username: this.username,
+        password: this.password,
+        email:    this.email,
+        captcha:  this.captcha
+      };
+      this.axios
+        .post(registerUrl, params)
+        .then(response =&amp;gt; {
+          if(response.status == 0) {
+            
+          }
+        });
+    }
+</code></pre>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

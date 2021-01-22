@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Centos下，源码安装Python的h3包 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Centos下，源码安装Python的h3包</h1>
+  <time datetime=2020-04-06T17:36:42Z class="post-date">Mon, Apr 6, 2020</time>
+  <blockquote>
+<p>公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。</p>
+</blockquote>
+<h2 id="检查cmake版本">检查cmake版本</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cmake --version
+
+</code></pre></div><p>如果版本显示是<strong>3.1</strong>以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：<a href="https://blog.csdn.net/jiang_xinxing/article/details/77945478" title="Centos7安装高版本Cmake">Centos7安装高版本Cmake</a></p>
+<h2 id="下载文件">下载文件</h2>
+<blockquote>
+<p>自己下载对于的master压缩包</p>
+</blockquote>
+<ol>
+<li><a href="https://github.com/uber/h3">https://github.com/uber/h3</a></li>
+<li><a href="https://github.com/uber/h3-py">https://github.com/uber/h3-py</a></li>
+</ol>
+<h2 id="解压文件">解压文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">unzip h3-master.zip
+
+unzip h3-py-master.zip
+
+</code></pre></div><h2 id="修改installsh文件">修改.install.sh文件</h2>
+<p>在解压后的h3-py-master文件夹中有一个.install.sh</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/usr/bin/env bash
+</span><span style="color:#75715e"></span>
+
+
+set -ex
+
+
+
+VERSION<span style="color:#f92672">=</span>$1
+
+IS_64BITS<span style="color:#f92672">=</span>$2
+
+
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;</span>$VERSION<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+
+    echo <span style="color:#e6db74">&#34;Failed to specify version required&#34;</span>
+
+    exit <span style="color:#ae81ff">1</span>
+
+<span style="color:#66d9ef">fi</span>
+
+
+
+command -v cmake  &gt;/dev/null 2&gt;&amp;<span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> echo <span style="color:#e6db74">&#34;cmake required but not found.&#34;</span>; exit 1; <span style="color:#f92672">}</span>
+
+
+
+mkdir -p h3/out
+
+rm -rf h3c
+
+git clone https://github.com/uber/h3.git h3c
+
+
+
+pushd h3c
+
+git pull origin master --tags
+
+git checkout <span style="color:#e6db74">&#34;</span>$VERSION<span style="color:#e6db74">&#34;</span>
+
+
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;Windows_NT&#34;</span> !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span>$OS<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+
+  command -v make &gt;/dev/null 2&gt;&amp;<span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> echo <span style="color:#e6db74">&#34;make required but not found.&#34;</span>; exit 1; <span style="color:#f92672">}</span>
+
+  command -v cc &gt;/dev/null 2&gt;&amp;<span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> <span style="color:#f92672">{</span> echo <span style="color:#e6db74">&#34;cc required but not found.&#34;</span>; exit 1; <span style="color:#f92672">}</span>
+
+
+
+  cmake -DENABLE_FORMAT<span style="color:#f92672">=</span>OFF -DBUILD_SHARED_LIBS<span style="color:#f92672">=</span>ON .
+
+
+
+  make
+
+  ls -l lib/libh3*
+
+  cp lib/libh3* ../h3/out
+
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -e ../build <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -d ../build <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+
+      LIBNAME<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>ls ../build/ | grep <span style="color:#e6db74">&#39;^lib&#39;</span><span style="color:#e6db74">`</span>
+
+      mkdir -p ../build/$LIBNAME/h3/out
+
+      cp lib/libh3* ../build/$LIBNAME/h3/out
+
+  <span style="color:#66d9ef">fi</span>
+
+<span style="color:#66d9ef">else</span>
+
+  <span style="color:#75715e"># Assumed to be Windows, default to x86</span>
+
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[[</span> <span style="color:#e6db74">&#34;True&#34;</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;</span>$IS_64BITS<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]]</span>; <span style="color:#66d9ef">then</span>
+
+    <span style="color:#75715e"># to build on win 10 with VS 16 use this command:</span>
+
+    cmake . -DENABLE_FORMAT<span style="color:#f92672">=</span>OFF -DBUILD_SHARED_LIBS<span style="color:#f92672">=</span>ON -A x64
+
+  <span style="color:#66d9ef">else</span>
+
+    cmake . -DENABLE_FORMAT<span style="color:#f92672">=</span>OFF -DBUILD_SHARED_LIBS<span style="color:#f92672">=</span>ON
+
+  <span style="color:#66d9ef">fi</span>
+
+  cmake --build . --target h3 --config Release
+
+  ls -l bin/Release/*
+
+  cp bin/Release/h3.dll ../h3/out
+
+<span style="color:#66d9ef">fi</span>
+
+popd
+
+rm -rf h3c
+
+</code></pre></div><p>将17, 20, 21注释掉即可，这些都是下载并更新仓库<a href="https://github.com/uber/h3" title="h3">h3</a>的代码</p>
+<h2 id="移动文件">移动文件</h2>
+<p>将解压后的文件夹<code>h3-master</code>移动到<code>h3-py-master</code>中，并且更名为<code>h3c</code></p>
+<h2 id="编译并安装">编译并安装</h2>
+<p>在<code>h3-py-master</code>文件夹中执行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python setup.py build
+
+python setup.py install
+
+</code></pre></div><p>好了，以上就是整个安装流程，祝大家coding愉快！</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

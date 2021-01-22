@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>redis_mongodb持久化的方式 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>redis_mongodb持久化的方式</h1>
+  <time datetime=0001-01-01T00:00:00Z class="post-date">Mon, Jan 1, 0001</time>
+  <p>[TOC]</p>
+<h2 id="redis持久化方式两种">redis持久化方式(两种)</h2>
+<h3 id="rdb持久化">RDB持久化</h3>
+<p>redis提供了RDB持久化的功能，这个功能可以将redis在内存中的的状态保存到硬盘中，相当于snapshot，它可以手动执行，也可以再redis.conf中配置，定期执行。</p>
+<h4 id="相关配置">相关配置</h4>
+<ol>
+<li>
+<p>databases</p>
+<p>配置db文件的数目，可以用select dbid 指令为每个连接指定后续持久化时的db文件，新连接默认均使用db 0</p>
+</li>
+<li>
+<p>save</p>
+<p>SNAPSHOTTING的持久化方式有多种save策略可供选择，而且支持混用，例如：  
+save 900 1  
+save 300 100  
+save 60  10000  
+上述配置的效果是：snapshotting会在3个条件中的任何一个满足时被触发：</p>
+<ul>
+<li>900s内至少1个key有变化；</li>
+<li>300s内至少100个key有变化；</li>
+<li>60s内至少有10000个key有变化</li>
+</ul>
+<p>save条件被触发时，Redis通过fork子进程，由子进程在后台实现异步dump磁盘。根据fork的写时复制策略，若持久化过程中出现很多写入请求，在最坏的情况下，需要的内存是当前数据集所占内存的2倍。  
+备注1：上述配置的3个触发条件其实是逐次加强的，哪个条件先满足就先触发那个save策略。  
+备注2：如果业务不需要持久化或不需要RDB方式的持久化，可以通过注释掉save配置项来实现</p>
+</li>
+<li>
+<p>stop-writes-on-bgsave-error</p>
+<p>指定Redis在后台dump磁盘出错时的行为，默认为yes，表示若后台dump出错，则RedisServer拒绝新的写入请求，通过这种方式来引起用户警觉，避免因用户未发现异常而引起更大的事故。</p>
+</li>
+<li>
+<p>rdbcompression</p>
+<p>RDB文件是否压缩存储，若为yes，会在压缩时消耗一点CPU，但省磁盘空间。</p>
+</li>
+<li>
+<p>rdbchecksum</p>
+<p>RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC64并将结果追加至文件尾，同样，Redis启动Load RDB时，也会先计算该文件的CRC64并与dump时的计算结果对比。  
+        好处：可以严格保证RDB的完整性及安全性  
+        代价：会在dump或load时损失10%的性能。如果要最大化Redis的性能，这个配置项应该用no关掉</p>
+</li>
+<li>
+<p>dbfilename</p>
+<p>指定RDB文件名，默认为dump.rdb</p>
+</li>
+<li>
+<p>dir</p>
+<p>指定RDB文件存放目录的路径，若包含多级路径，则相关父路径需事先mkdir出来，否则启动失败。</p>
+</li>
+</ol>
+<h3 id="aof持久化">AOF持久化</h3>
+<p>AOF持久化（Append-Only-File），与RDB持久化不同，AOF持久化是通过保存Redis服务器锁执行的写状态来记录数据库的，即commandlog。</p>
+<p>具体来说，RDB持久化相当于备份数据库状态，而AOF持久化是备份数据库接收到的命令，所有被写入AOF的命令都是以redis的协议格式来保存的。</p>
+<p>在AOF持久化的文件中，数据库会记录下所有变更数据库状态的命令，除了指定数据库的select命令，其他的命令都是来自client的，这些命令会以追加(append)的形式保存到文件中。<strong>AOF的引入可以将数据损失的程度减少到1秒或1条写入指令。</strong></p>
+<h4 id="相关配置-1">相关配置‘</h4>
+<ol>
+<li>
+<p>appendonly</p>
+<p>配置是否启用AOF持久化，默认为no</p>
+</li>
+<li>
+<p>appendfilename</p>
+<p>指定aof文件名，默认为appendonly.aof</p>
+</li>
+<li>
+<p>appendfsync</p>
+<p>配置aof文件的同步方式，Redis支持3种方式:</p>
+<ul>
+<li>no =&gt; redis不主动调用fsync，何时刷盘由OS来调度；</li>
+<li>always =&gt; redis针对每个写入命令均会主动调用fsync刷磁盘；</li>
+<li>everysec =&gt; 每秒调一次fsync刷盘。</li>
+</ul>
+<p>用户可以根据业务对数据的敏感性选择合适的同步策略。</p>
+</li>
+<li>
+<p>no-appendfsync-on-rewrite</p>
+<p>指定是否在后台aof文件rewrite期间调用fsync，默认为no，表示要调用fsync（无论后台是否有子进程在刷盘）。备注：Redis在后台写RDB文件或重写aof文件期间会存在大量磁盘IO，此时，在某些linux系统中，调用fsync可能会阻塞。</p>
+</li>
+<li>
+<p>auto-aof-rewrite-percentage</p>
+<p>指定Redis重写aof文件的条件，默认为100，表示与上次rewrite的aof文件大小相比，当前aof文件增长量超过上次aof文件大小的100%时，就会触发background rewrite。若配置为0，则会禁用自动rewrite。</p>
+</li>
+<li>
+<p>auto-aof-rewrite-min-size</p>
+<p>指定触发rewrite的aof文件大小。若aof文件小于该值，即使当前文件的增量比例达到auto-aof-rewrite-percentage的配置值，也不会触发自动rewrite。即这两个配置项同时满足时，才会触发rewrite。</p>
+</li>
+</ol>
+<h3 id="两种持续化方式需要明确的问题">两种持续化方式需要明确的问题</h3>
+<ol>
+<li>
+<p>若同时启用RDB和AFO两种持久化方式，则Redis Server启动时，会加载AOF文件以重建数据集，因为AOF可以保证数据是相对最完整的。</p>
+</li>
+<li>
+<p>关于RDB和AOF各自的优缺点以及用户如何选择合适的持久化策略</p>
+</li>
+<li>
+<p>若可以忍受数据丢失，只启用RDB即可；若对数据很敏感，可以同时启用RDB和AOF；不建议只启用AOF（注释配置文件的save配置项或通过redis-cli执行save &ldquo;&quot;），因为一旦如果AOF文件损坏或AOF解析引擎存在bug，整个数据集都无法重建。</p>
+</li>
+</ol>
+<h3 id="对比">对比</h3>
+<p>AOF更安全，可将数据及时同步到文件中，但需要较多的磁盘IO，AOF文件尺寸较大，文件内容恢复相对较慢， 也更完整。  
+RDB持久化，安全性较差，它是正常时期数据备份及 master-slave数据同步的最佳手段，文件尺寸较小，恢复数度较快。</p>
+<h2 id="mongodb持久化方式">MongoDB持久化方式</h2>
+<blockquote>
+<p>mongodb在启动时，专门初始化一个线程不断循环（除非应用crash掉），用于在一定时间周期内来从defer队列中获取要持久化的数据并写入到磁盘的journal(日志)和mongofile(数据)处，当然因为它不是在用户添加记录时就写到磁盘上，所以按mongodb开发者说，它不会造成性能上的损耗，因为看过代码发现，当进行CUD操作时，记录(Record类型)都被放入到defer队列中以供延时批量（groupcommit）提交写入，但相信其中时间周期参数是个要认真考量的参数，系统为90毫秒，如果该值更低的话，可能会造成频繁磁盘操作，过高又会造成系统宕机时数据丢失过。</p>
+</blockquote>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

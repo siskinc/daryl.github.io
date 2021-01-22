@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>redis源码解读--动态字符串SDSHDR &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>redis源码解读--动态字符串SDSHDR</h1>
+  <time datetime=2019-07-25T16:54:31Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<p>阅读源码: sds.h sds.c</p>
+<p>SDSHDR 全称 Simple Dynamic Strings Header</p>
+<h2 id="sds">sds</h2>
+<blockquote>
+<p>char *的别名</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sds;
+
+</code></pre></div><h2 id="sdshdr">sdshdr</h2>
+<blockquote>
+<p>sdshdr有好几个类别，它们分别是：sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64，其中sdshdr5是不使用的  
+源码如下：</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Note: sdshdr5 is never used, we just access the flags byte directly.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * However is here to document the layout of type 5 SDS strings. */</span>
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span> ((__packed__)) sdshdr5 {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags; <span style="color:#75715e">/* 3 lsb of type, and 5 msb of string length */</span>
+
+    <span style="color:#66d9ef">char</span> buf[];
+
+};
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span> ((__packed__)) sdshdr8 {
+
+    uint8_t len; <span style="color:#75715e">/* used */</span>
+
+    uint8_t alloc; <span style="color:#75715e">/* excluding the header and null terminator */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags; <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+
+    <span style="color:#66d9ef">char</span> buf[];
+
+};
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span> ((__packed__)) sdshdr16 {
+
+    uint16_t len; <span style="color:#75715e">/* used */</span>
+
+    uint16_t alloc; <span style="color:#75715e">/* excluding the header and null terminator */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags; <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+
+    <span style="color:#66d9ef">char</span> buf[];
+
+};
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span> ((__packed__)) sdshdr32 {
+
+    uint32_t len; <span style="color:#75715e">/* used */</span>
+
+    uint32_t alloc; <span style="color:#75715e">/* excluding the header and null terminator */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags; <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+
+    <span style="color:#66d9ef">char</span> buf[];
+
+};
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span> ((__packed__)) sdshdr64 {
+
+    uint64_t len; <span style="color:#75715e">/* used */</span>
+
+    uint64_t alloc; <span style="color:#75715e">/* excluding the header and null terminator */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags; <span style="color:#75715e">/* 3 lsb of type, 5 unused bits */</span>
+
+    <span style="color:#66d9ef">char</span> buf[];
+
+};
+
+</code></pre></div><blockquote>
+<p>这五个结构体中，len表示字符串的长度，alloc表示buf指针分配空间的大小，flags表示该字符串的类型(sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64),是由flags的第三位表示的，至于为何怎么说，请看下方的源码：</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define SDS_TYPE_5  0
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define SDS_TYPE_8  1
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define SDS_TYPE_16 2
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define SDS_TYPE_32 3
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define SDS_TYPE_64 4
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define SDS_TYPE_MASK 7
+</span><span style="color:#75715e"></span>
+</code></pre></div><blockquote>
+<p>可以看出SDS_TYPE只占用了0,1,2,3,4五个数字，正好占用三位，我们就可以使用flags&amp;SDS_TYPE_MASK来获取动态字符串对应的字符串类型  
+<strong>注意一个小细节：<strong>attribute</strong> ((<strong>packed</strong>))</strong>，这一段代码的作用是<strong>取消编译阶段的内存优化对齐功能</strong>。  
+例如：struct aa {char a; int b;}; sizeof(aa) == 8;  
+但是struct <strong>attribute</strong> ((<strong>packed</strong>)) aa {char a; int b;}; sizeof(aa) == 5;  
+这个很重要，redis源码中不是直接对sdshdr某一个类型操作，往往参数都是sds，而sds就是结构体中的buf，在后面的源码分析中，你可能会经常看见s[-1]这种魔法一般的操作，而按照sdshdr内存分布s[-1]就是sdshdr中flags变量，由此可以获取到该sds指向的字符串的类型。</p>
+</blockquote>
+<h2 id="sds中的宏定义函数">SDS中的宏定义函数</h2>
+<h3 id="sds_hdr_varts">SDS_HDR_VAR(T,s)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define SDS_HDR_VAR(T,s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
+</span><span style="color:#75715e"></span>
+</code></pre></div><blockquote>
+<p>查看这段代码首先得明白 C 语言中的宏定义##操作符，我在此就不再解释了  
+这段代码就很骚气了，用个例子来解释：</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">SDS_HDR_VAR(<span style="color:#ae81ff">8</span>,s);
+
+<span style="color:#75715e">//下面是对应宏定义翻译的产物
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">struct</span> sdshdr8 <span style="color:#f92672">*</span>sh <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>)((s)<span style="color:#f92672">-</span>(<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">struct</span> sdshdr<span style="color:#960050;background-color:#1e0010">##</span>T)));
+
+</code></pre></div><blockquote>
+<p>这样就可以根据<strong>指向buf的sds变量s</strong>得到sdshdr8的指针，是不是感觉很神奇？</p>
+</blockquote>
+<h3 id="sds_hdrts">SDS_HDR(T,s)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define SDS_HDR(T,s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
+</span><span style="color:#75715e"></span>
+</code></pre></div><blockquote>
+<p>同上方的函数类似，根据<strong>指向buf的sds变量s</strong>得到sdshdr的指针，只不过这里是获取的是指针地址，上方函数是创建了一个变量</p>
+</blockquote>
+<h3 id="sds_type_5_lenf">SDS_TYPE_5_LEN(f)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define SDS_TYPE_BITS 3
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define SDS_TYPE_5_LEN(f) ((f)&amp;gt;&amp;gt;SDS_TYPE_BITS)
+</span><span style="color:#75715e"></span>
+</code></pre></div><blockquote>
+<p>看名字就知道该函数就是获取sdshdr5字符串类型的长度，由于根本不使用sdshdr5类型，所以需要直接返回空，而flags成员使用最低三位有效位来表示类型，所以让f代表的flags的值右移三位即可</p>
+</blockquote>
+<hr>
+<p>上方基本上就是sds的核心内容了，然后再看看sds中的几个内联函数</p>
+<h3 id="static-inline-size_t-sdslenconst-sds-s">static inline size_t sdslen(const sds s)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> size_t <span style="color:#a6e22e">sdslen</span>(<span style="color:#66d9ef">const</span> sds s) {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+
+    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>amp;SDS_TYPE_MASK) {
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_5:
+
+            <span style="color:#66d9ef">return</span> SDS_TYPE_5_LEN(flags);
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_8:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">8</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_16:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">16</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_32:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">32</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_64:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">64</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+}
+
+</code></pre></div><blockquote>
+<p>该处就使用到了取消编译阶段的内存优化对齐功能，直接使用s[-1]获取到flags成员的值，然后根据flags&amp;&amp;SDS_TYPE_MASK来获取到动态字符串对应的类型进而获取动态字符串的长度。</p>
+</blockquote>
+<h3 id="static-inline-size_t-sdsavailconst-sds-s">static inline size_t sdsavail(const sds s)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> size_t <span style="color:#a6e22e">sdsavail</span>(<span style="color:#66d9ef">const</span> sds s) {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+
+    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>amp;SDS_TYPE_MASK) {
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_5: {
+
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_8: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">8</span>,s);
+
+            <span style="color:#66d9ef">return</span> sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">-</span> sh<span style="color:#f92672">-&amp;</span>gt;len;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_16: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">16</span>,s);
+
+            <span style="color:#66d9ef">return</span> sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">-</span> sh<span style="color:#f92672">-&amp;</span>gt;len;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_32: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">32</span>,s);
+
+            <span style="color:#66d9ef">return</span> sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">-</span> sh<span style="color:#f92672">-&amp;</span>gt;len;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_64: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">64</span>,s);
+
+            <span style="color:#66d9ef">return</span> sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">-</span> sh<span style="color:#f92672">-&amp;</span>gt;len;
+
+        }
+
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+}
+
+</code></pre></div><blockquote>
+<p>获取动态字符串可使用的空间，从这里可以看出来，SDS和我平常所用到的C语言的原生字符串有差别，因为从获取可用空间的计算方法来看，并未考虑到字符串需要以\0结尾，因为结构体本身带有长度的成员len，不需要\0来做字符串结尾的判定，而且不使用\0作为结尾有很多好处，可以存储的类型多样性就提高了。</p>
+</blockquote>
+<h3 id="static-inline-void-sdssetlensds-s-size_t-newlen">static inline void sdssetlen(sds s, size_t newlen)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdssetlen</span>(sds s, size_t newlen) {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+
+    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>amp;SDS_TYPE_MASK) {
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_5:
+
+            {
+
+                <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)s)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+
+                <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> SDS_TYPE_5 <span style="color:#f92672">|</span> (newlen <span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt; SDS_TYPE_BITS);
+
+            }
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_8:
+
+            SDS_HDR(<span style="color:#ae81ff">8</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_16:
+
+            SDS_HDR(<span style="color:#ae81ff">16</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_32:
+
+            SDS_HDR(<span style="color:#ae81ff">32</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_64:
+
+            SDS_HDR(<span style="color:#ae81ff">64</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+    }
+
+}
+
+</code></pre></div><blockquote>
+<p>设置sds的长度</p>
+</blockquote>
+<h3 id="static-inline-void-sdsinclensds-s-size_t-inc">static inline void sdsinclen(sds s, size_t inc)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsinclen</span>(sds s, size_t inc) {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+
+    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>amp;SDS_TYPE_MASK) {
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_5:
+
+            {
+
+                <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)s)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+
+                <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> newlen <span style="color:#f92672">=</span> SDS_TYPE_5_LEN(flags)<span style="color:#f92672">+</span>inc;
+
+                <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> SDS_TYPE_5 <span style="color:#f92672">|</span> (newlen <span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt; SDS_TYPE_BITS);
+
+            }
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_8:
+
+            SDS_HDR(<span style="color:#ae81ff">8</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">+=</span> inc;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_16:
+
+            SDS_HDR(<span style="color:#ae81ff">16</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">+=</span> inc;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_32:
+
+            SDS_HDR(<span style="color:#ae81ff">32</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">+=</span> inc;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_64:
+
+            SDS_HDR(<span style="color:#ae81ff">64</span>,s)<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">+=</span> inc;
+
+            <span style="color:#66d9ef">break</span>;
+
+    }
+
+}
+
+</code></pre></div><blockquote>
+<p>增加sds的长度</p>
+</blockquote>
+<h3 id="static-inline-size_t-sdsallocconst-sds-s">static inline size_t sdsalloc(const sds s)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* sdsalloc() = sdsavail() + sdslen() */</span>
+
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> size_t <span style="color:#a6e22e">sdsalloc</span>(<span style="color:#66d9ef">const</span> sds s) {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+
+    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>amp;SDS_TYPE_MASK) {
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_5:
+
+            <span style="color:#66d9ef">return</span> SDS_TYPE_5_LEN(flags);
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_8:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">8</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_16:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">16</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_32:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">32</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_64:
+
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">64</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc;
+
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+}
+
+</code></pre></div><blockquote>
+<p>获取sds已分配空间的大小</p>
+</blockquote>
+<h3 id="static-inline-void-sdssetallocsds-s-size_t-newlen">static inline void sdssetalloc(sds s, size_t newlen)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdssetalloc</span>(sds s, size_t newlen) {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+
+    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>amp;SDS_TYPE_MASK) {
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_5:
+
+            <span style="color:#75715e">/* Nothing to do, this type has no total allocation info. */</span>
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_8:
+
+            SDS_HDR(<span style="color:#ae81ff">8</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_16:
+
+            SDS_HDR(<span style="color:#ae81ff">16</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_32:
+
+            SDS_HDR(<span style="color:#ae81ff">32</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_64:
+
+            SDS_HDR(<span style="color:#ae81ff">64</span>,s)<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> newlen;
+
+            <span style="color:#66d9ef">break</span>;
+
+    }
+
+}
+
+</code></pre></div><blockquote>
+<p>设置sds已分配空间的大小</p>
+</blockquote>
+<h2 id="sds函数">SDS函数</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">sds <span style="color:#a6e22e">sdsnewlen</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>init, size_t initlen);
+
+sds <span style="color:#a6e22e">sdsnew</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>init);
+
+sds <span style="color:#a6e22e">sdsempty</span>(<span style="color:#66d9ef">void</span>);
+
+sds <span style="color:#a6e22e">sdsdup</span>(<span style="color:#66d9ef">const</span> sds s);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsfree</span>(sds s);
+
+sds <span style="color:#a6e22e">sdsgrowzero</span>(sds s, size_t len);
+
+sds <span style="color:#a6e22e">sdscatlen</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>t, size_t len);
+
+sds <span style="color:#a6e22e">sdscat</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>t);
+
+sds <span style="color:#a6e22e">sdscatsds</span>(sds s, <span style="color:#66d9ef">const</span> sds t);
+
+sds <span style="color:#a6e22e">sdscpylen</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>t, size_t len);
+
+sds <span style="color:#a6e22e">sdscpy</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>t);
+
+
+
+sds <span style="color:#a6e22e">sdscatvprintf</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fmt, va_list ap);
+
+<span style="color:#75715e">#ifdef __GNUC__
+</span><span style="color:#75715e"></span>
+sds <span style="color:#a6e22e">sdscatprintf</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fmt, ...)
+
+    __attribute__((format(printf, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)));
+
+<span style="color:#75715e">#else
+</span><span style="color:#75715e"></span>
+sds <span style="color:#a6e22e">sdscatprintf</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fmt, ...);
+
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+
+
+sds <span style="color:#a6e22e">sdscatfmt</span>(sds s, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>fmt, ...);
+
+sds <span style="color:#a6e22e">sdstrim</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>cset);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsrange</span>(sds s, ssize_t start, ssize_t end);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsupdatelen</span>(sds s);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsclear</span>(sds s);
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">sdscmp</span>(<span style="color:#66d9ef">const</span> sds s1, <span style="color:#66d9ef">const</span> sds s2);
+
+sds <span style="color:#f92672">*</span><span style="color:#a6e22e">sdssplitlen</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>s, ssize_t len, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sep, <span style="color:#66d9ef">int</span> seplen, <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>count);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsfreesplitres</span>(sds <span style="color:#f92672">*</span>tokens, <span style="color:#66d9ef">int</span> count);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdstolower</span>(sds s);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdstoupper</span>(sds s);
+
+sds <span style="color:#a6e22e">sdsfromlonglong</span>(<span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> value);
+
+sds <span style="color:#a6e22e">sdscatrepr</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>p, size_t len);
+
+sds <span style="color:#f92672">*</span><span style="color:#a6e22e">sdssplitargs</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>line, <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>argc);
+
+sds <span style="color:#a6e22e">sdsmapchars</span>(sds s, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>from, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>to, size_t setlen);
+
+sds <span style="color:#a6e22e">sdsjoin</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sep);
+
+sds <span style="color:#a6e22e">sdsjoinsds</span>(sds <span style="color:#f92672">*</span>argv, <span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sep, size_t seplen);
+
+
+
+<span style="color:#75715e">/* Low level functions exposed to the user API */</span>
+
+sds <span style="color:#a6e22e">sdsMakeRoomFor</span>(sds s, size_t addlen);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsIncrLen</span>(sds s, ssize_t incr);
+
+sds <span style="color:#a6e22e">sdsRemoveFreeSpace</span>(sds s);
+
+size_t <span style="color:#a6e22e">sdsAllocSize</span>(sds s);
+
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sdsAllocPtr</span>(sds s);
+
+
+
+<span style="color:#75715e">/* Export the allocator used by SDS to the program using SDS.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * Sometimes the program SDS is linked to, may use a different set of
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * allocators, but may want to allocate or free things that SDS will
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * respectively free or allocate. */</span>
+
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sds_malloc</span>(size_t size);
+
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sds_realloc</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr, size_t size);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sds_free</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr);
+
+</code></pre></div><blockquote>
+<p>这当中的大部分函数都很简单，只是对zmalloc文件里面的函数，sds中inline函数，或者是sdsnewlen函数的一层简单调用，就不解释，我们挑几个重点的看看。</p>
+</blockquote>
+<h3 id="sds-sdsnewlenconst-void-init-size_t-initlen">sds sdsnewlen(const void *init, size_t initlen)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Create a new sds string with the content specified by the &amp;#039;init&amp;#039; pointer
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * and &amp;#039;initlen&amp;#039;.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * If NULL is used for &amp;#039;init&amp;#039; the string is initialized with zero bytes.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * If SDS_NOINIT is used, the buffer is left uninitialized;
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * The string is always null-termined (all the sds strings are, always) so
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * even if you create an sds string with:
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * mystring = sdsnewlen(&amp;quot;abc&amp;quot;,3);
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * You can print the string with printf() as there is an implicit \0 at the
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * end of the string. However the string is binary safe and can contain
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * \0 characters in the middle, as the length is stored in the sds header. */</span>
+
+sds <span style="color:#a6e22e">sdsnewlen</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>init, size_t initlen) {
+
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>sh;
+
+    sds s;
+
+    <span style="color:#75715e">// 根据initlen来获取合适的字符串长度
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">char</span> type <span style="color:#f92672">=</span> sdsReqType(initlen);
+
+    <span style="color:#75715e">/* Empty strings are usually created in order to append. Use type 8
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">     * since type 5 is not good at this. */</span>
+
+    <span style="color:#66d9ef">if</span> (type <span style="color:#f92672">==</span> SDS_TYPE_5 <span style="color:#f92672">&amp;</span>amp;<span style="color:#f92672">&amp;</span>amp; initlen <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) type <span style="color:#f92672">=</span> SDS_TYPE_8;
+
+    <span style="color:#75715e">// 根据sds类型来获取该sds类型对应的结构体大小
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">int</span> hdrlen <span style="color:#f92672">=</span> sdsHdrSize(type);
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fp; <span style="color:#75715e">/* flags pointer. */</span>
+
+
+
+    <span style="color:#75715e">// 此处的s_malloc其实就是zmalloc函数,只是一个别名,注意这里，会给sds多增加一个字节的空间，由后面的s[initlen] = &amp;#039;\0&amp;#039;;可知，作者是为了兼容C语言的字符串类型，这样就可以直接使用printf来输出sds了，这样非常的方便
+</span><span style="color:#75715e"></span>
+    sh <span style="color:#f92672">=</span> s_malloc(hdrlen<span style="color:#f92672">+</span>initlen<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+    <span style="color:#75715e">// 如果init == &amp;quot;SDS_NOINIT&amp;quot;,那么就会把sds置为未知字符串，如果init == NULL，那么就会把sds置为空字符串
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span> (init<span style="color:#f92672">==</span>SDS_NOINIT)
+
+        init <span style="color:#f92672">=</span> NULL;
+
+    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>init)
+
+        memset(sh, <span style="color:#ae81ff">0</span>, hdrlen<span style="color:#f92672">+</span>initlen<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+    <span style="color:#66d9ef">if</span> (sh <span style="color:#f92672">==</span> NULL) <span style="color:#66d9ef">return</span> NULL;
+
+    s <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)sh<span style="color:#f92672">+</span>hdrlen;
+
+    fp <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)s)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+
+    <span style="color:#75715e">// 根据sds类型来初始化sds的内容
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">switch</span>(type) {
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_5: {
+
+            <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> type <span style="color:#f92672">|</span> (initlen <span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt; SDS_TYPE_BITS);
+
+            <span style="color:#66d9ef">break</span>;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_8: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">8</span>,s);
+
+            sh<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> initlen;
+
+            sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> initlen;
+
+            <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> type;
+
+            <span style="color:#66d9ef">break</span>;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_16: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">16</span>,s);
+
+            sh<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> initlen;
+
+            sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> initlen;
+
+            <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> type;
+
+            <span style="color:#66d9ef">break</span>;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_32: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">32</span>,s);
+
+            sh<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> initlen;
+
+            sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> initlen;
+
+            <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> type;
+
+            <span style="color:#66d9ef">break</span>;
+
+        }
+
+        <span style="color:#66d9ef">case</span> SDS_TYPE_64: {
+
+            SDS_HDR_VAR(<span style="color:#ae81ff">64</span>,s);
+
+            sh<span style="color:#f92672">-&amp;</span>gt;len <span style="color:#f92672">=</span> initlen;
+
+            sh<span style="color:#f92672">-&amp;</span>gt;alloc <span style="color:#f92672">=</span> initlen;
+
+            <span style="color:#f92672">*</span>fp <span style="color:#f92672">=</span> type;
+
+            <span style="color:#66d9ef">break</span>;
+
+        }
+
+    }
+
+    <span style="color:#75715e">// 在初始化完成后，将init的内容拷贝进sds对象中，但是init如果原来等于SDS_NOINIT，就会被置为NULL，所以sds还是一串未知的字符串
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span> (initlen <span style="color:#f92672">&amp;</span>amp;<span style="color:#f92672">&amp;</span>amp; init)
+
+        memcpy(s, init, initlen);
+
+    s[initlen] <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;;
+
+    <span style="color:#66d9ef">return</span> s;
+
+}
+
+</code></pre></div><blockquote>
+<p>该函数是一个生成新sds的函数，根据init指针和initlen参数来初始化sds的内容，根据init是否是SDS_NOINIT来设置是否需要使用init的内容初始化sds，如果是SDS_NOINIT，那么默认会将sds置为一串为未知的字符串，如果init为NULL。那么默认会将sds置为一个空字符串，并且sdsnewlen在为sds向系统申请一个新的空间的时候，新空间的长度是hdrlen+initlen+1，注意这里的+1，这多出来的一个字节，其实是放\0的，这样sds就可以使用C自带标准库(strlen,strtoll之类的函数)来操作sds中buf的内容，不然还得自己写一套，很是麻烦。</p>
+</blockquote>
+<p>以下是使用sdsnewlen函数简单调用构成的函数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// 创建一个新的sds，只不过这里只会给init参数，实际上initlen是通过strlen获取的
+</span><span style="color:#75715e"></span>
+sds <span style="color:#a6e22e">sdsnew</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>init);
+
+<span style="color:#75715e">// 创建一个空的sds
+</span><span style="color:#75715e"></span>
+sds <span style="color:#a6e22e">sdsempty</span>(<span style="color:#66d9ef">void</span>);
+
+<span style="color:#75715e">// 根据原sds，创建一个sds的副本
+</span><span style="color:#75715e"></span>
+sds <span style="color:#a6e22e">sdsdup</span>(<span style="color:#66d9ef">const</span> sds s);
+
+</code></pre></div><p>以下是对zmalloc里面的函数简单调用或者直接是别名的函数:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define s_malloc zmalloc
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define s_realloc zrealloc
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#define s_free zfree
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#75715e">/* Free an sds string. No operation is performed if &amp;#039;s&amp;#039; is NULL. */</span>
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sdsfree</span>(sds s) {
+
+    <span style="color:#66d9ef">if</span> (s <span style="color:#f92672">==</span> NULL) <span style="color:#66d9ef">return</span>;
+
+    s_free((<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)s<span style="color:#f92672">-</span>sdsHdrSize(s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]));
+
+}
+
+
+
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sds_malloc</span>(size_t size) { <span style="color:#66d9ef">return</span> s_malloc(size); }
+
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sds_realloc</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr, size_t size) { <span style="color:#66d9ef">return</span> s_realloc(ptr,size); }
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sds_free</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr) { s_free(ptr); }
+
+</code></pre></div><p>在动态字符串的所有操作中，大部分会进行对内存的扩大和释放，所以得介绍一下sds中对内存扩大和释放的函数</p>
+<h3 id="扩大sds的空闲空间----sdsmakeroomfor函数">扩大sds的空闲空间 &ndash; sdsMakeRoomFor函数</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">sds <span style="color:#a6e22e">sdsMakeRoomFor</span>(sds s, size_t addlen) {
+
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>sh, <span style="color:#f92672">*</span>newsh;
+
+    size_t avail <span style="color:#f92672">=</span> sdsavail(s);
+
+    size_t len, newlen;
+
+    <span style="color:#66d9ef">char</span> type, oldtype <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">&amp;</span>amp; SDS_TYPE_MASK;
+
+    <span style="color:#66d9ef">int</span> hdrlen;
+
+
+
+    <span style="color:#75715e">/* Return ASAP if there is enough space left. */</span>
+
+    <span style="color:#66d9ef">if</span> (avail <span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">=</span> addlen) <span style="color:#66d9ef">return</span> s;
+
+
+
+    len <span style="color:#f92672">=</span> sdslen(s);
+
+    sh <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)s<span style="color:#f92672">-</span>sdsHdrSize(oldtype);
+
+    newlen <span style="color:#f92672">=</span> (len<span style="color:#f92672">+</span>addlen);
+
+    <span style="color:#66d9ef">if</span> (newlen <span style="color:#f92672">&amp;</span>lt; SDS_MAX_PREALLOC)
+
+        newlen <span style="color:#f92672">*=</span> <span style="color:#ae81ff">2</span>;
+
+    <span style="color:#66d9ef">else</span>
+
+        newlen <span style="color:#f92672">+=</span> SDS_MAX_PREALLOC;
+
+
+
+    type <span style="color:#f92672">=</span> sdsReqType(newlen);
+
+
+
+    <span style="color:#75715e">/* Don&amp;#039;t use type 5: the user is appending to the string and type 5 is
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">     * not able to remember empty space, so sdsMakeRoomFor() must be called
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">     * at every appending operation. */</span>
+
+    <span style="color:#66d9ef">if</span> (type <span style="color:#f92672">==</span> SDS_TYPE_5) type <span style="color:#f92672">=</span> SDS_TYPE_8;
+
+
+
+    hdrlen <span style="color:#f92672">=</span> sdsHdrSize(type);
+
+    <span style="color:#66d9ef">if</span> (oldtype<span style="color:#f92672">==</span>type) {
+
+        newsh <span style="color:#f92672">=</span> s_realloc(sh, hdrlen<span style="color:#f92672">+</span>newlen<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+        <span style="color:#66d9ef">if</span> (newsh <span style="color:#f92672">==</span> NULL) <span style="color:#66d9ef">return</span> NULL;
+
+        s <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)newsh<span style="color:#f92672">+</span>hdrlen;
+
+    } <span style="color:#66d9ef">else</span> {
+
+        <span style="color:#75715e">/* Since the header size changes, need to move the string forward,
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">         * and can&amp;#039;t use realloc */</span>
+
+        newsh <span style="color:#f92672">=</span> s_malloc(hdrlen<span style="color:#f92672">+</span>newlen<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+        <span style="color:#66d9ef">if</span> (newsh <span style="color:#f92672">==</span> NULL) <span style="color:#66d9ef">return</span> NULL;
+
+        memcpy((<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)newsh<span style="color:#f92672">+</span>hdrlen, s, len<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+        s_free(sh);
+
+        s <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)newsh<span style="color:#f92672">+</span>hdrlen;
+
+        s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> type;
+
+        sdssetlen(s, len);
+
+    }
+
+    sdssetalloc(s, newlen);
+
+    <span style="color:#66d9ef">return</span> s;
+
+}
+
+</code></pre></div><blockquote>
+<p>该函数便是扩大sds空间，但是感觉上还是想让sds中available空间的大小能够容纳addlen大小的字符串，并不是改变了sds中buf的长度，而是改变了sds中available空间的大小，如果当前available空间的大小大于addlen的大小，那么便不作修改，如果available空间的大小小鱼addlen的大小，那么就会重新分配sds中alloc的大小，newlen并不是无脑直接让alloc加上addlen，而且使用sds的长度加上addlen的长度作为newlen，但是经常重新分配内存会对效率有所影响，但是为了防止重新分配内存对效率的影响而让newlen无脑翻倍的话，又会对内存造成影响，造成内存占用过高，但是很大一部分内存并没有使用，所以取得了一个折中的办法，就是在newlen小于SDS_MAX_PREALLOC(1M)，对newlen进行翻倍，在newlen大于SDS_MAX_PREALLOC的情况下，让newlen加上SDS_MAX_PREALLOC。</p>
+</blockquote>
+<h3 id="sdsremovefreespace">sdsRemoveFreeSpace</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">sds <span style="color:#a6e22e">sdsRemoveFreeSpace</span>(sds s) {
+
+    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>sh, <span style="color:#f92672">*</span>newsh;
+
+    <span style="color:#66d9ef">char</span> type, oldtype <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">&amp;</span>amp; SDS_TYPE_MASK;
+
+    <span style="color:#66d9ef">int</span> hdrlen, oldhdrlen <span style="color:#f92672">=</span> sdsHdrSize(oldtype);
+
+    size_t len <span style="color:#f92672">=</span> sdslen(s);
+
+    sh <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)s<span style="color:#f92672">-</span>oldhdrlen;
+
+
+
+    <span style="color:#75715e">/* Check what would be the minimum SDS header that is just good enough to
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">     * fit this string. */</span>
+
+    type <span style="color:#f92672">=</span> sdsReqType(len);
+
+    hdrlen <span style="color:#f92672">=</span> sdsHdrSize(type);
+
+
+
+    <span style="color:#75715e">/* If the type is the same, or at least a large enough type is still
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">     * required, we just realloc(), letting the allocator to do the copy
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">     * only if really needed. Otherwise if the change is huge, we manually
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">     * reallocate the string to use the different header type. */</span>
+
+    <span style="color:#66d9ef">if</span> (oldtype<span style="color:#f92672">==</span>type <span style="color:#f92672">||</span> type <span style="color:#f92672">&amp;</span>gt; SDS_TYPE_8) {
+
+        newsh <span style="color:#f92672">=</span> s_realloc(sh, oldhdrlen<span style="color:#f92672">+</span>len<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+        <span style="color:#66d9ef">if</span> (newsh <span style="color:#f92672">==</span> NULL) <span style="color:#66d9ef">return</span> NULL;
+
+        s <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)newsh<span style="color:#f92672">+</span>oldhdrlen;
+
+    } <span style="color:#66d9ef">else</span> {
+
+        newsh <span style="color:#f92672">=</span> s_malloc(hdrlen<span style="color:#f92672">+</span>len<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+        <span style="color:#66d9ef">if</span> (newsh <span style="color:#f92672">==</span> NULL) <span style="color:#66d9ef">return</span> NULL;
+
+        memcpy((<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)newsh<span style="color:#f92672">+</span>hdrlen, s, len<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+
+        s_free(sh);
+
+        s <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>)newsh<span style="color:#f92672">+</span>hdrlen;
+
+        s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> type;
+
+        sdssetlen(s, len);
+
+    }
+
+    sdssetalloc(s, len);
+
+    <span style="color:#66d9ef">return</span> s;
+
+}
+
+</code></pre></div><blockquote>
+<p>就是对sds中多余的空间进行释放，例如以前是一个sdshdr64的sds，在redis运行过程中，buf的内容被修改了，变短了，那么多出来的内容就需要释放掉，还给系统，并且，如果修改得比较多，现在一个sdshdr16的sds就能容纳下，那么当前sds的type还会被修改，因为不同的sds类型占用的空间也是不一样的，并且杀鸡焉用宰牛刀，是吧。</p>
+</blockquote>
+<p>其他的函数介绍意义其实并不大，都很简单，我们仅需要知道sds的内存分布，内存操作即可。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>svn钩子(hooks) &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>svn钩子(hooks)</h1>
+  <time datetime=2019-07-25T20:37:30Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<p>钩子脚本的具体写法就是操作系统中shell脚本程序的写法,请根据自己SVN所在的操作系统和shell程序进行相应的写作</p>
+<p>所谓钩子就是与一些版本库事件触发的程序，例如新修订版本的创建，或是未版本化属性的修改。每个钩子都会被告知足够多的信息，包括那是什么事件，所操作的对象，和触发事件的用户名。通过钩子的输出或返回状态，钩子程序能让工作继续、停止或是以某种方式挂起。</p>
+<p>svn在每个代码仓库下有一个hooks目录用于放hook脚本, svn为我们提供了模板</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span>root@idcflow2175 hooks<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+
+/home/svn/csvn/data/repositories/tr2/hooks
+
+<span style="color:#f92672">[</span>root@idcflow2175 hooks<span style="color:#f92672">]</span><span style="color:#75715e"># ll</span>
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">1977</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> post-commit.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">1638</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> post-lock.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">2289</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> post-revprop-change.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">1567</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> post-unlock.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">3447</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> pre-commit.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">2455</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> pre-lock.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">2786</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> pre-revprop-change.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">2143</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> pre-unlock.tmpl
+
+-rw-r--r-- <span style="color:#ae81ff">1</span> svn svn <span style="color:#ae81ff">2780</span> Jul <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2013</span> start-commit.tmpl
+
+</code></pre></div><p>这些钩子会在不同的点触发事务：</p>
+<ul>
+<li>start-commit 提交前触发事务</li>
+<li>pre-commit 提交完成前触发事务</li>
+<li>post-commit 提交完成时触发事务</li>
+<li>pre-revprop-change 版本属性修改前触发事务</li>
+<li>post-revprop-change 版本属性修改后触发事务</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

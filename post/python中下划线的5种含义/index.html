@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Python中下划线的5种含义 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Python中下划线的5种含义</h1>
+  <time datetime=2019-07-25T17:46:49Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<h2 id="单前导下划线-_var">单前导下划线 _var</h2>
+<p>当涉及到变量和方法名称时，单个下划线前缀有一个约定俗成的含义。 它是对程序员的一个提示 - 意味着Python社区一致认为它应该是什么意思，但程序的行为不受影响。</p>
+<p>下划线前缀的含义是告知其他程序员：以单个下划线开头的变量或方法仅供内部使用。 该约定在PEP 8中有定义。</p>
+<h2 id="单末尾下划线-var_">单末尾下划线 var_</h2>
+<p>有时候，一个变量的最合适的名称已经被一个关键字所占用。 因此，像class或def这样的名称不能用作Python中的变量名称。 在这种情况下，你可以附加一个下划线来解决命名冲突。总之，单个末尾下划线（后缀）是一个约定，用来避免与Python关键字产生命名冲突。 PEP 8解释了这个约定。</p>
+<h2 id="双前导下划线-__var">双前导下划线 __var</h2>
+<p>到目前为止，我们所涉及的所有命名模式的含义，来自于已达成共识的约定。 而对于以双下划线开头的Python类的属性（包括变量和方法），情况就有点不同了。</p>
+<p>双下划线前缀会导致Python解释器重写属性名称，以避免子类中的命名冲突。</p>
+<p>这也叫做名称修饰（name mangling） - 解释器更改变量的名称（例如：class名为Test, 变量名为__a,那么__a会被Python解释器重写属性名为_Test__a），以便在类被扩展的时候不容易产生冲突。名称修饰会影响在一个类的上下文中，以两个下划线字符（&ldquo;dunders&rdquo;）开头的所有名称。</p>
+<h2 id="双前导和双末尾下划线-__var__">双前导和双末尾下划线 <strong>var</strong></h2>
+<p>如果一个名字同时以双下划线开始和结束，则不会应用名称修饰。 由双下划线前缀和后缀包围的变量不会被Python解释器修改。</p>
+<h2 id="单下划线-_">单下划线 _</h2>
+<p>按照习惯，有时候单个独立下划线是用作一个名字，来表示某个变量是临时的或无关紧要的。你也可以在拆分(unpacking)表达式中将单个下划线用作“不关心的”变量，以忽略特定的值。 同样，这个含义只是“依照约定”，并不会在Python解释器中触发特殊的行为。 单个下划线仅仅是一个有效的变量名称，会有这个用途而已。</p>
+<p>除了用作临时变量之外，“_”是大多数Python REPL中的一个特殊变量，它表示由解释器评估的最近一个表达式的结果。</p>
+<h2 id="python下划线命名模式---小结">Python下划线命名模式 - 小结</h2>
+<p><img src="https://www.daryl.top/usr/uploads/2019/05/2343579122.png" alt="">evernotecid://9326179B-5200-4478-B32E-B919B94B243C/appyinxiangcom/21231346/ENResource/p4</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Linux进程的五个段 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Linux进程的五个段</h1>
+  <time datetime=2019-08-24T08:06:58Z class="post-date">Sat, Aug 24, 2019</time>
+  <h2 id="数据段">数据段</h2>
+<blockquote>
+<p>用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；</p>
+</blockquote>
+<h2 id="代码段">代码段</h2>
+<blockquote>
+<p>代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&mdash;&ndash;它是不可写的；</p>
+</blockquote>
+<h2 id="bss段">BSS段</h2>
+<blockquote>
+<p>包含了程序中未初始化的全局变量，在内存中bss段全部置零；</p>
+</blockquote>
+<h2 id="堆heap">堆（heap）</h2>
+<blockquote>
+<p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可以动态扩展或者所建。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩展）；当利用free等函数释放内存时，被释放的内存从堆中被提出（堆被缩减）；</p>
+</blockquote>
+<h2 id="栈">栈</h2>
+<blockquote>
+<p>栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。</p>
+</blockquote>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

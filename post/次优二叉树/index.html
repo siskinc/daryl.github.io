@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>次优二叉树 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>次优二叉树</h1>
+  <time datetime=2019-07-25T23:24:53Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<h2 id="原理">原理</h2>
+<blockquote>
+<p>首先取出查找表中每个关键字及其对应的权值，采用如下公式计算出每个关键字对应的一个值：</p>
+</blockquote>
+<p><img src="https://www.daryl.top/wp-content/uploads/2019/07/image-1564057857294.png" alt="file"></p>
+<blockquote>
+<p>其中 wj 表示每个关键字的权值（被查找到的概率），h 表示关键字的个数。</p>
+</blockquote>
+<p>表中有多少关键字，就会有多少个 △Pi ，取其中最小的做为次优查找树的根结点，然后将表中关键字从第 i 个关键字的位置分成两部分，分别作为该根结点的左子树和右子树。同理，左子树和右子树也这么处理，直到最后构成次优查找树完成。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">int</span> KeyType;<span style="color:#75715e">//定义关键字类型
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span>{
+
+    KeyType key;
+
+}ElemType;<span style="color:#75715e">//定义元素类型
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BiTNode</span>{
+
+    ElemType data;
+
+    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BiTNode</span> <span style="color:#f92672">*</span>lchild, <span style="color:#f92672">*</span>rchild;
+
+}BiTNode, <span style="color:#f92672">*</span>BiTree;
+
+
+
+<span style="color:#75715e">//定义变量
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> i;
+
+<span style="color:#66d9ef">int</span> min;
+
+<span style="color:#66d9ef">int</span> dw;
+
+<span style="color:#75715e">//创建次优查找树，R数组为查找表，sw数组为存储的各关键字的概率（权值），low和high表示的sw数组中的权值的范围
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SecondOptimal</span>(BiTree T, ElemType R[], <span style="color:#66d9ef">float</span> sw[], <span style="color:#66d9ef">int</span> low, <span style="color:#66d9ef">int</span> high){
+
+    <span style="color:#75715e">//由有序表R[low...high]及其累计权值表sw（其中sw[0]==0）递归构造次优查找树
+</span><span style="color:#75715e"></span>
+    i <span style="color:#f92672">=</span> low;
+
+    min <span style="color:#f92672">=</span> abs(sw[high] <span style="color:#f92672">-</span> sw[low]);
+
+    dw <span style="color:#f92672">=</span> sw[high] <span style="color:#f92672">+</span> sw[low <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>];
+
+    <span style="color:#75715e">//选择最小的△Pi值
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> low<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>; j <span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">=</span>high; j<span style="color:#f92672">++</span>){
+
+        <span style="color:#66d9ef">if</span> (abs(dw<span style="color:#f92672">-</span>sw[j]<span style="color:#f92672">-</span>sw[j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])<span style="color:#f92672">&amp;</span>lt;min){
+
+            i <span style="color:#f92672">=</span> j;
+
+            min <span style="color:#f92672">=</span> abs(dw <span style="color:#f92672">-</span> sw[j] <span style="color:#f92672">-</span> sw[j <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]);
+
+        }
+
+    }
+
+   
+
+    T <span style="color:#f92672">=</span> (BiTree)malloc(<span style="color:#66d9ef">sizeof</span>(BiTNode));
+
+    T<span style="color:#f92672">-&amp;</span>gt;data <span style="color:#f92672">=</span> R[i];<span style="color:#75715e">//生成结点（第一次生成根）
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">==</span> low) T<span style="color:#f92672">-&amp;</span>gt;lchild <span style="color:#f92672">=</span> NULL;<span style="color:#75715e">//左子树空
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">else</span> SecondOptimal(T<span style="color:#f92672">-&amp;</span>gt;lchild, R, sw, low, i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);<span style="color:#75715e">//构造左子树
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">==</span> high) T<span style="color:#f92672">-&amp;</span>gt;rchild <span style="color:#f92672">=</span> NULL;<span style="color:#75715e">//右子树空
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">else</span> SecondOptimal(T<span style="color:#f92672">-&amp;</span>gt;rchild, R, sw, i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, high);<span style="color:#75715e">//构造右子树
+</span><span style="color:#75715e"></span>
+   
+
+}
+
+</code></pre></div><h2 id="完整事例演示">完整事例演示</h2>
+<p>例如，一含有 9 个关键字的查找表及其相应权值如下表所示：
+<img src="https://www.daryl.top/wp-content/uploads/2019/07/image-1564068255733.png" alt="file">
+则构建次优查找树的过程如下：首先求出查找表中所有的 △P 的值，找出整棵查找表的根结点：<img src="https://www.daryl.top/usr/uploads/2019/07/3506699865.png" alt=""></p>
+<blockquote>
+<p>例如，关键字 F 的 △P 的计算方式为：从 G 到 I 的权值和 - 从 A 到 E 的权值和 = 4+3+5-1-1-2-5-3 = 0。 </p>
+</blockquote>
+<p>通过上图左侧表格得知，根结点为 F，以 F 为分界线，左侧子表为 F 结点的左子树，右侧子表为 F 结点的右子树（如上图右侧所示），继续查找左右子树的根结点：<img src="https://www.daryl.top/wp-content/uploads/2019/07/image-1564068239134.png" alt="file"></p>
+<p>通过重新分别计算左右两查找子表的 △P 的值，得知左子树的根结点为 D，右子树的根结点为 H （如上图右侧所示），以两结点为分界线，继续判断两根结点的左右子树：<img src="https://www.daryl.top/wp-content/uploads/2019/07/image-1564068286832.png" alt="file">
+通过计算，构建的次优查找树如上图右侧二叉树所示。后边还有一步，判断关键字 A 和 C 在树中的位置，最后一步两个关键字的权值为 0 ，分别作为结点 B 的左孩子和右孩子，这里不再用图表示。</p>
+<blockquote>
+<p><strong>注意</strong>：在建立次优查找树的过程中，由于只根据的各关键字的 P 的值进行构建，没有考虑单个关键字的相应权值的大小，有时会出现根结点的权值比孩子结点的权值还小，此时就需要适当调整两者的位置。</p>
+</blockquote>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Redis源码阅读之字典（二）——Rehash &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Redis源码阅读之字典（二）——Rehash</h1>
+  <time datetime=2020-04-21T23:58:02Z class="post-date">Tue, Apr 21, 2020</time>
+  <h2 id="历史文章">历史文章</h2>
+<p><a href="https://www.daryl.top/2020/04/21/redis%e6%ba%90%e7%a0%81%e9%98%85%e8%af%bb%e4%b9%8b%e5%ad%97%e5%85%b8%ef%bc%88%e4%b8%80%ef%bc%89/">Redis源码阅读之字典（一）</a></p>
+<h2 id="redis-rehash是什么">Redis Rehash是什么？</h2>
+<blockquote>
+<p>在我们日常使用redis的过程中，随着key不断的增加，dict的size也在不断的增加，当dict.used == dict.size或者used*100/size &lt; HASHTABLE_MIN_FILL,HASHTABLE_MIN_FILL一般为10，也就是说，要么容量不够，要么容量使用率小于10%了，就会调用dictExpand进行重新分配内存，这个时候就会触发rehash了。但是rehash不行一次性就操作完成了，试想一下，如果一个dict里面含有数百万的key，rehash一次可能会很久，就可能造成服务假死的情况。所以rehashing是一个长时间的过程，每一次可能只进行几个key的迁移。</p>
+</blockquote>
+<h2 id="哪些操作会触发rehashing的step">哪些操作会触发rehashing的step</h2>
+<h3 id="dictrehashmilliseconds">dictRehashMilliseconds</h3>
+<blockquote>
+<p>redis server的定时任务会去执行dictRehashMilliseconds，但是都是传入的ms==1，主要是rehashing一下redis的dict和expired相关的键</p>
+</blockquote>
+<h3 id="dictaddraw">dictAddRaw</h3>
+<blockquote>
+<p>在给dict增加key的时候，新增的key会直接放入dict.ht[1]中</p>
+</blockquote>
+<h3 id="dictgenericdelete">dictGenericDelete</h3>
+<blockquote>
+<p>删除key时</p>
+</blockquote>
+<h3 id="dictfind">dictFind</h3>
+<blockquote>
+<p>查找key</p>
+</blockquote>
+<h3 id="dictgetrandomkey-和-dictgetsomekeys">dictGetRandomKey 和 dictGetSomeKeys</h3>
+<blockquote>
+<p>获取随机key</p>
+</blockquote>
+<h3 id="dictscan">dictScan</h3>
+<blockquote>
+<p>遍历dict</p>
+</blockquote>
+<h2 id="每次rehash的过程">每次rehash的过程</h2>
+<h3 id="源码">源码</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Performs N steps of incremental rehashing. Returns 1 if there are still
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * keys to move from the old to the new hash table, otherwise 0 is returned.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> *
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * Note that a rehashing step consists in moving a bucket (that may have more
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * than one key as we use chaining) from the old to the new hash table, however
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * since part of the hash table may be composed of empty spaces, it is not
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * guaranteed that this function will rehash even a single bucket, since it
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * will visit at max N*10 empty buckets in total, otherwise the amount of
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * work it does would be unbound and the function may block for a long time. */</span>
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictRehash</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">int</span> n) {
+
+    <span style="color:#66d9ef">int</span> empty_visits <span style="color:#f92672">=</span> n<span style="color:#f92672">*</span><span style="color:#ae81ff">10</span>; <span style="color:#75715e">/* Max number of empty buckets to visit. */</span>
+
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>dictIsRehashing(d)) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+
+
+    <span style="color:#66d9ef">while</span>(n<span style="color:#f92672">--</span> <span style="color:#f92672">&amp;</span>amp;<span style="color:#f92672">&amp;</span>amp; d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].used <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+
+        dictEntry <span style="color:#f92672">*</span>de, <span style="color:#f92672">*</span>nextde;
+
+
+
+        <span style="color:#75715e">/* Note that rehashidx can&amp;#039;t overflow as we are sure there are more
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">         * elements because ht[0].used != 0 */</span>
+
+        assert(d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].size <span style="color:#f92672">&amp;</span>gt; (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>)d<span style="color:#f92672">-&amp;</span>gt;rehashidx);
+
+        <span style="color:#66d9ef">while</span>(d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].table[d<span style="color:#f92672">-&amp;</span>gt;rehashidx] <span style="color:#f92672">==</span> NULL) {
+
+            d<span style="color:#f92672">-&amp;</span>gt;rehashidx<span style="color:#f92672">++</span>;
+
+            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">--</span>empty_visits <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+
+        }
+
+        de <span style="color:#f92672">=</span> d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].table[d<span style="color:#f92672">-&amp;</span>gt;rehashidx];
+
+        <span style="color:#75715e">/* Move all the keys in this bucket from the old to the new hash HT */</span>
+
+        <span style="color:#66d9ef">while</span>(de) {
+
+            uint64_t h;
+
+
+
+            nextde <span style="color:#f92672">=</span> de<span style="color:#f92672">-&amp;</span>gt;next;
+
+            <span style="color:#75715e">/* Get the index in the new hash table */</span>
+
+            h <span style="color:#f92672">=</span> dictHashKey(d, de<span style="color:#f92672">-&amp;</span>gt;key) <span style="color:#f92672">&amp;</span>amp; d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">1</span>].sizemask;
+
+            de<span style="color:#f92672">-&amp;</span>gt;next <span style="color:#f92672">=</span> d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">1</span>].table[h];
+
+            d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">1</span>].table[h] <span style="color:#f92672">=</span> de;
+
+            d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].used<span style="color:#f92672">--</span>;
+
+            d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">1</span>].used<span style="color:#f92672">++</span>;
+
+            de <span style="color:#f92672">=</span> nextde;
+
+        }
+
+        d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].table[d<span style="color:#f92672">-&amp;</span>gt;rehashidx] <span style="color:#f92672">=</span> NULL;
+
+        d<span style="color:#f92672">-&amp;</span>gt;rehashidx<span style="color:#f92672">++</span>;
+
+    }
+
+
+
+    <span style="color:#75715e">/* Check if we already rehashed the whole table... */</span>
+
+    <span style="color:#66d9ef">if</span> (d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].used <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+
+        zfree(d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>].table);
+
+        d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">1</span>];
+
+        _dictReset(<span style="color:#f92672">&amp;</span>amp;d<span style="color:#f92672">-&amp;</span>gt;ht[<span style="color:#ae81ff">1</span>]);
+
+        d<span style="color:#f92672">-&amp;</span>gt;rehashidx <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+    }
+
+
+
+    <span style="color:#75715e">/* More to rehash... */</span>
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+
+}
+
+</code></pre></div><ul>
+<li>参数n是指step的次数</li>
+<li>rehash的过程就是不断的把老数据从ht[0]中迁移到ht[1]中，最后迁移完成，把ht[1]赋值给ht[0],然后置空ht[1]</li>
+<li>如果rehash完成，返回0， 反之返回1</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

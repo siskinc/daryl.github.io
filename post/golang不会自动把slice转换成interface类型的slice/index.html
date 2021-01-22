@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Golang不会自动把slice转换成interface{}类型的slice &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Golang不会自动把slice转换成interface{}类型的slice</h1>
+  <time datetime=2019-07-25T17:46:17Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<h2 id="例子">例子</h2>
+<p>我们时常会写一些interface，例如：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">interface</span>{
+
+    <span style="color:#a6e22e">Print</span>()
+
+}
+
+
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">B</span> <span style="color:#66d9ef">struct</span> {
+
+}
+
+
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Print</span>() {
+
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">Here</span> <span style="color:#a6e22e">is</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+
+}
+
+</code></pre></div><p>赋值的时候:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">A</span>
+
+<span style="color:#a6e22e">a</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">B</span>{}
+
+</code></pre></div><p>诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">aa</span> []<span style="color:#a6e22e">A</span>
+
+<span style="color:#a6e22e">aa</span> = make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>, <span style="color:#ae81ff">10</span>)
+
+</code></pre></div><p>好的，现在翻车了，会得到一个这样的报错：</p>
+<pre><code>cannot use make([]*B, 10) (type []*B) as type []A in assignment
+</code></pre><h2 id="原因">原因</h2>
+<ol>
+<li>[]A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。</li>
+<li>[]A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。</li>
+</ol>
+<h2 id="如何去实现">如何去实现</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#a6e22e">bb</span> <span style="color:#f92672">:=</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">B</span>{}, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">B</span>{}}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">aa</span> []<span style="color:#a6e22e">AA</span> = make([]<span style="color:#a6e22e">AA</span>, len(<span style="color:#a6e22e">bb</span>))
+
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">d</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">bb</span> {
+
+	<span style="color:#a6e22e">aa</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">d</span>
+
+}
+
+</code></pre></div>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

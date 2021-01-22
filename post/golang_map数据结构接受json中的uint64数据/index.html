@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Golang map数据结构接受json中的uint64数据 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Golang map数据结构接受json中的uint64数据</h1>
+  <time datetime=2020-05-27T13:16:11Z class="post-date">Wed, May 27, 2020</time>
+  <p>例如有一个json数据：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+
+	<span style="color:#960050;background-color:#1e0010">&amp;quot;name&amp;quot;:</span> <span style="color:#960050;background-color:#1e0010">&amp;quot;小明&amp;quot;,</span>
+
+	<span style="color:#960050;background-color:#1e0010">&amp;quot;money&amp;quot;:</span> <span style="color:#960050;background-color:#1e0010">1111111111111111111</span>
+
+}
+
+</code></pre></div><p>但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+
+
+<span style="color:#f92672">import</span> (
+
+	<span style="color:#e6db74">&#34;encoding/json&#34;</span>
+
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+
+)
+
+
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Info</span> <span style="color:#66d9ef">struct</span> {
+
+	<span style="color:#a6e22e">Name</span>  <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;name&#34;`</span>
+
+	<span style="color:#a6e22e">Money</span> <span style="color:#66d9ef">uint64</span> <span style="color:#e6db74">`json:&#34;money&#34;`</span>
+
+}
+
+
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#a6e22e">info</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Info</span>{}
+
+	<span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Unmarshal</span>([]byte(<span style="color:#e6db74">`
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">		{
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">			&#34;name&#34;: &#34;小明&#34;,
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">			&#34;money&#34;: 1111111111111111111
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">		}`</span>), <span style="color:#a6e22e">info</span>)
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">info</span>)
+
+}
+
+</code></pre></div><p>但是在某些情况下，你不得不用一个map去接收数据怎么办？
+有几个坑需要注意一下：</p>
+<ol>
+<li>JSON的规范中，对于数字类型，并不区分是整型还是浮点型。</li>
+<li>如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型
+如何解决这个问题，先看下面程序：</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+
+
+<span style="color:#f92672">import</span> (
+
+	<span style="color:#e6db74">&#34;encoding/json&#34;</span>
+
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+
+	<span style="color:#e6db74">&#34;strconv&#34;</span>
+
+	<span style="color:#e6db74">&#34;strings&#34;</span>
+
+)
+
+
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">jsonStream</span> = <span style="color:#e6db74">`
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">        {
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">			&#34;name&#34;: &#34;小明&#34;,
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">			&#34;money&#34;: 1111111111111111111
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">		}
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    `</span>
+
+	<span style="color:#a6e22e">decoder</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewDecoder</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">jsonStream</span>))
+
+	<span style="color:#a6e22e">decoder</span>.<span style="color:#a6e22e">UseNumber</span>() <span style="color:#75715e">// UseNumber causes the Decoder to unmarshal a number into an interface{} as a Number instead of as a float64
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">info</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}{}
+
+	<span style="color:#a6e22e">decoder</span>.<span style="color:#a6e22e">Decode</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">info</span>)
+
+	<span style="color:#a6e22e">money</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">info</span>[<span style="color:#e6db74">&#34;money&#34;</span>].(<span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Number</span>).<span style="color:#a6e22e">String</span>()
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">money</span>)
+
+	<span style="color:#a6e22e">m</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseUint</span>(<span style="color:#a6e22e">money</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">64</span>)
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">m</span>)
+
+}
+
+</code></pre></div><p>上面的程序，使用了func (*Decoder) UseNumber方法告诉反序列化JSON的数字类型的时候，不要直接转换成float64，而是转换成json.Number类型。json.Number本质是字符串，反序列化的时候将JSON的数值先转成json.Number，其实是一种延迟处理的手段，待后续逻辑需要时候，再把json.Number转成float64或者int64。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

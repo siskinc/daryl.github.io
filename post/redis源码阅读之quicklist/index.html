@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Redis源码阅读之quicklist &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Redis源码阅读之quicklist</h1>
+  <time datetime=2020-05-21T23:37:05Z class="post-date">Thu, May 21, 2020</time>
+  <h2 id="数据结构">数据结构</h2>
+<h3 id="quicklistnode">quicklistNode</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* quicklistNode is a 32 byte struct describing a ziplist for a quicklist.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * We use bit fields keep the quicklistNode at 32 bytes.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &amp;lt; 32k).
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * encoding: 2 bits, RAW=1, LZF=2.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * container: 2 bits, NONE=1, ZIPLIST=2.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * recompress: 1 bit, bool, true if node is temporarry decompressed for usage.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * attempted_compress: 1 bit, boolean, used for verifying during testing.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * extra: 10 bits, free for future use; pads out the remainder of 32 bits */</span>
+
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> quicklistNode {
+
+    <span style="color:#66d9ef">struct</span> quicklistNode <span style="color:#f92672">*</span>prev;
+
+    <span style="color:#66d9ef">struct</span> quicklistNode <span style="color:#f92672">*</span>next;
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>zl;
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> sz;             <span style="color:#75715e">/* ziplist size in bytes */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> count : <span style="color:#ae81ff">16</span>;     <span style="color:#75715e">/* count of items in ziplist */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> encoding : <span style="color:#ae81ff">2</span>;   <span style="color:#75715e">/* RAW==1 or LZF==2 */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> container : <span style="color:#ae81ff">2</span>;  <span style="color:#75715e">/* NONE==1 or ZIPLIST==2 */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> recompress : <span style="color:#ae81ff">1</span>; <span style="color:#75715e">/* was this node previous compressed? */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> attempted_compress : <span style="color:#ae81ff">1</span>; <span style="color:#75715e">/* node can&amp;#039;t compress; too small */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> extra : <span style="color:#ae81ff">10</span>; <span style="color:#75715e">/* more bits to steal for future usage */</span>
+
+} quicklistNode;
+
+</code></pre></div><ul>
+<li>prev, next 代表链表的前后节点</li>
+<li>zl是指向内容的指针</li>
+<li>count 是ziplist的元素数量</li>
+<li>encoding 代表该节点的数据是压缩后的还是未解压的</li>
+<li>container 代表该节点是一个节点还是一个ziplist</li>
+<li>attempted_compress测试使用</li>
+<li>extra 占位</li>
+</ul>
+<h3 id="quicklistlzf">quicklistLZF</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* quicklistLZF is a 4+N byte struct holding &amp;#039;sz&amp;#039; followed by &amp;#039;compressed&amp;#039;.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * &amp;#039;sz&amp;#039; is byte length of &amp;#039;compressed&amp;#039; field.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * &amp;#039;compressed&amp;#039; is LZF data with total (compressed) length &amp;#039;sz&amp;#039;
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * NOTE: uncompressed length is stored in quicklistNode-&amp;gt;sz.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> * When quicklistNode-&amp;gt;zl is compressed, node-&amp;gt;zl points to a quicklistLZF */</span>
+
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> quicklistLZF {
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> sz; <span style="color:#75715e">/* LZF size in bytes*/</span>
+
+    <span style="color:#66d9ef">char</span> compressed[];
+
+} quicklistLZF;
+
+</code></pre></div><ul>
+<li>sz 代表LZF内容的长度</li>
+<li>compressed 代表LZF的内容
+<strong>注意：未解压缩的数据的长度会直接存储在quicklistNode-&gt;sz，如果quicklistNode-&gt;zl是被压缩的，node-&gt;zl是指向的一个quicklistLZF指针</strong></li>
+</ul>
+<h3 id="quicklist">quicklist</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> quicklist {
+
+    quicklistNode <span style="color:#f92672">*</span>head;
+
+    quicklistNode <span style="color:#f92672">*</span>tail;
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> count;        <span style="color:#75715e">/* total count of all entries in all ziplists */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> len;          <span style="color:#75715e">/* number of quicklistNodes */</span>
+
+    <span style="color:#66d9ef">int</span> fill : QL_FILL_BITS;              <span style="color:#75715e">/* fill factor for individual nodes */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> compress : QL_COMP_BITS; <span style="color:#75715e">/* depth of end nodes not to compress;0=off */</span>
+
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> bookmark_count: QL_BM_BITS;
+
+    quicklistBookmark bookmarks[];
+
+} quicklist;
+
+</code></pre></div><blockquote>
+<p>quicklist在64位系统下占用40个字节，注意bookmarks这个field，他是一个“<a href="https://blog.csdn.net/feitianhu213/article/details/9863253">柔性数组</a>”，不占用字节空间</p>
+</blockquote>
+<ul>
+<li>head, tail指向quicklist的首，尾节点</li>
+<li>count代表ziplist元素数量</li>
+<li>len代表quicklist的节点数量</li>
+</ul>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

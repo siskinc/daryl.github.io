@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Python实现单例模式 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Python实现单例模式</h1>
+  <time datetime=2019-08-13T21:20:41Z class="post-date">Tue, Aug 13, 2019</time>
+  <p>[TOC]</p>
+<h2 id="使用__new__方法">使用__new__方法</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Singleton</span>(object):
+
+    <span style="color:#66d9ef">def</span> __new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kw):
+
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> hasattr(cls, <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;_instance&amp;#039;):</span>
+
+            orig <span style="color:#f92672">=</span> super(Singleton, cls)
+
+            cls<span style="color:#f92672">.</span>_instance <span style="color:#f92672">=</span> orig<span style="color:#f92672">.</span>__new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kw)
+
+        <span style="color:#66d9ef">return</span> cls<span style="color:#f92672">.</span>_instance
+
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>(Singleton):
+
+    <span style="color:#66d9ef">pass</span>
+
+</code></pre></div><h2 id="共享属性">共享属性</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Borg</span>(object):
+
+    _state <span style="color:#f92672">=</span> {}
+
+    <span style="color:#66d9ef">def</span> __new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kw):
+
+        ob <span style="color:#f92672">=</span> super(Borg, cls)<span style="color:#f92672">.</span>__new__(cls, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kw)
+
+        ob<span style="color:#f92672">.</span>__dict__ <span style="color:#f92672">=</span> cls<span style="color:#f92672">.</span>_state
+
+        <span style="color:#66d9ef">return</span> ob
+
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass2</span>(Borg):
+
+    <span style="color:#66d9ef">pass</span>
+
+</code></pre></div><h2 id="装饰器版本">装饰器版本</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">singleton</span>(cls):
+
+    instances <span style="color:#f92672">=</span> {}
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getinstance</span>(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kw):
+
+        <span style="color:#66d9ef">if</span> cls <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> instances:
+
+            instances[cls] <span style="color:#f92672">=</span> cls(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kw)
+
+        <span style="color:#66d9ef">return</span> instances[cls]
+
+    <span style="color:#66d9ef">return</span> getinstance
+
+
+
+<span style="color:#a6e22e">@singleton</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MyClass</span>:
+
+    <span style="color:#66d9ef">pass</span>
+
+</code></pre></div><h2 id="import方法">import方法</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e"># mysingleton.py</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">My_Singleton</span>(object):
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">foo</span>(self):
+
+        <span style="color:#66d9ef">pass</span>
+
+
+
+my_singleton <span style="color:#f92672">=</span> My_Singleton()
+
+
+
+<span style="color:#75715e"># to use</span>
+
+<span style="color:#f92672">from</span> mysingleton <span style="color:#f92672">import</span> my_singleton
+
+
+
+my_singleton<span style="color:#f92672">.</span>foo()
+
+</code></pre></div>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

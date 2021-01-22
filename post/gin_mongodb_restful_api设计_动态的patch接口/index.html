@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>gin mongodb restful api设计: 动态的patch接口 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>gin mongodb restful api设计: 动态的patch接口</h1>
+  <time datetime=2019-07-25T17:31:19Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<ol>
+<li>什么是Patch?</li>
+</ol>
+<blockquote>
+<p>Patch方法可以用来更新资源的一个组成部分</p>
+</blockquote>
+<ol start="2">
+<li>什么时候使用Patch?</li>
+</ol>
+<blockquote>
+<p>当你仅需更新资源的某一项，即不完全也不幂等</p>
+</blockquote>
+<p>那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？</p>
+<p>答案当然是有的，先说说如何去实现：</p>
+<ol>
+<li>我们需要利用golang的map[string]interface{}结构
+<ul>
+<li>我们需要一个动态的结构</li>
+<li>在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&quot;$set&quot;: xxxx})操作</li>
+</ul>
+</li>
+<li>使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）</li>
+</ol>
+<p>来，开始贴代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// 这个是我们需要存到数据库中的Model
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Article</span> <span style="color:#66d9ef">struct</span> {
+
+	<span style="color:#a6e22e">ID</span>          <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">ObjectId</span> <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">id</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">_id</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">id</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">Author</span>      <span style="color:#66d9ef">string</span>        <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">author</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">author</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">author</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">Title</span>       <span style="color:#66d9ef">string</span>        <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">title</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">title</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">title</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">Content</span>     <span style="color:#66d9ef">string</span>        <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">content</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">content</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">content</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">Publish</span>     <span style="color:#66d9ef">int</span>           <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">publish</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">publish</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">CreatedTime</span> <span style="color:#66d9ef">int64</span>         <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">created_time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">created_time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">created_time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">ChangedTime</span> <span style="color:#66d9ef">int64</span>         <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">changed_time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">changed_time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">changed_time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">PageView</span>    <span style="color:#66d9ef">int64</span>         <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">page_view</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">page_view</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">page_view</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>; <span style="color:#75715e">// 浏览量
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">ArticleType</span> <span style="color:#66d9ef">string</span>        <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">article_type</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">article_type</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">article_type</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">ArticleTags</span> []<span style="color:#66d9ef">string</span>      <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">article_tags</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">article_tags</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">show</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">article_tags</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+	<span style="color:#a6e22e">Deleted</span>     <span style="color:#66d9ef">int</span>           <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;<span style="color:#a6e22e">json</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">deleted</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>; <span style="color:#a6e22e">bson</span>:<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">deleted</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">x60</span>;
+
+}
+
+
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ArticlePatch</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+
+	<span style="color:#a6e22e">id</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">id</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">IsObjectIdHex</span>(<span style="color:#a6e22e">id</span>) {
+
+		<span style="color:#a6e22e">err_msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">参数错误</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+
+		<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">SendFailJSON</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">err_msg</span>)
+
+		<span style="color:#66d9ef">return</span>
+
+	}
+
+	<span style="color:#a6e22e">_id</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">ObjectIdHex</span>(<span style="color:#a6e22e">id</span>)
+
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">CheckOwner</span>(<span style="color:#a6e22e">c</span>) {
+
+		<span style="color:#a6e22e">err_msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">您没有权限</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+
+		<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">SendFailJSON</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">err_msg</span>)
+
+		<span style="color:#66d9ef">return</span>
+
+	}
+
+	<span style="color:#a6e22e">mongo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">GetModel</span>(<span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">MongoArticleCollection</span>)
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">mongo</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+
+		<span style="color:#a6e22e">err_msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">网络错误</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+
+		<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">SendFailJSON</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">err_msg</span>)
+
+		<span style="color:#66d9ef">return</span>
+
+	}
+
+	<span style="color:#a6e22e">article</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Article</span>{}
+
+	<span style="color:#a6e22e">tags</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">GetAllTagValue</span>(<span style="color:#a6e22e">article</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">json</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+
+	<span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">_id</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#a6e22e">_id</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">deleted</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">ModelNotDeleted</span>}
+
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">mongo</span>.<span style="color:#a6e22e">FindOne</span>(<span style="color:#a6e22e">article</span>, <span style="color:#a6e22e">query</span>) {
+
+		<span style="color:#a6e22e">err_msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">文章不存在</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+
+		<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">SendFailJSON</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">err_msg</span>)
+
+		<span style="color:#66d9ef">return</span>
+
+	}
+
+	<span style="color:#a6e22e">patchMap</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}{}
+
+	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">BindJSON</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">patchMap</span>)
+
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+
+		<span style="color:#a6e22e">err_msg</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprint</span>(<span style="color:#a6e22e">err</span>)
+
+		<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">SendFailJSON</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">err_msg</span>)
+
+		<span style="color:#66d9ef">return</span>
+
+	}
+
+	<span style="color:#a6e22e">deleteArray</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{}
+
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">k</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">patchMap</span> {
+
+		<span style="color:#a6e22e">ok</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">InArray</span>(<span style="color:#a6e22e">k</span>, <span style="color:#a6e22e">tags</span>)
+
+		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+
+			<span style="color:#a6e22e">deleteArray</span> = append(<span style="color:#a6e22e">deleteArray</span>, <span style="color:#a6e22e">k</span>)
+
+		}
+
+	}
+
+	<span style="color:#a6e22e">deleteCount</span> <span style="color:#f92672">:=</span> len(<span style="color:#a6e22e">deleteArray</span>)
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">delete</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">deleteArray</span>)
+
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>; <span style="color:#a6e22e">deleteCount</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+
+		delete(<span style="color:#a6e22e">patchMap</span>, <span style="color:#a6e22e">deleteArray</span>[<span style="color:#a6e22e">i</span>])
+
+	}
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">patchMap</span>)
+
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">mongo</span>.<span style="color:#a6e22e">UpdateOne</span>(<span style="color:#a6e22e">query</span>, <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#a6e22e">set</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#a6e22e">patchMap</span>}) {
+
+		<span style="color:#a6e22e">err_msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">更新失败</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+
+		<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">SendFailJSON</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">err_msg</span>)
+
+		<span style="color:#66d9ef">return</span>
+
+	}
+
+	<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">SendSuccessJSON</span>(<span style="color:#a6e22e">c</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">更新成功</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+
+}
+
+
+
+</code></pre></div>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

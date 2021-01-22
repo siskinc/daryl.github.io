@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Python远程操作SSH &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Python远程操作SSH</h1>
+  <time datetime=2020-11-05T13:59:29Z class="post-date">Thu, Nov 5, 2020</time>
+  <h2 id="三方组件">三方组件</h2>
+<p>paramiko</p>
+<h2 id="创建ssh-连接">创建ssh 连接</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect_ssh</span>(host: str, port: int, username: str, password: str):
+
+    ssh <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>SSHClient()
+
+    key <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>AutoAddPolicy()
+
+    ssh<span style="color:#f92672">.</span>set_missing_host_key_policy(key)
+
+    ssh<span style="color:#f92672">.</span>connect(host, port, username, password, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+
+    <span style="color:#66d9ef">return</span> ssh
+
+</code></pre></div><h2 id="执行命令">执行命令</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(ssh: paramiko<span style="color:#f92672">.</span>SSHClient):
+
+    stdin, stdout, stderr <span style="color:#f92672">=</span> ssh<span style="color:#f92672">.</span>exec_command(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;command&amp;#039;)</span>
+
+    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> stdout<span style="color:#f92672">.</span>readlines():
+
+        <span style="color:#66d9ef">print</span>(line)
+
+</code></pre></div>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

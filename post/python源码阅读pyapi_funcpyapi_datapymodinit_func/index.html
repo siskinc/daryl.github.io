@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</h1>
+  <time datetime=2019-07-25T17:45:35Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<blockquote>
+<p>PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型
+PyAPI_DATA(type): 声明公共的Python数据和类型
+PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">  All windows ports, except cygwin, are handled in PC/pyconfig.h.
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">  Cygwin is the only other autoconf platform requiring special
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">  linkage handling and it uses __declspec().
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">*/</span>
+
+<span style="color:#75715e">/* 
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> 除了cygwin之外的所有Windows socket 文件都在PC / pyconfig.h中处理。
+</span><span style="color:#75715e">
+</span><span style="color:#75715e"> */</span>
+
+<span style="color:#75715e">#if defined(__CYGWIN__)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       define HAVE_DECLSPEC_DLL
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#75715e">/* only get special linkage if built as shared or platform is Cygwin */</span>
+
+<span style="color:#75715e">#if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       if defined(HAVE_DECLSPEC_DLL)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#               if defined(Py_BUILD_CORE) || defined(Py_BUILD_CORE_BUILTIN)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       define PyAPI_DATA(RTYPE) extern __declspec(dllexport) RTYPE
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">/* module init functions inside the core need no external linkage */</span>
+
+        <span style="color:#75715e">/* except for Cygwin to handle embedding */</span>
+
+<span style="color:#75715e">#                       if defined(__CYGWIN__)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                               define PyMODINIT_FUNC __declspec(dllexport) PyObject*
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       else </span><span style="color:#75715e">/* __CYGWIN__ */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                               define PyMODINIT_FUNC PyObject*
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       endif </span><span style="color:#75715e">/* __CYGWIN__ */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#               else </span><span style="color:#75715e">/* Py_BUILD_CORE */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">/* Building an extension module, or an embedded situation */</span>
+
+        <span style="color:#75715e">/* public Python functions and data are imported */</span>
+
+        <span style="color:#75715e">/* Under Cygwin, auto-import functions to prevent compilation */</span>
+
+        <span style="color:#75715e">/* failures similar to those described at the bottom of 4.1: */</span>
+
+        <span style="color:#75715e">/* http://docs.python.org/extending/windows.html#a-cookbook-approach */</span>
+
+<span style="color:#75715e">#                       if !defined(__CYGWIN__)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                               define PyAPI_FUNC(RTYPE) __declspec(dllimport) RTYPE
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       endif </span><span style="color:#75715e">/* !__CYGWIN__ */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       define PyAPI_DATA(RTYPE) extern __declspec(dllimport) RTYPE
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">/* module init functions outside the core must be exported */</span>
+
+<span style="color:#75715e">#                       if defined(__cplusplus)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                               define PyMODINIT_FUNC extern &amp;quot;C&amp;quot; __declspec(dllexport) PyObject*
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       else </span><span style="color:#75715e">/* __cplusplus */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                               define PyMODINIT_FUNC __declspec(dllexport) PyObject*
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#                       endif </span><span style="color:#75715e">/* __cplusplus */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#               endif </span><span style="color:#75715e">/* Py_BUILD_CORE */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       endif </span><span style="color:#75715e">/* HAVE_DECLSPEC_DLL */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#endif </span><span style="color:#75715e">/* Py_ENABLE_SHARED */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#75715e">/* If no external linkage macros defined by now, create defaults */</span>
+
+<span style="color:#75715e">#ifndef PyAPI_FUNC
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       define PyAPI_FUNC(RTYPE) RTYPE
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#ifndef PyAPI_DATA
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       define PyAPI_DATA(RTYPE) extern RTYPE
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#ifndef PyMODINIT_FUNC
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       if defined(__cplusplus)
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#               define PyMODINIT_FUNC extern &amp;quot;C&amp;quot; PyObject*
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       else </span><span style="color:#75715e">/* __cplusplus */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#               define PyMODINIT_FUNC PyObject*
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#       endif </span><span style="color:#75715e">/* __cplusplus */</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+</code></pre></div>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

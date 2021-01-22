@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>关于Basic Latin踩到的一些坑 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>关于Basic Latin踩到的一些坑</h1>
+  <time datetime=2019-07-25T17:34:19Z class="post-date">Thu, Jul 25, 2019</time>
+  <p>[TOC]</p>
+<blockquote>
+<p>在wiki中，很多语言的字符集都包含了Basic Latin，一开始我没有细看，以为Basic Latin里面都是正常的字符集，后来在线上环境出现了问题</p>
+</blockquote>
+<p>博主某天接到一个需求，需要过滤出某国语言的字符集（避免出现Unicode中的不可见字符），于是高高兴兴的在维基百科上找到该语言字符集抄了下来</p>
+<p>嗯，于是，线上环境出了一点小问题，由于我们某些功能是依赖于Basic Latin里面的特殊字符来做分割的，博主过于年轻，没有细看，于是翻车，卒，享年22岁。</p>
+<p>先看看Basic Latin里面到底是什么：<a href="https://jrgraphix.net/r/Unicode/0020-007F">https://jrgraphix.net/r/Unicode/0020-007F</a></p>
+<p>仔细看里面其实有很多特殊字符的，所以大多数程序员一般都会在正则表达式里面写0-9a-zA-Z来表示Basic Latin里面的东西，为什么不直接写\x0020-\x007F是有用意，以后看见一些东西还是不要随意忽略，就像为什么写0-9a-zA-Z来表示\x0020-\x007F，你以为别人是傻逼，写这么一长串干啥，实际上你是傻逼。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

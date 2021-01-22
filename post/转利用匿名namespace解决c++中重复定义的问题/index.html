@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.81.0-DEV" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>【转】利用匿名namespace解决C&#43;&#43;中重复定义的问题 &middot; Daryl&#39;s Blog</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://siskinc.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://siskinc.github.io/"><h1>Daryl&#39;s Blog</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://siskinc.github.io/">Home</a> </li>
+        
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>【转】利用匿名namespace解决C&#43;&#43;中重复定义的问题</h1>
+  <time datetime=0001-01-01T00:00:00Z class="post-date">Mon, Jan 1, 0001</time>
+  <p>[TOC]</p>
+<p>原文:<a href="https://blog.csdn.net/pi9nc/article/details/11267031">https://blog.csdn.net/pi9nc/article/details/11267031</a></p>
+<h1 id="利用匿名namespace解决c中重复定义的问题">利用匿名namespace解决C++中重复定义的问题</h1>
+<p>今天写代码的时候又碰到了C++中多编译单元导致重复定义(multi definition)的链接问题。其实这个问题以前也碰到过几次，急着编译出代码也没有去深究背后的一些知识。今天系统的看了一些资料，算是把这个问题彻底搞清楚了。这里做下简单总结吧：</p>
+<blockquote>
+<ul>
+<li>C++中有由于模版分离编译等问题，导致常常需要在头文件加入变量定义或者函数定义的代码，从而在链接多编译单元时导致multi-definition重复定义的问题。</li>
+</ul>
+</blockquote>
+<ul>
+<li>传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。</li>
+<li>在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。</li>
+</ul>
+<p>在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。</p>
+<p>但是这种方法经常会导致一个问题就是multi-definition重复定义，在较大型的工程中往往会采用多编译单元的形式生成多个.o文件，然后再用ld链接生成可执行文件。如果多个.o中都include了同一个hpp文件，而该hpp文件又包含了全局变量，类的静态成员等一些变量的定义，那么就会导致gcc的multi-definition报错。在传统的C程序中可以通过static申明一个变量或者函数不生成全局符号来解决这个问题，但是C++中static关键字对于类的成员有了其他语义。因此C++中建议使用匿名namespace来替代static避免multi-definition的问题。看如下一个例子：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#f92672">-----------</span> test.hpp<span style="color:#f92672">----------</span>
+
+
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;string&amp;gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#66d9ef">class</span>
+
+<span style="color:#a6e22e">A</span>
+
+
+
+{
+
+
+
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+
+
+
+    <span style="color:#66d9ef">static</span>
+
+std<span style="color:#f92672">::</span>string y;
+
+
+
+};
+
+
+
+std<span style="color:#f92672">::</span>string A<span style="color:#f92672">::</span>y <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string();
+
+
+
+ 
+
+
+
+<span style="color:#f92672">-----------</span> test_comm.cpp<span style="color:#f92672">----------</span>
+
+
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;quot;test.hpp&amp;quot;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#66d9ef">void</span>
+
+func() { }
+
+
+
+ 
+
+
+
+<span style="color:#f92672">-----------</span> test_main.cpp<span style="color:#f92672">----------</span>
+
+
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;quot;test.hpp&amp;quot;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#66d9ef">void</span>
+
+func();
+
+
+
+<span style="color:#66d9ef">int</span>
+
+<span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span>
+
+argc, <span style="color:#66d9ef">char</span>
+
+<span style="color:#f92672">*</span>argv)
+
+
+
+{
+
+
+
+    func();
+
+
+
+}
+
+</code></pre></div><p>我们在g++上编译就会出现如下错误：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">leoxiang<span style="color:#960050;background-color:#1e0010">@</span>SEC38_64_sles10:<span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">$</span> g<span style="color:#f92672">++</span> <span style="color:#f92672">-</span>c test_comm.cpp
+
+
+
+leoxiang<span style="color:#960050;background-color:#1e0010">@</span>SEC38_64_sles10:<span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">$</span> g<span style="color:#f92672">++</span> <span style="color:#f92672">-</span>c test_main.cpp
+
+
+
+leoxiang<span style="color:#960050;background-color:#1e0010">@</span>SEC38_64_sles10:<span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">$</span> g<span style="color:#f92672">++</span> <span style="color:#f92672">-</span>o test
+
+test_comm.o test_main.o
+
+
+
+test_main.o:(.bss<span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span>)<span style="color:#f92672">:</span> multiple definition of <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span>x60;A<span style="color:#f92672">::</span>y<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;
+
+
+
+test_comm.o:(.bss<span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span>)<span style="color:#f92672">:</span> first defined here
+
+
+
+collect2: ld returned <span style="color:#ae81ff">1</span> exit
+
+status
+
+</code></pre></div><p>下面通过匿名namespace解决这个问题，只需要把test.hpp的实现用匿名namespace包围即可避免重复定义的问题：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#f92672">-----------</span> test.hpp<span style="color:#f92672">----------</span>
+
+
+
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;string&amp;gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+
+
+<span style="color:#66d9ef">namespace</span>
+
+{
+
+
+
+<span style="color:#66d9ef">class</span>
+
+<span style="color:#a6e22e">A</span>
+
+
+
+{
+
+
+
+<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+
+
+
+    <span style="color:#66d9ef">static</span>
+
+std<span style="color:#f92672">::</span>string y;
+
+
+
+};
+
+
+
+std<span style="color:#f92672">::</span>string A<span style="color:#f92672">::</span>y <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>string();
+
+
+
+}
+
+</code></pre></div><p>实际上匿名namespace的作用是把其中的变量都放在了一个随机名字空间中，并且保证改名字空间在多个编译单元中是唯一的。因为匿名namespace中声明或定义的变量函数是全局可见的，所以并不会对自己所在文件的编译造成影响，这就是实现了之前C语言中static关键字的作用，并且具有更好的实用性。</p>
+<p>但是匿名namespace也不是完美的，下面这篇文章《C++ 工程实践(1)：慎用匿名 namespace》中介绍了使用匿名namespace会导致的两个问题：</p>
+<blockquote>
+<ul>
+<li>其中的函数难以设断点，如果你像我一样使用的是 gdb 这样的文本模式 debugger。</li>
+</ul>
+</blockquote>
+<ul>
+<li>使用某些版本的 g++ 时，同一个文件每次编译出来的二进制文件会变化，这让某些 build tool 失灵。</li>
+<li>同时在头文件中使用匿名空间也会对库使用这造成一些陷阱，类似与在C中在头文件中使用静态变量。</li>
+</ul>
+<p>即使如此，在Google C++编程规范2.1节中也鼓励使用namespace代替C语言中的static关键字。因此个人觉得一些特殊情况下如果必须在头文件中定义类静态变量或者函数，可以考虑将整个文件代码用匿名namespace包裹，可以较好解决重复定义的问题。</p>
+
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>
