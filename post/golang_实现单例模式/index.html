@@ -51,13 +51,15 @@
     <main class="content container">
     <div class="post">
   <h1>Golang 实现单例模式</h1>
-  <time datetime=2020-01-01T20:51:10Z class="post-date">Wed, Jan 1, 2020</time>
+  <time datetime=2019-08-13T21:47:01Z class="post-date">Tue, Aug 13, 2019</time>
   <!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 
 
-<span style="color:#f92672">import</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">fmt</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
 
 
 
@@ -77,7 +79,7 @@
 
     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">single</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
 
-        <span style="color:#a6e22e">single</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">Single</span>{}
+        <span style="color:#a6e22e">single</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Single</span>{}
 
     }
 
@@ -89,26 +91,27 @@
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle</span>())
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle</span>())
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle</span>())
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle</span>())
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle</span>())
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle</span>())
 
 }
 
 </code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 
 
 <span style="color:#f92672">import</span> (
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">fmt</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">sync</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;sync&#34;</span>
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;time&#34;</span>
 
 )
 
@@ -124,7 +127,7 @@
 
 <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">single2</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Single2</span>
 
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">lock</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">lock</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>{}
 
 
 
@@ -136,7 +139,7 @@
 
     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">single2</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
 
-        <span style="color:#a6e22e">single2</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">Single2</span>{}
+        <span style="color:#a6e22e">single2</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Single2</span>{}
 
     }
 
@@ -148,30 +151,31 @@
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle2</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle2</span>())
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle2</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle2</span>())
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle2</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle2</span>())
 
     <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">done</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;done&#34;</span>)
 
 }
 
 </code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 
 
 <span style="color:#f92672">import</span> (
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">fmt</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">sync</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;sync&#34;</span>
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;time&#34;</span>
 
 )
 
@@ -187,7 +191,7 @@
 
 <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">single2</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Single2</span>
 
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">lock</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">lock</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>{}
 
 
 
@@ -201,7 +205,7 @@
 
         <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">single2</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
 
-            <span style="color:#a6e22e">single2</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">Single2</span>{}
+            <span style="color:#a6e22e">single2</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Single2</span>{}
 
         }
 
@@ -215,30 +219,31 @@
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle2</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle2</span>())
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle2</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle2</span>())
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle2</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle2</span>())
 
     <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">done</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;done&#34;</span>)
 
 }
 
 </code></pre></div><!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 
 
 <span style="color:#f92672">import</span> (
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">fmt</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">sync</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;sync&#34;</span>
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">time</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;time&#34;</span>
 
 )
 
@@ -262,7 +267,7 @@
 
     <span style="color:#a6e22e">once</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#66d9ef">func</span>() {
 
-        <span style="color:#a6e22e">single3</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">Single3</span>{}
+        <span style="color:#a6e22e">single3</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Single3</span>{}
 
     })
 
@@ -274,15 +279,15 @@
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle3</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle3</span>())
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle3</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle3</span>())
 
-    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">p</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#a6e22e">n</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">GetSingle3</span>())
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#a6e22e">GetSingle3</span>())
 
     <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">done</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;done&#34;</span>)
 
 }
 

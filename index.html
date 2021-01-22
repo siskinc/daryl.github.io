@@ -55,10 +55,10 @@
   <h1 class="post-title">
     <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/">go-redis批量(pipeline)拉取数据的操作</a>
   </h1>
-  <time datetime="2020-11-11T22:55:21Z" class="post-date">Wed, Nov 11, 2020</time>
+  <time datetime="2020-11-09T23:49:58Z" class="post-date">Mon, Nov 9, 2020</time>
   主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了
  原理 在调用pipeline每次append命令时，会返回一个对应的xxxxCmd对象指针，保留这个指针即可，在Exec()函数执行完成后，会将结果写入对应的对象内
-demo package main import ( &amp;quot;context&amp;quot; &amp;quot;fmt&amp;quot; &amp;quot;github.com/go-redis/redis/v8&amp;quot; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;amp;redis.Options{ Addr: &amp;quot;local.arch:6379&amp;quot;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &amp;lt; 100; i++ { key := fmt.Sprintf(&amp;quot;%d&amp;quot;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.
+demo package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.com/go-redis/redis/v8&#34; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;redis.Options{ Addr: &#34;local.arch:6379&#34;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &lt; 100; i++ { key := fmt.Sprintf(&#34;%d&#34;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.
   
   <div class="read-more-link">
     <a href="/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/">Read More…</a>
@@ -70,27 +70,7 @@ demo package main import ( &amp;quot;context&amp;quot; &amp;quot;fmt&amp;quot; &
   </h1>
   <time datetime="2020-11-05T13:59:29Z" class="post-date">Thu, Nov 5, 2020</time>
   三方组件 paramiko
-创建ssh 连接 def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh 执行命令 def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&amp;#039;command&amp;#039;) for line in stdout.readlines(): print(line) 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Golang重复对一个slice进行append造成数据错误</a>
-  </h1>
-  <time datetime="2020-10-25T18:13:49Z" class="post-date">Sun, Oct 25, 2020</time>
-  slice的属性  切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。 切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？  问题实例 slice的cap是怎么增长的  参考文章:How does Go slice capacity change on append? [duplicate] 有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go  slice的结构 type slice struct { array unsafe.Pointer len int cap int } 多次append造成的数据错误 代码 package main import &amp;quot;fmt&amp;quot; func main() { temp := []int{} temp = append(temp, 1) printSlice(&amp;quot;temp&amp;quot;, temp) temp = append(temp, 2) printSlice(&amp;quot;temp&amp;quot;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&amp;quot;temp&amp;quot;, temp) temp2 := append(temp, 4) printSlice(&amp;quot;temp2&amp;quot;, temp2) temp4 := append(temp, 5, 6) printSlice(&amp;quot;temp4&amp;quot;, temp4) temp3 := append(temp, 5) printSlice(&amp;quot;temp3&amp;quot;, temp3) printSlice(&amp;quot;temp2&amp;quot;, temp2) } func printSlice(valName string, s []int) { fmt.
-  
-  <div class="read-more-link">
-    <a href="/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/">redis lua script注意点</a>
-  </h1>
-  <time datetime="2020-10-24T15:30:25Z" class="post-date">Sat, Oct 24, 2020</time>
-  脚本死循环 Redis 的指令执行是个单线程，这个单线程还要执行来自客户端的 lua 脚本。如果 lua 脚本中来一个死循环，在脚本没有对 Redis 的内部数据状态进行修改时，可以使用script kill指令用于动态杀死一个执行时间超时的 lua 脚本。因为 Redis 不允许 script kill 破坏脚本执行的原子性。比如脚本内部使用了 redis.call(&ldquo;set&rdquo;, key, value) 修改了内部的数据，那么 script kill 执行时服务器会返回错误。
-Script Kill 的原理 lua 脚本引擎功能太强大了，它提供了各式各样的钩子函数，它允许在内部虚拟机执行指令时运行钩子代码。比如每执行 N 条指令执行一次某个钩子函数，Redis 正是使用了这个钩子函数。
-void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w条指令，执行一次钩子函数 luaMaskCountHook  lua_sethook(lua,luaMaskCountHook,LUA_MASKCOUNT,100000); ... } 
+创建ssh 连接 def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh 执行命令 def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&#39;command&#39;) for line in stdout.readlines(): print(line) 
   
 </article><article class="post">
   <h1 class="post-title">
@@ -99,7 +79,7 @@ void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w�
   <time datetime="2020-09-12T16:45:46Z" class="post-date">Sat, Sep 12, 2020</time>
   幂次定律  如果某件事的发生频率和它的某个属性成幂关系，那么这个频率就可以称之为符合幂次定律。幂次定律的表现是少数几个事件的发生频率占了整个发生频率的大部分， 而其余的大多数事件只占整个发生频率的一个小部分。幂次定律
  Redis中的应用  在Redis中的跳表内容中有一个zslRandomLevel函数，返回一个随机的层级
- /* Returns a random level for the new skiplist node we are going to create. * The return value of this function is between 1 and ZSKIPLIST_MAXLEVEL * (both inclusive), with a powerlaw-alike distribution where higher * levels are less likely to be returned. */ int zslRandomLevel(void) { int level = 1; while ((random()&amp;amp;0xFFFF) &amp;lt; (ZSKIPLIST_P * 0xFFFF)) level += 1; return (level&amp;lt;ZSKIPLIST_MAXLEVEL) ?
+ /* Returns a random level for the new skiplist node we are going to create. * The return value of this function is between 1 and ZSKIPLIST_MAXLEVEL * (both inclusive), with a powerlaw-alike distribution where higher * levels are less likely to be returned. */ int zslRandomLevel(void) { int level = 1; while ((random()&amp;0xFFFF) &lt; (ZSKIPLIST_P * 0xFFFF)) level += 1; return (level&lt;ZSKIPLIST_MAXLEVEL) ?
   
   <div class="read-more-link">
     <a href="/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">Read More…</a>
@@ -107,13 +87,26 @@ void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w�
   
 </article><article class="post">
   <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/">redis lua script注意点</a>
+  </h1>
+  <time datetime="2020-08-16T22:26:29Z" class="post-date">Sun, Aug 16, 2020</time>
+  脚本死循环 Redis 的指令执行是个单线程，这个单线程还要执行来自客户端的 lua 脚本。如果 lua 脚本中来一个死循环，在脚本没有对 Redis 的内部数据状态进行修改时，可以使用script kill指令用于动态杀死一个执行时间超时的 lua 脚本。因为 Redis 不允许 script kill 破坏脚本执行的原子性。比如脚本内部使用了 redis.call(&ldquo;set&rdquo;, key, value) 修改了内部的数据，那么 script kill 执行时服务器会返回错误。
+Script Kill 的原理 lua 脚本引擎功能太强大了，它提供了各式各样的钩子函数，它允许在内部虚拟机执行指令时运行钩子代码。比如每执行 N 条指令执行一次某个钩子函数，Redis 正是使用了这个钩子函数。
+void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w条指令，执行一次钩子函数 luaMaskCountHook  lua_sethook(lua,luaMaskCountHook,LUA_MASKCOUNT,100000); ... } 
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">Golang map数据结构接受json中的uint64数据</a>
   </h1>
   <time datetime="2020-05-27T13:16:11Z" class="post-date">Wed, May 27, 2020</time>
   例如有一个json数据：
-{ &amp;quot;name&amp;quot;: &amp;quot;小明&amp;quot;, &amp;quot;money&amp;quot;: 1111111111111111111 } 但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
-package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct { Name string `json:&#34;name&#34;` Money uint64 `json:&#34;money&#34;` } func main() { info := &amp;Info{} json.Unmarshal([]byte(` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 }`), info) fmt.Println(info) } 但是在某些情况下，你不得不用一个map去接收数据怎么办？有几个坑需要注意一下：
- JSON的规范中，对于数字类型，并不区分是整型还是浮点型。 如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型如何解决这个问题，先看下面程序：  package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#34;strings&#34; ) func main() { const jsonStream = ` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } ` decoder := json.
+{ &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } 但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
+package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct { Name string `json:&#34;name&#34;` Money uint64 `json:&#34;money&#34;` } func main() { info := &amp;Info{} json.Unmarshal([]byte(` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 }`), info) fmt.Println(info) } 但是在某些情况下，你不得不用一个map去接收数据怎么办？
+有几个坑需要注意一下：
+  JSON的规范中，对于数字类型，并不区分是整型还是浮点型。
+  如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型
+  如何解决这个问题，先看下面程序：
+package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#34;strings&#34; ) func main() { const jsonStream = ` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } ` decoder := json.
   
   <div class="read-more-link">
     <a href="/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">Read More…</a>
@@ -124,7 +117,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct {
     <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/">Redis源码阅读之quicklist</a>
   </h1>
   <time datetime="2020-05-21T23:37:05Z" class="post-date">Thu, May 21, 2020</time>
-  数据结构 quicklistNode /* quicklistNode is a 32 byte struct describing a ziplist for a quicklist. * We use bit fields keep the quicklistNode at 32 bytes. * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &amp;lt; 32k). * encoding: 2 bits, RAW=1, LZF=2. * container: 2 bits, NONE=1, ZIPLIST=2. * recompress: 1 bit, bool, true if node is temporarry decompressed for usage. * attempted_compress: 1 bit, boolean, used for verifying during testing.
+  数据结构 quicklistNode /* quicklistNode is a 32 byte struct describing a ziplist for a quicklist. * We use bit fields keep the quicklistNode at 32 bytes. * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &lt; 32k). * encoding: 2 bits, RAW=1, LZF=2. * container: 2 bits, NONE=1, ZIPLIST=2. * recompress: 1 bit, bool, true if node is temporarry decompressed for usage. * attempted_compress: 1 bit, boolean, used for verifying during testing.
   
   <div class="read-more-link">
     <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/">Read More…</a>
@@ -135,7 +128,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct {
     <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/">Redis字典扩张算法</a>
   </h1>
   <time datetime="2020-05-16T00:05:19Z" class="post-date">Sat, May 16, 2020</time>
-  源码 /* This is the initial size of every hash table */ #define DICT_HT_INITIAL_SIZE 4  /* Our hash table capability is a power of two */ static unsigned long _dictNextPower(unsigned long size) { unsigned long i = DICT_HT_INITIAL_SIZE; if (size &amp;gt;= LONG_MAX) return LONG_MAX + 1LU; while(1) { if (i &amp;gt;= size) return i; i *= 2; } } 结论  Redis的dict会从4开始扩张，最大到达LONG_MAX + 1LU
+  源码 /* This is the initial size of every hash table */ #define DICT_HT_INITIAL_SIZE 4  /* Our hash table capability is a power of two */ static unsigned long _dictNextPower(unsigned long size) { unsigned long i = DICT_HT_INITIAL_SIZE; if (size &gt;= LONG_MAX) return LONG_MAX + 1LU; while(1) { if (i &gt;= size) return i; i *= 2; } } 结论  Redis的dict会从4开始扩张，最大到达LONG_MAX + 1LU
  
   
 </article><article class="post">
@@ -161,7 +154,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct {
   <h1 class="post-title">
     <a href="https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/">HTTP 与 HTTPS 的区别</a>
   </h1>
-  <time datetime="2020-04-29T09:17:21Z" class="post-date">Wed, Apr 29, 2020</time>
+  <time datetime="2020-04-25T22:00:23Z" class="post-date">Sat, Apr 25, 2020</time>
   超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。
 为了解决HTTP协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议HTTPS，为了数据传输的安全，HTTPS在HTTP的基础上加入了SSL协议，SSL依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。
 基本概念 HTTP  是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。
@@ -202,7 +195,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct {
   <h1 class="post-title">
     <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%BA%8Crehash/">Redis源码阅读之字典（二）——Rehash</a>
   </h1>
-  <time datetime="2020-04-21T23:58:02Z" class="post-date">Tue, Apr 21, 2020</time>
+  <time datetime="2020-04-21T23:58:01Z" class="post-date">Tue, Apr 21, 2020</time>
   历史文章 Redis源码阅读之字典（一）
 Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不断的增加，dict的size也在不断的增加，当dict.used == dict.size或者used*100/size &lt; HASHTABLE_MIN_FILL,HASHTABLE_MIN_FILL一般为10，也就是说，要么容量不够，要么容量使用率小于10%了，就会调用dictExpand进行重新分配内存，这个时候就会触发rehash了。但是rehash不行一次性就操作完成了，试想一下，如果一个dict里面含有数百万的key，rehash一次可能会很久，就可能造成服务假死的情况。所以rehashing是一个长时间的过程，每一次可能只进行几个key的迁移。
  哪些操作会触发rehashing的step dictRehashMilliseconds  redis server的定时任务会去执行dictRehashMilliseconds，但是都是传入的ms==1，主要是rehashing一下redis的dict和expired相关的键
@@ -215,18 +208,6 @@ Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不�
   
   <div class="read-more-link">
     <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%BA%8Crehash/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Redis源码阅读之字典（一）</a>
-  </h1>
-  <time datetime="2020-04-21T23:27:45Z" class="post-date">Tue, Apr 21, 2020</time>
-  数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
-哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。
-  
-  <div class="read-more-link">
-    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Read More…</a>
   </div>
   
 </article><article class="post">
@@ -255,6 +236,18 @@ Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不�
   
 </article><article class="post">
   <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Redis源码阅读之字典（一）</a>
+  </h1>
+  <time datetime="2020-04-21T23:23:41Z" class="post-date">Tue, Apr 21, 2020</time>
+  数据结构 字典的基本单元——dictEntry typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry; dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
+哈希表——dictht /* This is our hash table structure. Every dictionary has two of this as we * implement incremental rehashing, for the old to the new table. */ typedef struct dictht { dictEntry **table; unsigned long size; unsigned long sizemask; unsigned long used; } dictht; 从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。
+  
+  <div class="read-more-link">
+    <a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Read More…</a>
+  </div>
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/">Centos下，源码安装Python的h3包</a>
   </h1>
   <time datetime="2020-04-06T17:36:42Z" class="post-date">Mon, Apr 6, 2020</time>
@@ -270,13 +263,37 @@ Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不�
   
 </article><article class="post">
   <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Golang重复对一个slice进行append造成数据错误</a>
+  </h1>
+  <time datetime="2020-04-04T20:06:21Z" class="post-date">Sat, Apr 4, 2020</time>
+  slice的属性   切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。
+  切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。
+  那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
+问题实例 slice的cap是怎么增长的   参考文章:How does Go slice capacity change on append? [duplicate]
+  有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go
+  slice的结构 type slice struct { array unsafe.Pointer len int cap int } 多次append造成的数据错误 代码 package main import &#34;fmt&#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&#34;temp&#34;, temp) temp = append(temp, 2) printSlice(&#34;temp&#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&#34;temp&#34;, temp) temp2 := append(temp, 4) printSlice(&#34;temp2&#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&#34;temp4&#34;, temp4) temp3 := append(temp, 5) printSlice(&#34;temp3&#34;, temp3) printSlice(&#34;temp2&#34;, temp2) } func printSlice(valName string, s []int) { fmt.
+  
+  <div class="read-more-link">
+    <a href="/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Read More…</a>
+  </div>
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/">乐观锁（CAS）</a>
   </h1>
   <time datetime="2020-03-14T17:33:17Z" class="post-date">Sat, Mar 14, 2020</time>
-  什么是CAS  CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术 CAS是原子操作，保证并发安全，而不是保证并发同步 CAS是CPU的一个指令 CAS是非阻塞的、轻量级的乐观锁  为什么说CAS是乐观锁  乐观锁，严格来说并不是锁，通过原子性来保证数据的同步，比如说数据库的乐观锁，通过版本控制来实现等，所以CAS不会保证线程同步。乐观的认为在数据更新期间没有其他线程影响
+  什么是CAS   CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术
+  CAS是原子操作，保证并发安全，而不是保证并发同步
+  CAS是CPU的一个指令
+  CAS是非阻塞的、轻量级的乐观锁
+  为什么说CAS是乐观锁  乐观锁，严格来说并不是锁，通过原子性来保证数据的同步，比如说数据库的乐观锁，通过版本控制来实现等，所以CAS不会保证线程同步。乐观的认为在数据更新期间没有其他线程影响
  CAS原理  CAS(compare and swap) 比较并替换，就是将内存值更新为需要的值，但是有个条件，内存值必须与期望值相同。举个例子，期望值 E、内存值M、更新值U，当E == M的时候将M更新为U。
- CAS优缺点  优点  非阻塞的轻量级的乐观锁，通过CPU指令实现，在资源竞争不激烈的情况下性能高，相比synchronized重量锁，synchronized会进行比较复杂的加锁，解锁和唤醒操作。   缺点  ABA问题 线程C、D,线程D将A修改为B后又修改为A,此时C线程以为A没有改变过，java的原子类AtomicStampedReference，通过控制变量值的版本来保证CAS的正确性。 自旋时间过长，消耗CPU资源， 如果资源竞争激烈，多线程自旋长时间消耗资源。    CAS例子 不加锁 代码：
-package main import &amp;quot;fmt&amp;quot; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &amp;lt; 100000; i++ { p++ } end &amp;lt;- struct{}{} } func main() { go changeP() go changeP() &amp;lt;-end &amp;lt;-end fmt.
+ CAS优缺点   优点
+ 非阻塞的轻量级的乐观锁，通过CPU指令实现，在资源竞争不激烈的情况下性能高，相比synchronized重量锁，synchronized会进行比较复杂的加锁，解锁和唤醒操作。    缺点
+  ABA问题 线程C、D,线程D将A修改为B后又修改为A,此时C线程以为A没有改变过，java的原子类AtomicStampedReference，通过控制变量值的版本来保证CAS的正确性。
+  自旋时间过长，消耗CPU资源， 如果资源竞争激烈，多线程自旋长时间消耗资源。
+    CAS例子 不加锁 代码：
+package main import &#34;fmt&#34; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &lt; 100000; i++ { p++ } end &lt;- struct{}{} } func main() { go changeP() go changeP() &lt;-end &lt;-end fmt.
   
   <div class="read-more-link">
     <a href="/post/%E4%B9%90%E8%A7%82%E9%94%81cas/">Read More…</a>
@@ -318,112 +335,6 @@ deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
   
 </article><article class="post">
   <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/">shell中通过eval执行一个字符串命令</a>
-  </h1>
-  <time datetime="2020-01-01T20:58:31Z" class="post-date">Wed, Jan 1, 2020</time>
-  #!/bin/bash  echo &amp;quot;Switch Directory : /home/pktgen-2.9.0&amp;quot; dir=&amp;quot;/home/pktgen-2.9.0&amp;quot; cd $dir cmd=&amp;quot;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&amp;quot; eval $cmd 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/">使用docker-compose搭建WordPress</a>
-  </h1>
-  <time datetime="2020-01-01T20:57:34Z" class="post-date">Wed, Jan 1, 2020</time>
-  version: &amp;#039;3&amp;#039; services: nginx: image: nginx:1.13.9-alpine ports: - &amp;quot;80:80&amp;quot; - &amp;quot;443:443&amp;quot; restart: always volumes: - ./wordpress.conf:/etc/nginx/conf.d/default.conf - ./nginx_logs:/var/log/nginx - ./letsencrypt:/etc/letsencrypt depends_on: - wordpress networks: - daryl_blog_net wordpress: image: wordpress:latest restart: always volumes: - ./html:/var/www/html networks: - daryl_blog_net depends_on: - db environment: WORDPRESS_DB_HOST: db:3306 WORDPRESS_DB_USER: wordpress WORDPRESS_DB_PASSWORD: password db: image: mysql:5.7.23 volumes: - ./mysql:/var/lib/mysql - ./mysql_logs:/var/logs/mysql restart: always env_file: - mysql.env ports: - &amp;quot;3306:3306&amp;quot; networks: - daryl_blog_net networks: daryl_blog_net: driver: bridge ipam: config: - subnet: 192.
-  
-  <div class="read-more-link">
-    <a href="/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Golang 实现单例模式</a>
-  </h1>
-  <time datetime="2020-01-01T20:51:10Z" class="post-date">Wed, Jan 1, 2020</time>
-  package main import &amp;quot;fmt&amp;quot; type Single struct { } var single *Single func GetSingle() *Single { if single == nil { single = &amp;amp;Single{} } return single } func main() { fmt.Printf(&amp;quot;%p\n&amp;quot;, GetSingle()) fmt.Printf(&amp;quot;%p\n&amp;quot;, GetSingle()) fmt.Printf(&amp;quot;%p\n&amp;quot;, GetSingle()) } package main import ( &amp;quot;fmt&amp;quot; &amp;quot;sync&amp;quot; &amp;quot;time&amp;quot; ) type Single2 struct { } var single2 *Single2 var lock *sync.Mutex = &amp;amp;sync.Mutex{} func GetSingle2() *Single2 { lock.Lock() defer lock.Unlock() if single2 == nil { single2 = &amp;amp;Single2{} } return single2 } func main() { go fmt.
-  
-  <div class="read-more-link">
-    <a href="/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/">数组中重复的数字(Golang)</a>
-  </h1>
-  <time datetime="2020-01-01T20:45:25Z" class="post-date">Wed, Jan 1, 2020</time>
-  import &amp;quot;fmt&amp;quot; func main() { a := [...]int{2,3,1,0,2,5,3} num := make(map[int]bool) for _, v := range a { if !num[v] { num[v] = true } else { fmt.Println(v) } } } package main import ( &amp;quot;fmt&amp;quot; &amp;quot;sort&amp;quot; ) func main() { a := []int{2,3,1,0,2,5,3} sort.Ints(a) for i, v := range a { if i != v { if v == a[v] { fmt.Println(v) } else { a[i], a[v] = a[v], a[i] } } } } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">数组中重复的数字(Python)</a>
-  </h1>
-  <time datetime="2020-01-01T20:43:58Z" class="post-date">Wed, Jan 1, 2020</time>
-  #!/usr/bin/env python # -*- coding: utf-8 -*- # @Time : 2019-08-13 22:35 # @Author : daryl # @File : main.py def use_map(numbers): &amp;quot;&amp;quot;&amp;quot; 使用哈希表结构 :param numbers: :return: &amp;quot;&amp;quot;&amp;quot; num_map = dict() for number in numbers: if number in num_map: print(number) else: num_map[number] = True def use_set(numbers): &amp;quot;&amp;quot;&amp;quot; 使用set结构 :param numbers: :return: &amp;quot;&amp;quot;&amp;quot; num_set = set() for number in numbers: if number in num_set: print(number) else: num_set.add(number) def use_sort(numbers): &amp;quot;&amp;quot;&amp;quot; 排序后查找 :param numbers: :return: &amp;quot;&amp;quot;&amp;quot; numbers = sorted(numbers) print(numbers) for index, number in enumerate(numbers): if index !
-  
-  <div class="read-more-link">
-    <a href="/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">Read More…</a>
-  </div>
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">golang自动调用结构体中内嵌字段的Init()函数</a>
-  </h1>
-  <time datetime="2020-01-01T20:43:06Z" class="post-date">Wed, Jan 1, 2020</time>
-  package main import ( &amp;quot;fmt&amp;quot; &amp;quot;reflect&amp;quot; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.ValueOf(c) if rv.Kind() == reflect.Ptr { rv = rv.Elem() } for i := 0; i &amp;lt; rv.NumField(); i++ { value := rv.Field(i) if conf, ok := value.Interface().(initial); ok { conf.Init() } } } type A struct { } func (a *A) Init() { fmt.Println(&amp;quot;Init A&amp;quot;) } type B struct { AA *A } func main() { b := B{} triggerInitials(b) } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/">CSS清除浮动</a>
-  </h1>
-  <time datetime="2020-01-01T20:42:35Z" class="post-date">Wed, Jan 1, 2020</time>
-  .clearfix:after { content: &amp;quot;&amp;quot;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; } .clearfix:before, .clearfix:after { content: &amp;quot;&amp;quot;; display: table; } .clearfix:after { clear: both; } .clearfix { *zoom: 1; } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">记一次kafka-go使用踩坑（多个partition只会写入一个partition）</a>
-  </h1>
-  <time datetime="2020-01-01T20:41:13Z" class="post-date">Wed, Jan 1, 2020</time>
-  w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&amp;quot;localhost:9092&amp;quot;}, Topic: &amp;quot;topic-A&amp;quot;, Balancer: &amp;amp;kafka.LeastBytes{}, }) 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">golang http.client 的 Connection reset by peer 问题</a>
-  </h1>
-  <time datetime="2020-01-01T20:39:46Z" class="post-date">Wed, Jan 1, 2020</time>
-  resp, err := client.Get(&amp;quot;https://www.baidu.com/&amp;quot;)if resp != nil {defer resp.Body.Close()}checkError(err)fmt.Println(resp.StatusCode) // 200body, err := ioutil.ReadAll(resp.Body)checkError(err)fmt.Println(len(string(body))) }
-&lt;h3&gt;服务器端设置短连接&lt;/h3&gt;```golangfunc main(){server := &amp;amp;http.Server{Handler:handle,ReadTimeout: 20 * time.Second,WriteTimeout: 20 * time.Second,}listen, err := net.Listen(&amp;quot;tcp4&amp;quot;,s.addr)if err != nil {logger.Errorf(&amp;quot;Failed to listen,err:%s&amp;quot;,err.Error())panic(err)}server.SetKeepAlivesEnabled(false)err = server.Serve(listen)}
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/">git使用ssh自动替代https</a>
-  </h1>
-  <time datetime="2020-01-01T20:37:34Z" class="post-date">Wed, Jan 1, 2020</time>
-   在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
- 本地执行git命令: git config --global url.&amp;quot;git@github.com:&amp;quot;.insteadOf &amp;quot;https://github.com/&amp;quot; git config --global url.&amp;quot;git@git.company.com:&amp;quot;.insteadOf &amp;quot;https://git.company.com/&amp;quot;  company.com换成你自己公司的地址即可。
-  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： git config --global url.&amp;quot;git@github.com:golang/&amp;quot;.insteadOf &amp;quot;https://go.googlesource.com/&amp;quot; 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/nohup%E4%B8%8D%E8%BE%93%E5%87%BA%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95/">nohup不输出日志信息的方法</a>
-  </h1>
-  <time datetime="2020-01-01T20:33:47Z" class="post-date">Wed, Jan 1, 2020</time>
-  只输出错误信息到日志文件 nohup ./program &amp;gt; /dev/null 2 &amp;gt; log &amp;amp; 什么信息也不要 nohup ./program &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &amp;amp; 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/">golang scan rows to []string，golang使用mysql，将结果写入到string列表中</a>
-  </h1>
-  <time datetime="2020-01-01T20:31:19Z" class="post-date">Wed, Jan 1, 2020</time>
-  rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&amp;quot;scan have an err: %v, sql string: %s&amp;quot;, err, sqlStr) } } 
-  
-</article><article class="post">
-  <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/">Run jQuery in Chrome Console</a>
-  </h1>
-  <time datetime="2020-01-01T20:29:51Z" class="post-date">Wed, Jan 1, 2020</time>
-  var jqry = document.createElement(&amp;#039;script&amp;#039;); jqry.src = &amp;quot;https://code.jquery.com/jquery-3.3.1.min.js&amp;quot;; document.getElementsByTagName(&amp;#039;head&amp;#039;)[0].appendChild(jqry); jQuery.noConflict();  
-  
-</article><article class="post">
-  <h1 class="post-title">
     <a href="https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/">xshell过期了怎么办，如何破解xshell</a>
   </h1>
   <time datetime="2019-12-25T20:35:41Z" class="post-date">Wed, Dec 25, 2019</time>
@@ -431,9 +342,32 @@ deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
   
 </article><article class="post">
   <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/">golang scan rows to []string，golang使用mysql，将结果写入到string列表中</a>
+  </h1>
+  <time datetime="2019-12-17T19:36:31Z" class="post-date">Tue, Dec 17, 2019</time>
+  rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&#34;scan have an err: %v, sql string: %s&#34;, err, sqlStr) } } 
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/nohup%E4%B8%8D%E8%BE%93%E5%87%BA%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95/">nohup不输出日志信息的方法</a>
+  </h1>
+  <time datetime="2019-12-15T09:45:40Z" class="post-date">Sun, Dec 15, 2019</time>
+  只输出错误信息到日志文件 nohup ./program &gt; /dev/null 2 &gt; log &amp; 什么信息也不要 nohup ./program &gt;/dev/null 2&gt;&amp;1 &amp; 
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/">git使用ssh自动替代https</a>
+  </h1>
+  <time datetime="2019-12-12T22:40:31Z" class="post-date">Thu, Dec 12, 2019</time>
+   在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
+ 本地执行git命令: git config --global url.&#34;git@github.com:&#34;.insteadOf &#34;https://github.com/&#34; git config --global url.&#34;git@git.company.com:&#34;.insteadOf &#34;https://git.company.com/&#34;  company.com换成你自己公司的地址即可。
+  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： git config --global url.&#34;git@github.com:golang/&#34;.insteadOf &#34;https://go.googlesource.com/&#34; 
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Golang交叉编译</a>
   </h1>
-  <time datetime="2019-12-13T10:29:48Z" class="post-date">Fri, Dec 13, 2019</time>
+  <time datetime="2019-12-12T09:31:27Z" class="post-date">Thu, Dec 12, 2019</time>
   Mac 下编译 Linux 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Linux 下编译 Mac 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go  GOOS：目标平台的操作系统（darwin、freebsd、linux、windows） GOARCH：目标平台的体系架构（386、amd64、arm） 交叉编译不支持 CGO 所以要禁用它   上面的命令编译 64 位可执行程序，你当然应该也会使用 386 编译 32 位可执行程序很多博客都提到要先增加对其它平台的支持，但是我跳过那一步，上面所列的命令也都能成功，且得到我想要的结果，可见那一步应该是非必须的，或是我所使用的 Go 版本已默认支持所有平台。
   
   <div class="read-more-link">
@@ -464,10 +398,49 @@ deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
   
 </article><article class="post">
   <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/">Run jQuery in Chrome Console</a>
+  </h1>
+  <time datetime="2019-11-28T00:57:49Z" class="post-date">Thu, Nov 28, 2019</time>
+  var jqry = document.createElement(&#39;script&#39;); jqry.src = &#34;https://code.jquery.com/jquery-3.3.1.min.js&#34;; document.getElementsByTagName(&#39;head&#39;)[0].appendChild(jqry); jQuery.noConflict(); 
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">golang http.client 的 Connection reset by peer 问题</a>
+  </h1>
+  <time datetime="2019-11-28T00:28:26Z" class="post-date">Thu, Nov 28, 2019</time>
+  func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Close = true resp, err := http.Client.Do(req) } func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Header.Add(&#34;Connection&#34;, &#34;close&#34;) resp, err := http.Client.Do(req) } func main() { tr := http.Transport{DisableKeepAlives: true} client := http.Client{Transport: &amp;tr} resp, err := client.Get(&#34;https://www.baidu.com/&#34;) if resp != nil { defer resp.Body.Close() } checkError(err) fmt.
+  
+  <div class="read-more-link">
+    <a href="/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">Read More…</a>
+  </div>
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">记一次kafka-go使用踩坑（多个partition只会写入一个partition）</a>
+  </h1>
+  <time datetime="2019-11-06T05:33:44Z" class="post-date">Wed, Nov 6, 2019</time>
+  w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, }) 
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/">定时统计任务参考</a>
   </h1>
   <time datetime="2019-11-01T22:12:47Z" class="post-date">Fri, Nov 1, 2019</time>
    时间的触发，过期的数据不再使用（数据来源是消息中间件） 相关联的任务使用事件的方式，例如一天的统计数据是需要小时的数据来生成的，当一天的小时数据生成完了，再去触发生成一天的数据，请勿使用延时的观念，是神坑，勿入。 数据的读取，采用批量的方式读取，一次读取一个限定的值的数量。 数据的写入，采用批量的方式写入，最好有ticker来触发写入未到阈值数量的数据。 撸数据是一次sql撸完，还是分页撸？DBA告诉我让我一次撸完。  
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/">CSS清除浮动</a>
+  </h1>
+  <time datetime="2019-10-25T14:29:00Z" class="post-date">Fri, Oct 25, 2019</time>
+  使用方法：.clearfix:after { content: &#34;&#34;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; } .clearfix:before, .clearfix:after { content: &#34;&#34;; display: table; } .clearfix:after { clear: both; } .clearfix { *zoom: 1; } 
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">golang自动调用结构体中内嵌字段的Init()函数</a>
+  </h1>
+  <time datetime="2019-09-26T13:31:39Z" class="post-date">Thu, Sep 26, 2019</time>
+  package main import ( &#34;fmt&#34; &#34;reflect&#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.ValueOf(c) if rv.Kind() == reflect.Ptr { rv = rv.Elem() } for i := 0; i &lt; rv.NumField(); i++ { value := rv.Field(i) if conf, ok := value.Interface().(initial); ok { conf.Init() } } } type A struct { } func (a *A) Init() { fmt.Println(&#34;Init A&#34;) } type B struct { AA *A } func main() { b := B{} triggerInitials(b) } 
   
 </article><article class="post">
   <h1 class="post-title">
@@ -507,11 +480,40 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
   
 </article><article class="post">
   <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">数组中重复的数字(Python)</a>
+  </h1>
+  <time datetime="2019-08-13T22:48:18Z" class="post-date">Tue, Aug 13, 2019</time>
+  #!/usr/bin/env python # -*- coding: utf-8 -*- # @Time : 2019-08-13 22:35 # @Author : daryl # @File : main.py def use_map(numbers): &#34;&#34;&#34; 使用哈希表结构 :param numbers: :return: &#34;&#34;&#34; num_map = dict() for number in numbers: if number in num_map: print(number) else: num_map[number] = True def use_set(numbers): &#34;&#34;&#34; 使用set结构 :param numbers: :return: &#34;&#34;&#34; num_set = set() for number in numbers: if number in num_set: print(number) else: num_set.add(number) def use_sort(numbers): &#34;&#34;&#34; 排序后查找 :param numbers: :return: &#34;&#34;&#34; numbers = sorted(numbers) print(numbers) for index, number in enumerate(numbers): if index !
+  
+  <div class="read-more-link">
+    <a href="/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">Read More…</a>
+  </div>
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/">数组中重复的数字(Golang)</a>
+  </h1>
+  <time datetime="2019-08-13T22:26:43Z" class="post-date">Tue, Aug 13, 2019</time>
+  import &#34;fmt&#34; func main() { a := [...]int{2,3,1,0,2,5,3} num := make(map[int]bool) for _, v := range a { if !num[v] { num[v] = true } else { fmt.Println(v) } } } package main import ( &#34;fmt&#34; &#34;sort&#34; ) func main() { a := []int{2,3,1,0,2,5,3} sort.Ints(a) for i, v := range a { if i != v { if v == a[v] { fmt.Println(v) } else { a[i], a[v] = a[v], a[i] } } } } 
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Golang 实现单例模式</a>
+  </h1>
+  <time datetime="2019-08-13T21:47:01Z" class="post-date">Tue, Aug 13, 2019</time>
+  package main import &#34;fmt&#34; type Single struct { } var single *Single func GetSingle() *Single { if single == nil { single = &amp;Single{} } return single } func main() { fmt.Printf(&#34;%p\n&#34;, GetSingle()) fmt.Printf(&#34;%p\n&#34;, GetSingle()) fmt.Printf(&#34;%p\n&#34;, GetSingle()) } package main import ( &#34;fmt&#34; &#34;sync&#34; &#34;time&#34; ) type Single2 struct { } var single2 *Single2 var lock *sync.Mutex = &amp;sync.Mutex{} func GetSingle2() *Single2 { lock.Lock() defer lock.Unlock() if single2 == nil { single2 = &amp;Single2{} } return single2 } func main() { go fmt.
+  
+  <div class="read-more-link">
+    <a href="/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Read More…</a>
+  </div>
+  
+</article><article class="post">
+  <h1 class="post-title">
     <a href="https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Python实现单例模式</a>
   </h1>
   <time datetime="2019-08-13T21:20:41Z" class="post-date">Tue, Aug 13, 2019</time>
   [TOC]
-使用__new__方法 class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &amp;#039;_instance&amp;#039;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass 共享属性 class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).__new__(cls, *args, **kw) ob.__dict__ = cls._state return ob class MyClass2(Borg): pass 装饰器版本 def singleton(cls): instances = {} def getinstance(*args, **kw): if cls not in instances: instances[cls] = cls(*args, **kw) return instances[cls] return getinstance @singleton class MyClass: pass import方法 # mysingleton.
+使用__new__方法 class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &#39;_instance&#39;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass 共享属性 class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).__new__(cls, *args, **kw) ob.__dict__ = cls._state return ob class MyClass2(Borg): pass 装饰器版本 def singleton(cls): instances = {} def getinstance(*args, **kw): if cls not in instances: instances[cls] = cls(*args, **kw) return instances[cls] return getinstance @singleton class MyClass: pass import方法 # mysingleton.
   
   <div class="read-more-link">
     <a href="/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Read More…</a>
@@ -526,24 +528,27 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
   
 </article><article class="post">
   <h1 class="post-title">
-    <a href="https://siskinc.github.io/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    <a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/">使用docker-compose搭建WordPress</a>
   </h1>
-  <time datetime="2019-07-25T23:24:53Z" class="post-date">Thu, Jul 25, 2019</time>
-  [TOC]
-原理  首先取出查找表中每个关键字及其对应的权值，采用如下公式计算出每个关键字对应的一个值：
-  其中 wj 表示每个关键字的权值（被查找到的概率），h 表示关键字的个数。
- 表中有多少关键字，就会有多少个 △Pi ，取其中最小的做为次优查找树的根结点，然后将表中关键字从第 i 个关键字的位置分成两部分，分别作为该根结点的左子树和右子树。同理，左子树和右子树也这么处理，直到最后构成次优查找树完成。
-typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemType;//定义元素类型  typedef struct BiTNode{ ElemType data; struct BiTNode *lchild, *rchild; }BiTNode, *BiTree; //定义变量  int i; int min; int dw; //创建次优查找树，R数组为查找表，sw数组为存储的各关键字的概率（权值），low和high表示的sw数组中的权值的范围  void SecondOptimal(BiTree T, ElemType R[], float sw[], int low, int high){ //由有序表R[low...high]及其累计权值表sw（其中sw[0]==0）递归构造次优查找树  i = low; min = abs(sw[high] - sw[low]); dw = sw[high] + sw[low - 1]; //选择最小的△Pi值  for (int j = low+1; j &amp;lt;=high; j++){ if (abs(dw-sw[j]-sw[j-1])&amp;lt;min){ i = j; min = abs(dw - sw[j] - sw[j - 1]); } } T = (BiTree)malloc(sizeof(BiTNode)); T-&amp;gt;data = R[i];//生成结点（第一次生成根）  if (i == low) T-&amp;gt;lchild = NULL;//左子树空  else SecondOptimal(T-&amp;gt;lchild, R, sw, low, i - 1);//构造左子树  if (i == high) T-&amp;gt;rchild = NULL;//右子树空  else SecondOptimal(T-&amp;gt;rchild, R, sw, i + 1, high);//构造右子树  } 完整事例演示 例如，一含有 9 个关键字的查找表及其相应权值如下表所示：则构建次优查找树的过程如下：首先求出查找表中所有的 △P 的值，找出整棵查找表的根结点： 例如，关键字 F 的 △P 的计算方式为：从 G 到 I 的权值和 - 从 A 到 E 的权值和 = 4+3+5-1-1-2-5-3 = 0。  通过上图左侧表格得知，根结点为 F，以 F 为分界线，左侧子表为 F 结点的左子树，右侧子表为 F 结点的右子树（如上图右侧所示），继续查找左右子树的根结点：通过重新分别计算左右两查找子表的 △P 的值，得知左子树的根结点为 D，右子树的根结点为 H （如上图右侧所示），以两结点为分界线，继续判断两根结点的左右子树：通过计算，构建的次优查找树如上图右侧二叉树所示。后边还有一步，判断关键字 A 和 C 在树中的位置，最后一步两个关键字的权值为 0 ，分别作为结点 B 的左孩子和右孩子，这里不再用图表示。
+  <time datetime="2019-07-25T23:18:13Z" class="post-date">Thu, Jul 25, 2019</time>
+  version: &#39;3&#39; services: nginx: image: nginx:1.13.9-alpine ports: - &#34;80:80&#34; - &#34;443:443&#34; restart: always volumes: - ./wordpress.conf:/etc/nginx/conf.d/default.conf - ./nginx_logs:/var/log/nginx - ./letsencrypt:/etc/letsencrypt depends_on: - wordpress networks: - daryl_blog_net wordpress: image: wordpress:latest restart: always volumes: - ./html:/var/www/html networks: - daryl_blog_net depends_on: - db environment: WORDPRESS_DB_HOST: db:3306 WORDPRESS_DB_USER: wordpress WORDPRESS_DB_PASSWORD: password db: image: mysql:5.7.23 volumes: - ./mysql:/var/lib/mysql - ./mysql_logs:/var/logs/mysql restart: always env_file: - mysql.env ports: - &#34;3306:3306&#34; networks: - daryl_blog_net networks: daryl_blog_net: driver: bridge ipam: config: - subnet: 192.
   
   <div class="read-more-link">
-    <a href="/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">Read More…</a>
+    <a href="/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/">Read More…</a>
   </div>
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/">shell中通过eval执行一个字符串命令</a>
+  </h1>
+  <time datetime="2019-07-25T20:39:15Z" class="post-date">Thu, Jul 25, 2019</time>
+  #!/bin/bash echo &#34;Switch Directory : /home/pktgen-2.9.0&#34; dir=&#34;/home/pktgen-2.9.0&#34; cd $dir cmd=&#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&#34; eval $cmd 
   
 </article><article class="post">
   <h1 class="post-title">
     <a href="https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/">svn钩子(hooks)</a>
   </h1>
-  <time datetime="2019-07-25T20:37:30Z" class="post-date">Thu, Jul 25, 2019</time>
+  <time datetime="2019-07-25T20:37:23Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
 钩子脚本的具体写法就是操作系统中shell脚本程序的写法,请根据自己SVN所在的操作系统和shell程序进行相应的写作
 所谓钩子就是与一些版本库事件触发的程序，例如新修订版本的创建，或是未版本化属性的修改。每个钩子都会被告知足够多的信息，包括那是什么事件，所操作的对象，和触发事件的用户名。通过钩子的输出或返回状态，钩子程序能让工作继续、停止或是以某种方式挂起。
@@ -581,14 +586,14 @@ svn的docker搭建方法  请提前在服务器安装好docker服务 本篇教�
   </h1>
   <time datetime="2019-07-25T20:35:44Z" class="post-date">Thu, Jul 25, 2019</time>
   引用：原文
-from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&amp;quot;self&amp;quot;, reverse_delete_rule = NULLIFY) 
+from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&#34;self&#34;, reverse_delete_rule = NULLIFY) 
   
 </article><article class="post">
   <h1 class="post-title">
     <a href="https://siskinc.github.io/post/docker%E4%B8%80%E9%94%AEss/">docker一键ss</a>
   </h1>
   <time datetime="2019-07-25T20:35:01Z" class="post-date">Thu, Jul 25, 2019</time>
-  sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &amp;quot;ss-server&amp;quot; -s &amp;quot;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&amp;quot; -x -e &amp;quot;kcpserver&amp;quot; -k &amp;quot;-t 127.0.0.1:6443 -l :8188 -mode fast2&amp;quot; 
+  sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &#34;ss-server&#34; -s &#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&#34; -x -e &#34;kcpserver&#34; -k &#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&#34; 
   
 </article><article class="post">
   <h1 class="post-title">
@@ -604,6 +609,21 @@ from mongoengine import * class Employee(Document): name = StringField() boss = 
   <time datetime="2019-07-25T20:33:29Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
 可能出现的问题  多进程启动 gevent启动 运行的服务可能不会停止  解决 我先参考了一下这一篇文章使用Coverage分析WSGI项目的代码覆盖率，他基本能够解决掉1.2两个问题，第三个问题我是使用了一个接口来停止当前进程的coverage，接口返回一个当前进程的work_id，可以判断是否所以进程都结束了，然后进行coverage combine就行了
+  
+</article><article class="post">
+  <h1 class="post-title">
+    <a href="https://siskinc.github.io/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+  </h1>
+  <time datetime="2019-07-25T20:31:14Z" class="post-date">Thu, Jul 25, 2019</time>
+  [TOC]
+原理  首先取出查找表中每个关键字及其对应的权值，采用如下公式计算出每个关键字对应的一个值：
+  其中 wj 表示每个关键字的权值（被查找到的概率），h 表示关键字的个数。
+ 表中有多少关键字，就会有多少个 △Pi ，取其中最小的做为次优查找树的根结点，然后将表中关键字从第 i 个关键字的位置分成两部分，分别作为该根结点的左子树和右子树。同理，左子树和右子树也这么处理，直到最后构成次优查找树完成。
+typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemType;//定义元素类型  typedef struct BiTNode{ ElemType data; struct BiTNode *lchild, *rchild; }BiTNode, *BiTree; //定义变量  int i; int min; int dw; //创建次优查找树，R数组为查找表，sw数组为存储的各关键字的概率（权值），low和high表示的sw数组中的权值的范围  void SecondOptimal(BiTree T, ElemType R[], float sw[], int low, int high){ //由有序表R[low...high]及其累计权值表sw（其中sw[0]==0）递归构造次优查找树  i = low; min = abs(sw[high] - sw[low]); dw = sw[high] + sw[low - 1]; //选择最小的△Pi值  for (int j = low+1; j &lt;=high; j++){ if (abs(dw-sw[j]-sw[j-1])&lt;min){ i = j; min = abs(dw - sw[j] - sw[j - 1]); } } T = (BiTree)malloc(sizeof(BiTNode)); T-&gt;data = R[i];//生成结点（第一次生成根）  if (i == low) T-&gt;lchild = NULL;//左子树空  else SecondOptimal(T-&gt;lchild, R, sw, low, i - 1);//构造左子树  if (i == high) T-&gt;rchild = NULL;//右子树空  else SecondOptimal(T-&gt;rchild, R, sw, i + 1, high);//构造右子树  } 完整事例演示 例如，一含有 9 个关键字的查找表及其相应权值如下表所示：
+  
+  <div class="read-more-link">
+    <a href="/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">Read More…</a>
+  </div>
   
 </article><article class="post">
   <h1 class="post-title">
@@ -624,10 +644,18 @@ from mongoengine import * class Employee(Document): name = StringField() boss = 
   </h1>
   <time datetime="2019-07-25T20:28:20Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
-使用 npm install vue-lazyload --save //注册插件  import vueLazyload from &amp;#039;vue-lazyload&amp;#039; Vue.use(vueLazyload); //在需要懒加载的图片上 &amp;lt;img v-lazy=&amp;quot;imgUrl&amp;quot;&amp;gt; 参数说明 注册插件的时候，是可以传入第二个配置参数的
-Vue.use(vueLazyload,{}) 可选的参数如下：preLoad:类型Number,默认1.3. 表示lazyload的元素距离页面底部距离的百分比.计算值为(preload - 1).attempt:图片加载失败后的重试次数.默认为3.error:类型string.图片加载失败后的显示的失败图片路径.loading:类型string.图片正在加载中显示的loading图片的路径.listenEvents:类型array.默认[&lsquo;scroll&rsquo;, &lsquo;wheel&rsquo;, &lsquo;mousewheel&rsquo;, &lsquo;resize&rsquo;, &lsquo;animationend&rsquo;, &lsquo;transitionend&rsquo;, &lsquo;touchmove&rsquo;].即是在监听上述事件中,判断图片是否在preload的位置.如果你不想在那么多事件中判断,可以指定一个或者几个.例如如果你给这个属性只指定[&lsquo;touchmove&rsquo;].那么scroll 屏幕不会加载图片,只有手指滑动屏幕才会加载图片.
-adapter:注册img 的loading,loaded,error三个状态的回调函数,参数会暴露懒加载的img元素,可以对其进行操作.filter: img未加载之前,解析到src 的时候注册的回调函数.可以在加载图片之前,对src进行修改.注册在filter下的所有的函数都会执行lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.挖坑(vue懒加载组件)
-observer:是否启用IntersectionObserver,这个api有兼容问题observerOptions:默认{ rootMargin: &lsquo;0px&rsquo;, threshold: 0.1 } 主要是我对这个pai不熟,按照vue-lazyload的说法是开启之后,对很多节点的情况会优化性能.挖坑吧
+使用 npm install vue-lazyload --save //注册插件  import vueLazyload from &#39;vue-lazyload&#39; Vue.use(vueLazyload); //在需要懒加载的图片上 &lt;img v-lazy=&#34;imgUrl&#34;&gt; 参数说明 注册插件的时候，是可以传入第二个配置参数的
+Vue.use(vueLazyload,{}) 可选的参数如下：
+preLoad:类型Number,默认1.3. 表示lazyload的元素距离页面底部距离的百分比.计算值为(preload - 1).
+attempt:图片加载失败后的重试次数.默认为3.
+error:类型string.图片加载失败后的显示的失败图片路径.
+loading:类型string.图片正在加载中显示的loading图片的路径.
+listenEvents:类型array.默认[&lsquo;scroll&rsquo;, &lsquo;wheel&rsquo;, &lsquo;mousewheel&rsquo;, &lsquo;resize&rsquo;, &lsquo;animationend&rsquo;, &lsquo;transitionend&rsquo;, &lsquo;touchmove&rsquo;].即是在监听上述事件中,判断图片是否在preload的位置.如果你不想在那么多事件中判断,可以指定一个或者几个.例如如果你给这个属性只指定[&lsquo;touchmove&rsquo;].那么scroll 屏幕不会加载图片,只有手指滑动屏幕才会加载图片.
+adapter:注册img 的loading,loaded,error三个状态的回调函数,参数会暴露懒加载的img元素,可以对其进行操作.
+filter: img未加载之前,解析到src 的时候注册的回调函数.可以在加载图片之前,对src进行修改.注册在filter下的所有的函数都会执行
+lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.挖坑(vue懒加载组件)
+observer:是否启用IntersectionObserver,这个api有兼容问题
+observerOptions:默认{ rootMargin: &lsquo;0px&rsquo;, threshold: 0.1 } 主要是我对这个pai不熟,按照vue-lazyload的说法是开启之后,对很多节点的情况会优化性能.挖坑吧
   
 </article><article class="post">
   <h1 class="post-title">
@@ -646,14 +674,14 @@ observer:是否启用IntersectionObserver,这个api有兼容问题observerOptio
   <time datetime="2019-07-25T20:27:18Z" class="post-date">Thu, Jul 25, 2019</time>
    在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
  解决方法如下，在__init__文件中加入以下代码:
-import sys import os sys.path.append(os.path.dirname(&amp;#039;mudole_name/&amp;#039;)) 
+import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) 
   
 </article><article class="post">
   <h1 class="post-title">
     <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a>
   </h1>
   <time datetime="2019-07-25T20:26:43Z" class="post-date">Thu, Jul 25, 2019</time>
-  from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=&amp;#039;&amp;#039;):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype=&amp;#039;application/json&amp;#039;)class JSONResponse(Response):def __init__(self, data, msg=&amp;#039;&amp;#039;):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype=&amp;#039;application/json&amp;#039;)class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&amp;quot;need login&amp;quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype=&amp;#039;application/json&amp;#039;, status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果
+  from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=''):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype='application/json')class JSONResponse(Response):def __init__(self, data, msg=''):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype='application/json')class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&quot;need login&quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype='application/json', status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果
   
 </article><article class="post">
   <h1 class="post-title">
@@ -661,7 +689,7 @@ import sys import os sys.path.append(os.path.dirname(&amp;#039;mudole_name/&amp;
   </h1>
   <time datetime="2019-07-25T20:25:30Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
-上传图片 func imagePost(c *gin.Context) { image, err := c.FormFile(&amp;quot;file&amp;quot;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } fileImage, err := image.Open() if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } defer fileImage.Close() imageGridFS, err := model.GetGridFS(&amp;quot;image&amp;quot;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } now := self_time.GetNowTimeStamp() nowStr := strconv.FormatInt(now, 10) file, err := imageGridFS.Create(nowStr) if err !
+上传图片 func imagePost(c *gin.Context) { image, err := c.FormFile(&#34;file&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } fileImage, err := image.Open() if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } defer fileImage.Close() imageGridFS, err := model.GetGridFS(&#34;image&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } now := self_time.GetNowTimeStamp() nowStr := strconv.FormatInt(now, 10) file, err := imageGridFS.Create(nowStr) if err !
   
   <div class="read-more-link">
     <a href="/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/">Read More…</a>
@@ -672,7 +700,7 @@ import sys import os sys.path.append(os.path.dirname(&amp;#039;mudole_name/&amp;
     <a href="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Django上传图片</a>
   </h1>
   <time datetime="2019-07-25T20:24:51Z" class="post-date">Thu, Jul 25, 2019</time>
-  model from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&amp;#039;share_pictures/&amp;#039;) name = models.CharField(max_length = 50) class Meta: db_table = &amp;quot;picture&amp;quot; def __str__(self): return self.name forms from django import forms class ImageForm(forms.Form): name = forms.CharField(max_length = 100, label=&amp;#039;名字：&amp;#039;) picture = forms.ImageField(label=&amp;#039;图片：&amp;#039;)  Views class PictureView(APIView): def get(self, request): name = request.GET.get(&amp;#039;name&amp;#039;, &amp;#039;&amp;#039;) try: picture = Picture.objects.get(name=name) except Picture.DoesNotExist: return Response(status=status.HTTP_404_NOT_FOUND) image = open(picture.path.url[1:], &amp;#039;rb&amp;#039;).read() return HttpResponse(image, content_type=&amp;#039;image/png&amp;#039;) def post(self, request): MyImageForm = ImageForm(request.
+  model from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&#39;share_pictures/&#39;) name = models.CharField(max_length = 50) class Meta: db_table = &#34;picture&#34; def __str__(self): return self.name forms from django import forms class ImageForm(forms.Form): name = forms.CharField(max_length = 100, label=&#39;名字：&#39;) picture = forms.ImageField(label=&#39;图片：&#39;) Views class PictureView(APIView): def get(self, request): name = request.GET.get(&#39;name&#39;, &#39;&#39;) try: picture = Picture.objects.get(name=name) except Picture.DoesNotExist: return Response(status=status.HTTP_404_NOT_FOUND) image = open(picture.path.url[1:], &#39;rb&#39;).read() return HttpResponse(image, content_type=&#39;image/png&#39;) def post(self, request): MyImageForm = ImageForm(request.
   
   <div class="read-more-link">
     <a href="/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Read More…</a>
@@ -695,7 +723,7 @@ import sys import os sys.path.append(os.path.dirname(&amp;#039;mudole_name/&amp;
   any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。
 元素除了是 0、空、FALSE 外都算 TRUE。
 如果想要测试一个list中是否有一个是1可以使用any，例如：
-x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&amp;#039;passed&amp;#039;) if 1 in (x, y, z): print(&amp;#039;passed&amp;#039;) # These only test for truthiness: if x or y or z: print(&amp;#039;passed&amp;#039;) if any((x, y, z)): print(&amp;#039;passed&amp;#039;) 
+x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&#39;passed&#39;) if 1 in (x, y, z): print(&#39;passed&#39;) # These only test for truthiness: if x or y or z: print(&#39;passed&#39;) if any((x, y, z)): print(&#39;passed&#39;) 
   
 </article><article class="post">
   <h1 class="post-title">
@@ -703,7 +731,7 @@ x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&amp;#039;passed&amp;#039
   </h1>
   <time datetime="2019-07-25T17:50:14Z" class="post-date">Thu, Jul 25, 2019</time>
   Python 3
-x = {&amp;#039;a&amp;#039;: 1, &amp;#039;b&amp;#039;: 2} y = {&amp;#039;b&amp;#039;: 3, &amp;#039;c&amp;#039;: 4} z = {**x, **y} Python 2
+x = {&#39;a&#39;: 1, &#39;b&#39;: 2} y = {&#39;b&#39;: 3, &#39;c&#39;: 4} z = {**x, **y} Python 2
 z = dict(x, **y)  Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖
  
   
@@ -731,10 +759,12 @@ Python下划线命名模式 - 小结 evernotecid://9326179B-5200-4478-B32E-B919B
   <time datetime="2019-07-25T17:46:17Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
 例子 我们时常会写一些interface，例如：
-type A interface{ Print() } type B struct { } func (b *B) Print() { fmt.Println(&amp;quot;Here is *B&amp;quot;) } 赋值的时候:
-var a A a = &amp;amp;B{} 诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码
+type A interface{ Print() } type B struct { } func (b *B) Print() { fmt.Println(&#34;Here is *B&#34;) } 赋值的时候:
+var a A a = &amp;B{} 诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码
 var aa []A aa = make([]*B, 10) 好的，现在翻车了，会得到一个这样的报错：
-cannot use make([]*B, 10) (type []*B) as type []A in assignment原因  []A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。 []A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。  如何去实现 bb := []*B{&amp;amp;B{}, &amp;amp;B{}} var aa []AA = make([]AA, len(bb)) for i, d := range bb { aa[i] = d } 
+cannot use make([]*B, 10) (type []*B) as type []A in assignment原因   []A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。
+  []A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。
+  如何去实现 bb := []*B{&amp;B{}, &amp;B{}} var aa []AA = make([]AA, len(bb)) for i, d := range bb { aa[i] = d } 
   
 </article><article class="post">
   <h1 class="post-title">
@@ -742,8 +772,10 @@ cannot use make([]*B, 10) (type []*B) as type []A in assignment原因  []A 不�
   </h1>
   <time datetime="2019-07-25T17:45:35Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
- PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型PyAPI_DATA(type): 声明公共的Python数据和类型PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接
- /* All windows ports, except cygwin, are handled in PC/pyconfig.h. Cygwin is the only other autoconf platform requiring special linkage handling and it uses __declspec(). */ /* 除了cygwin之外的所有Windows socket 文件都在PC / pyconfig.h中处理。 */ #if defined(__CYGWIN__)  # define HAVE_DECLSPEC_DLL  #endif  /* only get special linkage if built as shared or platform is Cygwin */ #if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__)  # if defined(HAVE_DECLSPEC_DLL)  # if defined(Py_BUILD_CORE) || defined(Py_BUILD_CORE_BUILTIN)  # define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE  # define PyAPI_DATA(RTYPE) extern __declspec(dllexport) RTYPE  /* module init functions inside the core need no external linkage */ /* except for Cygwin to handle embedding */ # if defined(__CYGWIN__)  # define PyMODINIT_FUNC __declspec(dllexport) PyObject*  # else /* __CYGWIN__ */ # define PyMODINIT_FUNC PyObject*  # endif /* __CYGWIN__ */ # else /* Py_BUILD_CORE */ /* Building an extension module, or an embedded situation */ /* public Python functions and data are imported */ /* Under Cygwin, auto-import functions to prevent compilation */ /* failures similar to those described at the bottom of 4.
+ PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型
+ PyAPI_DATA(type): 声明公共的Python数据和类型
+PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接
+/* All windows ports, except cygwin, are handled in PC/pyconfig.h. Cygwin is the only other autoconf platform requiring special linkage handling and it uses __declspec(). */ /* 除了cygwin之外的所有Windows socket 文件都在PC / pyconfig.h中处理。 */ #if defined(__CYGWIN__)  # define HAVE_DECLSPEC_DLL  #endif  /* only get special linkage if built as shared or platform is Cygwin */ #if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__)  # if defined(HAVE_DECLSPEC_DLL)  # if defined(Py_BUILD_CORE) || defined(Py_BUILD_CORE_BUILTIN)  # define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE  # define PyAPI_DATA(RTYPE) extern __declspec(dllexport) RTYPE  /* module init functions inside the core need no external linkage */ /* except for Cygwin to handle embedding */ # if defined(__CYGWIN__)  # define PyMODINIT_FUNC __declspec(dllexport) PyObject*  # else /* __CYGWIN__ */ # define PyMODINIT_FUNC PyObject*  # endif /* __CYGWIN__ */ # else /* Py_BUILD_CORE */ /* Building an extension module, or an embedded situation */ /* public Python functions and data are imported */ /* Under Cygwin, auto-import functions to prevent compilation */ /* failures similar to those described at the bottom of 4.
   
   <div class="read-more-link">
     <a href="/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/">Read More…</a>
@@ -756,8 +788,9 @@ cannot use make([]*B, 10) (type []*B) as type []A in assignment原因  []A 不�
   <time datetime="2019-07-25T17:44:55Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
  阅读源码的版本: cmmit id: 9e4f2f3a6b8ee995c365e86d976937c141d867f8
- 在阅读Python的源码时，我们第一个想到的就是先去阅读Python的数据结构的源码。那么，我们先去挨着看看。
-数据结构 long struct _longobject { PyObject_VAR_HEAD digit ob_digit[1]; }; list typedef struct { PyObject_VAR_HEAD /* Vector of pointers to list elements. list[0] is ob_item[0], etc. */ PyObject **ob_item; /* ob_item contains space for &amp;#039;allocated&amp;#039; elements. The number * currently in use is ob_size. * Invariants: * 0 &amp;lt;= ob_size &amp;lt;= allocated * len(list) == ob_size * ob_item == NULL implies ob_size == allocated == 0 * list.
+ 在阅读Python的源码时，我们第一个想到的就是先去阅读Python的数据结构的源码。
+那么，我们先去挨着看看。
+数据结构 long struct _longobject { PyObject_VAR_HEAD digit ob_digit[1]; }; list typedef struct { PyObject_VAR_HEAD /* Vector of pointers to list elements. list[0] is ob_item[0], etc. */ PyObject **ob_item; /* ob_item contains space for &#39;allocated&#39; elements. The number * currently in use is ob_size. * Invariants: * 0 &lt;= ob_size &lt;= allocated * len(list) == ob_size * ob_item == NULL implies ob_size == allocated == 0 * list.
   
   <div class="read-more-link">
     <a href="/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/">Read More…</a>
@@ -771,7 +804,7 @@ cannot use make([]*B, 10) (type []*B) as type []A in assignment原因  []A 不�
   [TOC]
  RTTI是”Runtime Type Information”的缩写，意思是运行时类型信息，它提供了运行时确定对象类型的方法。
  typeid函数  对于c++的内置数据类型，typeid可以方便的输出它们的数据类型。
- #include &amp;lt;iostream&amp;gt; #include &amp;lt;typeinfo&amp;gt; using namespace std; int main() { short s = 2; unsigned ui = 10; int i = 10; char ch = &amp;#039;a&amp;#039;; wchar_t wch = L&amp;#039;b&amp;#039;; float f = 1.0f; double d = 2; cout&amp;lt;&amp;lt;typeid(s).name()&amp;lt;&amp;lt;endl; // short  cout&amp;lt;&amp;lt;typeid(ui).name()&amp;lt;&amp;lt;endl; // unsigned int  cout&amp;lt;&amp;lt;typeid(i).name()&amp;lt;&amp;lt;endl; // int  cout&amp;lt;&amp;lt;typeid(ch).name()&amp;lt;&amp;lt;endl; // char  cout&amp;lt;&amp;lt;typeid(wch).name()&amp;lt;&amp;lt;endl; // wchar_t  cout&amp;lt;&amp;lt;typeid(f).name()&amp;lt;&amp;lt;endl; // float  cout&amp;lt;&amp;lt;typeid(d).
+ #include &lt;iostream&gt; #include &lt;typeinfo&gt; using namespace std; int main() { short s = 2; unsigned ui = 10; int i = 10; char ch = &#39;a&#39;; wchar_t wch = L&#39;b&#39;; float f = 1.0f; double d = 2; cout&lt;&lt;typeid(s).name()&lt;&lt;endl; // short  cout&lt;&lt;typeid(ui).name()&lt;&lt;endl; // unsigned int  cout&lt;&lt;typeid(i).name()&lt;&lt;endl; // int  cout&lt;&lt;typeid(ch).name()&lt;&lt;endl; // char  cout&lt;&lt;typeid(wch).name()&lt;&lt;endl; // wchar_t  cout&lt;&lt;typeid(f).name()&lt;&lt;endl; // float  cout&lt;&lt;typeid(d).
   
   <div class="read-more-link">
     <a href="/post/rtti/">Read More…</a>
@@ -783,15 +816,15 @@ cannot use make([]*B, 10) (type []*B) as type []A in assignment原因  []A 不�
   </h1>
   <time datetime="2019-07-25T17:36:53Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
-print  Python2.7的print不是一个function Python3里的print是一个function。  Unicode  Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。  由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：
-&amp;gt;&amp;gt;&amp;gt; 中国 = &amp;#039;china&amp;#039;  &amp;gt;&amp;gt;&amp;gt;print(中国) china Python 2.x
-&amp;gt;&amp;gt;&amp;gt; str = &amp;quot;我爱北京天安门&amp;quot; &amp;gt;&amp;gt;&amp;gt; str &amp;#039;\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8&amp;#039; &amp;gt;&amp;gt;&amp;gt; str = u&amp;quot;我爱北京天安门&amp;quot; &amp;gt;&amp;gt;&amp;gt; str u&amp;#039;\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8&amp;#039; Python 3.x
-&amp;gt;&amp;gt;&amp;gt; str = &amp;quot;我爱北京天安门&amp;quot; &amp;gt;&amp;gt;&amp;gt; str &amp;#039;我爱北京天安门&amp;#039; 除法运算 Python中的除法较其它语言显得非常高端，有套很复杂的规则。Python中的除法有两个运算符，/和//
+print   Python2.7的print不是一个function
+  Python3里的print是一个function。
+  Unicode   Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。
+  Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。
+  由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：
+&gt;&gt;&gt; 中国 = &#39;china&#39; &gt;&gt;&gt;print(中国) china Python 2.x
+&gt;&gt;&gt; str = &#34;我爱北京天安门&#34; &gt;&gt;&gt; str &#39;\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8&#39; &gt;&gt;&gt; str = u&#34;我爱北京天安门&#34; &gt;&gt;&gt; str u&#39;\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8&#39; Python 3.x
+&gt;&gt;&gt; str = &#34;我爱北京天安门&#34; &gt;&gt;&gt; str &#39;我爱北京天安门&#39; 除法运算 Python中的除法较其它语言显得非常高端，有套很复杂的规则。Python中的除法有两个运算符，/和//
 首先来说/除法:
-在python 2.x中/除法就跟我们熟悉的大多数语言，比如Java啊C啊差不多，整数相除的结果是一个整数，把小数部分完全忽略掉，浮点数除法会保留小数点的部分得到一个浮点数的结果。
-在python 3.x中/除法不再这么做了，对于整数之间的相除，结果也会是浮点数。
-Python 2.x:
-&amp;gt;&amp;gt;&amp;gt; 1 / 2 0 &amp;gt;&amp;gt;&amp;gt; 1.
   
   <div class="read-more-link">
     <a href="/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/">Read More…</a>
@@ -812,8 +845,8 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
   <time datetime="2019-07-25T17:35:46Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
 strptime 使用strptime来格式化字符串
-datetime.datetime.strptime(&amp;quot;2019-10-02&amp;quot;, &amp;quot;%Y-%m-%d&amp;quot;) # datetime.datetime(2019, 1, 2, 0, 10) timedelta 使用timedelta来进行计算天数
-a = datetime.datetime.strptime(&amp;quot;2019-10-02&amp;quot;, &amp;quot;%Y-%m-%d&amp;quot;) b = datetime.datetime.strptime(&amp;quot;2019-10-01&amp;quot;, &amp;quot;%Y-%m-%d&amp;quot;) a - b # datetime.timedelta(1) (a - b).days # 1 
+datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) # datetime.datetime(2019, 1, 2, 0, 10) timedelta 使用timedelta来进行计算天数
+a = datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) b = datetime.datetime.strptime(&#34;2019-10-01&#34;, &#34;%Y-%m-%d&#34;) a - b # datetime.timedelta(1) (a - b).days # 1 
   
 </article><article class="post">
   <h1 class="post-title">
@@ -821,11 +854,12 @@ a = datetime.datetime.strptime(&amp;quot;2019-10-02&amp;quot;, &amp;quot;%Y-%m-%
   </h1>
   <time datetime="2019-07-25T17:35:04Z" class="post-date">Thu, Jul 25, 2019</time>
   在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
-db.article.find({&amp;quot;title&amp;quot;: {$regex: /a/, $options: &amp;quot;im&amp;quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
-query := bson.M{&amp;quot;title&amp;quot;: bson.M{&amp;quot;$regex&amp;quot;: &amp;quot;/a/&amp;quot;, &amp;quot;$options&amp;quot;: &amp;quot;im&amp;quot;}} 大家用这个方式去查询，能查询到算我输！下面总结一下，正真使用的方式：
+db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
+query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;/a/&#34;, &#34;$options&#34;: &#34;im&#34;}} 大家用这个方式去查询，能查询到算我输！
+下面总结一下，正真使用的方式：
  在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&quot;\a&quot;，而不是\a\。   根据第一点，我们将代码修改一下。
- query := bson.M{&amp;quot;title&amp;quot;: bson.M{&amp;quot;$regex&amp;quot;: &amp;quot;a&amp;quot;, &amp;quot;$options&amp;quot;: &amp;quot;im&amp;quot;}}  但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
- 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  // RegEx represents a regular expression. The Options field may contain  // individual characters defining the way in which the pattern should be  // applied, and must be sorted. Valid options as of this writing are &amp;#039;i&amp;#039; for  // case insensitive matching, &amp;#039;m&amp;#039; for multi-line matching, &amp;#039;x&amp;#039; for verbose  // mode, &amp;#039;l&amp;#039; to make \w, \W, and similar be locale-dependent, &amp;#039;s&amp;#039; for dot-all  // mode (a &amp;#039;.
+ query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;a&#34;, &#34;$options&#34;: &#34;im&#34;}}  但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
+ 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  // RegEx represents a regular expression. The Options field may contain  // individual characters defining the way in which the pattern should be  // applied, and must be sorted. Valid options as of this writing are &#39;i&#39; for  // case insensitive matching, &#39;m&#39; for multi-line matching, &#39;x&#39; for verbose  // mode, &#39;l&#39; to make \w, \W, and similar be locale-dependent, &#39;s&#39; for dot-all  // mode (a &#39;.
   
   <div class="read-more-link">
     <a href="/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">Read More…</a>
@@ -879,8 +913,12 @@ SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SC
  什么时候使用Patch?   当你仅需更新资源的某一项，即不完全也不幂等
  那当我们的模型在数据库中几乎每个字段都可能会遇到改变的时候，难道在patch的时候，或者专门写一个post的接口去一个一个if else操作吗，而我们又使用的是静态语言golang，有没有什么办法能够动态的让我们进行愉快的Patch呢？
 答案当然是有的，先说说如何去实现：
- 我们需要利用golang的map[string]interface{}结构  我们需要一个动态的结构 在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&quot;$set&quot;: xxxx})操作   使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）  来，开始贴代码：
-// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId &amp;#x60;json:&amp;quot;id&amp;quot; bson:&amp;quot;_id&amp;quot; show:&amp;quot;id&amp;quot;&amp;#x60; Author string &amp;#x60;json:&amp;quot;author&amp;quot; bson:&amp;quot;author&amp;quot; show:&amp;quot;author&amp;quot;&amp;#x60; Title string &amp;#x60;json:&amp;quot;title&amp;quot; bson:&amp;quot;title&amp;quot; show:&amp;quot;title&amp;quot;&amp;#x60; Content string &amp;#x60;json:&amp;quot;content&amp;quot; bson:&amp;quot;content&amp;quot; show:&amp;quot;content&amp;quot;&amp;#x60; Publish int &amp;#x60;json:&amp;quot;publish&amp;quot; bson:&amp;quot;publish&amp;quot;&amp;#x60; CreatedTime int64 &amp;#x60;json:&amp;quot;created_time&amp;quot; bson:&amp;quot;created_time&amp;quot; show:&amp;quot;created_time&amp;quot;&amp;#x60; ChangedTime int64 &amp;#x60;json:&amp;quot;changed_time&amp;quot; bson:&amp;quot;changed_time&amp;quot; show:&amp;quot;changed_time&amp;quot;&amp;#x60; PageView int64 &amp;#x60;json:&amp;quot;page_view&amp;quot; bson:&amp;quot;page_view&amp;quot; show:&amp;quot;page_view&amp;quot;&amp;#x60; // 浏览量  ArticleType string &amp;#x60;json:&amp;quot;article_type&amp;quot; bson:&amp;quot;article_type&amp;quot; show:&amp;quot;article_type&amp;quot;&amp;#x60; ArticleTags []string &amp;#x60;json:&amp;quot;article_tags&amp;quot; bson:&amp;quot;article_tags&amp;quot; show:&amp;quot;article_tags&amp;quot;&amp;#x60; Deleted int &amp;#x60;json:&amp;quot;deleted&amp;quot; bson:&amp;quot;deleted&amp;quot;&amp;#x60; } func ArticlePatch(c *gin.
+  我们需要利用golang的map[string]interface{}结构
+  我们需要一个动态的结构
+  在mgo中大多使用map[string]interface{}的结构，我们直接构造出这个结构有利于我们直接进行Update({&quot;$set&quot;: xxxx})操作
+    使用BindJSON函数，当然你也可以使用Gin的其他函数对map[string]interface{}进行绑定，这里我们不使用一个struct进行绑定，原因是我们无法判断客户端，或者说是浏览器会传送哪些字段来，这样做也有利于我们客户端将某一个字段置为默认值（如果用struct就只能避开默认值了）
+  来，开始贴代码：
+// 这个是我们需要存到数据库中的Model  type Article struct { ID bson.ObjectId `json:&#34;id&#34; bson:&#34;_id&#34; show:&#34;id&#34;` Author string `json:&#34;author&#34; bson:&#34;author&#34; show:&#34;author&#34;` Title string `json:&#34;title&#34; bson:&#34;title&#34; show:&#34;title&#34;` Content string `json:&#34;content&#34; bson:&#34;content&#34; show:&#34;content&#34;` Publish int `json:&#34;publish&#34; bson:&#34;publish&#34;` CreatedTime int64 `json:&#34;created_time&#34; bson:&#34;created_time&#34; show:&#34;created_time&#34;` ChangedTime int64 `json:&#34;changed_time&#34; bson:&#34;changed_time&#34; show:&#34;changed_time&#34;` PageView int64 `json:&#34;page_view&#34; bson:&#34;page_view&#34; show:&#34;page_view&#34;` // 浏览量  ArticleType string `json:&#34;article_type&#34; bson:&#34;article_type&#34; show:&#34;article_type&#34;` ArticleTags []string `json:&#34;article_tags&#34; bson:&#34;article_tags&#34; show:&#34;article_tags&#34;` Deleted int `json:&#34;deleted&#34; bson:&#34;deleted&#34;` } func ArticlePatch(c *gin.
   
   <div class="read-more-link">
     <a href="/post/gin_mongodb_restful_api%E8%AE%BE%E8%AE%A1_%E5%8A%A8%E6%80%81%E7%9A%84patch%E6%8E%A5%E5%8F%A3/">Read More…</a>
@@ -929,7 +967,11 @@ SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SC
   </h1>
   <time datetime="2019-07-25T17:03:24Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
-1、直接使用字符串相加 std::string a = &amp;quot;hello&amp;quot;;std::string b = &amp;quot;hello&amp;quot;;for(int i = 0; i &amp;lt; 100; ++i){a = b + a;}2、使用insert函数 std::string a = &amp;quot;hello&amp;quot;;for(int i = 0; i &amp;lt; 100; ++i){a.insert(0, &amp;quot;hello&amp;quot;);}比较：通过Quick C++ Benchmarks 可得到结果 static void StringCreation(benchmark::State&amp;amp; state) {// Code inside this loop is measured repeatedlystd::string x = &amp;quot;hello&amp;quot;;for (auto _ : state) {x.insert(0,&amp;quot;hello&amp;quot;);// Make sure the variable is not optimized away by compilerbenchmark::DoNotOptimize(x);}}// Register the function as a benchmarkBENCHMARK(StringCreation);static void StringCopy(benchmark::State&amp;amp; state) {// Code before the loop is not measuredstd::string x = &amp;quot;hello&amp;quot;;for (auto _ : state) {x = &amp;quot;hello&amp;quot; + x;}}BENCHMARK(StringCopy);
+1、直接使用字符串相加 std::string a = &quot;hello&quot;;std::string b = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a = b + a;}2、使用insert函数 std::string a = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a.insert(0, &quot;hello&quot;);}比较：通过Quick C++ Benchmarks 可得到结果 static void StringCreation(benchmark::State&amp; state) {// Code inside this loop is measured repeatedlystd::string x = &quot;hello&quot;;for (auto _ : state) {x.
+  
+  <div class="read-more-link">
+    <a href="/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">Read More…</a>
+  </div>
   
 </article><article class="post">
   <h1 class="post-title">
@@ -939,10 +981,12 @@ SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SC
   [TOC]
 原文:https://blog.csdn.net/pi9nc/article/details/11267031
 利用匿名namespace解决C++中重复定义的问题 今天写代码的时候又碰到了C++中多编译单元导致重复定义(multi definition)的链接问题。其实这个问题以前也碰到过几次，急着编译出代码也没有去深究背后的一些知识。今天系统的看了一些资料，算是把这个问题彻底搞清楚了。这里做下简单总结吧：
-  C++中有由于模版分离编译等问题，导致常常需要在头文件加入变量定义或者函数定义的代码，从而在链接多编译单元时导致multi-definition重复定义的问题。    传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。 在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。  在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。
+  C++中有由于模版分离编译等问题，导致常常需要在头文件加入变量定义或者函数定义的代码，从而在链接多编译单元时导致multi-definition重复定义的问题。     传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。
+  在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。
+  在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。
 但是这种方法经常会导致一个问题就是multi-definition重复定义，在较大型的工程中往往会采用多编译单元的形式生成多个.o文件，然后再用ld链接生成可执行文件。如果多个.o中都include了同一个hpp文件，而该hpp文件又包含了全局变量，类的静态成员等一些变量的定义，那么就会导致gcc的multi-definition报错。在传统的C程序中可以通过static申明一个变量或者函数不生成全局符号来解决这个问题，但是C++中static关键字对于类的成员有了其他语义。因此C++中建议使用匿名namespace来替代static避免multi-definition的问题。看如下一个例子：
------------ test.hpp---------- #include &amp;lt;string&amp;gt; class A { public: static std::string y; }; std::string A::y = std::string(); ----------- test_comm.cpp---------- #include &amp;quot;test.hpp&amp;quot; void func() { } ----------- test_main.cpp---------- #include &amp;quot;test.hpp&amp;quot; void func(); int main(int argc, char *argv) { func(); } 我们在g++上编译就会出现如下错误：
-leoxiang@SEC38_64_sles10:~$ g++ -c test_comm.cpp leoxiang@SEC38_64_sles10:~$ g++ -c test_main.cpp leoxiang@SEC38_64_sles10:~$ g++ -o test test_comm.o test_main.o test_main.
+----------- test.hpp---------- #include &lt;string&gt; class A { public: static std::string y; }; std::string A::y = std::string(); ----------- test_comm.cpp---------- #include &#34;test.hpp&#34; void func() { } ----------- test_main.cpp---------- #include &#34;test.hpp&#34; void func(); int main(int argc, char *argv) { func(); } 我们在g++上编译就会出现如下错误：
+leoxiang@SEC38_64_sles10:~$ g++ -c test_comm.cpp leoxiang@SEC38_64_sles10:~$ g++ -c test_main.cpp leoxiang@SEC38_64_sles10:~$ g++ -o test test_comm.
   
   <div class="read-more-link">
     <a href="/post/%E8%BD%AC%E5%88%A9%E7%94%A8%E5%8C%BF%E5%90%8Dnamespace%E8%A7%A3%E5%86%B3cplusplus%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%AE%9A%E4%B9%89%E7%9A%84%E9%97%AE%E9%A2%98/">Read More…</a>
@@ -967,8 +1011,8 @@ proxyTable: {&lsquo;/list&rsquo;: {target: &lsquo;http://api.xxxxxxxx.com&rsqu
   <time datetime="2019-07-25T17:01:19Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
 方案一 在node中使用axios以post的方式发送一张图片给某个server时:
-let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)axios.post(url,{media:data,type:&amp;quot;image&amp;quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
-let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)let form = {type:&amp;quot;image&amp;quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&amp;gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &amp;quot;/user/signup&amp;quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&amp;gt; {if(response.
+let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
+let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).
   
   <div class="read-more-link">
     <a href="/post/axios_%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">Read More…</a>
@@ -983,8 +1027,9 @@ let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)let fo
 阅读源码: sds.h sds.c
 SDSHDR 全称 Simple Dynamic Strings Header
 sds  char *的别名
- typedef char *sds; sdshdr  sdshdr有好几个类别，它们分别是：sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64，其中sdshdr5是不使用的 源码如下：
- /* Note: sdshdr5 is never used, we just access the flags byte directly. * However is here to document the layout of type 5 SDS strings. */ struct __attribute__ ((__packed__)) sdshdr5 { unsigned char flags; /* 3 lsb of type, and 5 msb of string length */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr8 { uint8_t len; /* used */ uint8_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr16 { uint16_t len; /* used */ uint16_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr32 { uint32_t len; /* used */ uint32_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr64 { uint64_t len; /* used */ uint64_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; };  这五个结构体中，len表示字符串的长度，alloc表示buf指针分配空间的大小，flags表示该字符串的类型(sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64),是由flags的第三位表示的，至于为何怎么说，请看下方的源码：
+ typedef char *sds; sdshdr  sdshdr有好几个类别，它们分别是：sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64，其中sdshdr5是不使用的
+ 源码如下：
+/* Note: sdshdr5 is never used, we just access the flags byte directly. * However is here to document the layout of type 5 SDS strings. */ struct __attribute__ ((__packed__)) sdshdr5 { unsigned char flags; /* 3 lsb of type, and 5 msb of string length */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr8 { uint8_t len; /* used */ uint8_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr16 { uint16_t len; /* used */ uint16_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr32 { uint32_t len; /* used */ uint32_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; }; struct __attribute__ ((__packed__)) sdshdr64 { uint64_t len; /* used */ uint64_t alloc; /* excluding the header and null terminator */ unsigned char flags; /* 3 lsb of type, 5 unused bits */ char buf[]; };  这五个结构体中，len表示字符串的长度，alloc表示buf指针分配空间的大小，flags表示该字符串的类型(sdshdr5，sdshdr8，sdshdr16，sdshdr32，sdshdr64),是由flags的第三位表示的，至于为何怎么说，请看下方的源码：
   
   <div class="read-more-link">
     <a href="/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2sdshdr/">Read More…</a>
@@ -1027,7 +1072,7 @@ sds  char *的别名
   <h1 class="post-title">
     <a href="https://siskinc.github.io/post/redis_mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/">redis mongodb持久化的方式</a>
   </h1>
-  <time datetime="2019-07-25T16:36:53Z" class="post-date">Thu, Jul 25, 2019</time>
+  <time datetime="2019-07-25T16:50:05Z" class="post-date">Thu, Jul 25, 2019</time>
   [TOC]
 redis持久化方式(两种) RDB持久化 redis提供了RDB持久化的功能，这个功能可以将redis在内存中的的状态保存到硬盘中，相当于snapshot，它可以手动执行，也可以再redis.conf中配置，定期执行。
 相关配置   databases
@@ -1063,8 +1108,8 @@ RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC
   <time datetime="0001-01-01T00:00:00Z" class="post-date">Mon, Jan 1, 0001</time>
   [TOC]
 方案一 在node中使用axios以post的方式发送一张图片给某个server时:
-let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)axios.post(url,{media:data,type:&amp;quot;image&amp;quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
-let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)let form = {type:&amp;quot;image&amp;quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&amp;gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &amp;quot;/user/signup&amp;quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&amp;gt; {if(response.
+let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
+let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).
   
   <div class="read-more-link">
     <a href="/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">Read More…</a>
@@ -1132,10 +1177,12 @@ proxyTable: {&lsquo;/list&rsquo;: {target: &lsquo;http://api.xxxxxxxx.com&rsqu
   [TOC]
 原文:https://blog.csdn.net/pi9nc/article/details/11267031
 利用匿名namespace解决C++中重复定义的问题 今天写代码的时候又碰到了C++中多编译单元导致重复定义(multi definition)的链接问题。其实这个问题以前也碰到过几次，急着编译出代码也没有去深究背后的一些知识。今天系统的看了一些资料，算是把这个问题彻底搞清楚了。这里做下简单总结吧：
-  C++中有由于模版分离编译等问题，导致常常需要在头文件加入变量定义或者函数定义的代码，从而在链接多编译单元时导致multi-definition重复定义的问题。    传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。 在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。  在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。
+  C++中有由于模版分离编译等问题，导致常常需要在头文件加入变量定义或者函数定义的代码，从而在链接多编译单元时导致multi-definition重复定义的问题。     传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。
+  在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。
+  在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。
 但是这种方法经常会导致一个问题就是multi-definition重复定义，在较大型的工程中往往会采用多编译单元的形式生成多个.o文件，然后再用ld链接生成可执行文件。如果多个.o中都include了同一个hpp文件，而该hpp文件又包含了全局变量，类的静态成员等一些变量的定义，那么就会导致gcc的multi-definition报错。在传统的C程序中可以通过static申明一个变量或者函数不生成全局符号来解决这个问题，但是C++中static关键字对于类的成员有了其他语义。因此C++中建议使用匿名namespace来替代static避免multi-definition的问题。看如下一个例子：
------------ test.hpp---------- #include &amp;lt;string&amp;gt; class A { public: static std::string y; }; std::string A::y = std::string(); ----------- test_comm.cpp---------- #include &amp;quot;test.hpp&amp;quot; void func() { } ----------- test_main.cpp---------- #include &amp;quot;test.hpp&amp;quot; void func(); int main(int argc, char *argv) { func(); } 我们在g++上编译就会出现如下错误：
-leoxiang@SEC38_64_sles10:~$ g++ -c test_comm.cpp leoxiang@SEC38_64_sles10:~$ g++ -c test_main.cpp leoxiang@SEC38_64_sles10:~$ g++ -o test test_comm.o test_main.o test_main.
+----------- test.hpp---------- #include &lt;string&gt; class A { public: static std::string y; }; std::string A::y = std::string(); ----------- test_comm.cpp---------- #include &#34;test.hpp&#34; void func() { } ----------- test_main.cpp---------- #include &#34;test.hpp&#34; void func(); int main(int argc, char *argv) { func(); } 我们在g++上编译就会出现如下错误：
+leoxiang@SEC38_64_sles10:~$ g++ -c test_comm.cpp leoxiang@SEC38_64_sles10:~$ g++ -c test_main.cpp leoxiang@SEC38_64_sles10:~$ g++ -o test test_comm.
   
   <div class="read-more-link">
     <a href="/post/%E8%BD%AC%E5%88%A9%E7%94%A8%E5%8C%BF%E5%90%8Dnamespace%E8%A7%A3%E5%86%B3c&#43;&#43;%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%AE%9A%E4%B9%89%E7%9A%84%E9%97%AE%E9%A2%98/">Read More…</a>

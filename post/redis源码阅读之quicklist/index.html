@@ -54,11 +54,12 @@
   <time datetime=2020-05-21T23:37:05Z class="post-date">Thu, May 21, 2020</time>
   <h2 id="数据结构">数据结构</h2>
 <h3 id="quicklistnode">quicklistNode</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* quicklistNode is a 32 byte struct describing a ziplist for a quicklist.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* quicklistNode is a 32 byte struct describing a ziplist for a quicklist.
 </span><span style="color:#75715e">
 </span><span style="color:#75715e"> * We use bit fields keep the quicklistNode at 32 bytes.
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"> * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &amp;lt; 32k).
+</span><span style="color:#75715e"> * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &lt; 32k).
 </span><span style="color:#75715e">
 </span><span style="color:#75715e"> * encoding: 2 bits, RAW=1, LZF=2.
 </span><span style="color:#75715e">
@@ -88,31 +89,46 @@
 
     <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> recompress : <span style="color:#ae81ff">1</span>; <span style="color:#75715e">/* was this node previous compressed? */</span>
 
-    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> attempted_compress : <span style="color:#ae81ff">1</span>; <span style="color:#75715e">/* node can&amp;#039;t compress; too small */</span>
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> attempted_compress : <span style="color:#ae81ff">1</span>; <span style="color:#75715e">/* node can&#39;t compress; too small */</span>
 
     <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> extra : <span style="color:#ae81ff">10</span>; <span style="color:#75715e">/* more bits to steal for future usage */</span>
 
 } quicklistNode;
 
 </code></pre></div><ul>
-<li>prev, next 代表链表的前后节点</li>
-<li>zl是指向内容的指针</li>
-<li>count 是ziplist的元素数量</li>
-<li>encoding 代表该节点的数据是压缩后的还是未解压的</li>
-<li>container 代表该节点是一个节点还是一个ziplist</li>
-<li>attempted_compress测试使用</li>
-<li>extra 占位</li>
+<li>
+<p>prev, next 代表链表的前后节点</p>
+</li>
+<li>
+<p>zl是指向内容的指针</p>
+</li>
+<li>
+<p>count 是ziplist的元素数量</p>
+</li>
+<li>
+<p>encoding 代表该节点的数据是压缩后的还是未解压的</p>
+</li>
+<li>
+<p>container 代表该节点是一个节点还是一个ziplist</p>
+</li>
+<li>
+<p>attempted_compress测试使用</p>
+</li>
+<li>
+<p>extra 占位</p>
+</li>
 </ul>
 <h3 id="quicklistlzf">quicklistLZF</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* quicklistLZF is a 4+N byte struct holding &amp;#039;sz&amp;#039; followed by &amp;#039;compressed&amp;#039;.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* quicklistLZF is a 4+N byte struct holding &#39;sz&#39; followed by &#39;compressed&#39;.
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"> * &amp;#039;sz&amp;#039; is byte length of &amp;#039;compressed&amp;#039; field.
+</span><span style="color:#75715e"> * &#39;sz&#39; is byte length of &#39;compressed&#39; field.
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"> * &amp;#039;compressed&amp;#039; is LZF data with total (compressed) length &amp;#039;sz&amp;#039;
+</span><span style="color:#75715e"> * &#39;compressed&#39; is LZF data with total (compressed) length &#39;sz&#39;
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"> * NOTE: uncompressed length is stored in quicklistNode-&amp;gt;sz.
+</span><span style="color:#75715e"> * NOTE: uncompressed length is stored in quicklistNode-&gt;sz.
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"> * When quicklistNode-&amp;gt;zl is compressed, node-&amp;gt;zl points to a quicklistLZF */</span>
+</span><span style="color:#75715e"> * When quicklistNode-&gt;zl is compressed, node-&gt;zl points to a quicklistLZF */</span>
 
 <span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> quicklistLZF {
 
@@ -123,12 +139,17 @@
 } quicklistLZF;
 
 </code></pre></div><ul>
-<li>sz 代表LZF内容的长度</li>
-<li>compressed 代表LZF的内容
-<strong>注意：未解压缩的数据的长度会直接存储在quicklistNode-&gt;sz，如果quicklistNode-&gt;zl是被压缩的，node-&gt;zl是指向的一个quicklistLZF指针</strong></li>
+<li>
+<p>sz 代表LZF内容的长度</p>
+</li>
+<li>
+<p>compressed 代表LZF的内容</p>
+</li>
 </ul>
+<p><strong>注意：未解压缩的数据的长度会直接存储在quicklistNode-&gt;sz，如果quicklistNode-&gt;zl是被压缩的，node-&gt;zl是指向的一个quicklistLZF指针</strong></p>
 <h3 id="quicklist">quicklist</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> quicklist {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> quicklist {
 
     quicklistNode <span style="color:#f92672">*</span>head;
 
@@ -152,9 +173,15 @@
 <p>quicklist在64位系统下占用40个字节，注意bookmarks这个field，他是一个“<a href="https://blog.csdn.net/feitianhu213/article/details/9863253">柔性数组</a>”，不占用字节空间</p>
 </blockquote>
 <ul>
-<li>head, tail指向quicklist的首，尾节点</li>
-<li>count代表ziplist元素数量</li>
-<li>len代表quicklist的节点数量</li>
+<li>
+<p>head, tail指向quicklist的首，尾节点</p>
+</li>
+<li>
+<p>count代表ziplist元素数量</p>
+</li>
+<li>
+<p>len代表quicklist的节点数量</p>
+</li>
 </ul>
 
 </div>

@@ -62,16 +62,21 @@
 </ul>
 </blockquote>
 <ul>
-<li>传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。</li>
-<li>在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。</li>
+<li>
+<p>传统C语言中的static关键在C++中对于类的成员有其他的语义，导致其功能的局限性。</p>
+</li>
+<li>
+<p>在C++中建议使用匿名namespace类实现将一个函数或者变量的定义局限在一个编译单元内，避免multi-definition 的问题。</p>
+</li>
 </ul>
 <p>在C++中的，由于引入了面向对象的概念，导致了有时候在头文件中不得不加入函数实现或者变量定义的代码。比如在大部分编译器上不支持模版分离编译，导致很多模板类的实现只有放在头文件中，像boost等库都大量采用了hpp这种格式实现完全头文件化的库。</p>
 <p>但是这种方法经常会导致一个问题就是multi-definition重复定义，在较大型的工程中往往会采用多编译单元的形式生成多个.o文件，然后再用ld链接生成可执行文件。如果多个.o中都include了同一个hpp文件，而该hpp文件又包含了全局变量，类的静态成员等一些变量的定义，那么就会导致gcc的multi-definition报错。在传统的C程序中可以通过static申明一个变量或者函数不生成全局符号来解决这个问题，但是C++中static关键字对于类的成员有了其他语义。因此C++中建议使用匿名namespace来替代static避免multi-definition的问题。看如下一个例子：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#f92672">-----------</span> test.hpp<span style="color:#f92672">----------</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#f92672">-----------</span> test.hpp<span style="color:#f92672">----------</span>
 
 
 
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;string&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 
 
@@ -111,7 +116,7 @@ std<span style="color:#f92672">::</span>string A<span style="color:#f92672">::</
 
 
 
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;quot;test.hpp&amp;quot;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;test.hpp&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 
 
@@ -129,7 +134,7 @@ func() { }
 
 
 
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;quot;test.hpp&amp;quot;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;test.hpp&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 
 
@@ -160,7 +165,8 @@ argc, <span style="color:#66d9ef">char</span>
 }
 
 </code></pre></div><p>我们在g++上编译就会出现如下错误：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">leoxiang<span style="color:#960050;background-color:#1e0010">@</span>SEC38_64_sles10:<span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">$</span> g<span style="color:#f92672">++</span> <span style="color:#f92672">-</span>c test_comm.cpp
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+leoxiang<span style="color:#960050;background-color:#1e0010">@</span>SEC38_64_sles10:<span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">$</span> g<span style="color:#f92672">++</span> <span style="color:#f92672">-</span>c test_comm.cpp
 
 
 
@@ -174,7 +180,7 @@ test_comm.o test_main.o
 
 
 
-test_main.o:(.bss<span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span>)<span style="color:#f92672">:</span> multiple definition of <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span>x60;A<span style="color:#f92672">::</span>y<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;
+test_main.o:(.bss<span style="color:#f92672">+</span><span style="color:#ae81ff">0x0</span>)<span style="color:#f92672">:</span> multiple definition of <span style="color:#960050;background-color:#1e0010">`</span>A<span style="color:#f92672">::</span>y<span style="color:#960050;background-color:#1e0010">&#39;</span>
 
 
 
@@ -187,11 +193,12 @@ collect2: ld returned <span style="color:#ae81ff">1</span> exit
 status
 
 </code></pre></div><p>下面通过匿名namespace解决这个问题，只需要把test.hpp的实现用匿名namespace包围即可避免重复定义的问题：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#f92672">-----------</span> test.hpp<span style="color:#f92672">----------</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#f92672">-----------</span> test.hpp<span style="color:#f92672">----------</span>
 
 
 
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;string&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 
 
@@ -239,8 +246,12 @@ std<span style="color:#f92672">::</span>string A<span style="color:#f92672">::</
 </ul>
 </blockquote>
 <ul>
-<li>使用某些版本的 g++ 时，同一个文件每次编译出来的二进制文件会变化，这让某些 build tool 失灵。</li>
-<li>同时在头文件中使用匿名空间也会对库使用这造成一些陷阱，类似与在C中在头文件中使用静态变量。</li>
+<li>
+<p>使用某些版本的 g++ 时，同一个文件每次编译出来的二进制文件会变化，这让某些 build tool 失灵。</p>
+</li>
+<li>
+<p>同时在头文件中使用匿名空间也会对库使用这造成一些陷阱，类似与在C中在头文件中使用静态变量。</p>
+</li>
 </ul>
 <p>即使如此，在Google C++编程规范2.1节中也鼓励使用namespace代替C语言中的static关键字。因此个人觉得一些特殊情况下如果必须在头文件中定义类静态变量或者函数，可以考虑将整个文件代码用匿名namespace包裹，可以较好解决重复定义的问题。</p>
 

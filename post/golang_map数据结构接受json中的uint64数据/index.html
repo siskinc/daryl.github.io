@@ -53,16 +53,18 @@
   <h1>Golang map数据结构接受json中的uint64数据</h1>
   <time datetime=2020-05-27T13:16:11Z class="post-date">Wed, May 27, 2020</time>
   <p>例如有一个json数据：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">
+{
 
-	<span style="color:#960050;background-color:#1e0010">&amp;quot;name&amp;quot;:</span> <span style="color:#960050;background-color:#1e0010">&amp;quot;小明&amp;quot;,</span>
+	<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;小明&#34;</span>,
 
-	<span style="color:#960050;background-color:#1e0010">&amp;quot;money&amp;quot;:</span> <span style="color:#960050;background-color:#1e0010">1111111111111111111</span>
+	<span style="color:#f92672">&#34;money&#34;</span>: <span style="color:#ae81ff">1111111111111111111</span>
 
 }
 
 </code></pre></div><p>但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 
 
@@ -104,14 +106,19 @@
 
 }
 
-</code></pre></div><p>但是在某些情况下，你不得不用一个map去接收数据怎么办？
-有几个坑需要注意一下：</p>
+</code></pre></div><p>但是在某些情况下，你不得不用一个map去接收数据怎么办？</p>
+<p>有几个坑需要注意一下：</p>
 <ol>
-<li>JSON的规范中，对于数字类型，并不区分是整型还是浮点型。</li>
-<li>如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型
-如何解决这个问题，先看下面程序：</li>
+<li>
+<p>JSON的规范中，对于数字类型，并不区分是整型还是浮点型。</p>
+</li>
+<li>
+<p>如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型</p>
+</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<p>如何解决这个问题，先看下面程序：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 
 

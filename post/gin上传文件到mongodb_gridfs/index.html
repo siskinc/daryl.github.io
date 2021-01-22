@@ -54,9 +54,10 @@
   <time datetime=2019-07-25T20:25:30Z class="post-date">Thu, Jul 25, 2019</time>
   <p>[TOC]</p>
 <h2 id="上传图片">上传图片</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">imagePost</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang">
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">imagePost</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
 
-	<span style="color:#a6e22e">image</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">FormFile</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">file</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+	<span style="color:#a6e22e">image</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">FormFile</span>(<span style="color:#e6db74">&#34;file&#34;</span>)
 
 	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 
@@ -86,7 +87,7 @@
 
 	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fileImage</span>.<span style="color:#a6e22e">Close</span>()
 
-	<span style="color:#a6e22e">imageGridFS</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">GetGridFS</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">image</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+	<span style="color:#a6e22e">imageGridFS</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">GetGridFS</span>(<span style="color:#e6db74">&#34;image&#34;</span>)
 
 	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 
@@ -157,11 +158,12 @@
 }
 
 </code></pre></div><h2 id="下载图片">下载图片</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">imageGet</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang">
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">imageGet</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">gin</span>.<span style="color:#a6e22e">Context</span>) {
 
-	<span style="color:#a6e22e">imagename</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Param</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">imagename</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+	<span style="color:#a6e22e">imagename</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Param</span>(<span style="color:#e6db74">&#34;imagename&#34;</span>)
 
-	<span style="color:#a6e22e">imageGridFS</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">GetGridFS</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">image</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+	<span style="color:#a6e22e">imageGridFS</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">GetGridFS</span>(<span style="color:#e6db74">&#34;image&#34;</span>)
 
 	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 
@@ -209,11 +211,11 @@
 
 	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Writer</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusOK</span>)
 
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Header</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">Content</span><span style="color:#f92672">-</span><span style="color:#a6e22e">Disposition</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">attachment</span>; <span style="color:#a6e22e">filename</span>=<span style="color:#f92672">%</span><span style="color:#a6e22e">s</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">imagename</span>))
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Header</span>(<span style="color:#e6db74">&#34;Content-Disposition&#34;</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;attachment; filename=%s&#34;</span>, <span style="color:#a6e22e">imagename</span>))
 
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Header</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">Content</span><span style="color:#f92672">-</span><span style="color:#a6e22e">Type</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">application</span><span style="color:#f92672">/</span><span style="color:#a6e22e">text</span><span style="color:#f92672">/</span><span style="color:#a6e22e">plain</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Header</span>(<span style="color:#e6db74">&#34;Content-Type&#34;</span>, <span style="color:#e6db74">&#34;application/text/plain&#34;</span>)
 
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Header</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">Accept</span><span style="color:#f92672">-</span><span style="color:#a6e22e">Length</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">d</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">size</span>))
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Header</span>(<span style="color:#e6db74">&#34;Accept-Length&#34;</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#a6e22e">size</span>))
 
 }
 

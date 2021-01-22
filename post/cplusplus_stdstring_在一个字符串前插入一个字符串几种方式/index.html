@@ -54,40 +54,75 @@
   <time datetime=2019-07-25T17:03:24Z class="post-date">Thu, Jul 25, 2019</time>
   <p>[TOC]</p>
 <h2 id="1直接使用字符串相加">1、直接使用字符串相加</h2>
-<pre><code>std::string a = &amp;quot;hello&amp;quot;;
-std::string b = &amp;quot;hello&amp;quot;;
-for(int i = 0; i &amp;lt; 100; ++i)
-{
-	a = b + a;
-}
+<pre><code>
+std::string a = &quot;hello&quot;;
+
+std::string b = &quot;hello&quot;;
+
+for(int i = 0; i &lt; 100; ++i)
+
+{
+
+	a = b + a;
+
+}
+
 </code></pre><h2 id="2使用insert函数">2、使用insert函数</h2>
-<pre><code>std::string a = &amp;quot;hello&amp;quot;;
-for(int i = 0; i &amp;lt; 100; ++i)
-{
-	a.insert(0, &amp;quot;hello&amp;quot;);
-}
+<pre><code>
+std::string a = &quot;hello&quot;;
+
+for(int i = 0; i &lt; 100; ++i)
+
+{
+
+	a.insert(0, &quot;hello&quot;);
+
+}
+
 </code></pre><h2 id="比较通过quick-c-benchmarks-可得到结果">比较：通过Quick C++ Benchmarks 可得到结果</h2>
-<pre><code>static void StringCreation(benchmark::State&amp;amp; state) {
-  // Code inside this loop is measured repeatedly
-  std::string x = &amp;quot;hello&amp;quot;;
-  for (auto _ : state) {
-    x.insert(0,&amp;quot;hello&amp;quot;);
-    // Make sure the variable is not optimized away by compiler
-    benchmark::DoNotOptimize(x);
-  }
-}
-// Register the function as a benchmark
-BENCHMARK(StringCreation);
-
-static void StringCopy(benchmark::State&amp;amp; state) {
-  // Code before the loop is not measured
-  std::string x = &amp;quot;hello&amp;quot;;
-  for (auto _ : state) {
-    x = &amp;quot;hello&amp;quot; + x;
-  }
-}
-BENCHMARK(StringCopy);
-
+<pre><code>
+static void StringCreation(benchmark::State&amp; state) {
+
+  // Code inside this loop is measured repeatedly
+
+  std::string x = &quot;hello&quot;;
+
+  for (auto _ : state) {
+
+    x.insert(0,&quot;hello&quot;);
+
+    // Make sure the variable is not optimized away by compiler
+
+    benchmark::DoNotOptimize(x);
+
+  }
+
+}
+
+// Register the function as a benchmark
+
+BENCHMARK(StringCreation);
+
+
+
+static void StringCopy(benchmark::State&amp; state) {
+
+  // Code before the loop is not measured
+
+  std::string x = &quot;hello&quot;;
+
+  for (auto _ : state) {
+
+    x = &quot;hello&quot; + x;
+
+  }
+
+}
+
+BENCHMARK(StringCopy);
+
+
+
 </code></pre><p><img src="http://upload-images.jianshu.io/upload_images/4779802-ac7c040de5c3a024.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
 
 </div>

@@ -60,7 +60,8 @@
 <blockquote>
 <p>在Redis中的跳表内容中有一个zslRandomLevel函数，返回一个随机的层级</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Returns a random level for the new skiplist node we are going to create.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* Returns a random level for the new skiplist node we are going to create.
 </span><span style="color:#75715e">
 </span><span style="color:#75715e"> * The return value of this function is between 1 and ZSKIPLIST_MAXLEVEL
 </span><span style="color:#75715e">
@@ -72,11 +73,11 @@
 
     <span style="color:#66d9ef">int</span> level <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
 
-    <span style="color:#66d9ef">while</span> ((random()<span style="color:#f92672">&amp;</span>amp;<span style="color:#ae81ff">0xFFFF</span>) <span style="color:#f92672">&amp;</span>lt; (ZSKIPLIST_P <span style="color:#f92672">*</span> <span style="color:#ae81ff">0xFFFF</span>))
+    <span style="color:#66d9ef">while</span> ((random()<span style="color:#f92672">&amp;</span><span style="color:#ae81ff">0xFFFF</span>) <span style="color:#f92672">&lt;</span> (ZSKIPLIST_P <span style="color:#f92672">*</span> <span style="color:#ae81ff">0xFFFF</span>))
 
         level <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
 
-    <span style="color:#66d9ef">return</span> (level<span style="color:#f92672">&amp;</span>lt;ZSKIPLIST_MAXLEVEL) <span style="color:#f92672">?</span> level : ZSKIPLIST_MAXLEVEL;
+    <span style="color:#66d9ef">return</span> (level<span style="color:#f92672">&lt;</span>ZSKIPLIST_MAXLEVEL) <span style="color:#f92672">?</span> level : ZSKIPLIST_MAXLEVEL;
 
 }
 

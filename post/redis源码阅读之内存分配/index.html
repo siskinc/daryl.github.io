@@ -57,7 +57,8 @@
 <p>zmalloc是redis内存分配的基本操作，相当于包了一层malloc的操作，分配出来的内存不只是裸露的</p>
 </blockquote>
 <h2 id="api">API</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zmalloc</span>(size_t size);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zmalloc</span>(size_t size);
 
 <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zcalloc</span>(size_t size);
 
@@ -88,7 +89,8 @@ size_t <span style="color:#a6e22e">zmalloc_get_memory_size</span>(<span style="c
 <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">zlibc_free</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr);
 
 </code></pre></div><h3 id="内存分配zmalloczcalloc">内存分配zmalloc，zcalloc</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zmalloc</span>(size_t size) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zmalloc</span>(size_t size) {
 
     <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr <span style="color:#f92672">=</span> malloc(size<span style="color:#f92672">+</span>PREFIX_SIZE);
 
@@ -116,7 +118,8 @@ size_t <span style="color:#a6e22e">zmalloc_get_memory_size</span>(<span style="c
 
 </code></pre></div><p>在zmalloc的内存分配中，会多分配PREFIX_SIZE（sizeof(size_t)）个字节，多分配的是用来存储分配的字节数大小的。zcalloc其实和zmalloc做的事情差不多的，不作太多的赘余。</p>
 <h3 id="内存再分配-zrealloc">内存再分配 zrealloc</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zrealloc</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr, size_t size) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zrealloc</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr, size_t size) {
 
 <span style="color:#75715e">#ifndef HAVE_MALLOC_SIZE
 </span><span style="color:#75715e"></span>
@@ -130,7 +133,7 @@ size_t <span style="color:#a6e22e">zmalloc_get_memory_size</span>(<span style="c
 
 
 
-    <span style="color:#66d9ef">if</span> (size <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;</span>amp;<span style="color:#f92672">&amp;</span>amp; ptr <span style="color:#f92672">!=</span> NULL) {
+    <span style="color:#66d9ef">if</span> (size <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> ptr <span style="color:#f92672">!=</span> NULL) {
 
         zfree(ptr);
 
@@ -182,7 +185,8 @@ size_t <span style="color:#a6e22e">zmalloc_get_memory_size</span>(<span style="c
 
 </code></pre></div><p>在已申请的内存不够用时，需要扩大或者缩小内存的时候使用，注意一个细节，真正被分配的空间的开头是指向存储申请空间大小的地址的，所以，需要在ptr-PREFIX_SIZE才是真实被申请的空间的开头地址。</p>
 <h3 id="内存释放-zfree">内存释放 zfree</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">zfree</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">zfree</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr) {
 
 <span style="color:#75715e">#ifndef HAVE_MALLOC_SIZE
 </span><span style="color:#75715e"></span>
@@ -218,7 +222,8 @@ size_t <span style="color:#a6e22e">zmalloc_get_memory_size</span>(<span style="c
 
 </code></pre></div><p>和zrealloc类型，需要注意一下真实申请的内存空间的开头地址的计算</p>
 <h3 id="内存拷贝-zstrdup">内存拷贝 zstrdup</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zstrdup</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>s) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">zstrdup</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>s) {
 
     size_t l <span style="color:#f92672">=</span> strlen(s)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
 

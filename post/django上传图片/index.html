@@ -53,13 +53,14 @@
   <h1>Django上传图片</h1>
   <time datetime=2019-07-25T20:24:51Z class="post-date">Thu, Jul 25, 2019</time>
   <h1 id="model">model</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">from</span> django.db <span style="color:#f92672">import</span> models
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">from</span> django.db <span style="color:#f92672">import</span> models
 
 
 
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Picture</span>(models<span style="color:#f92672">.</span>Model):
 
-    path <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>ImageField(upload_to<span style="color:#f92672">=&amp;</span><span style="color:#75715e">#039;share_pictures/&amp;#039;)</span>
+    path <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>ImageField(upload_to<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;share_pictures/&#39;</span>)
 
     name <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>)
 
@@ -67,7 +68,7 @@
 
     <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Meta</span>:
 
-        db_table <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>quot;picture<span style="color:#f92672">&amp;</span>quot; 
+        db_table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;picture&#34;</span> 
 
 
 
@@ -78,24 +79,26 @@
 
 
 </code></pre></div><h1 id="forms">forms</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">from</span> django <span style="color:#f92672">import</span> forms
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">from</span> django <span style="color:#f92672">import</span> forms
 
 
 
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ImageForm</span>(forms<span style="color:#f92672">.</span>Form):
 
-    name <span style="color:#f92672">=</span> forms<span style="color:#f92672">.</span>CharField(max_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, label<span style="color:#f92672">=&amp;</span><span style="color:#75715e">#039;名字：&amp;#039;)</span>
+    name <span style="color:#f92672">=</span> forms<span style="color:#f92672">.</span>CharField(max_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;名字：&#39;</span>)
 
-    picture <span style="color:#f92672">=</span> forms<span style="color:#f92672">.</span>ImageField(label<span style="color:#f92672">=&amp;</span><span style="color:#75715e">#039;图片：&amp;#039;) </span>
+    picture <span style="color:#f92672">=</span> forms<span style="color:#f92672">.</span>ImageField(label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;图片：&#39;</span>) 
 
 </code></pre></div><h1 id="views">Views</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PictureView</span>(APIView):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PictureView</span>(APIView):
 
 
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self, request):
 
-        name <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>GET<span style="color:#f92672">.</span>get(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;name&amp;#039;, &amp;#039;&amp;#039;)</span>
+        name <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>GET<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;name&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)
 
         <span style="color:#66d9ef">try</span>:
 
@@ -105,9 +108,9 @@
 
             <span style="color:#66d9ef">return</span> Response(status<span style="color:#f92672">=</span>status<span style="color:#f92672">.</span>HTTP_404_NOT_FOUND)
 
-        image <span style="color:#f92672">=</span> open(picture<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>url[<span style="color:#ae81ff">1</span>:], <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;rb&amp;#039;).read()</span>
+        image <span style="color:#f92672">=</span> open(picture<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>url[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#39;rb&#39;</span>)<span style="color:#f92672">.</span>read()
 
-        <span style="color:#66d9ef">return</span> HttpResponse(image, content_type<span style="color:#f92672">=&amp;</span><span style="color:#75715e">#039;image/png&amp;#039;)</span>
+        <span style="color:#66d9ef">return</span> HttpResponse(image, content_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;image/png&#39;</span>)
 
 
 
@@ -125,11 +128,11 @@
 
             <span style="color:#75715e"># 获取name</span>
 
-            picture<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> MyImageForm<span style="color:#f92672">.</span>cleaned_data[<span style="color:#f92672">&amp;</span>quot;name<span style="color:#f92672">&amp;</span>quot;]
+            picture<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> MyImageForm<span style="color:#f92672">.</span>cleaned_data[<span style="color:#e6db74">&#34;name&#34;</span>]
 
             <span style="color:#75715e"># 获取图片</span>
 
-            picture<span style="color:#f92672">.</span>path <span style="color:#f92672">=</span> MyImageForm<span style="color:#f92672">.</span>cleaned_data[<span style="color:#f92672">&amp;</span>quot;picture<span style="color:#f92672">&amp;</span>quot;]
+            picture<span style="color:#f92672">.</span>path <span style="color:#f92672">=</span> MyImageForm<span style="color:#f92672">.</span>cleaned_data[<span style="color:#e6db74">&#34;picture&#34;</span>]
 
             e <span style="color:#f92672">=</span> picture<span style="color:#f92672">.</span>save()
 

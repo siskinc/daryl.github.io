@@ -55,7 +55,8 @@
   <p>[TOC]</p>
 <h2 id="例子">例子</h2>
 <p>我们时常会写一些interface，例如：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">interface</span>{
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang">
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">interface</span>{
 
     <span style="color:#a6e22e">Print</span>()
 
@@ -71,29 +72,38 @@
 
 <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>) <span style="color:#a6e22e">Print</span>() {
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">Here</span> <span style="color:#a6e22e">is</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">B</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;)
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Here is *B&#34;</span>)
 
 }
 
 </code></pre></div><p>赋值的时候:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">A</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang">
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">A</span>
 
-<span style="color:#a6e22e">a</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">B</span>{}
+<span style="color:#a6e22e">a</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">B</span>{}
 
 </code></pre></div><p>诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">aa</span> []<span style="color:#a6e22e">A</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang">
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">aa</span> []<span style="color:#a6e22e">A</span>
 
 <span style="color:#a6e22e">aa</span> = make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>, <span style="color:#ae81ff">10</span>)
 
 </code></pre></div><p>好的，现在翻车了，会得到一个这样的报错：</p>
-<pre><code>cannot use make([]*B, 10) (type []*B) as type []A in assignment
+<pre><code>
+cannot use make([]*B, 10) (type []*B) as type []A in assignment
+
 </code></pre><h2 id="原因">原因</h2>
 <ol>
-<li>[]A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。</li>
-<li>[]A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。</li>
+<li>
+<p>[]A 不是一个interface，它只是一个slice，并且刚刚好元素类型是A。</p>
+</li>
+<li>
+<p>[]A 有自己特殊的内存分布，每一个interface{}有两个字节，一个是存储他是什么类型，另一个存储数据或者指针来指向他。因此，一个[]A是一块N*2的数据，但是[]*B是一块N*(sizeof(*B))的数据。</p>
+</li>
 </ol>
 <h2 id="如何去实现">如何去实现</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang"><span style="color:#a6e22e">bb</span> <span style="color:#f92672">:=</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">B</span>{}, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">B</span>{}}
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Golang" data-lang="Golang">
+<span style="color:#a6e22e">bb</span> <span style="color:#f92672">:=</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">B</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">B</span>{}, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">B</span>{}}
 
 <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">aa</span> []<span style="color:#a6e22e">AA</span> = make([]<span style="color:#a6e22e">AA</span>, len(<span style="color:#a6e22e">bb</span>))
 

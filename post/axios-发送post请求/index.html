@@ -55,42 +55,79 @@
   <p>[TOC]</p>
 <h2 id="方案一">方案一</h2>
 <p><strong>在node中使用axios以post的方式发送一张图片给某个server时:</strong></p>
-<pre><code>let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)
-		axios.post(url,{media:data,type:&amp;quot;image&amp;quot;})
-		.then(function (response) {
-		console.log(response.data);
-		})
-		.catch(function (error) {
-		console.log(error);
-		})
+<pre><code>
+let data = fs.createReadStream(__dirname + '/test.jpg')
+
+		axios.post(url,{media:data,type:&quot;image&quot;})
+
+		.then(function (response) {
+
+		console.log(response.data);
+
+		})
+
+		.catch(function (error) {
+
+		console.log(error);
+
+		})
+
 </code></pre><h2 id="方案二">方案二</h2>
 <p><strong>事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：</strong></p>
-<pre><code>let data = fs.createReadStream(__dirname + &amp;#039;/test.jpg&amp;#039;)
-let form = {
-type:&amp;quot;image&amp;quot;,
-media:data
-}
-request.post({url:url,formData:form},(err,res,body)=&amp;gt;{
-if(err) console.log(err)
-console.log(body)
-})
-</code></pre><pre><code>// 注册事件方法
-    register: function() {
-      let registerUrl = this.GetServerUrl() + &amp;quot;/user/signup&amp;quot;;
-      let params = {
-        username: this.username,
-        password: this.password,
-        email:    this.email,
-        captcha:  this.captcha
-      };
-      this.axios
-        .post(registerUrl, params)
-        .then(response =&amp;gt; {
-          if(response.status == 0) {
-            
-          }
-        });
-    }
+<pre><code>
+let data = fs.createReadStream(__dirname + '/test.jpg')
+
+let form = {
+
+type:&quot;image&quot;,
+
+media:data
+
+}
+
+request.post({url:url,formData:form},(err,res,body)=&gt;{
+
+if(err) console.log(err)
+
+console.log(body)
+
+})
+
+</code></pre><pre><code>
+// 注册事件方法
+
+    register: function() {
+
+      let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;
+
+      let params = {
+
+        username: this.username,
+
+        password: this.password,
+
+        email:    this.email,
+
+        captcha:  this.captcha
+
+      };
+
+      this.axios
+
+        .post(registerUrl, params)
+
+        .then(response =&gt; {
+
+          if(response.status == 0) {
+
+            
+
+          }
+
+        });
+
+    }
+
 </code></pre>
 </div>
 

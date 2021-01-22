@@ -53,7 +53,8 @@
   <h1>Redis源码阅读之动态字符串</h1>
   <time datetime=2020-05-10T11:07:16Z class="post-date">Sun, May 10, 2020</time>
   <h2 id="数据结构">数据结构</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sds;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sds;
 
 
 
@@ -121,11 +122,12 @@
 <p>各位可能还发现了一个叫做<code>__attribute__ ((__packed__))</code>的东西，不了解的小伙伴赶紧百度一下，它的作用大概就是告诉编译器取消结构在编译过程中的优化对齐,按照实际占用字节数进行对齐，是GCC特有的语法。这个功能是跟操作系统没关系，跟编译器有关，gcc编译器不是紧凑模式的。</p>
 <h3 id="取消内存对齐优化有什么用">取消内存对齐优化有什么用？</h3>
 <p>这个时候各位就会很迷惑，为啥一定要取消结构的优化对齐，第一个是为了减少sdshdr对内存的占用，想想在大型情况下，几百万个key，取消对齐带来的内存优化还是很客观的，第二个嘛，当然是为了操作方便，上文已经说了，一般的参数里面都是传入sds，而sds是指向的sdshdr的buf字段，下面来看一段代码：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> size_t <span style="color:#a6e22e">sdslen</span>(<span style="color:#66d9ef">const</span> sds s) {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> size_t <span style="color:#a6e22e">sdslen</span>(<span style="color:#66d9ef">const</span> sds s) {
 
     <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> flags <span style="color:#f92672">=</span> s[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
 
-    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>amp;SDS_TYPE_MASK) {
+    <span style="color:#66d9ef">switch</span>(flags<span style="color:#f92672">&amp;</span>SDS_TYPE_MASK) {
 
         <span style="color:#66d9ef">case</span> SDS_TYPE_5:
 
@@ -133,19 +135,19 @@
 
         <span style="color:#66d9ef">case</span> SDS_TYPE_8:
 
-            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">8</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">8</span>,s)<span style="color:#f92672">-&gt;</span>len;
 
         <span style="color:#66d9ef">case</span> SDS_TYPE_16:
 
-            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">16</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">16</span>,s)<span style="color:#f92672">-&gt;</span>len;
 
         <span style="color:#66d9ef">case</span> SDS_TYPE_32:
 
-            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">32</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">32</span>,s)<span style="color:#f92672">-&gt;</span>len;
 
         <span style="color:#66d9ef">case</span> SDS_TYPE_64:
 
-            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">64</span>,s)<span style="color:#f92672">-&amp;</span>gt;len;
+            <span style="color:#66d9ef">return</span> SDS_HDR(<span style="color:#ae81ff">64</span>,s)<span style="color:#f92672">-&gt;</span>len;
 
     }
 
@@ -155,39 +157,17 @@
 
 </code></pre></div><p>这段代码是获取sds的长度的代码，可以看到，在代码中有<code>s[-1]</code>，what happen？一般来说我们是不会这么用的，但是也能看出来s[-1]就是指向的s前面的字节的地址，而sds指向的是buf，并且有了<code>__attribute__ ((__packed__))</code>来取消字节对齐优化，正好就会指向sdshdr的flags字段，而flag字段便是来判断sds是何种类型的sdshdr，最后就可以通过转换成对应的sdshdr拿到len啦。对应<code>s[-1]</code>这种操作还有很多处出现，我就不一一解析了，列出来即可：<code>sdsavail</code>,<code>sdssetlen</code>,<code>sdsinclen</code>,<code>sdsalloc</code>,<code>sdssetalloc</code>。</p>
 <h3 id="sdshrd类型">SDSHRD类型</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">SDSHRD类型</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">sdshdr5</td>
-<td style="text-align:center">不会被使用，仅仅作为一个文档来使用，字符串长度在1&laquo;5以内，但是即便是被选择为sdshdr5，代码上也会转为sdshdr8</td>
-</tr>
-<tr>
-<td style="text-align:center">sdshdr8</td>
-<td style="text-align:center">字符串长度在1&laquo;8以内</td>
-</tr>
-<tr>
-<td style="text-align:center">sdshdr16</td>
-<td style="text-align:center">字符串长度在1&laquo;16以内</td>
-</tr>
-<tr>
-<td style="text-align:center">sdshdr32</td>
-<td style="text-align:center">字符串长度在1&laquo;32以内</td>
-</tr>
-<tr>
-<td style="text-align:center">sdshdr64</td>
-<td style="text-align:center">字符串长度在1&laquo;64以内，如果在32位的机器，是不存在的</td>
-</tr>
-</tbody>
-</table>
+<p>| SDSHRD类型 |                             描述                             |</p>
+<p>| :&mdash;&mdash;&ndash;: | :&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-: |</p>
+<p>|  sdshdr5   | 不会被使用，仅仅作为一个文档来使用，字符串长度在1&laquo;5以内，但是即便是被选择为sdshdr5，代码上也会转为sdshdr8 |</p>
+<p>|  sdshdr8   |                     字符串长度在1&laquo;8以内                     |</p>
+<p>|  sdshdr16  |                    字符串长度在1&laquo;16以内                     |</p>
+<p>|  sdshdr32  |                    字符串长度在1&laquo;32以内                     |</p>
+<p>|  sdshdr64  |     字符串长度在1&laquo;64以内，如果在32位的机器，是不存在的      |</p>
 <p>描述中的信息，具体可以参照<code>sdsReqType</code>函数</p>
 <h2 id="api">API</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// 根据init和initlen创建一个新的sds
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">// 根据init和initlen创建一个新的sds
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// 如果init是SDS_NOINIT，会创建一个空的sds
 </span><span style="color:#75715e"></span>
@@ -197,9 +177,9 @@
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// 初始化后的sdshdr，len和alloc都会被赋值为initlen
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 多申请的一个字节的内存，会直接赋值为&amp;#039;\0&amp;#039;，意味这我们可以直接使用printf()函数直接打印sds
+<span style="color:#75715e">// 多申请的一个字节的内存，会直接赋值为&#39;\0&#39;，意味这我们可以直接使用printf()函数直接打印sds
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 由于有len的存在，即便是字符串中有&amp;#039;\0&amp;#039;也不会丢失，所以是二进制安全的
+<span style="color:#75715e">// 由于有len的存在，即便是字符串中有&#39;\0&#39;也不会丢失，所以是二进制安全的
 </span><span style="color:#75715e"></span>
 sds <span style="color:#a6e22e">sdsnewlen</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>init, size_t initlen);
 
@@ -207,7 +187,7 @@ sds <span style="color:#a6e22e">sdsnewlen</span>(<span style="color:#66d9ef">con
 </span><span style="color:#75715e"></span>
 sds <span style="color:#a6e22e">sdsnew</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>init);
 
-<span style="color:#75715e">// 直接调用sdsnewlen(&amp;quot;&amp;quot;,0),其实和调用sdsnewlen(SDS_NOINIT,0)没啥区别
+<span style="color:#75715e">// 直接调用sdsnewlen(&#34;&#34;,0),其实和调用sdsnewlen(SDS_NOINIT,0)没啥区别
 </span><span style="color:#75715e"></span>
 sds <span style="color:#a6e22e">sdsempty</span>(<span style="color:#66d9ef">void</span>);
 
@@ -303,7 +283,7 @@ sds <span style="color:#a6e22e">sdsjoinsds</span>(sds <span style="color:#f92672
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// 如果不需要扩大，会立即返回
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 如果newlen &amp;lt; SDS_MAX_PREALLOC(1MB),会直接让newlen翻倍,否则,会让newlen增加SDS_MAX_PREALLOC
+<span style="color:#75715e">// 如果newlen &lt; SDS_MAX_PREALLOC(1MB),会直接让newlen翻倍,否则,会让newlen增加SDS_MAX_PREALLOC
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// 如果newlen对比s的长度扩张太多，会引起重新创建sdshdr的操作，还会涉及到s的拷贝操作
 </span><span style="color:#75715e"></span>

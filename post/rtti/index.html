@@ -60,9 +60,10 @@
 <blockquote>
 <p>对于c++的内置数据类型，typeid可以方便的输出它们的数据类型。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;iostream&amp;gt;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;typeinfo&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -78,9 +79,9 @@
 
      <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
 
-     <span style="color:#66d9ef">char</span> ch <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;a<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;;
+     <span style="color:#66d9ef">char</span> ch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;a&#39;</span>;
 
-     <span style="color:#66d9ef">wchar_t</span> wch <span style="color:#f92672">=</span> L<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;b<span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;;
+     <span style="color:#66d9ef">wchar_t</span> wch <span style="color:#f92672">=</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39;b&#39;</span>;
 
      <span style="color:#66d9ef">float</span> f <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span>;
 
@@ -88,19 +89,19 @@
 
 
 
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(s).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// short
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(s).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// short
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(ui).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// unsigned int
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(ui).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// unsigned int
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(i).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// int
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(i).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// int
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(ch).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// char
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(ch).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// char
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(wch).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// wchar_t
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(wch).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// wchar_t
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(f).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// float
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(f).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// float
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(d).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// double
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(d).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// double
 </span><span style="color:#75715e"></span>
 
 
@@ -111,9 +112,10 @@
 </code></pre></div><blockquote>
 <p>对于自己创建的类对象，依然可以输出它们的数据类型</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;iostream&amp;gt;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;typeinfo&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -125,7 +127,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -137,7 +139,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -147,7 +149,7 @@
 
 {
 
-     <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Print</span>() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">C</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Print</span>() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is struct C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -163,15 +165,15 @@
 
 
 
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(pA1).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// class A *
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pA1).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A *
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(a2).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// class A
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(a2).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A
 </span><span style="color:#75715e"></span>
 
 
      B <span style="color:#f92672">*</span>pB1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
 
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(pB1).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// class B *
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pB1).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class B *
 </span><span style="color:#75715e"></span>
 
 
@@ -181,9 +183,9 @@
 
 
 
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(pC1).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// struct C *
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pC1).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// struct C *
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(c2).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// struct C
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(c2).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// struct C
 </span><span style="color:#75715e"></span>
 
 
@@ -192,9 +194,10 @@
 }
 
 </code></pre></div><h1 id="rtti-核心">RTTI 核心</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;iostream&amp;gt;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;typeinfo&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -206,7 +209,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -218,7 +221,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -230,9 +233,9 @@
 
      A <span style="color:#f92672">*</span>pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
 
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(pA).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// class A *
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A *
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>pA).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// class A
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A
 </span><span style="color:#75715e"></span>
      <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 
@@ -242,14 +245,21 @@
 <p>分析：</p>
 </blockquote>
 <ol>
-<li>我使用了两次typeid，但是两次的参数是不一样的；输出结果也是不一样的；当我指定为pA时，由于pA是一个A类型的指针，所以输出就为class A * ；</li>
-<li>当我指定*pA时，它表示的是pA所指向的对象的类型，所以输出的是class A；</li>
-<li>所以需要区分typeid(*pA)和typeid(pA)的区别，它们两个不是同一个东西</li>
+<li>
+<p>我使用了两次typeid，但是两次的参数是不一样的；输出结果也是不一样的；当我指定为pA时，由于pA是一个A类型的指针，所以输出就为class A * ；</p>
+</li>
+<li>
+<p>当我指定*pA时，它表示的是pA所指向的对象的类型，所以输出的是class A；</p>
+</li>
+<li>
+<p>所以需要区分typeid(*pA)和typeid(pA)的区别，它们两个不是同一个东西</p>
+</li>
 </ol>
 <p>但是，这里又有问题了，明明pA实际指向的是B，为什么得到的却是class A？</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;iostream&amp;gt;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;typeinfo&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -261,7 +271,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -273,7 +283,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -285,9 +295,9 @@
 
      A <span style="color:#f92672">*</span>pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
 
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(pA).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// class A *
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A *
 </span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>pA).name()<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; <span style="color:#75715e">// class B
+     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class B
 </span><span style="color:#75715e"></span>
      <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 
@@ -300,12 +310,13 @@
 <p><strong>(这个真的很重要 一定要多看看 一个类里面有virutal 和没有virtual 对于编译器来说，做的事完全不同的事情，所有一定要看清楚这个类有没有virtual)</strong></p>
 <h1 id="type_info类里面的比较运算符">type_info类里面的比较运算符</h1>
 <blockquote>
-<p>使用type_info类中重载的==和!=比较两个对象的类型是否相等
-这个会经常用到，通常用于比较两个带有虚函数的类的对象是否相等，例如以下代码：</p>
+<p>使用type_info类中重载的==和!=比较两个对象的类型是否相等</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;iostream&amp;gt;</span><span style="color:#75715e">
+<p>这个会经常用到，通常用于比较两个带有虚函数的类的对象是否相等，例如以下代码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;typeinfo&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -317,7 +328,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -329,7 +340,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -341,7 +352,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -355,7 +366,7 @@
 
      {
 
-          cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;I am a A truly.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl;
+          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a A truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
 
      }
 
@@ -363,7 +374,7 @@
 
      {
 
-          cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;I am a B truly.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl;
+          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a B truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
 
      }
 
@@ -371,7 +382,7 @@
 
      {
 
-          cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;I am a C truly.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl;
+          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a C truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
 
      }
 
@@ -379,7 +390,7 @@
 
      {
 
-          cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;I am alone.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl;
+          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am alone.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
 
      }
 
@@ -410,9 +421,10 @@
 <blockquote>
 <p>使用dynamic_cast 机制来实现上述的代码（dynamic_cast 是一种很常用的方法）</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;iostream&amp;gt;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;typeinfo&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -424,7 +436,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -436,7 +448,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -448,7 +460,7 @@
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -462,13 +474,13 @@
 
      <span style="color:#75715e">//C *pC = pA; // Wrong 编译器会提示错误
 </span><span style="color:#75715e"></span>
-     C <span style="color:#f92672">*</span>pC <span style="color:#f92672">=</span> <span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&amp;</span>lt;C <span style="color:#f92672">*&amp;</span>gt;(pA);
+     C <span style="color:#f92672">*</span>pC <span style="color:#f92672">=</span> <span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>C <span style="color:#f92672">*&gt;</span>(pA);
 
      <span style="color:#66d9ef">if</span> (pC <span style="color:#f92672">!=</span> NULL)
 
      {
 
-          pC<span style="color:#f92672">-&amp;</span>gt;Print();
+          pC<span style="color:#f92672">-&gt;</span>Print();
 
      }
 
@@ -476,12 +488,13 @@
 
 }
 
-</code></pre></div><p>在上面代码中，如果我们直接将pA赋值给pC，这样编译器就会提示错误，而当我们加上了dynamic_cast之后，一切就ok了。那么dynamic_cast在后面干了什么呢？
-dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类型转换，从而使程序能够在一个类层次结构中安全地转换类型，把基类指针（引用）转换为派生类指针（引用）。
-当类中存在虚函数时，编译器就会在类的成员变量中添加一个指向虚函数表的vptr指针，每一个class所关联的type_info object也经由virtual table被指出来，通常这个type_info object放在表格的第一个slot。当我们进行dynamic_cast时，编译器会帮我们进行语法检查。如果指针的静态类型和目标类型相同，那么就什么事情都不做；否则，首先对指针进行调整，使得它指向vftable，并将其和调整之后的指针、调整的偏移量、静态类型以及目标类型传递给内部函数。其中最后一个参数指明转换的是指针还是引用。两者唯一的区别是，如果转换失败，前者返回NULL，后者抛出bad_cast异常。对于在typeid函数的使用中所示例的程序，我使用dynamic_cast进行更改，代码如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;iostream&amp;gt;</span><span style="color:#75715e">
+</code></pre></div><p>在上面代码中，如果我们直接将pA赋值给pC，这样编译器就会提示错误，而当我们加上了dynamic_cast之后，一切就ok了。那么dynamic_cast在后面干了什么呢？</p>
+<p>dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类型转换，从而使程序能够在一个类层次结构中安全地转换类型，把基类指针（引用）转换为派生类指针（引用）。</p>
+<p>当类中存在虚函数时，编译器就会在类的成员变量中添加一个指向虚函数表的vptr指针，每一个class所关联的type_info object也经由virtual table被指出来，通常这个type_info object放在表格的第一个slot。当我们进行dynamic_cast时，编译器会帮我们进行语法检查。如果指针的静态类型和目标类型相同，那么就什么事情都不做；否则，首先对指针进行调整，使得它指向vftable，并将其和调整之后的指针、调整的偏移量、静态类型以及目标类型传递给内部函数。其中最后一个参数指明转换的是指针还是引用。两者唯一的区别是，如果转换失败，前者返回NULL，后者抛出bad_cast异常。对于在typeid函数的使用中所示例的程序，我使用dynamic_cast进行更改，代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&amp;lt;typeinfo&amp;gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
 
@@ -493,7 +506,7 @@ dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类�
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -505,7 +518,7 @@ dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类�
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -517,7 +530,7 @@ dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类�
 
 <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;This is <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span>.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl; }
+     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
 
 };
 
@@ -527,19 +540,19 @@ dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类�
 
 {
 
-     <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&amp;</span>lt;B<span style="color:#f92672">*&amp;</span>gt;(a))
+     <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>B<span style="color:#f92672">*&gt;</span>(a))
 
      {
 
-          cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;I am a B truly.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl;
+          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a B truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
 
      }
 
-     <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&amp;</span>lt;C<span style="color:#f92672">*&amp;</span>gt;(a))
+     <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>C<span style="color:#f92672">*&gt;</span>(a))
 
      {
 
-          cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;I am a C truly.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl;
+          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a C truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
 
      }
 
@@ -547,7 +560,7 @@ dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类�
 
      {
 
-          cout<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>quot;I am alone.<span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;<span style="color:#f92672">&amp;</span>lt;endl;
+          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am alone.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
 
      }
 

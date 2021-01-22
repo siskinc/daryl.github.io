@@ -56,11 +56,12 @@
 <p>在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 <code>import mudole.file</code>这样的代码，因为我们自己无法控制</p>
 </blockquote>
 <p>解决方法如下，在__init__文件中加入以下代码:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">import</span> sys
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">import</span> sys
 
 <span style="color:#f92672">import</span> os
 
-sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;mudole_name/&amp;#039;))</span>
+sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(<span style="color:#e6db74">&#39;mudole_name/&#39;</span>))
 
 </code></pre></div>
 </div>

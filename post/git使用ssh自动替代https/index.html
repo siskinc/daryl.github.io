@@ -51,14 +51,15 @@
     <main class="content container">
     <div class="post">
   <h1>git使用ssh自动替代https</h1>
-  <time datetime=2020-01-01T20:37:34Z class="post-date">Wed, Jan 1, 2020</time>
+  <time datetime=2019-12-12T22:40:31Z class="post-date">Thu, Dec 12, 2019</time>
   <blockquote>
 <p>在使用<code>go mod</code>的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥</p>
 </blockquote>
 <h2 id="本地执行git命令">本地执行git命令:</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git config --global url.&amp;quot;git@github.com:&amp;quot;.insteadOf &amp;quot;https://github.com/&amp;quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+git config --global url.<span style="color:#e6db74">&#34;git@github.com:&#34;</span>.insteadOf <span style="color:#e6db74">&#34;https://github.com/&#34;</span>
 
-git config --global url.&amp;quot;git@git.company.com:&amp;quot;.insteadOf &amp;quot;https://git.company.com/&amp;quot;
+git config --global url.<span style="color:#e6db74">&#34;git@git.company.com:&#34;</span>.insteadOf <span style="color:#e6db74">&#34;https://git.company.com/&#34;</span>
 
 </code></pre></div><blockquote>
 <p>company.com换成你自己公司的地址即可。</p>
@@ -66,7 +67,8 @@ git config --global url.&amp;quot;git@git.company.com:&amp;quot;.insteadOf &amp;
 <blockquote>
 <p>而对于 <a href="http://golang.org/">golang.org</a> 上的代码，在这一阶段，会从 <a href="https://go.googlesource.com/">https://go.googlesource.com</a> 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下：<!-- raw HTML omitted --></p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git config --global url.&amp;quot;git@github.com:golang/&amp;quot;.insteadOf &amp;quot;https://go.googlesource.com/&amp;quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+git config --global url.<span style="color:#e6db74">&#34;git@github.com:golang/&#34;</span>.insteadOf <span style="color:#e6db74">&#34;https://go.googlesource.com/&#34;</span>
 
 </code></pre></div>
 </div>

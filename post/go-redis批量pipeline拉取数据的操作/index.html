@@ -51,24 +51,25 @@
     <main class="content container">
     <div class="post">
   <h1>go-redis批量(pipeline)拉取数据的操作</h1>
-  <time datetime=2020-11-11T22:55:21Z class="post-date">Wed, Nov 11, 2020</time>
+  <time datetime=2020-11-09T23:49:58Z class="post-date">Mon, Nov 9, 2020</time>
   <blockquote>
 <p>主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了</p>
 </blockquote>
 <h2 id="原理">原理</h2>
 <p>在调用pipeline每次append命令时，会返回一个对应的xxxxCmd对象指针，保留这个指针即可，在Exec()函数执行完成后，会将结果写入对应的对象内</p>
 <h2 id="demo">demo</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 
 
 <span style="color:#f92672">import</span> (
 
-	<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">context</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+	<span style="color:#e6db74">&#34;context&#34;</span>
 
-	<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">fmt</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
 
-	<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span><span style="color:#f92672">-</span><span style="color:#a6e22e">redis</span><span style="color:#f92672">/</span><span style="color:#a6e22e">redis</span><span style="color:#f92672">/</span><span style="color:#a6e22e">v8</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+	<span style="color:#e6db74">&#34;github.com/go-redis/redis/v8&#34;</span>
 
 )
 
@@ -84,9 +85,9 @@
 
 <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
 
-	<span style="color:#a6e22e">client</span> = <span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">NewClient</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">Options</span>{
+	<span style="color:#a6e22e">client</span> = <span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">NewClient</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">Options</span>{
 
-		<span style="color:#a6e22e">Addr</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">local</span>.<span style="color:#a6e22e">arch</span>:<span style="color:#ae81ff">6379</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;,
+		<span style="color:#a6e22e">Addr</span>: <span style="color:#e6db74">&#34;local.arch:6379&#34;</span>,
 
 	})
 
@@ -100,9 +101,9 @@
 
 	<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>()
 
-	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>; <span style="color:#ae81ff">100</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">100</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
 
-		<span style="color:#a6e22e">key</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">d</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">i</span>)
+		<span style="color:#a6e22e">key</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#a6e22e">i</span>)
 
 		<span style="color:#a6e22e">pipeline</span>.<span style="color:#a6e22e">HSet</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">key</span>, <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}{<span style="color:#a6e22e">key</span>: <span style="color:#a6e22e">key</span>})
 
@@ -128,9 +129,9 @@
 
 	<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#a6e22e">redis</span>.<span style="color:#a6e22e">StringStringMapCmd</span>, <span style="color:#ae81ff">0</span>)
 
-	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">lt</span>; <span style="color:#ae81ff">100</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">100</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
 
-		<span style="color:#a6e22e">key</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">%</span><span style="color:#a6e22e">d</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">i</span>)
+		<span style="color:#a6e22e">key</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#a6e22e">i</span>)
 
 		<span style="color:#a6e22e">result</span> = append(<span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">pipeline</span>.<span style="color:#a6e22e">HGetAll</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">key</span>))
 

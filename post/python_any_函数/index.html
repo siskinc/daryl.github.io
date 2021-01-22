@@ -55,19 +55,20 @@
   <p>any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。</p>
 <p>元素除了是 0、空、FALSE 外都算 TRUE。</p>
 <p>如果想要测试一个list中是否有一个是1可以使用any，例如：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x, y, z <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+x, y, z <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>
 
 
 
 <span style="color:#66d9ef">if</span> x <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> y <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> z <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
 
-    <span style="color:#66d9ef">print</span>(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;passed&amp;#039;)</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;passed&#39;</span>)
 
 
 
 <span style="color:#66d9ef">if</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">in</span> (x, y, z):
 
-    <span style="color:#66d9ef">print</span>(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;passed&amp;#039;)</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;passed&#39;</span>)
 
 
 
@@ -75,13 +76,13 @@
 
 <span style="color:#66d9ef">if</span> x <span style="color:#f92672">or</span> y <span style="color:#f92672">or</span> z:
 
-    <span style="color:#66d9ef">print</span>(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;passed&amp;#039;)</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;passed&#39;</span>)
 
 
 
 <span style="color:#66d9ef">if</span> any((x, y, z)):
 
-    <span style="color:#66d9ef">print</span>(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;passed&amp;#039;)</span>
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;passed&#39;</span>)
 
 </code></pre></div>
 </div>

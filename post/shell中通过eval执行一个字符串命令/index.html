@@ -51,16 +51,17 @@
     <main class="content container">
     <div class="post">
   <h1>shell中通过eval执行一个字符串命令</h1>
-  <time datetime=2020-01-01T20:58:31Z class="post-date">Wed, Jan 1, 2020</time>
-  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
-</span><span style="color:#75715e"></span>
-echo &amp;quot;Switch Directory : /home/pktgen-2.9.0&amp;quot;
+  <time datetime=2019-07-25T20:39:15Z class="post-date">Thu, Jul 25, 2019</time>
+  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">
+<span style="color:#75715e">#!/bin/bash</span>
 
-dir<span style="color:#f92672">=</span>&amp;quot;/home/pktgen-2.9.0&amp;quot;
+echo <span style="color:#e6db74">&#34;Switch Directory : /home/pktgen-2.9.0&#34;</span>
+
+dir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/home/pktgen-2.9.0&#34;</span>
 
 cd $dir
 
-cmd<span style="color:#f92672">=</span>&amp;quot;./pktgen_20180410 -c f -n <span style="color:#ae81ff">4</span> --proc-type auto --socket-mem <span style="color:#ae81ff">512</span>  -b 01:00.1  --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d <span style="color:#ae81ff">10000</span> --bps 1500&amp;quot;
+cmd<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512  -b 01:00.1  --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&#34;</span>
 
 eval $cmd
 

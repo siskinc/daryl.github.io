@@ -53,14 +53,16 @@
   <h1>Python如何合并两个字典</h1>
   <time datetime=2019-07-25T17:50:14Z class="post-date">Thu, Jul 25, 2019</time>
   <p>Python 3</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> {<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;a&amp;#039;: 1, &amp;#039;b&amp;#039;: 2}</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+x <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;a&#39;</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;b&#39;</span>: <span style="color:#ae81ff">2</span>}
 
-y <span style="color:#f92672">=</span> {<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;b&amp;#039;: 3, &amp;#039;c&amp;#039;: 4}</span>
+y <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;b&#39;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#39;c&#39;</span>: <span style="color:#ae81ff">4</span>}
 
 z <span style="color:#f92672">=</span> {<span style="color:#f92672">**</span>x, <span style="color:#f92672">**</span>y}
 
 </code></pre></div><p>Python 2</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">z <span style="color:#f92672">=</span> dict(x, <span style="color:#f92672">**</span>y)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+z <span style="color:#f92672">=</span> dict(x, <span style="color:#f92672">**</span>y)
 
 </code></pre></div><blockquote>
 <p>Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖</p>

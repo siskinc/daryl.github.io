@@ -51,8 +51,9 @@
     <main class="content container">
     <div class="post">
   <h1>golang scan rows to []string，golang使用mysql，将结果写入到string列表中</h1>
-  <time datetime=2020-01-01T20:31:19Z class="post-date">Wed, Jan 1, 2020</time>
-  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">rows</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#a6e22e">sqlStr</span>)
+  <time datetime=2019-12-17T19:36:31Z class="post-date">Tue, Dec 17, 2019</time>
+  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<span style="color:#a6e22e">rows</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#a6e22e">sqlStr</span>)
 
 <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 
@@ -68,7 +69,7 @@
 
     <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pointers</span> {
 
-        <span style="color:#a6e22e">pointers</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span>]
+        <span style="color:#a6e22e">pointers</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">result</span>[<span style="color:#a6e22e">i</span>]
 
     }
 
@@ -76,7 +77,7 @@
 
     <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 
-        <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">scan</span> <span style="color:#a6e22e">have</span> <span style="color:#a6e22e">an</span> <span style="color:#a6e22e">err</span>: <span style="color:#f92672">%</span><span style="color:#a6e22e">v</span>, <span style="color:#a6e22e">sql</span> <span style="color:#66d9ef">string</span>: <span style="color:#f92672">%</span><span style="color:#a6e22e">s</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">sqlStr</span>)
+        <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;scan have an err: %v, sql string: %s&#34;</span>, <span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">sqlStr</span>)
 
     }
 

@@ -53,19 +53,23 @@
   <h1>Golang mgo 模糊查询的使用</h1>
   <time datetime=2019-07-25T17:35:04Z class="post-date">Thu, Jul 25, 2019</time>
   <p>在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:</p>
-<pre><code class="language-javascrapt" data-lang="javascrapt">db.article.find({&amp;quot;title&amp;quot;: {$regex: /a/, $options: &amp;quot;im&amp;quot;}})
-</code></pre><p>这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">title</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#a6e22e">regex</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">/</span><span style="color:#a6e22e">a</span><span style="color:#f92672">/&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#a6e22e">options</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">im</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;}}
+<pre><code class="language-javascrapt" data-lang="javascrapt">
+db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})
 
-</code></pre></div><p>大家用这个方式去查询，能查询到算我输！
-下面总结一下，正真使用的方式：</p>
+</code></pre><p>这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#e6db74">&#34;title&#34;</span>: <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#e6db74">&#34;$regex&#34;</span>: <span style="color:#e6db74">&#34;/a/&#34;</span>, <span style="color:#e6db74">&#34;$options&#34;</span>: <span style="color:#e6db74">&#34;im&#34;</span>}}
+
+</code></pre></div><p>大家用这个方式去查询，能查询到算我输！</p>
+<p>下面总结一下，正真使用的方式：</p>
 <ol>
 <li>在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&quot;\a&quot;，而不是\a\。</li>
 </ol>
 <blockquote>
 <p>根据第一点，我们将代码修改一下。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">title</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#a6e22e">regex</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">a</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#a6e22e">options</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">im</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;}}
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#e6db74">&#34;title&#34;</span>: <span style="color:#a6e22e">bson</span>.<span style="color:#a6e22e">M</span>{<span style="color:#e6db74">&#34;$regex&#34;</span>: <span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;$options&#34;</span>: <span style="color:#e6db74">&#34;im&#34;</span>}}
 
 </code></pre></div><blockquote>
 <p>但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！</p>
@@ -73,17 +77,18 @@
 <ol start="2">
 <li>在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// RegEx represents a regular expression.  The Options field may contain
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#75715e">// RegEx represents a regular expression.  The Options field may contain
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// individual characters defining the way in which the pattern should be
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">// applied, and must be sorted. Valid options as of this writing are &amp;#039;i&amp;#039; for
+<span style="color:#75715e">// applied, and must be sorted. Valid options as of this writing are &#39;i&#39; for
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">// case insensitive matching, &amp;#039;m&amp;#039; for multi-line matching, &amp;#039;x&amp;#039; for verbose
+<span style="color:#75715e">// case insensitive matching, &#39;m&#39; for multi-line matching, &#39;x&#39; for verbose
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">// mode, &amp;#039;l&amp;#039; to make \w, \W, and similar be locale-dependent, &amp;#039;s&amp;#039; for dot-all
+<span style="color:#75715e">// mode, &#39;l&#39; to make \w, \W, and similar be locale-dependent, &#39;s&#39; for dot-all
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">// mode (a &amp;#039;.&amp;#039; matches everything), and &amp;#039;u&amp;#039; to make \w, \W, and similar match
+<span style="color:#75715e">// mode (a &#39;.&#39; matches everything), and &#39;u&#39; to make \w, \W, and similar match
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// unicode. The value of the Options parameter is not verified before being
 </span><span style="color:#75715e"></span>
@@ -98,7 +103,9 @@
 }
 
 </code></pre></div><p>那么最终我们的代码为：</p>
-<pre><code>query := bson.M{&amp;quot;title&amp;quot;: bson.M{&amp;quot;$regex&amp;quot;: bson. RegEx:{Pattern:&amp;quot;/a/&amp;quot;, Options: &amp;quot;im&amp;quot;}}}
+<pre><code>
+query := bson.M{&quot;title&quot;: bson.M{&quot;$regex&quot;: bson. RegEx:{Pattern:&quot;/a/&quot;, Options: &quot;im&quot;}}}
+
 </code></pre>
 </div>
 

@@ -54,11 +54,12 @@
   <time datetime=2019-07-25T17:45:35Z class="post-date">Thu, Jul 25, 2019</time>
   <p>[TOC]</p>
 <blockquote>
-<p>PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型
-PyAPI_DATA(type): 声明公共的Python数据和类型
-PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接</p>
+<p>PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/*
+<p>PyAPI_DATA(type): 声明公共的Python数据和类型</p>
+<p>PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/*
 </span><span style="color:#75715e">
 </span><span style="color:#75715e">  All windows ports, except cygwin, are handled in PC/pyconfig.h.
 </span><span style="color:#75715e">
@@ -134,7 +135,7 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
 
 <span style="color:#75715e">#                       if defined(__cplusplus)
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#                               define PyMODINIT_FUNC extern &amp;quot;C&amp;quot; __declspec(dllexport) PyObject*
+<span style="color:#75715e">#                               define PyMODINIT_FUNC extern &#34;C&#34; __declspec(dllexport) PyObject*
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#                       else </span><span style="color:#75715e">/* __cplusplus */</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
@@ -168,7 +169,7 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#       if defined(__cplusplus)
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#               define PyMODINIT_FUNC extern &amp;quot;C&amp;quot; PyObject*
+<span style="color:#75715e">#               define PyMODINIT_FUNC extern &#34;C&#34; PyObject*
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#       else </span><span style="color:#75715e">/* __cplusplus */</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>

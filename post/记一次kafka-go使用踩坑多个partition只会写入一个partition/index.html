@@ -51,19 +51,28 @@
     <main class="content container">
     <div class="post">
   <h1>记一次kafka-go使用踩坑（多个partition只会写入一个partition）</h1>
-  <time datetime=2020-01-01T20:41:13Z class="post-date">Wed, Jan 1, 2020</time>
+  <time datetime=2019-11-06T05:33:44Z class="post-date">Wed, Nov 6, 2019</time>
   <!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#a6e22e">w</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">kafka</span>.<span style="color:#a6e22e">NewWriter</span>(<span style="color:#a6e22e">kafka</span>.<span style="color:#a6e22e">WriterConfig</span>{
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#a6e22e">w</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">kafka</span>.<span style="color:#a6e22e">NewWriter</span>(<span style="color:#a6e22e">kafka</span>.<span style="color:#a6e22e">WriterConfig</span>{
 
-    <span style="color:#a6e22e">Brokers</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">localhost</span>:<span style="color:#ae81ff">9092</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;},
+    <span style="color:#a6e22e">Brokers</span>: []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;localhost:9092&#34;</span>},
 
-    <span style="color:#a6e22e">Topic</span>:   <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#a6e22e">topic</span><span style="color:#f92672">-</span><span style="color:#a6e22e">A</span><span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;,
+    <span style="color:#a6e22e">Topic</span>:   <span style="color:#e6db74">&#34;topic-A&#34;</span>,
 
-    <span style="color:#a6e22e">Balancer</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">amp</span>;<span style="color:#a6e22e">kafka</span>.<span style="color:#a6e22e">LeastBytes</span>{},
+    <span style="color:#a6e22e">Balancer</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">kafka</span>.<span style="color:#a6e22e">LeastBytes</span>{},
 
 })
 
 </code></pre></div><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 
 </div>
 

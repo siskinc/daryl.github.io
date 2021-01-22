@@ -55,40 +55,51 @@
   <p>[TOC]</p>
 <h4 id="print">print</h4>
 <ul>
-<li>Python2.7的print不是一个function</li>
-<li>Python3里的print是一个function。</li>
+<li>
+<p>Python2.7的print不是一个function</p>
+</li>
+<li>
+<p>Python3里的print是一个function。</p>
+</li>
 </ul>
 <h4 id="unicode">Unicode</h4>
 <ul>
-<li>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。</li>
-<li>Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。</li>
+<li>
+<p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。</p>
+</li>
+<li>
+<p>Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。</p>
+</li>
 </ul>
 <p>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#960050;background-color:#1e0010">中国</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;china&amp;#039; </span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#960050;background-color:#1e0010">中国</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;china&#39;</span> 
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#66d9ef">print</span>(<span style="color:#960050;background-color:#1e0010">中国</span>) 
+<span style="color:#f92672">&gt;&gt;&gt;</span><span style="color:#66d9ef">print</span>(<span style="color:#960050;background-color:#1e0010">中国</span>) 
 
 china
 
 </code></pre></div><p>Python 2.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; str <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>quot;<span style="color:#960050;background-color:#1e0010">我爱北京天安门</span><span style="color:#f92672">&amp;</span>quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;我爱北京天安门&#34;</span>
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; str
+<span style="color:#f92672">&gt;&gt;&gt;</span> str
 
-<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8&amp;#039;</span>
+<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8</span><span style="color:#e6db74">&#39;</span>
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; str <span style="color:#f92672">=</span> u<span style="color:#f92672">&amp;</span>quot;<span style="color:#960050;background-color:#1e0010">我爱北京天安门</span><span style="color:#f92672">&amp;</span>quot;
+<span style="color:#f92672">&gt;&gt;&gt;</span> str <span style="color:#f92672">=</span> <span style="color:#e6db74">u</span><span style="color:#e6db74">&#34;我爱北京天安门&#34;</span>
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; str
+<span style="color:#f92672">&gt;&gt;&gt;</span> str
 
-u<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8&amp;#039;</span>
+<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8</span><span style="color:#e6db74">&#39;</span>
 
 </code></pre></div><p>Python 3.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; str <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>quot;<span style="color:#960050;background-color:#1e0010">我爱北京天安门</span><span style="color:#f92672">&amp;</span>quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;我爱北京天安门&#34;</span>
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; str
+<span style="color:#f92672">&gt;&gt;&gt;</span> str
 
-<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;我爱北京天安门&amp;#039;</span>
+<span style="color:#e6db74">&#39;我爱北京天安门&#39;</span>
 
 </code></pre></div><h4 id="除法运算">除法运算</h4>
 <p>Python中的除法较其它语言显得非常高端，有套很复杂的规则。Python中的除法有两个运算符，/和//</p>
@@ -96,49 +107,58 @@ u<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;\u6211
 <p>在python 2.x中/除法就跟我们熟悉的大多数语言，比如Java啊C啊差不多，整数相除的结果是一个整数，把小数部分完全忽略掉，浮点数除法会保留小数点的部分得到一个浮点数的结果。</p>
 <p>在python 3.x中/除法不再这么做了，对于整数之间的相除，结果也会是浮点数。</p>
 <p>Python 2.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
 
 <span style="color:#ae81ff">0</span>
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2.0</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2.0</span>
 
 <span style="color:#ae81ff">0.5</span>
 
 </code></pre></div><p>Python 3.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
 
 <span style="color:#ae81ff">0.5</span>
 
 </code></pre></div><p>而对于//除法，这种除法叫做floor除法，会对除法的结果自动进行一个floor操作，在python 2.x和python 3.x中是一致的。</p>
 <p>python 2.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
 
 <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 
 </code></pre></div><p>python 3.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
 
 <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 
 </code></pre></div><p>注意的是并不是舍弃小数部分，而是执行 floor 操作，如果要截取整数部分，那么需要使用 math 模块的 trunc 函数</p>
 <p>python 3.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#f92672">import</span> math
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> math
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; math<span style="color:#f92672">.</span>trunc(<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+<span style="color:#f92672">&gt;&gt;&gt;</span> math<span style="color:#f92672">.</span>trunc(<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
 
 <span style="color:#ae81ff">0</span>
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; math<span style="color:#f92672">.</span>trunc(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+<span style="color:#f92672">&gt;&gt;&gt;</span> math<span style="color:#f92672">.</span>trunc(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
 
 <span style="color:#ae81ff">0</span>
 
 </code></pre></div><h4 id="异常">异常</h4>
-<p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。
-捕获异常的语法由 except exc, var 改为 except exc as var。
-使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
+<p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。</p>
+<p>捕获异常的语法由 except exc, var 改为 except exc as var。</p>
+<p>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
 <ol>
-<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
-<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。</li>
+<li>
+<p>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</p>
+</li>
+<li>
+<p>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。</p>
+</li>
 </ol>
 <p>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。</p>
 <h4 id="xrange">xrange</h4>
@@ -146,7 +166,8 @@ u<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;\u6211
 <p>这个表现十分像生成器（比如。&ldquo;惰性求值&rdquo;）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。</p>
 <p>由于它的惰性求值，如果你不得不遍历它多次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。</p>
 <p>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">import</span> timeit
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">import</span> timeit
 
 
 
@@ -167,17 +188,18 @@ n <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
         <span style="color:#66d9ef">pass</span>   
 
 </code></pre></div><p>Python 2</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">print</span> <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;Python&amp;#039;, python_version()</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;Python&#39;</span>, python_version()
 
 
 
-<span style="color:#66d9ef">print</span> <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;\ntiming range()&amp;#039; </span>
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">timing range()&#39;</span> 
 
 <span style="color:#f92672">%</span>timeit test_range(n)
 
 
 
-<span style="color:#66d9ef">print</span> <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;\n\ntiming xrange()&amp;#039; </span>
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">timing xrange()&#39;</span> 
 
 <span style="color:#f92672">%</span>timeit test_xrange(n)
 
@@ -200,11 +222,12 @@ timing xrange()
 <span style="color:#ae81ff">1000</span> loops, best of <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">350</span> <span style="color:#960050;background-color:#1e0010">µ</span>s per loop
 
 </code></pre></div><p>Python 3</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">print</span>(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;Python&amp;#039;, python_version())</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Python&#39;</span>, python_version())
 
 
 
-<span style="color:#66d9ef">print</span>(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;\ntiming range()&amp;#039;)</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">timing range()&#39;</span>)
 
 <span style="color:#f92672">%</span>timeit test_range(n)
 
@@ -220,37 +243,40 @@ timing range()
 
 
 
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">print</span>(xrange(<span style="color:#ae81ff">10</span>))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">print</span>(xrange(<span style="color:#ae81ff">10</span>))
 
 <span style="color:#f92672">---------------------------------------------------------------------------</span>
 
 <span style="color:#a6e22e">NameError</span>                                 Traceback (most recent call last)
 
-<span style="color:#f92672">&amp;</span>lt;ipython<span style="color:#f92672">-</span>input<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span><span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>d8f9b79ea70<span style="color:#f92672">&amp;</span>gt; <span style="color:#f92672">in</span> <span style="color:#f92672">&amp;</span>lt;module<span style="color:#f92672">&amp;</span>gt;()
+<span style="color:#f92672">&lt;</span>ipython<span style="color:#f92672">-</span>input<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span><span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>d8f9b79ea70<span style="color:#f92672">&gt;</span> <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>()
 
 <span style="color:#f92672">----</span><span style="color:#960050;background-color:#1e0010">》</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">print</span>(xrange(<span style="color:#ae81ff">10</span>))
 
 
 
-<span style="color:#a6e22e">NameError</span>: name <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;xrange&amp;#039; is not defined</span>
+<span style="color:#a6e22e">NameError</span>: name <span style="color:#e6db74">&#39;xrange&#39;</span> <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> defined
 
 </code></pre></div><h4 id="八进制字面量表示">八进制字面量表示</h4>
 <p>八进制数必须写成0o777，原来的形式0777不能用了；二进制必须写成0b111。</p>
 <p>新增了一个bin()函数用于将一个整数转换成二进制字串。 Python 2.6已经支持这两种语法。</p>
 <p>在Python 3.x中，表示八进制字面量的方式只有一种，就是0o1000。</p>
 <p>python 2.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#ae81ff">0</span>o1000
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">0</span>o1000
 
 <span style="color:#ae81ff">512</span>
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#ae81ff">01000</span>
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">01000</span>
 
 <span style="color:#ae81ff">512</span>
 
 </code></pre></div><p>python 3.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#ae81ff">01000</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">01000</span>
 
-  File <span style="color:#f92672">&amp;</span>quot;<span style="color:#f92672">&amp;</span>lt;stdin<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>quot;, line <span style="color:#ae81ff">1</span>
+  File <span style="color:#e6db74">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#ae81ff">1</span>
 
     <span style="color:#ae81ff">01000</span>
 
@@ -258,7 +284,7 @@ timing range()
 
 <span style="color:#a6e22e">SyntaxError</span>: invalid token
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; <span style="color:#ae81ff">0</span>o1000
+<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">0</span>o1000
 
 <span style="color:#ae81ff">512</span>
 
@@ -268,45 +294,20 @@ timing range()
 <h4 id="去掉了repr表达式">去掉了repr表达式``</h4>
 <p>Python 2.x 中反引号``相当于repr函数的作用</p>
 <p>Python 3.x 中去掉了``这种写法，只允许使用repr函数，这样做的目的是为了使代码看上去更清晰么？不过我感觉用repr的机会很少，一般只在debug的时候才用，多数时候还是用str函数来用字符串描述对象。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sendMail</span>(from_: str, to: str, title: str, body: str) <span style="color:#f92672">-&amp;</span>gt; bool:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sendMail</span>(from_: str, to: str, title: str, body: str) <span style="color:#f92672">-&gt;</span> bool:
 
     <span style="color:#66d9ef">pass</span>
 
 </code></pre></div><h4 id="多个模块被改名根据pep8">多个模块被改名（根据PEP8）</h4>
-<table>
-<thead>
-<tr>
-<th>旧的名字</th>
-<th>新的名字</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>_winreg</td>
-<td>winreg</td>
-</tr>
-<tr>
-<td>ConfigParser</td>
-<td>configparser</td>
-</tr>
-<tr>
-<td>copy_reg</td>
-<td>copyreg</td>
-</tr>
-<tr>
-<td>Queue</td>
-<td>queue</td>
-</tr>
-<tr>
-<td>SocketServer</td>
-<td>socketserver</td>
-</tr>
-<tr>
-<td>repr</td>
-<td>reprlib</td>
-</tr>
-</tbody>
-</table>
+<p>| 旧的名字 | 新的名字 |</p>
+<p>| &mdash; | &mdash; |</p>
+<p>| _winreg | winreg |</p>
+<p>| ConfigParser | configparser |</p>
+<p>| copy_reg | copyreg |</p>
+<p>| Queue | queue |</p>
+<p>| SocketServer | socketserver |</p>
+<p>| repr | reprlib |</p>
 <p>StringIO模块现在被合并到新的io模组内。 new, md5, gopherlib等模块被删除。 Python 2.6已经支援新的io模组。</p>
 <p>httplib, BaseHTTPServer, CGIHTTPServer, SimpleHTTPServer, Cookie, cookielib被合并到http包内。</p>
 <p>取消了exec语句，只剩下exec()函数。 Python 2.6已经支援exec()函数。</p>
@@ -319,24 +320,26 @@ timing range()
 <p>新增了bytes类型，对应于2.X版本的八位串，定义一个bytes字面量的方法如下：</p>
 </li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; b <span style="color:#f92672">=</span> b<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;china&amp;#039; </span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> b <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;china&#39;</span> 
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; type(b) 
+<span style="color:#f92672">&gt;&gt;&gt;</span> type(b) 
 
-<span style="color:#f92672">&amp;</span>lt;type <span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;bytes&amp;#039;&amp;gt; </span>
+<span style="color:#f92672">&lt;</span>type <span style="color:#e6db74">&#39;bytes&#39;</span><span style="color:#f92672">&gt;</span> 
 
 </code></pre></div><p>str对象和bytes对象可以使用.encode() (str -&gt; bytes) or .decode() (bytes -&gt; str)方法相互转化。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; s <span style="color:#f92672">=</span> b<span style="color:#f92672">.</span>decode() 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">&gt;&gt;&gt;</span> s <span style="color:#f92672">=</span> b<span style="color:#f92672">.</span>decode() 
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; s 
+<span style="color:#f92672">&gt;&gt;&gt;</span> s 
 
-<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;china&amp;#039; </span>
+<span style="color:#e6db74">&#39;china&#39;</span> 
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; b1 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>encode() 
+<span style="color:#f92672">&gt;&gt;&gt;</span> b1 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>encode() 
 
-<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">&amp;</span>gt; b1 
+<span style="color:#f92672">&gt;&gt;&gt;</span> b1 
 
-b<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;china&amp;#039; </span>
+<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;china&#39;</span> 
 
 </code></pre></div><ol start="3">
 <li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。</li>

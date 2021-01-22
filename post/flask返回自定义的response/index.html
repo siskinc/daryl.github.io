@@ -52,29 +52,53 @@
     <div class="post">
   <h1>flask返回自定义的Response</h1>
   <time datetime=2019-07-25T20:26:43Z class="post-date">Thu, Jul 25, 2019</time>
-  <pre><code>from json import dumps
-from flask import Response
-from flask_api import status
-from protocol.errors_pb2 import *
-
-
-class ErrorResponse(Response):
-    def __init__(self, err_code, err_msg=&amp;#039;&amp;#039;):
-        result = dumps(dict(code=err_code, msg=err_msg))
-        Response.__init__(self, result, mimetype=&amp;#039;application/json&amp;#039;)
-
-
-class JSONResponse(Response):
-    def __init__(self, data, msg=&amp;#039;&amp;#039;):
-        result = dumps(dict(data=data, code=Error_None, msg=msg))
-        Response.__init__(self, result, mimetype=&amp;#039;application/json&amp;#039;)
-
-
-class UnauthorizedResponse(Response):
-    def __init__(self):
-        data = dumps(dict(msg=&amp;quot;need login&amp;quot;, code=Error_NeedLogin, data=None))
-        Response.__init__(self, data, mimetype=&amp;#039;application/json&amp;#039;, status=status.HTTP_401_UNAUTHORIZED)
-
+  <pre><code>
+from json import dumps
+
+from flask import Response
+
+from flask_api import status
+
+from protocol.errors_pb2 import *
+
+
+
+
+
+class ErrorResponse(Response):
+
+    def __init__(self, err_code, err_msg=''):
+
+        result = dumps(dict(code=err_code, msg=err_msg))
+
+        Response.__init__(self, result, mimetype='application/json')
+
+
+
+
+
+class JSONResponse(Response):
+
+    def __init__(self, data, msg=''):
+
+        result = dumps(dict(data=data, code=Error_None, msg=msg))
+
+        Response.__init__(self, result, mimetype='application/json')
+
+
+
+
+
+class UnauthorizedResponse(Response):
+
+    def __init__(self):
+
+        data = dumps(dict(msg=&quot;need login&quot;, code=Error_NeedLogin, data=None))
+
+        Response.__init__(self, data, mimetype='application/json', status=status.HTTP_401_UNAUTHORIZED)
+
+
+
 </code></pre><p><strong>注意：一定要使用json.dumps来转换最后的结果</strong></p>
 
 </div>

@@ -51,39 +51,119 @@
     <main class="content container">
     <div class="post">
   <h1>golang http.client 的 Connection reset by peer 问题</h1>
-  <time datetime=2020-01-01T20:39:46Z class="post-date">Wed, Jan 1, 2020</time>
+  <time datetime=2019-11-28T00:28:26Z class="post-date">Thu, Nov 28, 2019</time>
   <!-- raw HTML omitted -->
-<pre><code>resp, err := client.Get(&amp;quot;https://www.baidu.com/&amp;quot;)
-if resp != nil {
-    defer resp.Body.Close()
-}
-checkError(err)
-
-fmt.Println(resp.StatusCode)    // 200
-
-body, err := ioutil.ReadAll(resp.Body)
-checkError(err)
-
-fmt.Println(len(string(body)))
-</code></pre>
-<p>}</p>
-<pre><code>&lt;h3&gt;服务器端设置短连接&lt;/h3&gt;
-```golang
-func main(){
-    server := &amp;amp;http.Server{
-        Handler:handle,
-        ReadTimeout:  20 * time.Second,
-        WriteTimeout: 20 * time.Second,
-    }
-    listen, err := net.Listen(&amp;quot;tcp4&amp;quot;,s.addr)
-    if err != nil  {
-        logger.Errorf(&amp;quot;Failed to listen,err:%s&amp;quot;,err.Error())
-        panic(err)
-    }
-    server.SetKeepAlivesEnabled(false)
-    err = server.Serve(listen)
-}
-</code></pre>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;http://www.baidu.com&#34;</span>,<span style="color:#66d9ef">nil</span> )
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;&#34;</span>)
+
+    }
+
+    <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Close</span> = <span style="color:#66d9ef">true</span>
+
+    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+
+}
+
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;http://www.baidu.com&#34;</span>,<span style="color:#66d9ef">nil</span> )
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+
+        <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;&#34;</span>)
+
+    }
+
+    <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#e6db74">&#34;Connection&#34;</span>, <span style="color:#e6db74">&#34;close&#34;</span>)
+
+    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+
+}
+
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#a6e22e">tr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Transport</span>{<span style="color:#a6e22e">DisableKeepAlives</span>: <span style="color:#66d9ef">true</span>}
+
+    <span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{<span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tr</span>}
+
+
+
+    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;https://www.baidu.com/&#34;</span>)
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+
+        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+
+    }
+
+    <span style="color:#a6e22e">checkError</span>(<span style="color:#a6e22e">err</span>)
+
+
+
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>)    <span style="color:#75715e">// 200
+</span><span style="color:#75715e"></span>
+
+
+    <span style="color:#a6e22e">body</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>)
+
+    <span style="color:#a6e22e">checkError</span>(<span style="color:#a6e22e">err</span>)
+
+
+
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(len(string(<span style="color:#a6e22e">body</span>)))
+
+}
+
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>(){
+
+    <span style="color:#a6e22e">server</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Server</span>{
+
+        <span style="color:#a6e22e">Handler</span>:<span style="color:#a6e22e">handle</span>,
+
+        <span style="color:#a6e22e">ReadTimeout</span>:  <span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+
+        <span style="color:#a6e22e">WriteTimeout</span>: <span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+
+    }
+
+    <span style="color:#a6e22e">listen</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp4&#34;</span>,<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">addr</span>)
+
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span>  {
+
+        <span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Failed to listen,err:%s&#34;</span>,<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>())
+
+        panic(<span style="color:#a6e22e">err</span>)
+
+    }
+
+    <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">SetKeepAlivesEnabled</span>(<span style="color:#66d9ef">false</span>)
+
+    <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">server</span>.<span style="color:#a6e22e">Serve</span>(<span style="color:#a6e22e">listen</span>)
+
+}
+
+</code></pre></div>
 </div>
 
 

@@ -53,7 +53,8 @@
   <h1>Redis字典扩张算法</h1>
   <time datetime=2020-05-16T00:05:19Z class="post-date">Sat, May 16, 2020</time>
   <h2 id="源码">源码</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* This is the initial size of every hash table */</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* This is the initial size of every hash table */</span>
 
 <span style="color:#75715e">#define DICT_HT_INITIAL_SIZE     4
 </span><span style="color:#75715e"></span>
@@ -67,11 +68,11 @@
 
 
 
-    <span style="color:#66d9ef">if</span> (size <span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">=</span> LONG_MAX) <span style="color:#66d9ef">return</span> LONG_MAX <span style="color:#f92672">+</span> <span style="color:#ae81ff">1LU</span>;
+    <span style="color:#66d9ef">if</span> (size <span style="color:#f92672">&gt;=</span> LONG_MAX) <span style="color:#66d9ef">return</span> LONG_MAX <span style="color:#f92672">+</span> <span style="color:#ae81ff">1LU</span>;
 
     <span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">1</span>) {
 
-        <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">&amp;</span>gt;<span style="color:#f92672">=</span> size)
+        <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">&gt;=</span> size)
 
             <span style="color:#66d9ef">return</span> i;
 

@@ -54,7 +54,8 @@
   <time datetime=2020-04-21T23:24:04Z class="post-date">Tue, Apr 21, 2020</time>
   <h2 id="数据结构">数据结构</h2>
 <h3 id="字典的基本单元dictentry">字典的基本单元——<code>dictEntry</code></h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictEntry {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictEntry {
 
     <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key;
 
@@ -76,7 +77,8 @@
 
 </code></pre></div><p>dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。</p>
 <h3 id="哈希表dictht">哈希表——<code>dictht</code></h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* This is our hash table structure. Every dictionary has two of this as we
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* This is our hash table structure. Every dictionary has two of this as we
 </span><span style="color:#75715e">
 </span><span style="color:#75715e"> * implement incremental rehashing, for the old to the new table. */</span>
 
@@ -97,7 +99,8 @@
 <p>根据<code>dictht</code>和<code>dictEntry</code>的结构其实我们可以推论出一个事情，那就是redis的哈希表实现几乎就是最简单的哈希实现，数组加上链表，如果哈希碰撞，其实是一个灾难性的发生。为什么不使用数据加上红黑树的实现方式呢？下面图是来自于网络，最简单的哈希实现方式：</p>
 <p><a href="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png"><img src="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png" alt=""></a></p>
 <h3 id="字典的类型dicttype">字典的类型——dictType</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictType {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictType {
 
     uint64_t (<span style="color:#f92672">*</span>hashFunction)(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
 
@@ -114,7 +117,8 @@
 } dictType;
 
 </code></pre></div><p>其实光看这里真的看不出来啥，看看咋用的吧，在server.c文件中，有一堆声明，我就随意拿一个出来了：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Generic hash table type where keys are Redis Objects, Values
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* Generic hash table type where keys are Redis Objects, Values
 </span><span style="color:#75715e">
 </span><span style="color:#75715e"> * dummy pointers. */</span>
 
@@ -136,16 +140,29 @@ dictType objectKeyPointerValueDictType <span style="color:#f92672">=</span> {
 
 </code></pre></div><p>看注释基本还是能看明白：</p>
 <ul>
-<li><code>hashFunction</code>是将key哈希化的函数</li>
-<li><code>keyDup</code>是拷贝key的函数，</li>
-<li><code>valDup</code>是拷贝value的函数</li>
-<li><code>keyCompare</code>是用来比较两个key是否相等的函数</li>
-<li><code>keyDestructor</code>是用来删除key对象的函数</li>
-<li><code>valDestructor</code>是用来删除value对象的函数</li>
+<li>
+<p><code>hashFunction</code>是将key哈希化的函数</p>
+</li>
+<li>
+<p><code>keyDup</code>是拷贝key的函数，</p>
+</li>
+<li>
+<p><code>valDup</code>是拷贝value的函数</p>
+</li>
+<li>
+<p><code>keyCompare</code>是用来比较两个key是否相等的函数</p>
+</li>
+<li>
+<p><code>keyDestructor</code>是用来删除key对象的函数</p>
+</li>
+<li>
+<p><code>valDestructor</code>是用来删除value对象的函数</p>
+</li>
 </ul>
 <p>这个结构咋理解呢？想想python里面的<code>__hash__</code>函数，它其实就对应的是<code>hashFunction</code>，又例如golang中新建一个map[string]uint64,其实就已经隐含了key和value的拷贝，对比了。当然，对于redis这种主力是c语言来说，对于不需要的变量，理所当然需要一个释放内存的操作。只是说其他语言不需要是因为有GC的原因。</p>
 <h3 id="主角字典结构">主角——字典结构</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dict {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dict {
 
     dictType <span style="color:#f92672">*</span>type;
 
@@ -160,13 +177,22 @@ dictType objectKeyPointerValueDictType <span style="color:#f92672">=</span> {
 } dict;
 
 </code></pre></div><ul>
-<li>type字段，是为了保存字典操作key和value的增删查改的函数的。</li>
-<li>privdata字段，没啥用了，不管它了。</li>
-<li>ht字段，这里照应了上面<code>dictht</code>的注释，这里会有两个<code>dictht</code>，目的就是为了rehash。</li>
-<li>rehashidx字段，表示rehash的进度(其实就是ht[0]中table的index)，如果没有在rehash操作时，这个字段默认为-1。</li>
+<li>
+<p>type字段，是为了保存字典操作key和value的增删查改的函数的。</p>
+</li>
+<li>
+<p>privdata字段，没啥用了，不管它了。</p>
+</li>
+<li>
+<p>ht字段，这里照应了上面<code>dictht</code>的注释，这里会有两个<code>dictht</code>，目的就是为了rehash。</p>
+</li>
+<li>
+<p>rehashidx字段，表示rehash的进度(其实就是ht[0]中table的index)，如果没有在rehash操作时，这个字段默认为-1。</p>
+</li>
 </ul>
 <h3 id="迭代器">迭代器</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictIterator {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictIterator {
 
     dict <span style="color:#f92672">*</span>d;
 
@@ -187,99 +213,114 @@ dictType objectKeyPointerValueDictType <span style="color:#f92672">=</span> {
 </ul>
 <h2 id="宏定义">宏定义</h2>
 <h3 id="api操作的返回值">API操作的返回值</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define DICT_OK 0 </span><span style="color:#75715e">// 成功
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define DICT_OK 0 </span><span style="color:#75715e">// 成功
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#define DICT_ERR 1 </span><span style="color:#75715e">// 失败
 </span><span style="color:#75715e"></span>
 </code></pre></div><h3 id="防止编译器报警">防止编译器报警</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Unused arguments generate annoying warnings... */</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* Unused arguments generate annoying warnings... */</span>
 
 <span style="color:#75715e">#define DICT_NOTUSED(V) ((void) V)
 </span><span style="color:#75715e"></span>
 </code></pre></div><h3 id="哈希表的默认大小">哈希表的默认大小</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* This is the initial size of every hash table */</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* This is the initial size of every hash table */</span>
 
 <span style="color:#75715e">#define DICT_HT_INITIAL_SIZE     4
 </span><span style="color:#75715e"></span>
 </code></pre></div><h3 id="使用dicttype">使用<code>dictType</code></h3>
 <h4 id="释放value的内存">释放value的内存</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictFreeVal(d, entry) \
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictFreeVal(d, entry) \
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;valDestructor) \
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDestructor) \
 
-        (d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;valDestructor((d)<span style="color:#f92672">-&amp;</span>gt;privdata, (entry)<span style="color:#f92672">-&amp;</span>gt;v.val)
+        (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDestructor((d)<span style="color:#f92672">-&gt;</span>privdata, (entry)<span style="color:#f92672">-&gt;</span>v.val)
 
 </code></pre></div><h4 id="在设置value的时候如果存在valdup函数会拷贝一份value">在设置value的时候，如果存在<code>valDup</code>函数，会拷贝一份value</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictSetVal(d, entry, _val_) do { \
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictSetVal(d, entry, _val_) do { \
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;valDup) \
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDup) \
 
-        (entry)<span style="color:#f92672">-&amp;</span>gt;v.val <span style="color:#f92672">=</span> (d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;valDup((d)<span style="color:#f92672">-&amp;</span>gt;privdata, _val_); \
+        (entry)<span style="color:#f92672">-&gt;</span>v.val <span style="color:#f92672">=</span> (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDup((d)<span style="color:#f92672">-&gt;</span>privdata, _val_); \
 
     <span style="color:#66d9ef">else</span> \
 
-        (entry)<span style="color:#f92672">-&amp;</span>gt;v.val <span style="color:#f92672">=</span> (_val_); \
+        (entry)<span style="color:#f92672">-&gt;</span>v.val <span style="color:#f92672">=</span> (_val_); \
 
 } <span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">0</span>)
 
 </code></pre></div><h4 id="释放key占用的内存">释放key占用的内存</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictFreeKey(d, entry) \
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictFreeKey(d, entry) \
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;keyDestructor) \
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDestructor) \
 
-        (d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;keyDestructor((d)<span style="color:#f92672">-&amp;</span>gt;privdata, (entry)<span style="color:#f92672">-&amp;</span>gt;key)
+        (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDestructor((d)<span style="color:#f92672">-&gt;</span>privdata, (entry)<span style="color:#f92672">-&gt;</span>key)
 
 </code></pre></div><h4 id="在设置key的时候如果存在keydup函数会拷贝一份key">在设置key的时候，如果存在<code>keyDup</code>函数，会拷贝一份key</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictSetKey(d, entry, _key_) do { \
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictSetKey(d, entry, _key_) do { \
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;keyDup) \
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDup) \
 
-        (entry)<span style="color:#f92672">-&amp;</span>gt;key <span style="color:#f92672">=</span> (d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;keyDup((d)<span style="color:#f92672">-&amp;</span>gt;privdata, _key_); \
+        (entry)<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">=</span> (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDup((d)<span style="color:#f92672">-&gt;</span>privdata, _key_); \
 
     <span style="color:#66d9ef">else</span> \
 
-        (entry)<span style="color:#f92672">-&amp;</span>gt;key <span style="color:#f92672">=</span> (_key_); \
+        (entry)<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">=</span> (_key_); \
 
 } <span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">0</span>)
 
 </code></pre></div><h4 id="比较两个key查看是否相等">比较两个key，查看是否相等</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictCompareKeys(d, key1, key2) \
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictCompareKeys(d, key1, key2) \
 </span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    (((d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;keyCompare) <span style="color:#f92672">?</span> \
+</span><span style="color:#75715e"></span>    (((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyCompare) <span style="color:#f92672">?</span> \
 
-        (d)<span style="color:#f92672">-&amp;</span>gt;type<span style="color:#f92672">-&amp;</span>gt;keyCompare((d)<span style="color:#f92672">-&amp;</span>gt;privdata, key1, key2) <span style="color:#f92672">:</span> \
+        (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyCompare((d)<span style="color:#f92672">-&gt;</span>privdata, key1, key2) <span style="color:#f92672">:</span> \
 
         (key1) <span style="color:#f92672">==</span> (key2))
 
 </code></pre></div><h4 id="算出key的hash值">算出key的hash值</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictHashKey(d, key) (d)-&amp;gt;type-&amp;gt;hashFunction(key)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictHashKey(d, key) (d)-&gt;type-&gt;hashFunction(key)
 </span><span style="color:#75715e"></span>
 </code></pre></div><h3 id="操作dictentry">操作<code>dictEntry</code></h3>
 <h4 id="获取key">获取key</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictGetKey(he) ((he)-&amp;gt;key)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictGetKey(he) ((he)-&gt;key)
 </span><span style="color:#75715e"></span>
 </code></pre></div><h4 id="获取value">获取value</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictGetVal(he) ((he)-&amp;gt;v.val)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictGetVal(he) ((he)-&gt;v.val)
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define dictGetSignedIntegerVal(he) ((he)-&amp;gt;v.s64)
+<span style="color:#75715e">#define dictGetSignedIntegerVal(he) ((he)-&gt;v.s64)
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define dictGetUnsignedIntegerVal(he) ((he)-&amp;gt;v.u64)
+<span style="color:#75715e">#define dictGetUnsignedIntegerVal(he) ((he)-&gt;v.u64)
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define dictGetDoubleVal(he) ((he)-&amp;gt;v.d)
+<span style="color:#75715e">#define dictGetDoubleVal(he) ((he)-&gt;v.d)
 </span><span style="color:#75715e"></span>
 </code></pre></div><h3 id="操作dict">操作<code>dict</code></h3>
 <h4 id="获取槽的数量">获取槽的数量</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictSlots(d) ((d)-&amp;gt;ht[0].size+(d)-&amp;gt;ht[1].size)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictSlots(d) ((d)-&gt;ht[0].size+(d)-&gt;ht[1].size)
 </span><span style="color:#75715e"></span>
 </code></pre></div><h4 id="获取dictentry的数量">获取dictEntry的数量</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictSize(d) ((d)-&amp;gt;ht[0].used+(d)-&amp;gt;ht[1].used)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictSize(d) ((d)-&gt;ht[0].used+(d)-&gt;ht[1].used)
 </span><span style="color:#75715e"></span>
 </code></pre></div><h4 id="判断是否正在rehashing">判断是否正在rehashing</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define dictIsRehashing(d) ((d)-&amp;gt;rehashidx != -1)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">#define dictIsRehashing(d) ((d)-&gt;rehashidx != -1)
 </span><span style="color:#75715e"></span>
 </code></pre></div><h2 id="api">API</h2>
 <h3 id="列表">列表</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// 创建
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">// 创建
 </span><span style="color:#75715e"></span>
 dict <span style="color:#f92672">*</span><span style="color:#a6e22e">dictCreate</span>(dictType <span style="color:#f92672">*</span>type, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privDataPtr);
 
@@ -430,7 +471,8 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
 </code></pre></div><h2 id="杂项">杂项</h2>
 <h3 id="struct-dict中的void-privdata是干啥用的"><code>struct dict</code>中的<code>void *privdata</code>是干啥用的？</h3>
 <p>先看<code>strct dictType</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictType {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictType {
 
     uint64_t (<span style="color:#f92672">*</span>hashFunction)(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
 
@@ -448,7 +490,8 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
 
 </code></pre></div><p>可以看出，结构体是使用privdata字段比较多的地方，</p>
 <p>再看下dictType声明的地方，在server.c中，有一堆dictType的变量，查看其中的参数可以发现，所有的函数都会使用<code>DICT_NOTUSED(privdata)</code>，再去看下DICT_NOTUSED定义</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">/* Unused arguments generate annoying warnings... */</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#75715e">/* Unused arguments generate annoying warnings... */</span>
 
 <span style="color:#75715e">#define DICT_NOTUSED(V) ((void) V)
 </span><span style="color:#75715e"></span>

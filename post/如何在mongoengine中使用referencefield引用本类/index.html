@@ -53,7 +53,8 @@
   <h1>如何在mongoengine中使用referencefield引用本类</h1>
   <time datetime=2019-07-25T20:35:44Z class="post-date">Thu, Jul 25, 2019</time>
   <p>引用：<a href="https://stackoverflow.com/questions/15806844/how-can-i-have-cyclic-or-forward-referencefield-when-using-reverse-delete-rule-i">原文</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">from</span> mongoengine <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#f92672">from</span> mongoengine <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
 
 
@@ -61,7 +62,7 @@
 
     name <span style="color:#f92672">=</span> StringField()
 
-    boss <span style="color:#f92672">=</span> ReferenceField(<span style="color:#f92672">&amp;</span>quot;self<span style="color:#f92672">&amp;</span>quot;, reverse_delete_rule <span style="color:#f92672">=</span> NULLIFY)
+    boss <span style="color:#f92672">=</span> ReferenceField(<span style="color:#e6db74">&#34;self&#34;</span>, reverse_delete_rule <span style="color:#f92672">=</span> NULLIFY)
 
 </code></pre></div>
 </div>

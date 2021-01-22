@@ -51,8 +51,9 @@
     <main class="content container">
     <div class="post">
   <h1>数组中重复的数字(Python)</h1>
-  <time datetime=2020-01-01T20:43:58Z class="post-date">Wed, Jan 1, 2020</time>
-  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#960050;background-color:#1e0010">#</span>!<span style="color:#f92672">/</span><span style="color:#a6e22e">usr</span><span style="color:#f92672">/</span><span style="color:#a6e22e">bin</span><span style="color:#f92672">/</span><span style="color:#a6e22e">env</span> <span style="color:#a6e22e">python</span> 
+  <time datetime=2019-08-13T22:48:18Z class="post-date">Tue, Aug 13, 2019</time>
+  <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang">
+<span style="color:#960050;background-color:#1e0010">#</span>!<span style="color:#f92672">/</span><span style="color:#a6e22e">usr</span><span style="color:#f92672">/</span><span style="color:#a6e22e">bin</span><span style="color:#f92672">/</span><span style="color:#a6e22e">env</span> <span style="color:#a6e22e">python</span> 
 
 <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#f92672">-*-</span> <span style="color:#a6e22e">coding</span>: <span style="color:#a6e22e">utf</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span> <span style="color:#f92672">-*-</span>
 
@@ -66,15 +67,15 @@
 
 <span style="color:#a6e22e">def</span> <span style="color:#a6e22e">use_map</span>(<span style="color:#a6e22e">numbers</span>):
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
-
-    <span style="color:#a6e22e">使用哈希表结构</span>
-
-    :<span style="color:#a6e22e">param</span> <span style="color:#a6e22e">numbers</span>:
-
-    :<span style="color:#66d9ef">return</span>:
-
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    使用哈希表结构
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    :param numbers:
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    :return:
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
     <span style="color:#a6e22e">num_map</span> = <span style="color:#a6e22e">dict</span>()
 
@@ -92,15 +93,15 @@
 
 <span style="color:#a6e22e">def</span> <span style="color:#a6e22e">use_set</span>(<span style="color:#a6e22e">numbers</span>):
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
-
-    <span style="color:#a6e22e">使用set结构</span>
-
-    :<span style="color:#a6e22e">param</span> <span style="color:#a6e22e">numbers</span>:
-
-    :<span style="color:#66d9ef">return</span>:
-
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    使用set结构
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    :param numbers:
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    :return:
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
     <span style="color:#a6e22e">num_set</span> = <span style="color:#a6e22e">set</span>()
 
@@ -118,15 +119,15 @@
 
 <span style="color:#a6e22e">def</span> <span style="color:#a6e22e">use_sort</span>(<span style="color:#a6e22e">numbers</span>):
 
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
-
-    <span style="color:#a6e22e">排序后查找</span>
-
-    :<span style="color:#a6e22e">param</span> <span style="color:#a6e22e">numbers</span>:
-
-    :<span style="color:#66d9ef">return</span>:
-
-    <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">quot</span>;
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    排序后查找
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    :param numbers:
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    :return:
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
     <span style="color:#a6e22e">numbers</span> = <span style="color:#a6e22e">sorted</span>(<span style="color:#a6e22e">numbers</span>)
 
@@ -148,7 +149,7 @@
 
 
 
-<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">__name__</span> <span style="color:#f92672">==</span> <span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;<span style="color:#a6e22e">__main__</span><span style="color:#f92672">&amp;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">03</span><span style="color:#ae81ff">9</span>;:
+<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">__name__</span> <span style="color:#f92672">==</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">__main__</span><span style="color:#960050;background-color:#1e0010">&#39;</span>:
 
     <span style="color:#a6e22e">numbers</span> = [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>]
 

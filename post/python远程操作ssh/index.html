@@ -55,7 +55,8 @@
   <h2 id="三方组件">三方组件</h2>
 <p>paramiko</p>
 <h2 id="创建ssh-连接">创建ssh 连接</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect_ssh</span>(host: str, port: int, username: str, password: str):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect_ssh</span>(host: str, port: int, username: str, password: str):
 
     ssh <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>SSHClient()
 
@@ -68,9 +69,10 @@
     <span style="color:#66d9ef">return</span> ssh
 
 </code></pre></div><h2 id="执行命令">执行命令</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(ssh: paramiko<span style="color:#f92672">.</span>SSHClient):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">execute</span>(ssh: paramiko<span style="color:#f92672">.</span>SSHClient):
 
-    stdin, stdout, stderr <span style="color:#f92672">=</span> ssh<span style="color:#f92672">.</span>exec_command(<span style="color:#f92672">&amp;</span><span style="color:#75715e">#039;command&amp;#039;)</span>
+    stdin, stdout, stderr <span style="color:#f92672">=</span> ssh<span style="color:#f92672">.</span>exec_command(<span style="color:#e6db74">&#39;command&#39;</span>)
 
     <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> stdout<span style="color:#f92672">.</span>readlines():
 
