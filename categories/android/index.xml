@@ -23,7 +23,7 @@
     <item>
       <title>Error_inflating_class_fragment</title>
       <link>https://siskinc.github.io/post/error-inflating-class-fragment/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 25 Jul 2019 04:53:44 +0000</pubDate>
       
       <guid>https://siskinc.github.io/post/error-inflating-class-fragment/</guid>
       <description>如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。

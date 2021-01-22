@@ -165,11 +165,11 @@ sds  char *的别名
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/" title="vue_跨域问题">vue_跨域问题</a>
+                <a href="https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/" title="vue 跨域问题">vue 跨域问题</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            1年1月1日
+            2019年7月25日
         </date>
         
         <div class="post-meta">
@@ -184,18 +184,64 @@ sds  char *的别名
 今天翻看代码时，突然发现vue-cli的config文件里有一个参数叫proxyTable，看这个名字就感觉能解决问题，于是我就去搜了一下，果然。在vuejs-templates，也就是vue-cli的使用的模板插件里，有关于API proxy的说明，使用的就是这个参数。
 https://vuejs-templates.github.io/webpack/proxy.html
 这个参数主要是一个地址映射表，你可以通过设置将复杂的url简化，例如我们要请求的地址是api.xxxxxxxx.com/list/1，可以按照如下设置：
-proxyTable: {
-&lsquo;/list&rsquo;: {
-target: 'http://api.xxxxxxxx.com',pathRewrite: {'^/list': '/list'} }
-}
-这样我们在写url的时候，只用写成/list/1就可以代表api.xxxxxxxx.com/list/1.
-那么又是如何解决跨域问题的呢？其实在上面的&rsquo;list&rsquo;的参数里有一个changeOrigin参数，接收一个布尔值，如果设置为true,那么本地会虚拟一个服务端接收你的请求并代你发送该请求，这样就不会有跨域问题了，当然这只适用于开发环境。增加的代码如下所示：
-proxyTable: {
-&lsquo;/list&rsquo;: {
-target: 'http://api.xxxxxxxx.com',changeOrigin: true,pathRewrite: {'^/list': '/list'} }
-}……
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  proxyTable: { &#39;/list&#39;: { target: &#39;http://api.xxxxxxxx.com&#39;, pathRewrite: { &#39;^/list&#39;: &#39;/list&#39; } } }   这样我们在写url的时候，只用写成/list/1就可以代表api.xxxxxxxx.com/list/1.
+那么又是如何解决跨域问题的呢？其实在上面的list的参数里有一个changeOrigin参数，接收一个布尔值，如果设置为true,那么本地会虚拟一个服务端接收你的请求并代你发送该请求，这样就不会有跨域问题了，当然这只适用于开发环境。增加的代码如下所示：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  proxyTable: { &#39;/list&#39;: { target: &#39;http://api.xxxxxxxx.com&#39;, changeOrigin: true, pathRewrite: { &#39;^/list&#39;: &#39;/list&#39; } } }   ……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/" title="axios_发送post请求">axios_发送post请求</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E5%89%8D%E7%AB%AF'>前端</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            方案一 在node中使用axios以post的方式发送一张图片给某个server时:
+let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
+let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&gt; {if(response.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/error-inflating-class-fragment/" title="Error_inflating_class_fragment">Error_inflating_class_fragment</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/android'>Android</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。
+1 2 3 4 5 6 7 8 9 10 11  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; }   ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/error-inflating-class-fragment/">阅读全文</a></p>
     </article>
     
     
@@ -207,7 +253,7 @@ target: 'http://api.xxxxxxxx.com',changeOrigin: true,pathRewrite: {'^/list': 
             </h1>
         </header>
         <date class="post-meta meta-date">
-            1年1月1日
+            2019年7月25日
         </date>
         
         <div class="post-meta">
@@ -250,59 +296,6 @@ RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC
   AOF持久化 AOF持久化（Append-Only-File），与RDB持久化不同，AOF持久化是通过保存Redis服务器锁执行的写状态来记录数据库的，即commandlog。……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/error-inflating-class-fragment/" title="Error_inflating_class_fragment">Error_inflating_class_fragment</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            1年1月1日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/android'>Android</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。
-1 2 3 4 5 6 7 8 9 10 11  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; }   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/error-inflating-class-fragment/">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/" title="axios_发送post请求">axios_发送post请求</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            1年1月1日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/%E5%89%8D%E7%AB%AF'>前端</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            方案一 在node中使用axios以post的方式发送一张图片给某个server时:
-let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
-let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&gt; {if(response.……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">阅读全文</a></p>
     </article>
     
     
