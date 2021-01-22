@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Algorithm on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/categories/Algorithm/</link>
+    <link>https://siskinc.github.io/categories/algorithm/</link>
     <description>Recent content in Algorithm on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2020 17:33:17 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/Algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 14 Mar 2020 17:33:17 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>乐观锁（CAS）</title>
-      <link>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81CAS/</link>
+      <link>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</link>
       <pubDate>Sat, 14 Mar 2020 17:33:17 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81CAS/</guid>
+      <guid>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</guid>
       <description>什么是CAS   CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术
   CAS是原子操作，保证并发安全，而不是保证并发同步
   CAS是CPU的一个指令

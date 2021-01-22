@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 25 Jul 2019 17:34:19 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于Basic Latin踩到的一些坑</title>
-      <link>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EBasic_Latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</link>
+      <link>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</link>
       <pubDate>Thu, 25 Jul 2019 17:34:19 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EBasic_Latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</guid>
+      <guid>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/</guid>
       <description>在wiki中，很多语言的字符集都包含了Basic Latin，一开始我没有细看，以为Basic Latin里面都是正常的字符集，后来在线上环境出现了问题
  博主某天接到一个需求，需要过滤出某国语言的字符集（避免出现Unicode中的不可见字符），于是高高兴兴的在维基百科上找到该语言字符集抄了下来
 嗯，于是，线上环境出了一点小问题，由于我们某些功能是依赖于Basic Latin里面的特殊字符来做分割的，博主过于年轻，没有细看，于是翻车，卒，享年22岁。
@@ -22,10 +22,10 @@
     
     <item>
       <title>Unicode 编码 范围</title>
-      <link>https://siskinc.github.io/post/Unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</link>
+      <link>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</link>
       <pubDate>Thu, 25 Jul 2019 17:33:08 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</guid>
+      <guid>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</guid>
       <description>文字部分
 （ U+0000 – U+007F） 基本拉丁字符
 （ U+0080 – U+00FF） 增补拉丁字符集 1

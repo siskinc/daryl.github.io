@@ -71,7 +71,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/Cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式">C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式</a>
+                <a href="https://siskinc.github.io/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式">C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -81,20 +81,20 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/C&#43;&#43;'>C&#43;&#43;</a></span>
+            <span class="meta-category"><a href='/categories/c&#43;&#43;'>C&#43;&#43;</a></span>
             
         </div>
         
         <div class="post-content">
             1、直接使用字符串相加 std::string a = &quot;hello&quot;;std::string b = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a = b + a;}2、使用insert函数 std::string a = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a.insert(0, &quot;hello&quot;);}比较：通过Quick C++ Benchmarks 可得到结果 static void StringCreation(benchmark::State&amp; state) {// Code inside this loop is measured repeatedlystd::string x = &quot;hello&quot;;for (auto _ : state) {x.……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/Cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">阅读全文</a></p>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2SDSHDR/" title="redis源码解读--动态字符串SDSHDR">redis源码解读--动态字符串SDSHDR</a>
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2sdshdr/" title="redis源码解读--动态字符串SDSHDR">redis源码解读--动态字符串SDSHDR</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -104,7 +104,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/Redis'>Redis</a></span>
+            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
             
         </div>
         
@@ -116,7 +116,7 @@ sds  char *的别名
  源码如下：
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61  /* Note: sdshdr5 is never used, we just access the flags byte directly.……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2SDSHDR/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2sdshdr/">阅读全文</a></p>
     </article>
     
     <article class="post">
@@ -132,7 +132,7 @@ sds  char *的别名
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/Redis'>Redis</a></span>
+            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
             
         </div>
         
@@ -182,7 +182,7 @@ sds  char *的别名
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/Error-inflating-class-fragment/" title="Error_inflating_class_fragment">Error_inflating_class_fragment</a>
+                <a href="https://siskinc.github.io/post/error-inflating-class-fragment/" title="Error_inflating_class_fragment">Error_inflating_class_fragment</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -192,7 +192,7 @@ sds  char *的别名
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/Android'>Android</a></span>
+            <span class="meta-category"><a href='/categories/android'>Android</a></span>
             
         </div>
         
@@ -200,7 +200,7 @@ sds  char *的别名
             如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。
 1 2 3 4 5 6 7 8 9 10 11  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; }   ……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/Error-inflating-class-fragment/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/error-inflating-class-fragment/">阅读全文</a></p>
     </article>
     
     <article class="post">
@@ -216,9 +216,9 @@ sds  char *的别名
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/Redis'>Redis</a></span>
+            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
             
-            <span class="meta-category"><a href='/categories/MongoDB'>MongoDB</a></span>
+            <span class="meta-category"><a href='/categories/mongodb'>MongoDB</a></span>
             
         </div>
         
@@ -408,7 +408,7 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -416,11 +416,11 @@ if (!doNotTrack) {
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -428,23 +428,23 @@ if (!doNotTrack) {
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -456,35 +456,35 @@ if (!doNotTrack) {
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -503,19 +503,15 @@ if (!doNotTrack) {
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
-    
-    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
-    
-    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
-    
-    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
-    
     <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    
+    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
+    
+    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -569,9 +565,9 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
-    
     <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    
+    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -617,6 +613,8 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
+    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
+    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -634,6 +632,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
+    
+    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

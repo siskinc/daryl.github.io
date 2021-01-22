@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 25 Jul 2019 20:27:18 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/import/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python 同级目录import报错</title>
-      <link>https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</link>
+      <link>https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</link>
       <pubDate>Thu, 25 Jul 2019 20:27:18 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</guid>
+      <guid>https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</guid>
       <description> 在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
  解决方法如下，在__init__文件中加入以下代码:
 1 2 3 4 5 6 7  import sys import os sys.path.append(os.path.dirname(&amp;#39;mudole_name/&amp;#39;))   </description>
@@ -20,10 +20,10 @@
     
     <item>
       <title>关于Python的导入覆盖解决办法</title>
-      <link>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <link>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
       <pubDate>Thu, 25 Jul 2019 17:36:26 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <guid>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
       <description>这种问题一般来说还是不会引起的，可能会出现在datetime和time这样类型的模块中。
 例如：
 1 2 3 4 5  import datetime from datetime import datetime   如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。

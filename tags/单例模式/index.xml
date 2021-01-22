@@ -9,10 +9,10 @@
     <lastBuildDate>Tue, 13 Aug 2019 21:20:41 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python实现单例模式</title>
-      <link>https://siskinc.github.io/post/Python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Tue, 13 Aug 2019 21:20:41 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
       <description>使用__new__方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &amp;#39;_instance&amp;#39;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass   共享属性 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).</description>
     </item>
     

@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Docker on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/categories/Docker/</link>
+    <link>https://siskinc.github.io/categories/docker/</link>
     <description>Recent content in Docker on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Dec 2019 16:53:30 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/Docker/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 Dec 2019 16:53:30 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>wordpress,docker,插件升级</title>
       <link>https://siskinc.github.io/post/wordpressdocker%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7/</link>
@@ -20,19 +20,19 @@
     
     <item>
       <title>使用docker-compose搭建WordPress</title>
-      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAWordPress/</link>
+      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/</link>
       <pubDate>Thu, 25 Jul 2019 23:18:13 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAWordPress/</guid>
+      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/</guid>
       <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101  version:&amp;#39;3&amp;#39;services:nginx:image:nginx:1.</description>
     </item>
     
     <item>
       <title>使用Docker搭建svn服务器教程</title>
-      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8Docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</link>
+      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</link>
       <pubDate>Thu, 25 Jul 2019 20:36:47 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8Docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</guid>
+      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</guid>
       <description>svn简介 SVN是Subversion的简称，是一个开放源代码的版本控制系统，相较于RCS、CVS，它采用了分支管理系统，它的设计目标就是取代CVS。互联网上很多版本控制服务已从CVS迁移到Subversion。说得简单一点SVN就是用于多个人共同开发同一个项目，共用资源的目的。
 svn的docker搭建方法   请提前在服务器安装好docker服务
   本篇教程选用的docker镜像为garethflowers/svn-server

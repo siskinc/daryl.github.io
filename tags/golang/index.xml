@@ -20,10 +20,10 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
     
     <item>
       <title>Golang map数据结构接受json中的uint64数据</title>
-      <link>https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</link>
+      <link>https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Wed, 27 May 2020 13:16:11 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</guid>
+      <guid>https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/</guid>
       <description>例如有一个json数据：
 1 2 3 4 5 6 7 8 9  { &amp;#34;name&amp;#34;: &amp;#34;小明&amp;#34;, &amp;#34;money&amp;#34;: 1111111111111111111 }   但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43  package main import ( &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; ) type Info struct { Name string `json:&amp;#34;name&amp;#34;` Money uint64 `json:&amp;#34;money&amp;#34;` } func main() { info := &amp;amp;Info{} json.</description>
@@ -31,10 +31,10 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
     
     <item>
       <title>Golang源码阅读之map</title>
-      <link>https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/</link>
+      <link>https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/</link>
       <pubDate>Fri, 15 May 2020 23:33:35 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/</guid>
+      <guid>https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/</guid>
       <description>源码地址:src/runtime/map.go
 描述   Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。
   Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。
@@ -43,10 +43,10 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
     
     <item>
       <title>Golang重复对一个slice进行append造成数据错误</title>
-      <link>https://siskinc.github.io/post/Golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</link>
+      <link>https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</link>
       <pubDate>Sat, 04 Apr 2020 20:06:21 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</guid>
+      <guid>https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</guid>
       <description>slice的属性   切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。
   切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。
   那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
@@ -66,10 +66,10 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
     
     <item>
       <title>Golang交叉编译</title>
-      <link>https://siskinc.github.io/post/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <link>https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Thu, 12 Dec 2019 09:31:27 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <guid>https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
       <description>Mac 下编译 Linux 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Linux 下编译 Mac 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.</description>
     </item>
     
@@ -84,10 +84,10 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
     
     <item>
       <title>golang http.client 的 Connection reset by peer 问题</title>
-      <link>https://siskinc.github.io/post/golang_http.client_%E7%9A%84_Connection_reset_by_peer_%E9%97%AE%E9%A2%98/</link>
+      <link>https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/</link>
       <pubDate>Thu, 28 Nov 2019 00:28:26 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/golang_http.client_%E7%9A%84_Connection_reset_by_peer_%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/</guid>
       <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  func main() { req, err := http.NewRequest(&amp;#34;GET&amp;#34;, &amp;#34;http://www.baidu.com&amp;#34;,nil ) if err != nil { log.Errorf(&amp;#34;&amp;#34;) } req.Close = true resp, err := http.Client.Do(req) }   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  func main() { req, err := http.NewRequest(&amp;#34;GET&amp;#34;, &amp;#34;http://www.baidu.com&amp;#34;,nil ) if err !</description>
     </item>
     
@@ -109,19 +109,19 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
     
     <item>
       <title>golang自动调用结构体中内嵌字段的Init()函数</title>
-      <link>https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84Init%E5%87%BD%E6%95%B0/</link>
+      <link>https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/</link>
       <pubDate>Thu, 26 Sep 2019 13:31:39 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84Init%E5%87%BD%E6%95%B0/</guid>
+      <guid>https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/</guid>
       <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81  package main import ( &amp;#34;fmt&amp;#34; &amp;#34;reflect&amp;#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.</description>
     </item>
     
     <item>
       <title>Goroutines和线程对比</title>
-      <link>https://siskinc.github.io/post/Goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/</link>
+      <link>https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/</link>
       <pubDate>Thu, 15 Aug 2019 22:31:52 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/</guid>
+      <guid>https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/</guid>
       <description>栈不同   线程：每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。固定大小的栈对于更复杂或者更深层次的递归函数调用来说显然是不够的。修改固定的大小可以提升空间的利用率允许创建更多的线程，并且可以允许更深的递归调用，不过这两者是没法同时兼备的。
   goroutine：一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。一个goroutine的栈，和操作系统线程一样，会保存其活跃或挂起的函数调用的本地变量，但是和OS线程不太一样的是一个goroutine的栈大小并不是固定的；栈的大小会根据需要动态地伸缩。而goroutine的栈的最大值有1GB，比传统的固定大小的线程栈要大得多，尽管一般情况下，大多goroutine都不需要这么大的栈。
   调度不同   线程：OS线程会被操作系统内核调度。每几毫秒，一个硬件计时器会中断处理器，这会调用一个叫作scheduler的内核函数。这个函数会挂起当前执行的线程并保存内存中它的寄存器内容，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。因为操作系统线程是被内核所调度，所以从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。
@@ -134,37 +134,37 @@ Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言�
     
     <item>
       <title>数组中重复的数字(Golang)</title>
-      <link>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Golang/</link>
+      <link>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/</link>
       <pubDate>Tue, 13 Aug 2019 22:26:43 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Golang/</guid>
+      <guid>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/</guid>
       <description>使用哈希表 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27  import &amp;#34;fmt&amp;#34; func main() { a := [...]int{2,3,1,0,2,5,3} num := make(map[int]bool) for _, v := range a { if !num[v] { num[v] = true } else { fmt.Println(v) } } }   排序查找 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41  package main import ( &amp;#34;fmt&amp;#34; &amp;#34;sort&amp;#34; ) func main() { a := []int{2,3,1,0,2,5,3} sort.</description>
     </item>
     
     <item>
       <title>Golang 实现单例模式</title>
-      <link>https://siskinc.github.io/post/Golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Tue, 13 Aug 2019 21:47:01 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <guid>https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
       <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45  package main import &amp;#34;fmt&amp;#34; type Single struct { } var single *Single func GetSingle() *Single { if single == nil { single = &amp;amp;Single{} } return single } func main() { fmt.</description>
     </item>
     
     <item>
       <title>Gin上传文件到MongoDB gridfs</title>
-      <link>https://siskinc.github.io/post/Gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0MongoDB_gridfs/</link>
+      <link>https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/</link>
       <pubDate>Thu, 25 Jul 2019 20:25:30 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0MongoDB_gridfs/</guid>
+      <guid>https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/</guid>
       <description>上传图片 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103  func imagePost(c *gin.</description>
     </item>
     
     <item>
       <title>Golang不会自动把slice转换成interface{}类型的slice</title>
-      <link>https://siskinc.github.io/post/Golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</link>
+      <link>https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</link>
       <pubDate>Thu, 25 Jul 2019 17:46:17 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</guid>
+      <guid>https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</guid>
       <description>例子 我们时常会写一些interface，例如：
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  type A interface{ Print() } type B struct { } func (b *B) Print() { fmt.Println(&amp;#34;Here is *B&amp;#34;) }   赋值的时候:
 1 2 3 4 5  var a A a = &amp;amp;B{}   诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码
@@ -173,10 +173,10 @@ Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言�
     
     <item>
       <title>Golang mgo 模糊查询的使用</title>
-      <link>https://siskinc.github.io/post/Golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <link>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Thu, 25 Jul 2019 17:35:04 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
       <description>在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
 db.article.find({&amp;quot;title&amp;quot;: {$regex: /a/, $options: &amp;quot;im&amp;quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
 1 2 3  query := bson.M{&amp;#34;title&amp;#34;: bson.M{&amp;#34;$regex&amp;#34;: &amp;#34;/a/&amp;#34;, &amp;#34;$options&amp;#34;: &amp;#34;im&amp;#34;}}   大家用这个方式去查询，能查询到算我输！
@@ -206,10 +206,10 @@ db.article.find({&amp;quot;title&amp;quot;: {$regex: /a/, $options: &amp;quot;im
     
     <item>
       <title>gin PostForm 方法不起作用</title>
-      <link>https://siskinc.github.io/post/gin_PostForm_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/</link>
+      <link>https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/</link>
       <pubDate>Thu, 25 Jul 2019 17:30:08 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/gin_PostForm_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/</guid>
+      <guid>https://siskinc.github.io/post/gin_postform_%E6%96%B9%E6%B3%95%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8/</guid>
       <description>情景: 在httpie post 下，在 axios post下，总的来说，就是在form-data下只有c.Bind()会有用
 如果一定要用c.PostForm() headers必须为x-www-form-urlencoded</description>
     </item>

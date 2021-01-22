@@ -30,10 +30,10 @@ svn在每个代码仓库下有一个hooks目录用于放hook脚本, svn为我们
     
     <item>
       <title>使用Docker搭建svn服务器教程</title>
-      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8Docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</link>
+      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</link>
       <pubDate>Thu, 25 Jul 2019 20:36:47 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8Docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</guid>
+      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</guid>
       <description>svn简介 SVN是Subversion的简称，是一个开放源代码的版本控制系统，相较于RCS、CVS，它采用了分支管理系统，它的设计目标就是取代CVS。互联网上很多版本控制服务已从CVS迁移到Subversion。说得简单一点SVN就是用于多个人共同开发同一个项目，共用资源的目的。
 svn的docker搭建方法   请提前在服务器安装好docker服务
   本篇教程选用的docker镜像为garethflowers/svn-server

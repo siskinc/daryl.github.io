@@ -18,12 +18,12 @@
     <meta name="description" content="Python">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/categories/Python/">
+    <meta property="og:url" content="https://siskinc.github.io/categories/python/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/categories/Python/index.xml" title="Daryl's Blog" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/categories/python/index.xml" title="Daryl's Blog" />
     <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -80,7 +80,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/">Python远程操作SSH</a>
+                <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/">Python远程操作SSH</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -90,21 +90,21 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
         <div class="post-content">
             三方组件 paramiko
 创建ssh 连接 1 2 3 4 5 6 7 8 9 10 11 12 13  def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh   执行命令 1 2 3 4 5 6 7 8 9  def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&#39;command&#39;) for line in stdout.readlines(): print(line)   ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Python/">数组中重复的数字(Python)</a>
+                <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">数组中重复的数字(Python)</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -114,20 +114,20 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
         <div class="post-content">
             1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107  #!……
-            <p class="readmore"><a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Python/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/Python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Python实现单例模式</a>
+                <a href="https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">Python实现单例模式</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -137,13 +137,13 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
         <div class="post-content">
             使用__new__方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &#39;_instance&#39;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass   共享属性 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).……
-            <p class="readmore"><a href="https://siskinc.github.io/post/Python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">阅读全文</a></p>
         </div>
     </article>
     
@@ -160,7 +160,7 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
@@ -184,7 +184,7 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
@@ -210,7 +210,7 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
@@ -225,7 +225,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a>
+                <a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -235,7 +235,7 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
@@ -243,14 +243,14 @@
              在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
  解决方法如下，在__init__文件中加入以下代码:
 1 2 3 4 5 6 7  import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;))   ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84Response/">flask返回自定义的Response</a>
+                <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -260,20 +260,20 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
         <div class="post-content">
             from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=''):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype='application/json')class JSONResponse(Response):def __init__(self, data, msg=''):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype='application/json')class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&quot;need login&quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype='application/json', status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果……
-            <p class="readmore"><a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84Response/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/Django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Django上传图片</a>
+                <a href="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Django上传图片</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -283,20 +283,20 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
         <div class="post-content">
             model 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25  from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&#39;share_pictures/&#39;) name = models.CharField(max_length = 50) class Meta: db_table = &#34;picture&#34; def __str__(self): return self.name   forms 1 2 3 4 5 6 7 8 9 10 11  from django import forms class ImageForm(forms.……
-            <p class="readmore"><a href="https://siskinc.github.io/post/Django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/Python_any_%E5%87%BD%E6%95%B0/">Python any() 函数</a>
+                <a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/">Python any() 函数</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -306,7 +306,7 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/Python'>Python</a>
+            <a href='/categories/python'>Python</a>
             
         </div>
         
@@ -315,7 +315,7 @@
 元素除了是 0、空、FALSE 外都算 TRUE。
 如果想要测试一个list中是否有一个是1可以使用any，例如：
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&#39;passed&#39;) if 1 in (x, y, z): print(&#39;passed&#39;) # These only test for truthiness: if x or y or z: print(&#39;passed&#39;) if any((x, y, z)): print(&#39;passed&#39;)   ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/Python_any_%E5%87%BD%E6%95%B0/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/">阅读全文</a></p>
         </div>
     </article>
     
@@ -329,17 +329,17 @@
 
     
     <li  class="current">
-        <a href="https://siskinc.github.io/categories/Python/">1</a>
+        <a href="https://siskinc.github.io/categories/python/">1</a>
     </li>
     
     <li >
-        <a href="https://siskinc.github.io/categories/Python/page/2/">2</a>
+        <a href="https://siskinc.github.io/categories/python/page/2/">2</a>
     </li>
     
 
     
     <li class="next">
-        <a href="https://siskinc.github.io/categories/Python/page/2/">下一页</a>
+        <a href="https://siskinc.github.io/categories/python/page/2/">下一页</a>
     </li>
     
 </ol>
@@ -409,7 +409,7 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -417,11 +417,11 @@ if (!doNotTrack) {
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -429,23 +429,23 @@ if (!doNotTrack) {
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -457,35 +457,35 @@ if (!doNotTrack) {
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -504,19 +504,15 @@ if (!doNotTrack) {
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
-    
-    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
-    
-    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
-    
-    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
-    
     <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    
+    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
+    
+    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -570,9 +566,9 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
-    
     <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    
+    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -618,6 +614,8 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
+    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
+    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -635,6 +633,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
+    
+    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

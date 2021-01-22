@@ -18,10 +18,10 @@
     
     <item>
       <title>Golang不会自动把slice转换成interface{}类型的slice</title>
-      <link>https://siskinc.github.io/post/Golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</link>
+      <link>https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</link>
       <pubDate>Thu, 25 Jul 2019 17:46:17 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</guid>
+      <guid>https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/</guid>
       <description>例子 我们时常会写一些interface，例如：
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  type A interface{ Print() } type B struct { } func (b *B) Print() { fmt.Println(&amp;#34;Here is *B&amp;#34;) }   赋值的时候:
 1 2 3 4 5  var a A a = &amp;amp;B{}   诶，这样看视乎没什么问题，但是我们没有办法避免使用数组，然后顺手就写了这样的代码

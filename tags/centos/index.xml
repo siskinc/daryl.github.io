@@ -9,10 +9,10 @@
     <lastBuildDate>Mon, 06 Apr 2020 17:36:42 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/centos/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Centos下，源码安装Python的h3包</title>
-      <link>https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/</link>
+      <link>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</link>
       <pubDate>Mon, 06 Apr 2020 17:36:42 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/</guid>
+      <guid>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</guid>
       <description>公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
  检查cmake版本 1 2 3  cmake --version   如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
 下载文件  自己下载对于的master压缩包

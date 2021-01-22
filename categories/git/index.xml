@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Git on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/categories/Git/</link>
+    <link>https://siskinc.github.io/categories/git/</link>
     <description>Recent content in Git on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Dec 2019 22:40:31 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/Git/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 Dec 2019 22:40:31 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>git使用ssh自动替代https</title>
       <link>https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/</link>

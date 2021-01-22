@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 28 Feb 2020 16:54:07 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu 18.04换国内源</title>
-      <link>https://siskinc.github.io/post/Ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</link>
+      <link>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</link>
       <pubDate>Fri, 28 Feb 2020 16:54:07 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</guid>
+      <guid>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</guid>
       <description>国内有很多Ubuntu的镜像源，例如阿里、网易、清华、中科大。
 我们这里以阿里云的源为例展示如何修改Ubuntu 18.04里面默认的源。
 编辑/etc/apt/sources.list文件：

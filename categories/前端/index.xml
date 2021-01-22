@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 25 Oct 2019 14:29:00 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CSS清除浮动</title>
-      <link>https://siskinc.github.io/post/CSS%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/</link>
+      <link>https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/</link>
       <pubDate>Fri, 25 Oct 2019 14:29:00 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/CSS%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/</guid>
+      <guid>https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/</guid>
       <description>使用方法：1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23  .clearfix:after { content: &amp;#34;&amp;#34;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; }   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  .clearfix:before, .</description>
     </item>
     

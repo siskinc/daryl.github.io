@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/categories/Linux/</link>
+    <link>https://siskinc.github.io/categories/linux/</link>
     <description>Recent content in Linux on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 Jan 2021 23:59:06 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/categories/Linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 22 Jan 2021 23:59:06 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu16.04 笔记本合上盖子时不进入休眠</title>
-      <link>https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/</link>
+      <link>https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/</link>
       <pubDate>Fri, 22 Jan 2021 23:59:06 +0800</pubDate>
       
-      <guid>https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/</guid>
+      <guid>https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/</guid>
       <description>在笔记本上装ubuntu系统，也可以从事相关开发工作。但笔记本存在这样的情况，就是有时服务功能设好了，不需要操作了，但是希望机器一直开机提供服务，或者长期下载大文件。此时，为了省电，可将笔记本屏幕合上，静待其完成任务。 但是，在默认情况下，笔记本合上屏幕后，ubuntu系统会休眠，我试着用GUI改了一下设置，实践证明没有效果，还是直接修改配置文件来得快，方法如下： 修改 Login Manager的配置文件，/etc/systemd/logind.conf: 然后将其中的：
 1  #HandleLidSwitch=suspend   改成：
 1  HandleLidSwitch=ignore   然后重启服务：
@@ -22,10 +22,10 @@
     
     <item>
       <title>Centos下，源码安装Python的h3包</title>
-      <link>https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/</link>
+      <link>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</link>
       <pubDate>Mon, 06 Apr 2020 17:36:42 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/</guid>
+      <guid>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</guid>
       <description>公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
  检查cmake版本 1 2 3  cmake --version   如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
 下载文件  自己下载对于的master压缩包
@@ -37,10 +37,10 @@
     
     <item>
       <title>Ubuntu 18.04换国内源</title>
-      <link>https://siskinc.github.io/post/Ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</link>
+      <link>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</link>
       <pubDate>Fri, 28 Feb 2020 16:54:07 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</guid>
+      <guid>https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/</guid>
       <description>国内有很多Ubuntu的镜像源，例如阿里、网易、清华、中科大。
 我们这里以阿里云的源为例展示如何修改Ubuntu 18.04里面默认的源。
 编辑/etc/apt/sources.list文件：
@@ -63,10 +63,10 @@
     
     <item>
       <title>Linux进程的五个段</title>
-      <link>https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</link>
+      <link>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</link>
       <pubDate>Sat, 24 Aug 2019 08:06:58 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</guid>
+      <guid>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</guid>
       <description>数据段  用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；
  代码段  代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&amp;mdash;&amp;ndash;它是不可写的；
  BSS段  包含了程序中未初始化的全局变量，在内存中bss段全部置零；

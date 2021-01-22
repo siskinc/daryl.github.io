@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 25 Jul 2019 17:36:53 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/python3/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python3 和 Python2的区别</title>
-      <link>https://siskinc.github.io/post/Python3_%E5%92%8C_Python2%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <link>https://siskinc.github.io/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
       <pubDate>Thu, 25 Jul 2019 17:36:53 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Python3_%E5%92%8C_Python2%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <guid>https://siskinc.github.io/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
       <description>print   Python2.7的print不是一个function
   Python3里的print是一个function。
   Unicode   Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。

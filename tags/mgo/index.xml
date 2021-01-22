@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 25 Jul 2019 17:35:04 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/mgo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang mgo 模糊查询的使用</title>
-      <link>https://siskinc.github.io/post/Golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <link>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Thu, 25 Jul 2019 17:35:04 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
       <description>在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
 db.article.find({&amp;quot;title&amp;quot;: {$regex: /a/, $options: &amp;quot;im&amp;quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
 1 2 3  query := bson.M{&amp;#34;title&amp;#34;: bson.M{&amp;#34;$regex&amp;#34;: &amp;#34;/a/&amp;#34;, &amp;#34;$options&amp;#34;: &amp;#34;im&amp;#34;}}   大家用这个方式去查询，能查询到算我输！

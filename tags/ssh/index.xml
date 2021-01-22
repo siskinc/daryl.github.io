@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 05 Nov 2020 13:59:29 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python远程操作SSH</title>
-      <link>https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/</link>
+      <link>https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/</link>
       <pubDate>Thu, 05 Nov 2020 13:59:29 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/</guid>
+      <guid>https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/</guid>
       <description>三方组件 paramiko
 创建ssh 连接 1 2 3 4 5 6 7 8 9 10 11 12 13  def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh   执行命令 1 2 3 4 5 6 7 8 9  def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&amp;#39;command&amp;#39;) for line in stdout.readlines(): print(line)   </description>
     </item>

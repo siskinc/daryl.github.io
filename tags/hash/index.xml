@@ -9,10 +9,10 @@
     <lastBuildDate>Sat, 16 May 2020 00:05:19 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/hash/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Redis字典扩张算法</title>
-      <link>https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/</link>
+      <link>https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/</link>
       <pubDate>Sat, 16 May 2020 00:05:19 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/</guid>
       <description>源码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  /* This is the initial size of every hash table */ #define DICT_HT_INITIAL_SIZE 4  /* Our hash table capability is a power of two */ static unsigned long _dictNextPower(unsigned long size) { unsigned long i = DICT_HT_INITIAL_SIZE; if (size &amp;gt;= LONG_MAX) return LONG_MAX + 1LU; while(1) { if (i &amp;gt;= size) return i; i *= 2; } }   结论  Redis的dict会从4开始扩张，最大到达LONG_MAX + 1LU</description>
     </item>
     
