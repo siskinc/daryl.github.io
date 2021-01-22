@@ -9,13 +9,11 @@
     <lastBuildDate>Thu, 12 Dec 2019 09:31:27 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang交叉编译</title>
-      <link>https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <link>https://siskinc.github.io/post/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Thu, 12 Dec 2019 09:31:27 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
-      <description>Mac 下编译 Linux 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Linux 下编译 Mac 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go   GOOS：目标平台的操作系统（darwin、freebsd、linux、windows）
-  GOARCH：目标平台的体系架构（386、amd64、arm）
-  交叉编译不支持 CGO 所以要禁用它</description>
+      <guid>https://siskinc.github.io/post/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <description>Mac 下编译 Linux 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Linux 下编译 Mac 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.</description>
     </item>
     
   </channel>

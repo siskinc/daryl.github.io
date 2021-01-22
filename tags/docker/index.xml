@@ -20,29 +20,27 @@
     
     <item>
       <title>使用docker-compose搭建WordPress</title>
-      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/</link>
+      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAWordPress/</link>
       <pubDate>Thu, 25 Jul 2019 23:18:13 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAwordpress/</guid>
-      <description>version: &amp;#39;3&amp;#39; services: nginx: image: nginx:1.13.9-alpine ports: - &amp;#34;80:80&amp;#34; - &amp;#34;443:443&amp;#34; restart: always volumes: - ./wordpress.conf:/etc/nginx/conf.d/default.conf - ./nginx_logs:/var/log/nginx - ./letsencrypt:/etc/letsencrypt depends_on: - wordpress networks: - daryl_blog_net wordpress: image: wordpress:latest restart: always volumes: - ./html:/var/www/html networks: - daryl_blog_net depends_on: - db environment: WORDPRESS_DB_HOST: db:3306 WORDPRESS_DB_USER: wordpress WORDPRESS_DB_PASSWORD: password db: image: mysql:5.7.23 volumes: - ./mysql:/var/lib/mysql - ./mysql_logs:/var/logs/mysql restart: always env_file: - mysql.env ports: - &amp;#34;3306:3306&amp;#34; networks: - daryl_blog_net networks: daryl_blog_net: driver: bridge ipam: config: - subnet: 192.</description>
+      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker-compose%E6%90%AD%E5%BB%BAWordPress/</guid>
+      <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101  version:&amp;#39;3&amp;#39;services:nginx:image:nginx:1.</description>
     </item>
     
     <item>
       <title>使用Docker搭建svn服务器教程</title>
-      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</link>
+      <link>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8Docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</link>
       <pubDate>Thu, 25 Jul 2019 20:36:47 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</guid>
+      <guid>https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8Docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/</guid>
       <description>svn简介 SVN是Subversion的简称，是一个开放源代码的版本控制系统，相较于RCS、CVS，它采用了分支管理系统，它的设计目标就是取代CVS。互联网上很多版本控制服务已从CVS迁移到Subversion。说得简单一点SVN就是用于多个人共同开发同一个项目，共用资源的目的。
 svn的docker搭建方法   请提前在服务器安装好docker服务
   本篇教程选用的docker镜像为garethflowers/svn-server
   安装并启动容器代码
-  docker run --restart always --name svn -d -v /root/dockers/svn:/var/opt/svn -p 3690:3690 garethflowers/svn-server 简析   /root/dockers/svn为宿主机的文件目录，/var/opt/svn为容器内的文件目录
+  1 2 3  docker run --restart always --name svn -d -v /root/dockers/svn:/var/opt/svn -p 3690:3690 garethflowers/svn-server   简析   /root/dockers/svn为宿主机的文件目录，/var/opt/svn为容器内的文件目录
   &amp;ndash;restart always命令可以实现容器在宿主机开机时自启动
   -p 3690:3690表示将宿主机的3690端口映射到容器的3690端口，此端口为svn服务的默认端口，可以根据需要自行修改
-  创建svn仓库和账户 进入容器中进行配置 docker exec -it svn /bin/sh 创建名称为svn的资源仓库 svnadmin create svn 创建成功后svn目录内应该包含以下文件:
- README.txt conf db format hooks locks
-资源仓库配置，修改svnserve.conf anon-access = none # 匿名用户不可读写，也可设置为只读 readauth-access = write # 授权用户可写password-db = passwd # 密码文件路径，相对于当前目录authz-db = authz # 访问控制文件realm = /var/opt/svn/svn # 认证命名空间，会在认证提示界面显示，并作为凭证缓存的关键字，可以写仓库名称比如svn配置账号与密码，修改 passwd文件，格式为“账号 = 密码” [users]# harry = harryssecret# sally = sallyssecretadmin = 123456配置账户权限，修改 authz文件 [groups]owner = admin[/] # / 表示所有仓库admin = rw # 用户 admin 在所有仓库拥有读写权限[svn:/] # 表示以下用户在仓库 svn 的所有目录有相应权限@owner = rw # 表示 owner 组下的用户拥有读写权限拉取svn svn co svn://127.</description>
+  创建svn仓库和账户 进入容器中进行配置 1 2 3  docker exec -it svn /bin/sh   创建名称为svn的资源仓库 1 2 3  svnadmin create svn   创建成功后svn目录内应该包含以下文件:</description>
     </item>
     
     <item>
@@ -63,7 +61,7 @@ svn的docker搭建方法   请提前在服务器安装好docker服务
       <pubDate>Thu, 25 Jul 2019 20:35:01 +0000</pubDate>
       
       <guid>https://siskinc.github.io/post/docker%E4%B8%80%E9%94%AEss/</guid>
-      <description>sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &amp;#34;ss-server&amp;#34; -s &amp;#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&amp;#34; -x -e &amp;#34;kcpserver&amp;#34; -k &amp;#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&amp;#34; </description>
+      <description>1 2 3  sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &amp;#34;ss-server&amp;#34; -s &amp;#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&amp;#34; -x -e &amp;#34;kcpserver&amp;#34; -k &amp;#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&amp;#34;   </description>
     </item>
     
   </channel>

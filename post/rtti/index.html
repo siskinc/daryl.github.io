@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>RTTI | Daryl&#39;s Blog</title>
     <meta property="og:title" content="RTTI - Daryl&#39;s Blog">
@@ -16,11 +18,11 @@
         
     <meta property="article:modified_time" content='2019-07-25T17:44:31&#43;08:00'>
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="RTTI">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/post/rtti/">
+    <meta property="og:url" content="https://siskinc.github.io/post/RTTI/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -32,6 +34,10 @@
     
     
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -46,7 +52,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -170,10 +176,15 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/c&#43;&#43;'>C&#43;&#43;</a></span>
+            <span class="meta-category"><a href='/categories/C&#43;&#43;'>C&#43;&#43;</a></span>
             
         </div>
         
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
         
         
         <div class="clear" style="display: none">
@@ -190,188 +201,383 @@
 <blockquote>
 <p>对于c++的内置数据类型，typeid可以方便的输出它们的数据类型。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;typeinfo&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span> std;
 
 
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>()
 
 {
 
-     <span style="color:#66d9ef">short</span> s <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+     <span style="color:#458;font-weight:bold">short</span> s <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2</span>;
 
-     <span style="color:#66d9ef">unsigned</span> ui <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+     <span style="color:#458;font-weight:bold">unsigned</span> ui <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10</span>;
 
-     <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+     <span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10</span>;
 
-     <span style="color:#66d9ef">char</span> ch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;a&#39;</span>;
+     <span style="color:#458;font-weight:bold">char</span> ch <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39;a&#39;</span>;
 
-     <span style="color:#66d9ef">wchar_t</span> wch <span style="color:#f92672">=</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39;b&#39;</span>;
+     <span style="color:#458;font-weight:bold">wchar_t</span> wch <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">L</span><span style="color:#d14">&#39;b&#39;</span>;
 
-     <span style="color:#66d9ef">float</span> f <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span>;
+     <span style="color:#458;font-weight:bold">float</span> f <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1.0f</span>;
 
-     <span style="color:#66d9ef">double</span> d <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-
-
-
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(s).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// short
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(ui).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// unsigned int
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(i).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// int
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(ch).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// char
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(wch).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// wchar_t
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(f).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// float
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(d).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// double
-</span><span style="color:#75715e"></span>
+     <span style="color:#458;font-weight:bold">double</span> d <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2</span>;
 
 
-     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(s).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// short
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(ui).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// unsigned int
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(i).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// int
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(ch).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// char
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(wch).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// wchar_t
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(f).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// float
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(d).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// double
+</span><span style="color:#998;font-style:italic"></span>
+
+
+     <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>;
 
 }
 
-</code></pre></div><blockquote>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>对于自己创建的类对象，依然可以输出它们的数据类型</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;typeinfo&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span> std;
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">A</span>
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class A.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">B</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class B.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">C</span>
+<span style="color:#000;font-weight:bold">struct</span> <span style="color:#458;font-weight:bold">C</span>
 
 {
 
-     <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Print</span>() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is struct C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">Print</span>() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is struct C.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>()
 
 {
 
-     A <span style="color:#f92672">*</span>pA1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> A();
+     A <span style="color:#000;font-weight:bold">*</span>pA1 <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> A();
 
      A a2;
 
 
 
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pA1).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A *
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(a2).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A
-</span><span style="color:#75715e"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(pA1).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// class A *
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(a2).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// class A
+</span><span style="color:#998;font-style:italic"></span>
 
 
-     B <span style="color:#f92672">*</span>pB1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
+     B <span style="color:#000;font-weight:bold">*</span>pB1 <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> B();
 
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pB1).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class B *
-</span><span style="color:#75715e"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(pB1).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// class B *
+</span><span style="color:#998;font-style:italic"></span>
 
 
-     C <span style="color:#f92672">*</span>pC1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> C();
+     C <span style="color:#000;font-weight:bold">*</span>pC1 <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> C();
 
      C c2;
 
 
 
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pC1).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// struct C *
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(c2).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// struct C
-</span><span style="color:#75715e"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(pC1).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// struct C *
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(c2).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// struct C
+</span><span style="color:#998;font-style:italic"></span>
 
 
-     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+     <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>;
 
 }
 
-</code></pre></div><h1 id="rtti-核心">RTTI 核心</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="rtti-核心">RTTI 核心</h1>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;typeinfo&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span> std;
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">A</span>
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class A.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">B</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class B.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>()
 
 {
 
-     A <span style="color:#f92672">*</span>pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
+     A <span style="color:#000;font-weight:bold">*</span>pA <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> B();
 
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A *
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A
-</span><span style="color:#75715e"></span>
-     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(pA).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// class A *
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(<span style="color:#000;font-weight:bold">*</span>pA).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// class A
+</span><span style="color:#998;font-style:italic"></span>
+     <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>;
 
 }
 
-</code></pre></div><blockquote>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>分析：</p>
 </blockquote>
 <ol>
@@ -386,54 +592,107 @@
 </li>
 </ol>
 <p>但是，这里又有问题了，明明pA实际指向的是B，为什么得到的却是class A？</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;typeinfo&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span> std;
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">A</span>
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#000;font-weight:bold">virtual</span> <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class A.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">B</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class B.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>()
 
 {
 
-     A <span style="color:#f92672">*</span>pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
+     A <span style="color:#000;font-weight:bold">*</span>pA <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> B();
 
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class A *
-</span><span style="color:#75715e"></span>
-     cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>pA).name()<span style="color:#f92672">&lt;&lt;</span>endl; <span style="color:#75715e">// class B
-</span><span style="color:#75715e"></span>
-     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(pA).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// class A *
+</span><span style="color:#998;font-style:italic"></span>
+     cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#000;font-weight:bold">typeid</span>(<span style="color:#000;font-weight:bold">*</span>pA).name()<span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; <span style="color:#998;font-style:italic">// class B
+</span><span style="color:#998;font-style:italic"></span>
+     <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>;
 
 }
 
-</code></pre></div><h1 id="划重点">划重点：</h1>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="划重点">划重点：</h1>
 <p>好了，我将Print函数变成了虚函数，输出结果就不一样了，这说明什么？</p>
 <p>这就是RTTI在捣鬼了，当类中不存在虚函数时，typeid是编译时期的事情，也就是静态类型，就如上面的cout&laquo;typeid(*pA).name()&laquo;endl;输出class A一样；</p>
 <p>当类中存在虚函数时，typeid是运行时期的事情，也就是动态类型，就如上面的cout&laquo;typeid(*pA).name()&laquo;endl;输出class B一样，关于这一点，我们在实际编程中，经常会出错，一定要谨记。</p>
@@ -443,84 +702,191 @@
 <p>使用type_info类中重载的==和!=比较两个对象的类型是否相等</p>
 </blockquote>
 <p>这个会经常用到，通常用于比较两个带有虚函数的类的对象是否相等，例如以下代码：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;typeinfo&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span> std;
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">A</span>
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#000;font-weight:bold">virtual</span> <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class A.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">B</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class B.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">C</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class C.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Handle</span>(A <span style="color:#f92672">*</span>a)
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">Handle</span>(A <span style="color:#000;font-weight:bold">*</span>a)
 
 {
 
-     <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>a) <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeid</span>(A))
+     <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">typeid</span>(<span style="color:#000;font-weight:bold">*</span>a) <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">typeid</span>(A))
 
      {
 
-          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a A truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+          cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;I am a A truly.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl;
 
      }
 
-     <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>a) <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeid</span>(B))
+     <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">typeid</span>(<span style="color:#000;font-weight:bold">*</span>a) <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">typeid</span>(B))
 
      {
 
-          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a B truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+          cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;I am a B truly.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl;
 
      }
 
-     <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeid</span>(<span style="color:#f92672">*</span>a) <span style="color:#f92672">==</span> <span style="color:#66d9ef">typeid</span>(C))
+     <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">typeid</span>(<span style="color:#000;font-weight:bold">*</span>a) <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">typeid</span>(C))
 
      {
 
-          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a C truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+          cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;I am a C truly.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl;
 
      }
 
-     <span style="color:#66d9ef">else</span>
+     <span style="color:#000;font-weight:bold">else</span>
 
      {
 
-          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am alone.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+          cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;I am alone.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl;
 
      }
 
@@ -528,169 +894,343 @@
 
 
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>()
 
 {
 
-     A <span style="color:#f92672">*</span>pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
+     A <span style="color:#000;font-weight:bold">*</span>pA <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> B();
 
      Handle(pA);
 
-     <span style="color:#66d9ef">delete</span> pA;
+     <span style="color:#000;font-weight:bold">delete</span> pA;
 
-     pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> C();
+     pA <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> C();
 
      Handle(pA);
 
-     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+     <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>;
 
 }
 
-</code></pre></div><p>这是一种用法，呆会我再总结如何使用dynamic_cast来实现同样的功能。</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>这是一种用法，呆会我再总结如何使用dynamic_cast来实现同样的功能。</p>
 <h1 id="dynamic_cast机制">dynamic_cast机制</h1>
 <blockquote>
 <p>使用dynamic_cast 机制来实现上述的代码（dynamic_cast 是一种很常用的方法）</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;typeinfo&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span> std;
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">A</span>
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#000;font-weight:bold">virtual</span> <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class A.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">B</span>
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#000;font-weight:bold">virtual</span> <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class B.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A, <span style="color:#66d9ef">public</span> B
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">C</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A, <span style="color:#000;font-weight:bold">public</span> B
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class C.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>()
 
 {
 
-     A <span style="color:#f92672">*</span>pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> C;
+     A <span style="color:#000;font-weight:bold">*</span>pA <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> C;
 
-     <span style="color:#75715e">//C *pC = pA; // Wrong 编译器会提示错误
-</span><span style="color:#75715e"></span>
-     C <span style="color:#f92672">*</span>pC <span style="color:#f92672">=</span> <span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>C <span style="color:#f92672">*&gt;</span>(pA);
+     <span style="color:#998;font-style:italic">//C *pC = pA; // Wrong 编译器会提示错误
+</span><span style="color:#998;font-style:italic"></span>
+     C <span style="color:#000;font-weight:bold">*</span>pC <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">dynamic_cast</span><span style="color:#000;font-weight:bold">&lt;</span>C <span style="color:#000;font-weight:bold">*&gt;</span>(pA);
 
-     <span style="color:#66d9ef">if</span> (pC <span style="color:#f92672">!=</span> NULL)
+     <span style="color:#000;font-weight:bold">if</span> (pC <span style="color:#000;font-weight:bold">!=</span> <span style="color:#0086b3">NULL</span>)
 
      {
 
-          pC<span style="color:#f92672">-&gt;</span>Print();
+          pC<span style="color:#000;font-weight:bold">-&gt;</span>Print();
 
      }
 
-     <span style="color:#66d9ef">delete</span> pA;
+     <span style="color:#000;font-weight:bold">delete</span> pA;
 
 }
 
-</code></pre></div><p>在上面代码中，如果我们直接将pA赋值给pC，这样编译器就会提示错误，而当我们加上了dynamic_cast之后，一切就ok了。那么dynamic_cast在后面干了什么呢？</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>在上面代码中，如果我们直接将pA赋值给pC，这样编译器就会提示错误，而当我们加上了dynamic_cast之后，一切就ok了。那么dynamic_cast在后面干了什么呢？</p>
 <p>dynamic_cast主要用于在多态的时候，它允许在运行时刻进行类型转换，从而使程序能够在一个类层次结构中安全地转换类型，把基类指针（引用）转换为派生类指针（引用）。</p>
 <p>当类中存在虚函数时，编译器就会在类的成员变量中添加一个指向虚函数表的vptr指针，每一个class所关联的type_info object也经由virtual table被指出来，通常这个type_info object放在表格的第一个slot。当我们进行dynamic_cast时，编译器会帮我们进行语法检查。如果指针的静态类型和目标类型相同，那么就什么事情都不做；否则，首先对指针进行调整，使得它指向vftable，并将其和调整之后的指针、调整的偏移量、静态类型以及目标类型传递给内部函数。其中最后一个参数指明转换的是指针还是引用。两者唯一的区别是，如果转换失败，前者返回NULL，后者抛出bad_cast异常。对于在typeid函数的使用中所示例的程序，我使用dynamic_cast进行更改，代码如下：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;typeinfo&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">95
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;typeinfo&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span> std;
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">A</span>
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class A.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#000;font-weight:bold">virtual</span> <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class A.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">B</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class B.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class B.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">C</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">public</span> A
 
 {
 
-<span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
 
-     <span style="color:#66d9ef">void</span> Print() { cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;This is class C.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl; }
+     <span style="color:#458;font-weight:bold">void</span> Print() { cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;This is class C.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl; }
 
 };
 
 
 
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Handle</span>(A <span style="color:#f92672">*</span>a)
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">Handle</span>(A <span style="color:#000;font-weight:bold">*</span>a)
 
 {
 
-     <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>B<span style="color:#f92672">*&gt;</span>(a))
+     <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">dynamic_cast</span><span style="color:#000;font-weight:bold">&lt;</span>B<span style="color:#000;font-weight:bold">*&gt;</span>(a))
 
      {
 
-          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a B truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+          cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;I am a B truly.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl;
 
      }
 
-     <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>C<span style="color:#f92672">*&gt;</span>(a))
+     <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">dynamic_cast</span><span style="color:#000;font-weight:bold">&lt;</span>C<span style="color:#000;font-weight:bold">*&gt;</span>(a))
 
      {
 
-          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am a C truly.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+          cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;I am a C truly.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl;
 
      }
 
-     <span style="color:#66d9ef">else</span>
+     <span style="color:#000;font-weight:bold">else</span>
 
      {
 
-          cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;I am alone.&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+          cout<span style="color:#000;font-weight:bold">&lt;&lt;</span><span style="color:#d14">&#34;I am alone.&#34;</span><span style="color:#000;font-weight:bold">&lt;&lt;</span>endl;
 
      }
 
@@ -698,25 +1238,27 @@
 
 
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>()
 
 {
 
-     A <span style="color:#f92672">*</span>pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> B();
+     A <span style="color:#000;font-weight:bold">*</span>pA <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> B();
 
      Handle(pA);
 
-     <span style="color:#66d9ef">delete</span> pA;
+     <span style="color:#000;font-weight:bold">delete</span> pA;
 
-     pA <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> C();
+     pA <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> C();
 
      Handle(pA);
 
-     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+     <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>;
 
 }
 
-</code></pre></div><p>这个是使用dynamic_cast进行改写的版本。实际项目中，这种方法会使用的更多点。</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>这个是使用dynamic_cast进行改写的版本。实际项目中，这种方法会使用的更多点。</p>
 <h1 id="rtti-实现底层实现的原理">RTTI 实现底层实现的原理</h1>
 <p>简单的讲，是在一个类的虚函数表里面添加了一个新的条目。</p>
 <p>这一部分在《深度搜索c++对象模型》里面的3，4，7章有详细的分析。</p>
@@ -724,16 +1266,42 @@
         </div>
 
         
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://siskinc.github.io/">Daryl</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://siskinc.github.io/post/RTTI/">https://siskinc.github.io/post/RTTI/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
 
 
         
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/Python3_%E5%92%8C_Python2%E7%9A%84%E5%8C%BA%E5%88%AB/">Python3 和 Python2的区别</a></li>
+        
+        <li><a href="/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">关于Python的导入覆盖解决办法</a></li>
+        
+        <li><a href="/post/Python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/">Python使用datetime来判断近七天</a></li>
+        
+        <li><a href="/post/Golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">Golang mgo 模糊查询的使用</a></li>
+        
+        <li><a href="/post/%E5%85%B3%E4%BA%8EBasic_Latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">关于Basic Latin踩到的一些坑</a></li>
+        
+    </ul>
+</div>
 
 
         <div class="post-meta meta-tags">
             
             <ul class="clearfix">
                 
-                <li><a href='/tags/rtti'>RTTI</a></li>
+                <li><a href='/tags/RTTI'>RTTI</a></li>
                 
             </ul>
             
@@ -780,16 +1348,31 @@
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -802,7 +1385,7 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -810,11 +1393,11 @@
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -822,23 +1405,23 @@
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -850,35 +1433,35 @@
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -897,15 +1480,19 @@
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -959,9 +1546,9 @@
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -1007,8 +1594,6 @@
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -1026,8 +1611,6 @@
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

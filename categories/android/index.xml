@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Android on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/categories/android/</link>
+    <link>https://siskinc.github.io/categories/Android/</link>
     <description>Recent content in Android on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Feb 2020 21:40:19 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/android/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Feb 2020 21:40:19 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/Android/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Nexus 5X API 29 x86模拟器无法联网，无法打开chrome</title>
-      <link>https://siskinc.github.io/post/nexus_5x_api_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/</link>
+      <link>https://siskinc.github.io/post/Nexus_5X_API_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/</link>
       <pubDate>Wed, 05 Feb 2020 21:40:19 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/nexus_5x_api_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/</guid>
+      <guid>https://siskinc.github.io/post/Nexus_5X_API_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/</guid>
       <description>  在Android Studio中打开AVD Manager
   点击Create Virtual Device&amp;hellip;按钮
   
@@ -22,12 +22,12 @@
     
     <item>
       <title>Error_inflating_class_fragment</title>
-      <link>https://siskinc.github.io/post/error-inflating-class-fragment/</link>
+      <link>https://siskinc.github.io/post/Error-inflating-class-fragment/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/error-inflating-class-fragment/</guid>
+      <guid>https://siskinc.github.io/post/Error-inflating-class-fragment/</guid>
       <description>如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。
-@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; } </description>
+1 2 3 4 5 6 7 8 9 10 11  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; }   </description>
     </item>
     
   </channel>

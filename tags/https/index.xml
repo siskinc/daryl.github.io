@@ -9,10 +9,10 @@
     <lastBuildDate>Sat, 25 Apr 2020 22:00:23 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/https/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTTP 与 HTTPS 的区别</title>
-      <link>https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <link>https://siskinc.github.io/post/HTTP_%E4%B8%8E_HTTPS_%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
       <pubDate>Sat, 25 Apr 2020 22:00:23 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/http_%E4%B8%8E_https_%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <guid>https://siskinc.github.io/post/HTTP_%E4%B8%8E_HTTPS_%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
       <description>超文本传输协议HTTP协议被用于在Web浏览器和网站服务器之间传递信息，HTTP协议以明文方式发送内容，不提供任何方式的数据加密，如果攻击者截取了Web浏览器和网站服务器之间的传输报文，就可以直接读懂其中的信息，因此，HTTP协议不适合传输一些敏感信息，比如：信用卡号、密码等支付信息。
 为了解决HTTP协议的这一缺陷，需要使用另一种协议：安全套接字层超文本传输协议HTTPS，为了数据传输的安全，HTTPS在HTTP的基础上加入了SSL协议，SSL依靠证书来验证服务器的身份，并为浏览器和服务器之间的通信加密。
 基本概念 HTTP  是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。
@@ -45,8 +45,8 @@
       
       <guid>https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/</guid>
       <description> 在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
- 本地执行git命令: git config --global url.&amp;#34;git@github.com:&amp;#34;.insteadOf &amp;#34;https://github.com/&amp;#34; git config --global url.&amp;#34;git@git.company.com:&amp;#34;.insteadOf &amp;#34;https://git.company.com/&amp;#34;  company.com换成你自己公司的地址即可。
-  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： git config --global url.&amp;#34;git@github.com:golang/&amp;#34;.insteadOf &amp;#34;https://go.googlesource.com/&amp;#34; </description>
+ 本地执行git命令: 1 2 3 4 5  git config --global url.&amp;#34;git@github.com:&amp;#34;.insteadOf &amp;#34;https://github.com/&amp;#34; git config --global url.&amp;#34;git@git.company.com:&amp;#34;.insteadOf &amp;#34;https://git.company.com/&amp;#34;    company.com换成你自己公司的地址即可。
+  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： 1 2 3  git config --global url.&amp;#34;git@github.com:golang/&amp;#34;.insteadOf &amp;#34;https://go.googlesource.com/&amp;#34;   </description>
     </item>
     
   </channel>

@@ -13,8 +13,8 @@
       <pubDate>Thu, 25 Jul 2019 20:28:20 +0000</pubDate>
       
       <guid>https://siskinc.github.io/post/vue-lazyload%E6%8F%92%E4%BB%B6/</guid>
-      <description>使用 npm install vue-lazyload --save //注册插件  import vueLazyload from &amp;#39;vue-lazyload&amp;#39; Vue.use(vueLazyload); //在需要懒加载的图片上 &amp;lt;img v-lazy=&amp;#34;imgUrl&amp;#34;&amp;gt; 参数说明 注册插件的时候，是可以传入第二个配置参数的
-Vue.use(vueLazyload,{}) 可选的参数如下：
+      <description>使用 1 2 3  npm install vue-lazyload --save   1 2 3 4 5 6 7  //注册插件  import vueLazyload from &amp;#39;vue-lazyload&amp;#39; Vue.use(vueLazyload);   1 2 3 4 5  //在需要懒加载的图片上 &amp;lt;img v-lazy=&amp;#34;imgUrl&amp;#34;&amp;gt;   参数说明 注册插件的时候，是可以传入第二个配置参数的
+1 2 3  Vue.use(vueLazyload,{})   可选的参数如下：
 preLoad:类型Number,默认1.3. 表示lazyload的元素距离页面底部距离的百分比.计算值为(preload - 1).
 attempt:图片加载失败后的重试次数.默认为3.
 error:类型string.图片加载失败后的显示的失败图片路径.
@@ -22,9 +22,7 @@ loading:类型string.图片正在加载中显示的loading图片的路径.
 listenEvents:类型array.默认[&amp;lsquo;scroll&amp;rsquo;, &amp;lsquo;wheel&amp;rsquo;, &amp;lsquo;mousewheel&amp;rsquo;, &amp;lsquo;resize&amp;rsquo;, &amp;lsquo;animationend&amp;rsquo;, &amp;lsquo;transitionend&amp;rsquo;, &amp;lsquo;touchmove&amp;rsquo;].即是在监听上述事件中,判断图片是否在preload的位置.如果你不想在那么多事件中判断,可以指定一个或者几个.例如如果你给这个属性只指定[&amp;lsquo;touchmove&amp;rsquo;].那么scroll 屏幕不会加载图片,只有手指滑动屏幕才会加载图片.
 adapter:注册img 的loading,loaded,error三个状态的回调函数,参数会暴露懒加载的img元素,可以对其进行操作.
 filter: img未加载之前,解析到src 的时候注册的回调函数.可以在加载图片之前,对src进行修改.注册在filter下的所有的函数都会执行
-lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.挖坑(vue懒加载组件)
-observer:是否启用IntersectionObserver,这个api有兼容问题
-observerOptions:默认{ rootMargin: &amp;lsquo;0px&amp;rsquo;, threshold: 0.1 } 主要是我对这个pai不熟,按照vue-lazyload的说法是开启之后,对很多节点的情况会优化性能.挖坑吧</description>
+lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.</description>
     </item>
     
     <item>

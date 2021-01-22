@@ -6,13 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>import | Daryl&#39;s Blog</title>
     <meta property="og:title" content="import - Daryl&#39;s Blog">
     <meta property="og:type" content="article">
         
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="import">
         
     <meta name="author" content="Daryl">
@@ -30,6 +32,10 @@
     
     
     
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
 </head>
 
 
@@ -43,7 +49,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -74,7 +80,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a>
+                <a href="https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -84,22 +90,22 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/python'>Python</a>
+            <a href='/categories/Python'>Python</a>
             
         </div>
         
         <div class="post-content">
              在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
  解决方法如下，在__init__文件中加入以下代码:
-import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
+1 2 3 4 5 6 7  import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;))   ……
+            <p class="readmore"><a href="https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">关于Python的导入覆盖解决办法</a>
+                <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">关于Python的导入覆盖解决办法</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -109,16 +115,16 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/python'>Python</a>
+            <a href='/categories/Python'>Python</a>
             
         </div>
         
         <div class="post-content">
             这种问题一般来说还是不会引起的，可能会出现在datetime和time这样类型的模块中。
 例如：
-import datetime from datetime import datetime 如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。
+1 2 3 4 5  import datetime from datetime import datetime   如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。
 我的建议是将系统的模块放在最后面导入，自己写的模块放在前面，不过最好跟公司的人统一一下，统一使用import datetime就行。……
-            <p class="readmore"><a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">阅读全文</a></p>
         </div>
     </article>
     
@@ -155,16 +161,31 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -177,7 +198,7 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -185,11 +206,11 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -197,23 +218,23 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -225,35 +246,35 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -272,15 +293,19 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -334,9 +359,9 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -382,8 +407,6 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -401,8 +424,6 @@ import datetime from datetime import datetime 如果写在一个文件到倒是�
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RTTI on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/tags/rtti/</link>
+    <link>https://siskinc.github.io/tags/RTTI/</link>
     <description>Recent content in RTTI on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jul 2019 17:44:31 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/rtti/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Jul 2019 17:44:31 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/RTTI/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>RTTI</title>
-      <link>https://siskinc.github.io/post/rtti/</link>
+      <link>https://siskinc.github.io/post/RTTI/</link>
       <pubDate>Thu, 25 Jul 2019 17:44:31 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/rtti/</guid>
+      <guid>https://siskinc.github.io/post/RTTI/</guid>
       <description>RTTI是”Runtime Type Information”的缩写，意思是运行时类型信息，它提供了运行时确定对象类型的方法。
  typeid函数  对于c++的内置数据类型，typeid可以方便的输出它们的数据类型。
- #include &amp;lt;iostream&amp;gt; #include &amp;lt;typeinfo&amp;gt; using namespace std; int main() { short s = 2; unsigned ui = 10; int i = 10; char ch = &amp;#39;a&amp;#39;; wchar_t wch = L&amp;#39;b&amp;#39;; float f = 1.0f; double d = 2; cout&amp;lt;&amp;lt;typeid(s).name()&amp;lt;&amp;lt;endl; // short  cout&amp;lt;&amp;lt;typeid(ui).name()&amp;lt;&amp;lt;endl; // unsigned int  cout&amp;lt;&amp;lt;typeid(i).name()&amp;lt;&amp;lt;endl; // int  cout&amp;lt;&amp;lt;typeid(ch).name()&amp;lt;&amp;lt;endl; // char  cout&amp;lt;&amp;lt;typeid(wch).name()&amp;lt;&amp;lt;endl; // wchar_t  cout&amp;lt;&amp;lt;typeid(f).name()&amp;lt;&amp;lt;endl; // float  cout&amp;lt;&amp;lt;typeid(d).</description>
+ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49  #include &amp;lt;iostream&amp;gt; #include &amp;lt;typeinfo&amp;gt; using namespace std; int main() { short s = 2; unsigned ui = 10; int i = 10; char ch = &amp;#39;a&amp;#39;; wchar_t wch = L&amp;#39;b&amp;#39;; float f = 1.</description>
     </item>
     
   </channel>

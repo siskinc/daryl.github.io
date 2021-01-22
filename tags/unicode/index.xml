@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Unicode on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/tags/unicode/</link>
+    <link>https://siskinc.github.io/tags/Unicode/</link>
     <description>Recent content in Unicode on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jul 2019 17:33:08 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/unicode/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Jul 2019 17:33:08 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/Unicode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Unicode 编码 范围</title>
-      <link>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</link>
+      <link>https://siskinc.github.io/post/Unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</link>
       <pubDate>Thu, 25 Jul 2019 17:33:08 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</guid>
+      <guid>https://siskinc.github.io/post/Unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/</guid>
       <description>文字部分
 （ U+0000 – U+007F） 基本拉丁字符
 （ U+0080 – U+00FF） 增补拉丁字符集 1

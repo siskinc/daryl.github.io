@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>jQuery on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/tags/jquery/</link>
+    <link>https://siskinc.github.io/tags/jQuery/</link>
     <description>Recent content in jQuery on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Nov 2019 00:57:49 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/jquery/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Nov 2019 00:57:49 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/jQuery/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Run jQuery in Chrome Console</title>
-      <link>https://siskinc.github.io/post/run_jquery_in_chrome_console/</link>
+      <link>https://siskinc.github.io/post/Run_jQuery_in_Chrome_Console/</link>
       <pubDate>Thu, 28 Nov 2019 00:57:49 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/run_jquery_in_chrome_console/</guid>
-      <description>var jqry = document.createElement(&amp;#39;script&amp;#39;); jqry.src = &amp;#34;https://code.jquery.com/jquery-3.3.1.min.js&amp;#34;; document.getElementsByTagName(&amp;#39;head&amp;#39;)[0].appendChild(jqry); jQuery.noConflict(); </description>
+      <guid>https://siskinc.github.io/post/Run_jQuery_in_Chrome_Console/</guid>
+      <description>1 2 3  var jqry = document.createElement(&amp;#39;script&amp;#39;); jqry.src = &amp;#34;https://code.jquery.com/jquery-3.3.1.min.js&amp;#34;; document.getElementsByTagName(&amp;#39;head&amp;#39;)[0].appendChild(jqry); jQuery.noConflict();   </description>
     </item>
     
   </channel>

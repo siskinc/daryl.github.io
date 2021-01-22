@@ -14,7 +14,7 @@
       
       <guid>https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/</guid>
       <description>引用：原文
-from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&amp;#34;self&amp;#34;, reverse_delete_rule = NULLIFY) </description>
+1 2 3 4 5 6 7 8 9 10 11  from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&amp;#34;self&amp;#34;, reverse_delete_rule = NULLIFY)   </description>
     </item>
     
   </channel>

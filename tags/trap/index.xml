@@ -9,16 +9,16 @@
     <lastBuildDate>Sat, 04 Apr 2020 20:06:21 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/trap/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang重复对一个slice进行append造成数据错误</title>
-      <link>https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</link>
+      <link>https://siskinc.github.io/post/Golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</link>
       <pubDate>Sat, 04 Apr 2020 20:06:21 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</guid>
+      <guid>https://siskinc.github.io/post/Golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/</guid>
       <description>slice的属性   切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。
   切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。
   那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
 问题实例 slice的cap是怎么增长的   参考文章:How does Go slice capacity change on append? [duplicate]
   有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go
-  slice的结构 type slice struct { array unsafe.Pointer len int cap int } 多次append造成的数据错误 代码 package main import &amp;#34;fmt&amp;#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&amp;#34;temp&amp;#34;, temp) temp = append(temp, 2) printSlice(&amp;#34;temp&amp;#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&amp;#34;temp&amp;#34;, temp) temp2 := append(temp, 4) printSlice(&amp;#34;temp2&amp;#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&amp;#34;temp4&amp;#34;, temp4) temp3 := append(temp, 5) printSlice(&amp;#34;temp3&amp;#34;, temp3) printSlice(&amp;#34;temp2&amp;#34;, temp2) } func printSlice(valName string, s []int) { fmt.</description>
+  slice的结构 1 2 3 4 5 6 7 8 9 10 11  type slice struct { array unsafe.Pointer len int cap int }   多次append造成的数据错误 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45  package main import &amp;#34;fmt&amp;#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&amp;#34;temp&amp;#34;, temp) temp = append(temp, 2) printSlice(&amp;#34;temp&amp;#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&amp;#34;temp&amp;#34;, temp) temp2 := append(temp, 4) printSlice(&amp;#34;temp2&amp;#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&amp;#34;temp4&amp;#34;, temp4) temp3 := append(temp, 5) printSlice(&amp;#34;temp3&amp;#34;, temp3) printSlice(&amp;#34;temp2&amp;#34;, temp2) } func printSlice(valName string, s []int) { fmt.</description>
     </item>
     
   </channel>

@@ -9,35 +9,35 @@
     <lastBuildDate>Thu, 05 Nov 2020 13:59:29 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python远程操作SSH</title>
-      <link>https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/</link>
+      <link>https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/</link>
       <pubDate>Thu, 05 Nov 2020 13:59:29 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/</guid>
+      <guid>https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/</guid>
       <description>三方组件 paramiko
-创建ssh 连接 def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh 执行命令 def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&amp;#39;command&amp;#39;) for line in stdout.readlines(): print(line) </description>
+创建ssh 连接 1 2 3 4 5 6 7 8 9 10 11 12 13  def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh   执行命令 1 2 3 4 5 6 7 8 9  def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&amp;#39;command&amp;#39;) for line in stdout.readlines(): print(line)   </description>
     </item>
     
     <item>
       <title>Centos下，源码安装Python的h3包</title>
-      <link>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</link>
+      <link>https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/</link>
       <pubDate>Mon, 06 Apr 2020 17:36:42 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/</guid>
+      <guid>https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/</guid>
       <description>公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
- 检查cmake版本 cmake --version 如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
+ 检查cmake版本 1 2 3  cmake --version   如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
 下载文件  自己下载对于的master压缩包
    https://github.com/uber/h3
   https://github.com/uber/h3-py
-  解压文件 unzip h3-master.zip unzip h3-py-master.zip 修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
-#!/usr/bin/env bash set -ex VERSION=$1 IS_64BITS=$2 if [ &amp;#34;&amp;#34; == &amp;#34;$VERSION&amp;#34; ]; then echo &amp;#34;Failed to specify version required&amp;#34; exit 1 fi command -v cmake &amp;gt;/dev/null 2&amp;gt;&amp;amp;1 || { echo &amp;#34;cmake required but not found.&amp;#34;; exit 1; } mkdir -p h3/out rm -rf h3c git clone https://github.</description>
+  解压文件 1 2 3 4 5  unzip h3-master.zip unzip h3-py-master.zip   修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101  #!</description>
     </item>
     
     <item>
       <title>Windows下如何使用pip安装Uber H3</title>
-      <link>https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/</link>
+      <link>https://siskinc.github.io/post/Windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85Uber_H3/</link>
       <pubDate>Wed, 26 Feb 2020 17:21:02 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/</guid>
+      <guid>https://siskinc.github.io/post/Windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85Uber_H3/</guid>
       <description>最近项目中会用到uber h3，而我写一个小工具或者去验证一些思路的时候常常会使用Python来着，方便嘛！而Uber H3是C写的，只是为Python提供了拓展，所以需要安装Vs14。这个需要自己提前安装好。
 在使用pip安装时直接报错了！
 大概的报错内容就是需要cmake，bash等东西，cmake好解决，自己下载到本地，放到环境变量里面就行，bash可以使用git bash来代替，所以只能跟Power shell暂时说拜拜，使用Git Bash来安装H3。Ok， 你运行pip install h3就会看见如下界面</description>
@@ -45,20 +45,20 @@
     
     <item>
       <title>数组中重复的数字(Python)</title>
-      <link>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/</link>
+      <link>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Python/</link>
       <pubDate>Tue, 13 Aug 2019 22:48:18 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/</guid>
-      <description>#!/usr/bin/env python  # -*- coding: utf-8 -*- # @Time : 2019-08-13 22:35 # @Author : daryl # @File : main.py def use_map(numbers): &amp;#34;&amp;#34;&amp;#34; 使用哈希表结构 :param numbers: :return: &amp;#34;&amp;#34;&amp;#34; num_map = dict() for number in numbers: if number in num_map: print(number) else: num_map[number] = True def use_set(numbers): &amp;#34;&amp;#34;&amp;#34; 使用set结构 :param numbers: :return: &amp;#34;&amp;#34;&amp;#34; num_set = set() for number in numbers: if number in num_set: print(number) else: num_set.add(number) def use_sort(numbers): &amp;#34;&amp;#34;&amp;#34; 排序后查找 :param numbers: :return: &amp;#34;&amp;#34;&amp;#34; numbers = sorted(numbers) print(numbers) for index, number in enumerate(numbers): if index !</description>
+      <guid>https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Python/</guid>
+      <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107  #!</description>
     </item>
     
     <item>
       <title>Python实现单例模式</title>
-      <link>https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
+      <link>https://siskinc.github.io/post/Python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</link>
       <pubDate>Tue, 13 Aug 2019 21:20:41 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
-      <description>使用__new__方法 class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &amp;#39;_instance&amp;#39;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass 共享属性 class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).__new__(cls, *args, **kw) ob.__dict__ = cls._state return ob class MyClass2(Borg): pass 装饰器版本 def singleton(cls): instances = {} def getinstance(*args, **kw): if cls not in instances: instances[cls] = cls(*args, **kw) return instances[cls] return getinstance @singleton class MyClass: pass import方法 # mysingleton.</description>
+      <guid>https://siskinc.github.io/post/Python%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</guid>
+      <description>使用__new__方法 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  class Singleton(object): def __new__(cls, *args, **kw): if not hasattr(cls, &amp;#39;_instance&amp;#39;): orig = super(Singleton, cls) cls._instance = orig.__new__(cls, *args, **kw) return cls._instance class MyClass(Singleton): pass   共享属性 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  class Borg(object): _state = {} def __new__(cls, *args, **kw): ob = super(Borg, cls).</description>
     </item>
     
     <item>
@@ -68,7 +68,7 @@
       
       <guid>https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/</guid>
       <description>引用：原文
-from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&amp;#34;self&amp;#34;, reverse_delete_rule = NULLIFY) </description>
+1 2 3 4 5 6 7 8 9 10 11  from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&amp;#34;self&amp;#34;, reverse_delete_rule = NULLIFY)   </description>
     </item>
     
     <item>
@@ -84,63 +84,63 @@ from mongoengine import * class Employee(Document): name = StringField() boss = 
     
     <item>
       <title>Python 同级目录import报错</title>
-      <link>https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</link>
+      <link>https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</link>
       <pubDate>Thu, 25 Jul 2019 20:27:18 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</guid>
+      <guid>https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/</guid>
       <description> 在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
  解决方法如下，在__init__文件中加入以下代码:
-import sys import os sys.path.append(os.path.dirname(&amp;#39;mudole_name/&amp;#39;)) </description>
+1 2 3 4 5 6 7  import sys import os sys.path.append(os.path.dirname(&amp;#39;mudole_name/&amp;#39;))   </description>
     </item>
     
     <item>
       <title>flask返回自定义的Response</title>
-      <link>https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/</link>
+      <link>https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84Response/</link>
       <pubDate>Thu, 25 Jul 2019 20:26:43 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/</guid>
+      <guid>https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84Response/</guid>
       <description>from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=&#39;&#39;):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype=&#39;application/json&#39;)class JSONResponse(Response):def __init__(self, data, msg=&#39;&#39;):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype=&#39;application/json&#39;)class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&amp;quot;need login&amp;quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype=&#39;application/json&#39;, status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果</description>
     </item>
     
     <item>
       <title>Django上传图片</title>
-      <link>https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</link>
+      <link>https://siskinc.github.io/post/Django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</link>
       <pubDate>Thu, 25 Jul 2019 20:24:51 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</guid>
-      <description>model from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&amp;#39;share_pictures/&amp;#39;) name = models.CharField(max_length = 50) class Meta: db_table = &amp;#34;picture&amp;#34; def __str__(self): return self.name forms from django import forms class ImageForm(forms.Form): name = forms.CharField(max_length = 100, label=&amp;#39;名字：&amp;#39;) picture = forms.ImageField(label=&amp;#39;图片：&amp;#39;) Views class PictureView(APIView): def get(self, request): name = request.GET.get(&amp;#39;name&amp;#39;, &amp;#39;&amp;#39;) try: picture = Picture.objects.get(name=name) except Picture.DoesNotExist: return Response(status=status.HTTP_404_NOT_FOUND) image = open(picture.path.url[1:], &amp;#39;rb&amp;#39;).read() return HttpResponse(image, content_type=&amp;#39;image/png&amp;#39;) def post(self, request): MyImageForm = ImageForm(request.</description>
+      <guid>https://siskinc.github.io/post/Django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</guid>
+      <description>model 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25  from django.db import models class Picture(models.Model): path = models.ImageField(upload_to=&amp;#39;share_pictures/&amp;#39;) name = models.CharField(max_length = 50) class Meta: db_table = &amp;#34;picture&amp;#34; def __str__(self): return self.name   forms 1 2 3 4 5 6 7 8 9 10 11  from django import forms class ImageForm(forms.</description>
     </item>
     
     <item>
       <title>Python any() 函数</title>
-      <link>https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/</link>
+      <link>https://siskinc.github.io/post/Python_any_%E5%87%BD%E6%95%B0/</link>
       <pubDate>Thu, 25 Jul 2019 17:50:44 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/</guid>
+      <guid>https://siskinc.github.io/post/Python_any_%E5%87%BD%E6%95%B0/</guid>
       <description>any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。
 元素除了是 0、空、FALSE 外都算 TRUE。
 如果想要测试一个list中是否有一个是1可以使用any，例如：
-x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&amp;#39;passed&amp;#39;) if 1 in (x, y, z): print(&amp;#39;passed&amp;#39;) # These only test for truthiness: if x or y or z: print(&amp;#39;passed&amp;#39;) if any((x, y, z)): print(&amp;#39;passed&amp;#39;) </description>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&amp;#39;passed&amp;#39;) if 1 in (x, y, z): print(&amp;#39;passed&amp;#39;) # These only test for truthiness: if x or y or z: print(&amp;#39;passed&amp;#39;) if any((x, y, z)): print(&amp;#39;passed&amp;#39;)   </description>
     </item>
     
     <item>
       <title>Python如何合并两个字典</title>
-      <link>https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/</link>
+      <link>https://siskinc.github.io/post/Python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/</link>
       <pubDate>Thu, 25 Jul 2019 17:50:14 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/</guid>
+      <guid>https://siskinc.github.io/post/Python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/</guid>
       <description>Python 3
-x = {&amp;#39;a&amp;#39;: 1, &amp;#39;b&amp;#39;: 2} y = {&amp;#39;b&amp;#39;: 3, &amp;#39;c&amp;#39;: 4} z = {**x, **y} Python 2
-z = dict(x, **y)  Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖
+1 2 3 4 5 6 7  x = {&amp;#39;a&amp;#39;: 1, &amp;#39;b&amp;#39;: 2} y = {&amp;#39;b&amp;#39;: 3, &amp;#39;c&amp;#39;: 4} z = {**x, **y}   Python 2
+1 2 3  z = dict(x, **y)    Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖
  </description>
     </item>
     
     <item>
       <title>Python中下划线的5种含义</title>
-      <link>https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/</link>
+      <link>https://siskinc.github.io/post/Python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/</link>
       <pubDate>Thu, 25 Jul 2019 17:46:49 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/</guid>
+      <guid>https://siskinc.github.io/post/Python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/</guid>
       <description>单前导下划线 _var 当涉及到变量和方法名称时，单个下划线前缀有一个约定俗成的含义。 它是对程序员的一个提示 - 意味着Python社区一致认为它应该是什么意思，但程序的行为不受影响。
 下划线前缀的含义是告知其他程序员：以单个下划线开头的变量或方法仅供内部使用。 该约定在PEP 8中有定义。
 单末尾下划线 var_ 有时候，一个变量的最合适的名称已经被一个关键字所占用。 因此，像class或def这样的名称不能用作Python中的变量名称。 在这种情况下，你可以附加一个下划线来解决命名冲突。总之，单个末尾下划线（后缀）是一个约定，用来避免与Python关键字产生命名冲突。 PEP 8解释了这个约定。
@@ -155,57 +155,57 @@ Python下划线命名模式 - 小结 evernotecid://9326179B-5200-4478-B32E-B919
     
     <item>
       <title>Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</title>
-      <link>https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/</link>
+      <link>https://siskinc.github.io/post/Python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBPyAPI_FUNCPyAPI_DATAPyMODINIT_FUNC/</link>
       <pubDate>Thu, 25 Jul 2019 17:45:35 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/</guid>
+      <guid>https://siskinc.github.io/post/Python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBPyAPI_FUNCPyAPI_DATAPyMODINIT_FUNC/</guid>
       <description>PyAPI_FUNC(type):申明一个公共的Python API函数并且返回一个PyObject*代表对应的类型
  PyAPI_DATA(type): 声明公共的Python数据和类型
 PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Python内核的，他们就提供Python的内核。如果是一个扩展的模块。那可能需要拓展库支持平台的外部连接
-/* All windows ports, except cygwin, are handled in PC/pyconfig.h. Cygwin is the only other autoconf platform requiring special linkage handling and it uses __declspec(). */ /* 除了cygwin之外的所有Windows socket 文件都在PC / pyconfig.h中处理。 */ #if defined(__CYGWIN__)  # define HAVE_DECLSPEC_DLL  #endif  /* only get special linkage if built as shared or platform is Cygwin */ #if defined(Py_ENABLE_SHARED) || defined(__CYGWIN__)  # if defined(HAVE_DECLSPEC_DLL)  # if defined(Py_BUILD_CORE) || defined(Py_BUILD_CORE_BUILTIN)  # define PyAPI_FUNC(RTYPE) __declspec(dllexport) RTYPE  # define PyAPI_DATA(RTYPE) extern __declspec(dllexport) RTYPE  /* module init functions inside the core need no external linkage */ /* except for Cygwin to handle embedding */ # if defined(__CYGWIN__)  # define PyMODINIT_FUNC __declspec(dllexport) PyObject*  # else /* __CYGWIN__ */ # define PyMODINIT_FUNC PyObject*  # endif /* __CYGWIN__ */ # else /* Py_BUILD_CORE */ /* Building an extension module, or an embedded situation */ /* public Python functions and data are imported */ /* Under Cygwin, auto-import functions to prevent compilation */ /* failures similar to those described at the bottom of 4.</description>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121  /* All windows ports, except cygwin, are handled in PC/pyconfig.</description>
     </item>
     
     <item>
       <title>Python源码阅读——基础</title>
-      <link>https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/</link>
+      <link>https://siskinc.github.io/post/Python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Thu, 25 Jul 2019 17:44:55 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://siskinc.github.io/post/Python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/</guid>
       <description>阅读源码的版本: cmmit id: 9e4f2f3a6b8ee995c365e86d976937c141d867f8
  在阅读Python的源码时，我们第一个想到的就是先去阅读Python的数据结构的源码。
 那么，我们先去挨着看看。
-数据结构 long struct _longobject { PyObject_VAR_HEAD digit ob_digit[1]; }; list typedef struct { PyObject_VAR_HEAD /* Vector of pointers to list elements. list[0] is ob_item[0], etc. */ PyObject **ob_item; /* ob_item contains space for &amp;#39;allocated&amp;#39; elements. The number * currently in use is ob_size. * Invariants: * 0 &amp;lt;= ob_size &amp;lt;= allocated * len(list) == ob_size * ob_item == NULL implies ob_size == allocated == 0 * list.</description>
+数据结构 long 1 2 3 4 5 6 7 8 9 10 11  struct _longobject { PyObject_VAR_HEAD digit ob_digit[1]; };   list 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37  typedef struct { PyObject_VAR_HEAD /* Vector of pointers to list elements.</description>
     </item>
     
     <item>
       <title>关于Python的导入覆盖解决办法</title>
-      <link>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
+      <link>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</link>
       <pubDate>Thu, 25 Jul 2019 17:36:26 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
+      <guid>https://siskinc.github.io/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</guid>
       <description>这种问题一般来说还是不会引起的，可能会出现在datetime和time这样类型的模块中。
 例如：
-import datetime from datetime import datetime 如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。
+1 2 3 4 5  import datetime from datetime import datetime   如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。
 我的建议是将系统的模块放在最后面导入，自己写的模块放在前面，不过最好跟公司的人统一一下，统一使用import datetime就行。</description>
     </item>
     
     <item>
       <title>Python使用datetime来判断近七天</title>
-      <link>https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/</link>
+      <link>https://siskinc.github.io/post/Python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/</link>
       <pubDate>Thu, 25 Jul 2019 17:35:46 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/</guid>
+      <guid>https://siskinc.github.io/post/Python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/</guid>
       <description>strptime 使用strptime来格式化字符串
-datetime.datetime.strptime(&amp;#34;2019-10-02&amp;#34;, &amp;#34;%Y-%m-%d&amp;#34;) # datetime.datetime(2019, 1, 2, 0, 10) timedelta 使用timedelta来进行计算天数
-a = datetime.datetime.strptime(&amp;#34;2019-10-02&amp;#34;, &amp;#34;%Y-%m-%d&amp;#34;) b = datetime.datetime.strptime(&amp;#34;2019-10-01&amp;#34;, &amp;#34;%Y-%m-%d&amp;#34;) a - b # datetime.timedelta(1) (a - b).days # 1 </description>
+1 2 3 4 5  datetime.datetime.strptime(&amp;#34;2019-10-02&amp;#34;, &amp;#34;%Y-%m-%d&amp;#34;) # datetime.datetime(2019, 1, 2, 0, 10)   timedelta 使用timedelta来进行计算天数
+1 2 3 4 5 6 7 8 9 10 11 12 13  a = datetime.datetime.strptime(&amp;#34;2019-10-02&amp;#34;, &amp;#34;%Y-%m-%d&amp;#34;) b = datetime.datetime.strptime(&amp;#34;2019-10-01&amp;#34;, &amp;#34;%Y-%m-%d&amp;#34;) a - b # datetime.timedelta(1) (a - b).days # 1   </description>
     </item>
     
     <item>
       <title>Django dumpdata and loaddata</title>
-      <link>https://siskinc.github.io/post/django_dumpdata_and_loaddata/</link>
+      <link>https://siskinc.github.io/post/Django_dumpdata_and_loaddata/</link>
       <pubDate>Thu, 25 Jul 2019 17:29:18 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/django_dumpdata_and_loaddata/</guid>
+      <guid>https://siskinc.github.io/post/Django_dumpdata_and_loaddata/</guid>
       <description>原文来自于: https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata
  dumpdata 命令  这个是Django自带的管理命令，可以用来备份你的模型实例和数据库  dumpdata 基本数据库的转存  下面的命令将把整个数据转存到db.json文件中   ./manage.py dumpdata &amp;gt; db.json
  dumpdata 备份特定的 app  下面的命令将在django admin app 转存到 admin.json文件中   ./manage.py dumpdata admin &amp;gt; admin.json

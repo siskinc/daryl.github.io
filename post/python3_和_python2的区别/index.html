@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>Python3 和 Python2的区别 | Daryl&#39;s Blog</title>
     <meta property="og:title" content="Python3 和 Python2的区别 - Daryl&#39;s Blog">
@@ -16,11 +18,11 @@
         
     <meta property="article:modified_time" content='2019-07-25T17:36:53&#43;08:00'>
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="Python3 和 Python2的区别">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/post/python3_%E5%92%8C_python2%E7%9A%84%E5%8C%BA%E5%88%AB/">
+    <meta property="og:url" content="https://siskinc.github.io/post/Python3_%E5%92%8C_Python2%E7%9A%84%E5%8C%BA%E5%88%AB/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -32,6 +34,10 @@
     
     
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -46,7 +52,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -178,10 +184,15 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            <span class="meta-category"><a href='/categories/Python'>Python</a></span>
             
         </div>
         
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
         
         
         <div class="clear" style="display: none">
@@ -210,83 +221,193 @@
 </li>
 </ul>
 <p>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#960050;background-color:#1e0010">中国</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;china&#39;</span> 
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#a61717;background-color:#e3d2d2">中国</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39;china&#39;</span> 
 
-<span style="color:#f92672">&gt;&gt;&gt;</span><span style="color:#66d9ef">print</span>(<span style="color:#960050;background-color:#1e0010">中国</span>) 
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span><span style="color:#000;font-weight:bold">print</span>(<span style="color:#a61717;background-color:#e3d2d2">中国</span>) 
 
 china
 
-</code></pre></div><p>Python 2.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;我爱北京天安门&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Python 2.x</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0086b3">str</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;我爱北京天安门&#34;</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> str
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0086b3">str</span>
 
-<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#d14">&#39;</span><span style="color:#d14">\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8</span><span style="color:#d14">&#39;</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> str <span style="color:#f92672">=</span> <span style="color:#e6db74">u</span><span style="color:#e6db74">&#34;我爱北京天安门&#34;</span>
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0086b3">str</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">u</span><span style="color:#d14">&#34;我爱北京天安门&#34;</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> str
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0086b3">str</span>
 
-<span style="color:#e6db74">u</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#d14">u</span><span style="color:#d14">&#39;</span><span style="color:#d14">\u6211\u7231\u5317\u4eac\u5929\u5b89\u95e8</span><span style="color:#d14">&#39;</span>
 
-</code></pre></div><p>Python 3.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;我爱北京天安门&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Python 3.x</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0086b3">str</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;我爱北京天安门&#34;</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> str
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0086b3">str</span>
 
-<span style="color:#e6db74">&#39;我爱北京天安门&#39;</span>
+<span style="color:#d14">&#39;我爱北京天安门&#39;</span>
 
-</code></pre></div><h4 id="除法运算">除法运算</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="除法运算">除法运算</h4>
 <p>Python中的除法较其它语言显得非常高端，有套很复杂的规则。Python中的除法有两个运算符，/和//</p>
 <p>首先来说/除法:</p>
 <p>在python 2.x中/除法就跟我们熟悉的大多数语言，比如Java啊C啊差不多，整数相除的结果是一个整数，把小数部分完全忽略掉，浮点数除法会保留小数点的部分得到一个浮点数的结果。</p>
 <p>在python 3.x中/除法不再这么做了，对于整数之间的相除，结果也会是浮点数。</p>
 <p>Python 2.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#099">1</span> <span style="color:#000;font-weight:bold">/</span> <span style="color:#099">2</span>
 
-<span style="color:#ae81ff">0</span>
+<span style="color:#099">0</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2.0</span>
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#099">1.0</span> <span style="color:#000;font-weight:bold">/</span> <span style="color:#099">2.0</span>
 
-<span style="color:#ae81ff">0.5</span>
+<span style="color:#099">0.5</span>
 
-</code></pre></div><p>Python 3.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Python 3.x:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#099">1</span><span style="color:#000;font-weight:bold">/</span><span style="color:#099">2</span>
 
-<span style="color:#ae81ff">0.5</span>
+<span style="color:#099">0.5</span>
 
-</code></pre></div><p>而对于//除法，这种除法叫做floor除法，会对除法的结果自动进行一个floor操作，在python 2.x和python 3.x中是一致的。</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>而对于//除法，这种除法叫做floor除法，会对除法的结果自动进行一个floor操作，在python 2.x和python 3.x中是一致的。</p>
 <p>python 2.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span> <span style="color:#000;font-weight:bold">//</span> <span style="color:#099">2</span>
 
-<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
 
-</code></pre></div><p>python 3.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>python 3.x:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span> <span style="color:#000;font-weight:bold">//</span> <span style="color:#099">2</span>
 
-<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
 
-</code></pre></div><p>注意的是并不是舍弃小数部分，而是执行 floor 操作，如果要截取整数部分，那么需要使用 math 模块的 trunc 函数</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意的是并不是舍弃小数部分，而是执行 floor 操作，如果要截取整数部分，那么需要使用 math 模块的 trunc 函数</p>
 <p>python 3.x:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> math
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#000;font-weight:bold">import</span> <span style="color:#555">math</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> math<span style="color:#f92672">.</span>trunc(<span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> math<span style="color:#000;font-weight:bold">.</span>trunc(<span style="color:#099">1</span> <span style="color:#000;font-weight:bold">/</span> <span style="color:#099">2</span>)
 
-<span style="color:#ae81ff">0</span>
+<span style="color:#099">0</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> math<span style="color:#f92672">.</span>trunc(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> math<span style="color:#000;font-weight:bold">.</span>trunc(<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span> <span style="color:#000;font-weight:bold">/</span> <span style="color:#099">2</span>)
 
-<span style="color:#ae81ff">0</span>
+<span style="color:#099">0</span>
 
-</code></pre></div><h4 id="异常">异常</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="异常">异常</h4>
 <p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。</p>
 <p>捕获异常的语法由 except exc, var 改为 except exc as var。</p>
 <p>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
@@ -304,140 +425,301 @@ china
 <p>这个表现十分像生成器（比如。&ldquo;惰性求值&rdquo;）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。</p>
 <p>由于它的惰性求值，如果你不得不遍历它多次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。</p>
 <p>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">import</span> timeit
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">import</span> <span style="color:#555">timeit</span>
 
 
 
-n <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+n <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">10000</span>
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_range</span>(n):
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">test_range</span>(n):
 
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n):
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(n):
 
-        <span style="color:#66d9ef">pass</span>
-
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_xrange</span>(n):
-
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> xrange(n):
-
-        <span style="color:#66d9ef">pass</span>   
-
-</code></pre></div><p>Python 2</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;Python&#39;</span>, python_version()
+        <span style="color:#000;font-weight:bold">pass</span>
 
 
 
-<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">timing range()&#39;</span> 
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">test_xrange</span>(n):
 
-<span style="color:#f92672">%</span>timeit test_range(n)
+    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">xrange</span>(n):
 
+        <span style="color:#000;font-weight:bold">pass</span>   
 
-
-<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">timing xrange()&#39;</span> 
-
-<span style="color:#f92672">%</span>timeit test_xrange(n)
-
-
-
-Python <span style="color:#ae81ff">2.7</span><span style="color:#f92672">.</span><span style="color:#ae81ff">6</span>
-
-
-
-timing range()
-
-<span style="color:#ae81ff">1000</span> loops, best of <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">433</span> <span style="color:#960050;background-color:#1e0010">µ</span>s per loop
-
-
-
-
-
-timing xrange()
-
-<span style="color:#ae81ff">1000</span> loops, best of <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">350</span> <span style="color:#960050;background-color:#1e0010">µ</span>s per loop
-
-</code></pre></div><p>Python 3</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Python&#39;</span>, python_version())
-
-
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">timing range()&#39;</span>)
-
-<span style="color:#f92672">%</span>timeit test_range(n)
-
-
-
-Python <span style="color:#ae81ff">3.4</span><span style="color:#f92672">.</span><span style="color:#ae81ff">1</span>
-
-
-
-timing range()
-
-<span style="color:#ae81ff">1000</span> loops, best of <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">520</span> <span style="color:#960050;background-color:#1e0010">µ</span>s per loop
-
-
-
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#66d9ef">print</span>(xrange(<span style="color:#ae81ff">10</span>))
-
-<span style="color:#f92672">---------------------------------------------------------------------------</span>
-
-<span style="color:#a6e22e">NameError</span>                                 Traceback (most recent call last)
-
-<span style="color:#f92672">&lt;</span>ipython<span style="color:#f92672">-</span>input<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span><span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>d8f9b79ea70<span style="color:#f92672">&gt;</span> <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>()
-
-<span style="color:#f92672">----</span><span style="color:#960050;background-color:#1e0010">》</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">print</span>(xrange(<span style="color:#ae81ff">10</span>))
+</code></pre></td></tr></table>
+</div>
+</div><p>Python 2</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">print</span> <span style="color:#d14">&#39;Python&#39;</span>, python_version()
 
 
 
-<span style="color:#a6e22e">NameError</span>: name <span style="color:#e6db74">&#39;xrange&#39;</span> <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> defined
+<span style="color:#000;font-weight:bold">print</span> <span style="color:#d14">&#39;</span><span style="color:#d14">\n</span><span style="color:#d14">timing range()&#39;</span> 
 
-</code></pre></div><h4 id="八进制字面量表示">八进制字面量表示</h4>
+<span style="color:#000;font-weight:bold">%</span>timeit test_range(n)
+
+
+
+<span style="color:#000;font-weight:bold">print</span> <span style="color:#d14">&#39;</span><span style="color:#d14">\n\n</span><span style="color:#d14">timing xrange()&#39;</span> 
+
+<span style="color:#000;font-weight:bold">%</span>timeit test_xrange(n)
+
+
+
+Python <span style="color:#099">2.7</span><span style="color:#000;font-weight:bold">.</span><span style="color:#099">6</span>
+
+
+
+timing <span style="color:#0086b3">range</span>()
+
+<span style="color:#099">1000</span> loops, best of <span style="color:#099">3</span>: <span style="color:#099">433</span> <span style="color:#a61717;background-color:#e3d2d2">µ</span>s per loop
+
+
+
+
+
+timing <span style="color:#0086b3">xrange</span>()
+
+<span style="color:#099">1000</span> loops, best of <span style="color:#099">3</span>: <span style="color:#099">350</span> <span style="color:#a61717;background-color:#e3d2d2">µ</span>s per loop
+
+</code></pre></td></tr></table>
+</div>
+</div><p>Python 3</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">print</span>(<span style="color:#d14">&#39;Python&#39;</span>, python_version())
+
+
+
+<span style="color:#000;font-weight:bold">print</span>(<span style="color:#d14">&#39;</span><span style="color:#d14">\n</span><span style="color:#d14">timing range()&#39;</span>)
+
+<span style="color:#000;font-weight:bold">%</span>timeit test_range(n)
+
+
+
+Python <span style="color:#099">3.4</span><span style="color:#000;font-weight:bold">.</span><span style="color:#099">1</span>
+
+
+
+timing <span style="color:#0086b3">range</span>()
+
+<span style="color:#099">1000</span> loops, best of <span style="color:#099">3</span>: <span style="color:#099">520</span> <span style="color:#a61717;background-color:#e3d2d2">µ</span>s per loop
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">print</span>(<span style="color:#0086b3">xrange</span>(<span style="color:#099">10</span>))
+
+<span style="color:#000;font-weight:bold">---------------------------------------------------------------------------</span>
+
+<span style="color:#900;font-weight:bold">NameError</span>                                 Traceback (most recent call last)
+
+<span style="color:#000;font-weight:bold">&lt;</span>ipython<span style="color:#000;font-weight:bold">-</span><span style="color:#0086b3">input</span><span style="color:#000;font-weight:bold">-</span><span style="color:#099">5</span><span style="color:#000;font-weight:bold">-</span><span style="color:#099">5</span>d8f9b79ea70<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">in</span> <span style="color:#000;font-weight:bold">&lt;</span>module<span style="color:#000;font-weight:bold">&gt;</span>()
+
+<span style="color:#000;font-weight:bold">----</span><span style="color:#a61717;background-color:#e3d2d2">》</span> <span style="color:#099">1</span> <span style="color:#000;font-weight:bold">print</span>(<span style="color:#0086b3">xrange</span>(<span style="color:#099">10</span>))
+
+
+
+<span style="color:#900;font-weight:bold">NameError</span>: name <span style="color:#d14">&#39;xrange&#39;</span> <span style="color:#000;font-weight:bold">is</span> <span style="color:#000;font-weight:bold">not</span> defined
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="八进制字面量表示">八进制字面量表示</h4>
 <p>八进制数必须写成0o777，原来的形式0777不能用了；二进制必须写成0b111。</p>
 <p>新增了一个bin()函数用于将一个整数转换成二进制字串。 Python 2.6已经支持这两种语法。</p>
 <p>在Python 3.x中，表示八进制字面量的方式只有一种，就是0o1000。</p>
 <p>python 2.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">0</span>o1000
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#099">0</span>o1000
 
-<span style="color:#ae81ff">512</span>
+<span style="color:#099">512</span>
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">01000</span>
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#099">01000</span>
 
-<span style="color:#ae81ff">512</span>
+<span style="color:#099">512</span>
 
-</code></pre></div><p>python 3.x</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">01000</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>python 3.x</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#099">01000</span>
 
-  File <span style="color:#e6db74">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#ae81ff">1</span>
+  File <span style="color:#d14">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#099">1</span>
 
-    <span style="color:#ae81ff">01000</span>
+    <span style="color:#099">01000</span>
 
-        <span style="color:#f92672">^</span>
+        <span style="color:#000;font-weight:bold">^</span>
 
-<span style="color:#a6e22e">SyntaxError</span>: invalid token
+<span style="color:#900;font-weight:bold">SyntaxError</span>: invalid token
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#ae81ff">0</span>o1000
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#099">0</span>o1000
 
-<span style="color:#ae81ff">512</span>
+<span style="color:#099">512</span>
 
-</code></pre></div><h4 id="不等运算符">不等运算符</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="不等运算符">不等运算符</h4>
 <p>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</p>
 <p>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</p>
 <h4 id="去掉了repr表达式">去掉了repr表达式``</h4>
 <p>Python 2.x 中反引号``相当于repr函数的作用</p>
 <p>Python 3.x 中去掉了``这种写法，只允许使用repr函数，这样做的目的是为了使代码看上去更清晰么？不过我感觉用repr的机会很少，一般只在debug的时候才用，多数时候还是用str函数来用字符串描述对象。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sendMail</span>(from_: str, to: str, title: str, body: str) <span style="color:#f92672">-&gt;</span> bool:
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">sendMail</span>(from_: <span style="color:#0086b3">str</span>, to: <span style="color:#0086b3">str</span>, title: <span style="color:#0086b3">str</span>, body: <span style="color:#0086b3">str</span>) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">bool</span>:
 
-    <span style="color:#66d9ef">pass</span>
+    <span style="color:#000;font-weight:bold">pass</span>
 
-</code></pre></div><h4 id="多个模块被改名根据pep8">多个模块被改名（根据PEP8）</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="多个模块被改名根据pep8">多个模块被改名（根据PEP8）</h4>
 <p>| 旧的名字 | 新的名字 |</p>
 <p>| &mdash; | &mdash; |</p>
 <p>| _winreg | winreg |</p>
@@ -458,37 +740,95 @@ timing range()
 <p>新增了bytes类型，对应于2.X版本的八位串，定义一个bytes字面量的方法如下：</p>
 </li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> b <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;china&#39;</span> 
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> b <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">b</span><span style="color:#d14">&#39;china&#39;</span> 
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> type(b) 
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> <span style="color:#0086b3">type</span>(b) 
 
-<span style="color:#f92672">&lt;</span>type <span style="color:#e6db74">&#39;bytes&#39;</span><span style="color:#f92672">&gt;</span> 
+<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#0086b3">type</span> <span style="color:#d14">&#39;bytes&#39;</span><span style="color:#000;font-weight:bold">&gt;</span> 
 
-</code></pre></div><p>str对象和bytes对象可以使用.encode() (str -&gt; bytes) or .decode() (bytes -&gt; str)方法相互转化。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">&gt;&gt;&gt;</span> s <span style="color:#f92672">=</span> b<span style="color:#f92672">.</span>decode() 
+</code></pre></td></tr></table>
+</div>
+</div><p>str对象和bytes对象可以使用.encode() (str -&gt; bytes) or .decode() (bytes -&gt; str)方法相互转化。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> s <span style="color:#000;font-weight:bold">=</span> b<span style="color:#000;font-weight:bold">.</span>decode() 
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> s 
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> s 
 
-<span style="color:#e6db74">&#39;china&#39;</span> 
+<span style="color:#d14">&#39;china&#39;</span> 
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> b1 <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>encode() 
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> b1 <span style="color:#000;font-weight:bold">=</span> s<span style="color:#000;font-weight:bold">.</span>encode() 
 
-<span style="color:#f92672">&gt;&gt;&gt;</span> b1 
+<span style="color:#000;font-weight:bold">&gt;&gt;&gt;</span> b1 
 
-<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;china&#39;</span> 
+<span style="color:#d14">b</span><span style="color:#d14">&#39;china&#39;</span> 
 
-</code></pre></div><ol start="3">
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
 <li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。</li>
 </ol>
 
         </div>
 
         
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://siskinc.github.io/">Daryl</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://siskinc.github.io/post/Python3_%E5%92%8C_Python2%E7%9A%84%E5%8C%BA%E5%88%AB/">https://siskinc.github.io/post/Python3_%E5%92%8C_Python2%E7%9A%84%E5%8C%BA%E5%88%AB/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
 
 
         
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/%E5%85%B3%E4%BA%8EPython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">关于Python的导入覆盖解决办法</a></li>
+        
+        <li><a href="/post/Python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/">Python使用datetime来判断近七天</a></li>
+        
+        <li><a href="/post/Golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">Golang mgo 模糊查询的使用</a></li>
+        
+        <li><a href="/post/%E5%85%B3%E4%BA%8EBasic_Latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">关于Basic Latin踩到的一些坑</a></li>
+        
+        <li><a href="/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/">mysql查看数据库和表的占用空间大小</a></li>
+        
+    </ul>
+</div>
 
 
         <div class="post-meta meta-tags">
@@ -544,16 +884,31 @@ timing range()
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -566,7 +921,7 @@ timing range()
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -574,11 +929,11 @@ timing range()
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -586,23 +941,23 @@ timing range()
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -614,35 +969,35 @@ timing range()
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -661,15 +1016,19 @@ timing range()
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -723,9 +1082,9 @@ timing range()
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -771,8 +1130,6 @@ timing range()
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -790,8 +1147,6 @@ timing range()
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

@@ -13,7 +13,7 @@
       <pubDate>Tue, 17 Dec 2019 19:36:31 +0000</pubDate>
       
       <guid>https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/</guid>
-      <description>rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&amp;#34;scan have an err: %v, sql string: %s&amp;#34;, err, sqlStr) } } </description>
+      <description>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31  rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.</description>
     </item>
     
     <item>

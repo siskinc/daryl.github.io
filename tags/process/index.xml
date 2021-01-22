@@ -9,10 +9,10 @@
     <lastBuildDate>Sat, 24 Aug 2019 08:06:58 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/process/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux进程的五个段</title>
-      <link>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</link>
+      <link>https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</link>
       <pubDate>Sat, 24 Aug 2019 08:06:58 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</guid>
+      <guid>https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/</guid>
       <description>数据段  用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；
  代码段  代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&amp;mdash;&amp;ndash;它是不可写的；
  BSS段  包含了程序中未初始化的全局变量，在内存中bss段全部置零；

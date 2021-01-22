@@ -9,11 +9,11 @@
     <lastBuildDate>Thu, 25 Jul 2019 20:34:24 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/mac/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux or Mac 重启网络</title>
-      <link>https://siskinc.github.io/post/linux_or_mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/</link>
+      <link>https://siskinc.github.io/post/Linux_or_Mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/</link>
       <pubDate>Thu, 25 Jul 2019 20:34:24 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/linux_or_mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/</guid>
-      <description>Mac sudo ifconfig en0 down sudo ifconfig en0 up Linux /etc/init.d/networking restart</description>
+      <guid>https://siskinc.github.io/post/Linux_or_Mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/</guid>
+      <description>Mac 1 2 3 4 5  sudo ifconfig en0 down sudo ifconfig en0 up   Linux /etc/init.d/networking restart</description>
     </item>
     
   </channel>

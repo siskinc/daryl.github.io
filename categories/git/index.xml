@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Git on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/categories/git/</link>
+    <link>https://siskinc.github.io/categories/Git/</link>
     <description>Recent content in Git on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Dec 2019 22:40:31 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 Dec 2019 22:40:31 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/categories/Git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>git使用ssh自动替代https</title>
       <link>https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/</link>
@@ -14,8 +14,8 @@
       
       <guid>https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/</guid>
       <description> 在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
- 本地执行git命令: git config --global url.&amp;#34;git@github.com:&amp;#34;.insteadOf &amp;#34;https://github.com/&amp;#34; git config --global url.&amp;#34;git@git.company.com:&amp;#34;.insteadOf &amp;#34;https://git.company.com/&amp;#34;  company.com换成你自己公司的地址即可。
-  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： git config --global url.&amp;#34;git@github.com:golang/&amp;#34;.insteadOf &amp;#34;https://go.googlesource.com/&amp;#34; </description>
+ 本地执行git命令: 1 2 3 4 5  git config --global url.&amp;#34;git@github.com:&amp;#34;.insteadOf &amp;#34;https://github.com/&amp;#34; git config --global url.&amp;#34;git@git.company.com:&amp;#34;.insteadOf &amp;#34;https://git.company.com/&amp;#34;    company.com换成你自己公司的地址即可。
+  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： 1 2 3  git config --global url.&amp;#34;git@github.com:golang/&amp;#34;.insteadOf &amp;#34;https://go.googlesource.com/&amp;#34;   </description>
     </item>
     
   </channel>

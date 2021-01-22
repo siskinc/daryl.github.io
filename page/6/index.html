@@ -7,12 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
-    <title>Daryl&#39;s Blog | </title>
-    <meta property="og:title" content="Daryl&#39;s Blog | ">
+    <title>Daryl&#39;s Blog | 专注于Go语言(golang)、Python、项目管理、软件架构</title>
+    <meta property="og:title" content="Daryl&#39;s Blog | 专注于Go语言(golang)、Python、项目管理、软件架构">
     <meta property="og:type" content="website">
-    <meta name="Keywords" content="">
-    <meta name="description" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
+    <meta name="description" content="专注于IT互联网，包括但不限于Go语言(golang)、Python、项目管理、软件架构等">
     <meta property="og:url" content="https://siskinc.github.io/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
@@ -26,6 +28,10 @@
     
     
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -42,7 +48,7 @@
                         </a>
                     </h1>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -75,12 +81,12 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/docker'>Docker</a></span>
+            <span class="meta-category"><a href='/categories/Docker'>Docker</a></span>
             
         </div>
         
         <div class="post-content">
-            sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &#34;ss-server&#34; -s &#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&#34; -x -e &#34;kcpserver&#34; -k &#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&#34; ……
+            1 2 3  sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &#34;ss-server&#34; -s &#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&#34; -x -e &#34;kcpserver&#34; -k &#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&#34;   ……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/docker%E4%B8%80%E9%94%AEss/">阅读全文</a></p>
     </article>
@@ -88,7 +94,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/linux_or_mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/" title="Linux or Mac 重启网络">Linux or Mac 重启网络</a>
+                <a href="https://siskinc.github.io/post/Linux_or_Mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/" title="Linux or Mac 重启网络">Linux or Mac 重启网络</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -96,9 +102,9 @@
         </date>
         
         <div class="post-content">
-            Mac sudo ifconfig en0 down sudo ifconfig en0 up Linux /etc/init.d/networking restart……
+            Mac 1 2 3 4 5  sudo ifconfig en0 down sudo ifconfig en0 up   Linux /etc/init.d/networking restart……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/linux_or_mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/Linux_or_Mac_%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C/">阅读全文</a></p>
     </article>
     
     <article class="post">
@@ -114,7 +120,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            <span class="meta-category"><a href='/categories/Python'>Python</a></span>
             
         </div>
         
@@ -140,7 +146,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/algorithm'>Algorithm</a></span>
+            <span class="meta-category"><a href='/categories/Algorithm'>Algorithm</a></span>
             
         </div>
         
@@ -148,7 +154,7 @@
             原理  首先取出查找表中每个关键字及其对应的权值，采用如下公式计算出每个关键字对应的一个值：
   其中 wj 表示每个关键字的权值（被查找到的概率），h 表示关键字的个数。
  表中有多少关键字，就会有多少个 △Pi ，取其中最小的做为次优查找树的根结点，然后将表中关键字从第 i 个关键字的位置分成两部分，分别作为该根结点的左子树和右子树。同理，左子树和右子树也这么处理，直到最后构成次优查找树完成。
-typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemType;//定义元素类型  typedef struct BiTNode{ ElemType data; struct BiTNode *lchild, *rchild; }BiTNode, *BiTree; //定义变量  int i; int min; int dw; //创建次优查找树，R数组为查找表，sw数组为存储的各关键字的概率（权值），low和high表示的sw数组中的权值的范围  void SecondOptimal(BiTree T, ElemType R[], float sw[], int low, int high){ //由有序表R[low...high]及其累计权值表sw（其中sw[0]==0）递归构造次优查找树  i = low; min = abs(sw[high] - sw[low]); dw = sw[high] + sw[low - 1]; //选择最小的△Pi值  for (int j = low+1; j &lt;=high; j++){ if (abs(dw-sw[j]-sw[j-1])&lt;min){ i = j; min = abs(dw - sw[j] - sw[j - 1]); } } T = (BiTree)malloc(sizeof(BiTNode)); T-&gt;data = R[i];//生成结点（第一次生成根）  if (i == low) T-&gt;lchild = NULL;//左子树空  else SecondOptimal(T-&gt;lchild, R, sw, low, i - 1);//构造左子树  if (i == high) T-&gt;rchild = NULL;//右子树空  else SecondOptimal(T-&gt;rchild, R, sw, i + 1, high);//构造右子树  } 完整事例演示 例如，一含有 9 个关键字的查找表及其相应权值如下表所示：……
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71  typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemType;//定义元素类型  typedef struct BiTNode{ ElemType data; struct BiTNode *lchild, *rchild; }BiTNode, *BiTree; //定义变量  int i; int min; int dw; //创建次优查找树，R数组为查找表，sw数组为存储的各关键字的概率（权值），low和high表示的sw数组中的权值的范围  void SecondOptimal(BiTree T, ElemType R[], float sw[], int low, int high){ //由有序表R[low.……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">阅读全文</a></p>
     </article>
@@ -166,7 +172,7 @@ typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemT
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/algorithm'>Algorithm</a></span>
+            <span class="meta-category"><a href='/categories/Algorithm'>Algorithm</a></span>
             
         </div>
         
@@ -212,8 +218,8 @@ typedef int KeyType;//定义关键字类型  typedef struct{ KeyType key; }ElemT
         </div>
         
         <div class="post-content">
-            使用 npm install vue-lazyload --save //注册插件  import vueLazyload from &#39;vue-lazyload&#39; Vue.use(vueLazyload); //在需要懒加载的图片上 &lt;img v-lazy=&#34;imgUrl&#34;&gt; 参数说明 注册插件的时候，是可以传入第二个配置参数的
-Vue.use(vueLazyload,{}) 可选的参数如下：
+            使用 1 2 3  npm install vue-lazyload --save   1 2 3 4 5 6 7  //注册插件  import vueLazyload from &#39;vue-lazyload&#39; Vue.use(vueLazyload);   1 2 3 4 5  //在需要懒加载的图片上 &lt;img v-lazy=&#34;imgUrl&#34;&gt;   参数说明 注册插件的时候，是可以传入第二个配置参数的
+1 2 3  Vue.use(vueLazyload,{})   可选的参数如下：
 preLoad:类型Number,默认1.3. 表示lazyload的元素距离页面底部距离的百分比.计算值为(preload - 1).
 attempt:图片加载失败后的重试次数.默认为3.
 error:类型string.图片加载失败后的显示的失败图片路径.
@@ -221,9 +227,7 @@ loading:类型string.图片正在加载中显示的loading图片的路径.
 listenEvents:类型array.默认[&lsquo;scroll&rsquo;, &lsquo;wheel&rsquo;, &lsquo;mousewheel&rsquo;, &lsquo;resize&rsquo;, &lsquo;animationend&rsquo;, &lsquo;transitionend&rsquo;, &lsquo;touchmove&rsquo;].即是在监听上述事件中,判断图片是否在preload的位置.如果你不想在那么多事件中判断,可以指定一个或者几个.例如如果你给这个属性只指定[&lsquo;touchmove&rsquo;].那么scroll 屏幕不会加载图片,只有手指滑动屏幕才会加载图片.
 adapter:注册img 的loading,loaded,error三个状态的回调函数,参数会暴露懒加载的img元素,可以对其进行操作.
 filter: img未加载之前,解析到src 的时候注册的回调函数.可以在加载图片之前,对src进行修改.注册在filter下的所有的函数都会执行
-lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.挖坑(vue懒加载组件)
-observer:是否启用IntersectionObserver,这个api有兼容问题
-observerOptions:默认{ rootMargin: &lsquo;0px&rsquo;, threshold: 0.1 } 主要是我对这个pai不熟,按照vue-lazyload的说法是开启之后,对很多节点的情况会优化性能.挖坑吧……
+lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.……
         </div>
         <p class="readmore"><a href="https://siskinc.github.io/post/vue-lazyload%E6%8F%92%E4%BB%B6/">阅读全文</a></p>
     </article>
@@ -241,7 +245,7 @@ observerOptions:默认{ rootMargin: &lsquo;0px&rsquo;, threshold: 0.1 } 主要�
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            <span class="meta-category"><a href='/categories/Python'>Python</a></span>
             
         </div>
         
@@ -256,7 +260,7 @@ observerOptions:默认{ rootMargin: &lsquo;0px&rsquo;, threshold: 0.1 } 主要�
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/" title="Python 同级目录import报错">Python 同级目录import报错</a>
+                <a href="https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/" title="Python 同级目录import报错">Python 同级目录import报错</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -266,22 +270,22 @@ observerOptions:默认{ rootMargin: &lsquo;0px&rsquo;, threshold: 0.1 } 主要�
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            <span class="meta-category"><a href='/categories/Python'>Python</a></span>
             
         </div>
         
         <div class="post-content">
              在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
  解决方法如下，在__init__文件中加入以下代码:
-import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) ……
+1 2 3 4 5 6 7  import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;))   ……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/Python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/" title="flask返回自定义的Response">flask返回自定义的Response</a>
+                <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84Response/" title="flask返回自定义的Response">flask返回自定义的Response</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -291,20 +295,20 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            <span class="meta-category"><a href='/categories/Python'>Python</a></span>
             
         </div>
         
         <div class="post-content">
             from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=''):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype='application/json')class JSONResponse(Response):def __init__(self, data, msg=''):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype='application/json')class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&quot;need login&quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype='application/json', status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84Response/">阅读全文</a></p>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/" title="Gin上传文件到MongoDB gridfs">Gin上传文件到MongoDB gridfs</a>
+                <a href="https://siskinc.github.io/post/Gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0MongoDB_gridfs/" title="Gin上传文件到MongoDB gridfs">Gin上传文件到MongoDB gridfs</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -314,14 +318,14 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            <span class="meta-category"><a href='/categories/Go'>Go</a></span>
             
         </div>
         
         <div class="post-content">
-            上传图片 func imagePost(c *gin.Context) { image, err := c.FormFile(&#34;file&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } fileImage, err := image.Open() if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } defer fileImage.Close() imageGridFS, err := model.GetGridFS(&#34;image&#34;) if err != nil { errMsg := err.Error() logger.Error(errMsg) autorestapi.RespErr(c, errMsg) return } now := self_time.GetNowTimeStamp() nowStr := strconv.FormatInt(now, 10) file, err := imageGridFS.Create(nowStr) if err !……
+            上传图片 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103  func imagePost(c *gin.……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0mongodb_gridfs/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/Gin%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0MongoDB_gridfs/">阅读全文</a></p>
     </article>
     
     
@@ -408,16 +412,31 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -430,7 +449,7 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -438,11 +457,11 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -450,23 +469,23 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -478,35 +497,35 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -525,15 +544,19 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -587,9 +610,9 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -635,8 +658,6 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -654,8 +675,6 @@ import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;)) �
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

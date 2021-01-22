@@ -6,22 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>Go | Daryl&#39;s Blog</title>
     <meta property="og:title" content="Go - Daryl&#39;s Blog">
     <meta property="og:type" content="article">
         
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="Go">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/categories/go/">
+    <meta property="og:url" content="https://siskinc.github.io/categories/Go/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/categories/go/index.xml" title="Daryl's Blog" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/categories/Go/index.xml" title="Daryl's Blog" />
     <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -29,6 +31,10 @@
     
     
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -43,7 +49,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -84,14 +90,14 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
         <div class="post-content">
             主要没看见啥好的文档讲解，自己翻了翻源码，记录一下用法，见笑了
  原理 在调用pipeline每次append命令时，会返回一个对应的xxxxCmd对象指针，保留这个指针即可，在Exec()函数执行完成后，会将结果写入对应的对象内
-demo package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.com/go-redis/redis/v8&#34; ) var ( client *redis.Client ) func init() { client = redis.NewClient(&amp;redis.Options{ Addr: &#34;local.arch:6379&#34;, }) } func batchSet() { pipeline := client.Pipeline() ctx := context.Background() for i := 0; i &lt; 100; i++ { key := fmt.Sprintf(&#34;%d&#34;, i) pipeline.HSet(ctx, key, map[string]interface{}{key: key}) } _, err := pipeline.Exec(ctx) if err != nil { panic(err) } } func batchGet() { pipeline := client.……
+demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107  package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.……
             <p class="readmore"><a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/">阅读全文</a></p>
         </div>
     </article>
@@ -99,7 +105,7 @@ demo package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.com/go-re
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">Golang map数据结构接受json中的uint64数据</a>
+                <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">Golang map数据结构接受json中的uint64数据</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -109,27 +115,22 @@ demo package main import ( &#34;context&#34; &#34;fmt&#34; &#34;github.com/go-re
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
         <div class="post-content">
             例如有一个json数据：
-{ &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } 但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
-package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct { Name string `json:&#34;name&#34;` Money uint64 `json:&#34;money&#34;` } func main() { info := &amp;Info{} json.Unmarshal([]byte(` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 }`), info) fmt.Println(info) } 但是在某些情况下，你不得不用一个map去接收数据怎么办？
-有几个坑需要注意一下：
-  JSON的规范中，对于数字类型，并不区分是整型还是浮点型。
-  如果反序列化不指定结构体类型或者变量类型，则JSON中的数字类型，默认被反序列化成float64类型
-  如何解决这个问题，先看下面程序：
-package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#34;strings&#34; ) func main() { const jsonStream = ` { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 } ` decoder := json.……
-            <p class="readmore"><a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">阅读全文</a></p>
+1 2 3 4 5 6 7 8 9  { &#34;name&#34;: &#34;小明&#34;, &#34;money&#34;: 1111111111111111111 }   但是小明很有钱，他的钱用int64是存储不下来的，如果我们用一个结构体来接受数据就很简单，例如：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43  package main import ( &#34;encoding/json&#34; &#34;fmt&#34; ) type Info struct { Name string `json:&#34;name&#34;` Money uint64 `json:&#34;money&#34;` } func main() { info := &amp;Info{} json.……
+            <p class="readmore"><a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/">Golang源码阅读之map</a>
+                <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/">Golang源码阅读之map</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -139,7 +140,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
@@ -148,14 +149,14 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
 描述   Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。
   Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。
   ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Golang重复对一个slice进行append造成数据错误</a>
+                <a href="https://siskinc.github.io/post/Golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">Golang重复对一个slice进行append造成数据错误</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -165,7 +166,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
@@ -175,8 +176,8 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
   那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
 问题实例 slice的cap是怎么增长的   参考文章:How does Go slice capacity change on append? [duplicate]
   有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go
-  slice的结构 type slice struct { array unsafe.Pointer len int cap int } 多次append造成的数据错误 代码 package main import &#34;fmt&#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&#34;temp&#34;, temp) temp = append(temp, 2) printSlice(&#34;temp&#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&#34;temp&#34;, temp) temp2 := append(temp, 4) printSlice(&#34;temp2&#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&#34;temp4&#34;, temp4) temp3 := append(temp, 5) printSlice(&#34;temp3&#34;, temp3) printSlice(&#34;temp2&#34;, temp2) } func printSlice(valName string, s []int) { fmt.……
-            <p class="readmore"><a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">阅读全文</a></p>
+  slice的结构 1 2 3 4 5 6 7 8 9 10 11  type slice struct { array unsafe.Pointer len int cap int }   多次append造成的数据错误 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45  package main import &#34;fmt&#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&#34;temp&#34;, temp) temp = append(temp, 2) printSlice(&#34;temp&#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&#34;temp&#34;, temp) temp2 := append(temp, 4) printSlice(&#34;temp2&#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&#34;temp4&#34;, temp4) temp3 := append(temp, 5) printSlice(&#34;temp3&#34;, temp3) printSlice(&#34;temp2&#34;, temp2) } func printSlice(valName string, s []int) { fmt.……
+            <p class="readmore"><a href="https://siskinc.github.io/post/Golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">阅读全文</a></p>
         </div>
     </article>
     
@@ -193,12 +194,12 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
         <div class="post-content">
-            rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.Fatalf(&#34;scan have an err: %v, sql string: %s&#34;, err, sqlStr) } } ……
+            1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31  rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.……
             <p class="readmore"><a href="https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/">阅读全文</a></p>
         </div>
     </article>
@@ -206,7 +207,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Golang交叉编译</a>
+                <a href="https://siskinc.github.io/post/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Golang交叉编译</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -216,15 +217,13 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
         <div class="post-content">
-            Mac 下编译 Linux 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Linux 下编译 Mac 和 Windows 64位可执行程序 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go   GOOS：目标平台的操作系统（darwin、freebsd、linux、windows）
-  GOARCH：目标平台的体系架构（386、amd64、arm）
-  交叉编译不支持 CGO 所以要禁用它……
-            <p class="readmore"><a href="https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">阅读全文</a></p>
+            Mac 下编译 Linux 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Linux 下编译 Mac 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.……
+            <p class="readmore"><a href="https://siskinc.github.io/post/Golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">阅读全文</a></p>
         </div>
     </article>
     
@@ -241,7 +240,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
@@ -254,7 +253,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">golang http.client 的 Connection reset by peer 问题</a>
+                <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_Connection_reset_by_peer_%E9%97%AE%E9%A2%98/">golang http.client 的 Connection reset by peer 问题</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -264,13 +263,13 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
         <div class="post-content">
-            func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Close = true resp, err := http.Client.Do(req) } func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Header.Add(&#34;Connection&#34;, &#34;close&#34;) resp, err := http.Client.Do(req) } func main() { tr := http.Transport{DisableKeepAlives: true} client := http.Client{Transport: &amp;tr} resp, err := client.Get(&#34;https://www.baidu.com/&#34;) if resp != nil { defer resp.Body.Close() } checkError(err) fmt.……
-            <p class="readmore"><a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">阅读全文</a></p>
+            1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Close = true resp, err := http.Client.Do(req) }   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err !……
+            <p class="readmore"><a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_Connection_reset_by_peer_%E9%97%AE%E9%A2%98/">阅读全文</a></p>
         </div>
     </article>
     
@@ -287,7 +286,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
@@ -297,7 +296,7 @@ package main import ( &#34;encoding/json&#34; &#34;fmt&#34; &#34;strconv&#34; &#
 今天查看公司某kafka group消费情况的时候，发现该group消费的topic大多数的message写入了同一个partition，先从配置问题查找，后来又去看公司包装的kafka的库的源码查找，看起来都没啥问题。
 并且，该问题就出现在一个服务里面，很是让人迷惑。该服务和其他服务最大的不同在于，它每一次都只会发送一个message给kafka。
 先看看，kafka-go的demo：
-w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, }) 第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
+1 2 3 4 5 6 7 8 9 10 11  w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, })   第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
 因为代码是每次都发送一个message，每次都是一个新的Balancer，所以Balancer每次只需Balance的状态都是一致，所以会造成只写入一个partition中。
 总结一下，这个问题可大可小，数据量不大，程序抗得住当然没什么，但是总有一天会扛不住。所以奉劝一句，写完代码记得认认真真测试，程序跑得起来不代表正确。……
             <p class="readmore"><a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">阅读全文</a></p>
@@ -307,7 +306,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">golang自动调用结构体中内嵌字段的Init()函数</a>
+                <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84Init%E5%87%BD%E6%95%B0/">golang自动调用结构体中内嵌字段的Init()函数</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -317,13 +316,13 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/go'>Go</a>
+            <a href='/categories/Go'>Go</a>
             
         </div>
         
         <div class="post-content">
-            package main import ( &#34;fmt&#34; &#34;reflect&#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.ValueOf(c) if rv.Kind() == reflect.Ptr { rv = rv.Elem() } for i := 0; i &lt; rv.NumField(); i++ { value := rv.Field(i) if conf, ok := value.Interface().(initial); ok { conf.Init() } } } type A struct { } func (a *A) Init() { fmt.Println(&#34;Init A&#34;) } type B struct { AA *A } func main() { b := B{} triggerInitials(b) } ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">阅读全文</a></p>
+            1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81  package main import ( &#34;fmt&#34; &#34;reflect&#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.……
+            <p class="readmore"><a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84Init%E5%87%BD%E6%95%B0/">阅读全文</a></p>
         </div>
     </article>
     
@@ -337,17 +336,17 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
 
     
     <li  class="current">
-        <a href="https://siskinc.github.io/categories/go/">1</a>
+        <a href="https://siskinc.github.io/categories/Go/">1</a>
     </li>
     
     <li >
-        <a href="https://siskinc.github.io/categories/go/page/2/">2</a>
+        <a href="https://siskinc.github.io/categories/Go/page/2/">2</a>
     </li>
     
 
     
     <li class="next">
-        <a href="https://siskinc.github.io/categories/go/page/2/">下一页</a>
+        <a href="https://siskinc.github.io/categories/Go/page/2/">下一页</a>
     </li>
     
 </ol>
@@ -380,16 +379,31 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -402,7 +416,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -410,11 +424,11 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -422,23 +436,23 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -450,35 +464,35 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -497,15 +511,19 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -559,9 +577,9 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -607,8 +625,6 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -626,8 +642,6 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>Redis源码阅读-dict | Daryl&#39;s Blog</title>
     <meta property="og:title" content="Redis源码阅读-dict - Daryl&#39;s Blog">
@@ -16,11 +18,11 @@
         
     <meta property="article:modified_time" content='2020-04-21T23:23:41&#43;08:00'>
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="Redis源码阅读-dict">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/">
+    <meta property="og:url" content="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -32,6 +34,10 @@
     
     
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -46,7 +52,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -202,10 +208,15 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
+            <span class="meta-category"><a href='/categories/Redis'>Redis</a></span>
             
         </div>
         
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
         
         
         <div class="clear" style="display: none">
@@ -217,93 +228,193 @@
         <div class="post-content">
             <h2 id="数据结构">数据结构</h2>
 <h3 id="字典的基本单元dictentry">字典的基本单元——<code>dictEntry</code></h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictEntry {
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> dictEntry {
 
-    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key;
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key;
 
-    <span style="color:#66d9ef">union</span> {
+    <span style="color:#000;font-weight:bold">union</span> {
 
-        <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>val;
+        <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>val;
 
         uint64_t u64;
 
         int64_t s64;
 
-        <span style="color:#66d9ef">double</span> d;
+        <span style="color:#458;font-weight:bold">double</span> d;
 
     } v;
 
-    <span style="color:#66d9ef">struct</span> dictEntry <span style="color:#f92672">*</span>next;
+    <span style="color:#000;font-weight:bold">struct</span> dictEntry <span style="color:#000;font-weight:bold">*</span>next;
 
 } dictEntry;
 
-</code></pre></div><p>dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。</p>
 <h3 id="哈希表dictht">哈希表——<code>dictht</code></h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">/* This is our hash table structure. Every dictionary has two of this as we
-</span><span style="color:#75715e">
-</span><span style="color:#75715e"> * implement incremental rehashing, for the old to the new table. */</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#998;font-style:italic">/* This is our hash table structure. Every dictionary has two of this as we
+</span><span style="color:#998;font-style:italic">
+</span><span style="color:#998;font-style:italic"> * implement incremental rehashing, for the old to the new table. */</span>
 
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictht {
+<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> dictht {
 
-    dictEntry <span style="color:#f92672">**</span>table;
+    dictEntry <span style="color:#000;font-weight:bold">**</span>table;
 
-    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> size;
+    <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">long</span> size;
 
-    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> sizemask;
+    <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">long</span> sizemask;
 
-    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> used;
+    <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">long</span> used;
 
 } dictht;
 
-</code></pre></div><p>从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>从注释可以明显看出，这个结构是redis的哈希表结构，每个字典都会有两个哈希表元素，以便于在rehashing的时候从旧的哈希表将数据迁移到新的哈希表中。</p>
 <p>再观察，第一个字段table，其实就是一个dictEntry的指针列表，size代表table的长度，used代表table当前存储的dictEntry(注意，假如size==8,used==8,这不代表table的每个元素都不为NULL，因为算出来的hash可能会碰撞，hash和sizemask相与后可能会再一次碰撞)，sizemask作用就是保证hash后的值，能够落入table的范围内，其实说白了，就是求某一个key落入到dictht的哪个index里面，具体操作要看函数<code>_dictKeyIndex</code>。里面有一行代码是<code>idx = hash &amp; d-&gt;ht[table].sizemask;</code>，这个就是sizemask的主要作用。关于size,sizemask,在<code>dictExpand</code>可以看到对其赋值，size就是创建的table长度，sizemask是size-1。</p>
 <p>根据<code>dictht</code>和<code>dictEntry</code>的结构其实我们可以推论出一个事情，那就是redis的哈希表实现几乎就是最简单的哈希实现，数组加上链表，如果哈希碰撞，其实是一个灾难性的发生。为什么不使用数据加上红黑树的实现方式呢？下面图是来自于网络，最简单的哈希实现方式：</p>
 <p><a href="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png">
         <img class="mx-auto" alt="" src="https://www.daryl.top/wp-content/uploads/2020/04/aef35373f8e526df3c5862daca8a2a6f.png" />   
     </a></p>
 <h3 id="字典的类型dicttype">字典的类型——dictType</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictType {
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> dictType {
 
-    uint64_t (<span style="color:#f92672">*</span>hashFunction)(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+    uint64_t (<span style="color:#000;font-weight:bold">*</span>hashFunction)(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>keyDup)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>(<span style="color:#000;font-weight:bold">*</span>keyDup)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>valDup)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>obj);
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>(<span style="color:#000;font-weight:bold">*</span>valDup)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>obj);
 
-    <span style="color:#66d9ef">int</span> (<span style="color:#f92672">*</span>keyCompare)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key1, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key2);
+    <span style="color:#458;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">*</span>keyCompare)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key1, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key2);
 
-    <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>keyDestructor)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+    <span style="color:#458;font-weight:bold">void</span> (<span style="color:#000;font-weight:bold">*</span>keyDestructor)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-    <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>valDestructor)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>obj);
+    <span style="color:#458;font-weight:bold">void</span> (<span style="color:#000;font-weight:bold">*</span>valDestructor)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>obj);
 
 } dictType;
 
-</code></pre></div><p>其实光看这里真的看不出来啥，看看咋用的吧，在server.c文件中，有一堆声明，我就随意拿一个出来了：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">/* Generic hash table type where keys are Redis Objects, Values
-</span><span style="color:#75715e">
-</span><span style="color:#75715e"> * dummy pointers. */</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>其实光看这里真的看不出来啥，看看咋用的吧，在server.c文件中，有一堆声明，我就随意拿一个出来了：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#998;font-style:italic">/* Generic hash table type where keys are Redis Objects, Values
+</span><span style="color:#998;font-style:italic">
+</span><span style="color:#998;font-style:italic"> * dummy pointers. */</span>
 
-dictType objectKeyPointerValueDictType <span style="color:#f92672">=</span> {
+dictType objectKeyPointerValueDictType <span style="color:#000;font-weight:bold">=</span> {
 
-    dictEncObjHash,            <span style="color:#75715e">/* hash function */</span>
+    dictEncObjHash,            <span style="color:#998;font-style:italic">/* hash function */</span>
 
-    NULL,                      <span style="color:#75715e">/* key dup */</span>
+    <span style="color:#0086b3">NULL</span>,                      <span style="color:#998;font-style:italic">/* key dup */</span>
 
-    NULL,                      <span style="color:#75715e">/* val dup */</span>
+    <span style="color:#0086b3">NULL</span>,                      <span style="color:#998;font-style:italic">/* val dup */</span>
 
-    dictEncObjKeyCompare,      <span style="color:#75715e">/* key compare */</span>
+    dictEncObjKeyCompare,      <span style="color:#998;font-style:italic">/* key compare */</span>
 
-    dictObjectDestructor,      <span style="color:#75715e">/* key destructor */</span>
+    dictObjectDestructor,      <span style="color:#998;font-style:italic">/* key destructor */</span>
 
-    NULL                       <span style="color:#75715e">/* val destructor */</span>
+    <span style="color:#0086b3">NULL</span>                       <span style="color:#998;font-style:italic">/* val destructor */</span>
 
 };
 
-</code></pre></div><p>看注释基本还是能看明白：</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>看注释基本还是能看明白：</p>
 <ul>
 <li>
 <p><code>hashFunction</code>是将key哈希化的函数</p>
@@ -326,22 +437,43 @@ dictType objectKeyPointerValueDictType <span style="color:#f92672">=</span> {
 </ul>
 <p>这个结构咋理解呢？想想python里面的<code>__hash__</code>函数，它其实就对应的是<code>hashFunction</code>，又例如golang中新建一个map[string]uint64,其实就已经隐含了key和value的拷贝，对比了。当然，对于redis这种主力是c语言来说，对于不需要的变量，理所当然需要一个释放内存的操作。只是说其他语言不需要是因为有GC的原因。</p>
 <h3 id="主角字典结构">主角——字典结构</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dict {
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> dict {
 
-    dictType <span style="color:#f92672">*</span>type;
+    dictType <span style="color:#000;font-weight:bold">*</span>type;
 
-    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata;
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata;
 
-    dictht ht[<span style="color:#ae81ff">2</span>];
+    dictht ht[<span style="color:#099">2</span>];
 
-    <span style="color:#66d9ef">long</span> rehashidx; <span style="color:#75715e">/* rehashing not in progress if rehashidx == -1 */</span>
+    <span style="color:#458;font-weight:bold">long</span> rehashidx; <span style="color:#998;font-style:italic">/* rehashing not in progress if rehashidx == -1 */</span>
 
-    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> iterators; <span style="color:#75715e">/* number of iterators currently running */</span>
+    <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">long</span> iterators; <span style="color:#998;font-style:italic">/* number of iterators currently running */</span>
 
 } dict;
 
-</code></pre></div><ul>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>
 <p>type字段，是为了保存字典操作key和value的增删查改的函数的。</p>
 </li>
@@ -356,317 +488,710 @@ dictType objectKeyPointerValueDictType <span style="color:#f92672">=</span> {
 </li>
 </ul>
 <h3 id="迭代器">迭代器</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictIterator {
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> dictIterator {
 
-    dict <span style="color:#f92672">*</span>d;
+    dict <span style="color:#000;font-weight:bold">*</span>d;
 
-    <span style="color:#66d9ef">long</span> index;
+    <span style="color:#458;font-weight:bold">long</span> index;
 
-    <span style="color:#66d9ef">int</span> table, safe;
+    <span style="color:#458;font-weight:bold">int</span> table, safe;
 
-    dictEntry <span style="color:#f92672">*</span>entry, <span style="color:#f92672">*</span>nextEntry;
+    dictEntry <span style="color:#000;font-weight:bold">*</span>entry, <span style="color:#000;font-weight:bold">*</span>nextEntry;
 
-    <span style="color:#75715e">/* unsafe iterator fingerprint for misuse detection. */</span>
+    <span style="color:#998;font-style:italic">/* unsafe iterator fingerprint for misuse detection. */</span>
 
-    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> fingerprint;
+    <span style="color:#458;font-weight:bold">long</span> <span style="color:#458;font-weight:bold">long</span> fingerprint;
 
 } dictIterator;
 
-</code></pre></div><ul>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>如果safe是1，那么久是一个安全的迭代器，你可以增加(dictAdd)或者查找(dictFind)，反之，只能查找下一个(dictNext)。</li>
 </ul>
 <h2 id="宏定义">宏定义</h2>
 <h3 id="api操作的返回值">API操作的返回值</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define DICT_OK 0 </span><span style="color:#75715e">// 成功
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define DICT_ERR 1 </span><span style="color:#75715e">// 失败
-</span><span style="color:#75715e"></span>
-</code></pre></div><h3 id="防止编译器报警">防止编译器报警</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">/* Unused arguments generate annoying warnings... */</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define DICT_OK 0 </span><span style="color:#998;font-style:italic">// 成功
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#define DICT_ERR 1 </span><span style="color:#998;font-style:italic">// 失败
+</span><span style="color:#998;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="防止编译器报警">防止编译器报警</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#998;font-style:italic">/* Unused arguments generate annoying warnings... */</span>
 
-<span style="color:#75715e">#define DICT_NOTUSED(V) ((void) V)
-</span><span style="color:#75715e"></span>
-</code></pre></div><h3 id="哈希表的默认大小">哈希表的默认大小</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">/* This is the initial size of every hash table */</span>
+<span style="color:#999;font-weight:bold;font-style:italic">#define DICT_NOTUSED(V) ((void) V)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="哈希表的默认大小">哈希表的默认大小</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#998;font-style:italic">/* This is the initial size of every hash table */</span>
 
-<span style="color:#75715e">#define DICT_HT_INITIAL_SIZE     4
-</span><span style="color:#75715e"></span>
-</code></pre></div><h3 id="使用dicttype">使用<code>dictType</code></h3>
+<span style="color:#999;font-weight:bold;font-style:italic">#define DICT_HT_INITIAL_SIZE     4
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="使用dicttype">使用<code>dictType</code></h3>
 <h4 id="释放value的内存">释放value的内存</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictFreeVal(d, entry) \
-</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDestructor) \
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictFreeVal(d, entry) \
+</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> ((d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>valDestructor) \
 
-        (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDestructor((d)<span style="color:#f92672">-&gt;</span>privdata, (entry)<span style="color:#f92672">-&gt;</span>v.val)
+        (d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>valDestructor((d)<span style="color:#000;font-weight:bold">-&gt;</span>privdata, (entry)<span style="color:#000;font-weight:bold">-&gt;</span>v.val)
 
-</code></pre></div><h4 id="在设置value的时候如果存在valdup函数会拷贝一份value">在设置value的时候，如果存在<code>valDup</code>函数，会拷贝一份value</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictSetVal(d, entry, _val_) do { \
-</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDup) \
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="在设置value的时候如果存在valdup函数会拷贝一份value">在设置value的时候，如果存在<code>valDup</code>函数，会拷贝一份value</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictSetVal(d, entry, _val_) do { \
+</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> ((d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>valDup) \
 
-        (entry)<span style="color:#f92672">-&gt;</span>v.val <span style="color:#f92672">=</span> (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>valDup((d)<span style="color:#f92672">-&gt;</span>privdata, _val_); \
+        (entry)<span style="color:#000;font-weight:bold">-&gt;</span>v.val <span style="color:#000;font-weight:bold">=</span> (d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>valDup((d)<span style="color:#000;font-weight:bold">-&gt;</span>privdata, _val_); \
 
-    <span style="color:#66d9ef">else</span> \
+    <span style="color:#000;font-weight:bold">else</span> \
 
-        (entry)<span style="color:#f92672">-&gt;</span>v.val <span style="color:#f92672">=</span> (_val_); \
+        (entry)<span style="color:#000;font-weight:bold">-&gt;</span>v.val <span style="color:#000;font-weight:bold">=</span> (_val_); \
 
-} <span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">0</span>)
+} <span style="color:#000;font-weight:bold">while</span>(<span style="color:#099">0</span>)
 
-</code></pre></div><h4 id="释放key占用的内存">释放key占用的内存</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictFreeKey(d, entry) \
-</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDestructor) \
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="释放key占用的内存">释放key占用的内存</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictFreeKey(d, entry) \
+</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> ((d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>keyDestructor) \
 
-        (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDestructor((d)<span style="color:#f92672">-&gt;</span>privdata, (entry)<span style="color:#f92672">-&gt;</span>key)
+        (d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>keyDestructor((d)<span style="color:#000;font-weight:bold">-&gt;</span>privdata, (entry)<span style="color:#000;font-weight:bold">-&gt;</span>key)
 
-</code></pre></div><h4 id="在设置key的时候如果存在keydup函数会拷贝一份key">在设置key的时候，如果存在<code>keyDup</code>函数，会拷贝一份key</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictSetKey(d, entry, _key_) do { \
-</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDup) \
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="在设置key的时候如果存在keydup函数会拷贝一份key">在设置key的时候，如果存在<code>keyDup</code>函数，会拷贝一份key</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictSetKey(d, entry, _key_) do { \
+</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> ((d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>keyDup) \
 
-        (entry)<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">=</span> (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyDup((d)<span style="color:#f92672">-&gt;</span>privdata, _key_); \
+        (entry)<span style="color:#000;font-weight:bold">-&gt;</span>key <span style="color:#000;font-weight:bold">=</span> (d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>keyDup((d)<span style="color:#000;font-weight:bold">-&gt;</span>privdata, _key_); \
 
-    <span style="color:#66d9ef">else</span> \
+    <span style="color:#000;font-weight:bold">else</span> \
 
-        (entry)<span style="color:#f92672">-&gt;</span>key <span style="color:#f92672">=</span> (_key_); \
+        (entry)<span style="color:#000;font-weight:bold">-&gt;</span>key <span style="color:#000;font-weight:bold">=</span> (_key_); \
 
-} <span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">0</span>)
+} <span style="color:#000;font-weight:bold">while</span>(<span style="color:#099">0</span>)
 
-</code></pre></div><h4 id="比较两个key查看是否相等">比较两个key，查看是否相等</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictCompareKeys(d, key1, key2) \
-</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>    (((d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyCompare) <span style="color:#f92672">?</span> \
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="比较两个key查看是否相等">比较两个key，查看是否相等</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictCompareKeys(d, key1, key2) \
+</span><span style="color:#999;font-weight:bold;font-style:italic">
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>    (((d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>keyCompare) <span style="color:#000;font-weight:bold">?</span> \
 
-        (d)<span style="color:#f92672">-&gt;</span>type<span style="color:#f92672">-&gt;</span>keyCompare((d)<span style="color:#f92672">-&gt;</span>privdata, key1, key2) <span style="color:#f92672">:</span> \
+        (d)<span style="color:#000;font-weight:bold">-&gt;</span>type<span style="color:#000;font-weight:bold">-&gt;</span>keyCompare((d)<span style="color:#000;font-weight:bold">-&gt;</span>privdata, key1, key2) <span style="color:#000;font-weight:bold">:</span> \
 
-        (key1) <span style="color:#f92672">==</span> (key2))
+        (key1) <span style="color:#000;font-weight:bold">==</span> (key2))
 
-</code></pre></div><h4 id="算出key的hash值">算出key的hash值</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictHashKey(d, key) (d)-&gt;type-&gt;hashFunction(key)
-</span><span style="color:#75715e"></span>
-</code></pre></div><h3 id="操作dictentry">操作<code>dictEntry</code></h3>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="算出key的hash值">算出key的hash值</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictHashKey(d, key) (d)-&gt;type-&gt;hashFunction(key)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="操作dictentry">操作<code>dictEntry</code></h3>
 <h4 id="获取key">获取key</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictGetKey(he) ((he)-&gt;key)
-</span><span style="color:#75715e"></span>
-</code></pre></div><h4 id="获取value">获取value</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictGetVal(he) ((he)-&gt;v.val)
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define dictGetSignedIntegerVal(he) ((he)-&gt;v.s64)
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define dictGetUnsignedIntegerVal(he) ((he)-&gt;v.u64)
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define dictGetDoubleVal(he) ((he)-&gt;v.d)
-</span><span style="color:#75715e"></span>
-</code></pre></div><h3 id="操作dict">操作<code>dict</code></h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictGetKey(he) ((he)-&gt;key)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="获取value">获取value</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictGetVal(he) ((he)-&gt;v.val)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictGetSignedIntegerVal(he) ((he)-&gt;v.s64)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictGetUnsignedIntegerVal(he) ((he)-&gt;v.u64)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictGetDoubleVal(he) ((he)-&gt;v.d)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="操作dict">操作<code>dict</code></h3>
 <h4 id="获取槽的数量">获取槽的数量</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictSlots(d) ((d)-&gt;ht[0].size+(d)-&gt;ht[1].size)
-</span><span style="color:#75715e"></span>
-</code></pre></div><h4 id="获取dictentry的数量">获取dictEntry的数量</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictSize(d) ((d)-&gt;ht[0].used+(d)-&gt;ht[1].used)
-</span><span style="color:#75715e"></span>
-</code></pre></div><h4 id="判断是否正在rehashing">判断是否正在rehashing</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">#define dictIsRehashing(d) ((d)-&gt;rehashidx != -1)
-</span><span style="color:#75715e"></span>
-</code></pre></div><h2 id="api">API</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictSlots(d) ((d)-&gt;ht[0].size+(d)-&gt;ht[1].size)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="获取dictentry的数量">获取dictEntry的数量</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictSize(d) ((d)-&gt;ht[0].used+(d)-&gt;ht[1].used)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="判断是否正在rehashing">判断是否正在rehashing</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#999;font-weight:bold;font-style:italic">#define dictIsRehashing(d) ((d)-&gt;rehashidx != -1)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="api">API</h2>
 <h3 id="列表">列表</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">// 创建
-</span><span style="color:#75715e"></span>
-dict <span style="color:#f92672">*</span><span style="color:#a6e22e">dictCreate</span>(dictType <span style="color:#f92672">*</span>type, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privDataPtr);
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#998;font-style:italic">// 创建
+</span><span style="color:#998;font-style:italic"></span>
+dict <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictCreate</span>(dictType <span style="color:#000;font-weight:bold">*</span>type, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privDataPtr);
 
-<span style="color:#75715e">// 扩容
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictExpand</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> size);
+<span style="color:#998;font-style:italic">// 扩容
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictExpand</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">long</span> size);
 
-<span style="color:#75715e">// 增加, 会调用dictAddRaw
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictAdd</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>val);
+<span style="color:#998;font-style:italic">// 增加, 会调用dictAddRaw
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictAdd</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>val);
 
-<span style="color:#75715e">// 增加，如果传入existing，并且查找到对应的key，会对existing赋值
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">*</span><span style="color:#a6e22e">dictAddRaw</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key, dictEntry <span style="color:#f92672">**</span>existing);
+<span style="color:#998;font-style:italic">// 增加，如果传入existing，并且查找到对应的key，会对existing赋值
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictAddRaw</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key, dictEntry <span style="color:#000;font-weight:bold">**</span>existing);
 
-<span style="color:#75715e">// 增加或查找，会调用dictAddRaw
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">*</span><span style="color:#a6e22e">dictAddOrFind</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+<span style="color:#998;font-style:italic">// 增加或查找，会调用dictAddRaw
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictAddOrFind</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-<span style="color:#75715e">// 替换
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 如果key存在，会将原本的value释放掉，并且返回0
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 如果key不存在，会直接增加，并且返回1
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictReplace</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>val);
+<span style="color:#998;font-style:italic">// 替换
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 如果key存在，会将原本的value释放掉，并且返回0
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 如果key不存在，会直接增加，并且返回1
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictReplace</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>val);
 
-<span style="color:#75715e">// 删除，调用dictGenericDelete
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictDelete</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+<span style="color:#998;font-style:italic">// 删除，调用dictGenericDelete
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictDelete</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-<span style="color:#75715e">// 删除，但是不释放空间，调用调用dictGenericDelete
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">*</span><span style="color:#a6e22e">dictUnlink</span>(dict <span style="color:#f92672">*</span>ht, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+<span style="color:#998;font-style:italic">// 删除，但是不释放空间，调用调用dictGenericDelete
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictUnlink</span>(dict <span style="color:#000;font-weight:bold">*</span>ht, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-<span style="color:#75715e">// 删除，找到对应的key，将其从链表中删除，如果nofree为1，还会释放value和key的空间
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">static</span> dictEntry <span style="color:#f92672">*</span><span style="color:#a6e22e">dictGenericDelete</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key, <span style="color:#66d9ef">int</span> nofree);
+<span style="color:#998;font-style:italic">// 删除，找到对应的key，将其从链表中删除，如果nofree为1，还会释放value和key的空间
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#000;font-weight:bold">static</span> dictEntry <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictGenericDelete</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key, <span style="color:#458;font-weight:bold">int</span> nofree);
 
-<span style="color:#75715e">// 在调用dictUnlink函数后，必须使用该函数释放掉he和其对应的key和value的空间
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dictFreeUnlinkedEntry</span>(dict <span style="color:#f92672">*</span>d, dictEntry <span style="color:#f92672">*</span>he);
+<span style="color:#998;font-style:italic">// 在调用dictUnlink函数后，必须使用该函数释放掉he和其对应的key和value的空间
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">dictFreeUnlinkedEntry</span>(dict <span style="color:#000;font-weight:bold">*</span>d, dictEntry <span style="color:#000;font-weight:bold">*</span>he);
 
-<span style="color:#75715e">// 释放dict空间
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dictRelease</span>(dict <span style="color:#f92672">*</span>d);
+<span style="color:#998;font-style:italic">// 释放dict空间
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">dictRelease</span>(dict <span style="color:#000;font-weight:bold">*</span>d);
 
-<span style="color:#75715e">// 根据key在dict中查找entry
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">*</span> <span style="color:#a6e22e">dictFind</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+<span style="color:#998;font-style:italic">// 根据key在dict中查找entry
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">*</span> <span style="color:#900;font-weight:bold">dictFind</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-<span style="color:#75715e">// 跟据key在dict查找value，会使用dictFind
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">dictFetchValue</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+<span style="color:#998;font-style:italic">// 跟据key在dict查找value，会使用dictFind
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictFetchValue</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-<span style="color:#75715e">// 调整dict的内存占用
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 保证 USED/BUCKETS 的比例接近于1，但是小于等于1
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 如果配置上不允许resize或者正在rehashing，会返回DICT_ERR
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictResize</span>(dict <span style="color:#f92672">*</span>d);
+<span style="color:#998;font-style:italic">// 调整dict的内存占用
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 保证 USED/BUCKETS 的比例接近于1，但是小于等于1
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 如果配置上不允许resize或者正在rehashing，会返回DICT_ERR
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictResize</span>(dict <span style="color:#000;font-weight:bold">*</span>d);
 
-<span style="color:#75715e">// 获取一个非安全的迭代器
-</span><span style="color:#75715e"></span>
-dictIterator <span style="color:#f92672">*</span><span style="color:#a6e22e">dictGetIterator</span>(dict <span style="color:#f92672">*</span>d);
+<span style="color:#998;font-style:italic">// 获取一个非安全的迭代器
+</span><span style="color:#998;font-style:italic"></span>
+dictIterator <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictGetIterator</span>(dict <span style="color:#000;font-weight:bold">*</span>d);
 
-<span style="color:#75715e">// 获取一个安全的迭代器，会调用dictGetIterator
-</span><span style="color:#75715e"></span>
-dictIterator <span style="color:#f92672">*</span><span style="color:#a6e22e">dictGetSafeIterator</span>(dict <span style="color:#f92672">*</span>d);
+<span style="color:#998;font-style:italic">// 获取一个安全的迭代器，会调用dictGetIterator
+</span><span style="color:#998;font-style:italic"></span>
+dictIterator <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictGetSafeIterator</span>(dict <span style="color:#000;font-weight:bold">*</span>d);
 
-<span style="color:#75715e">// 获取下一个entry
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">*</span><span style="color:#a6e22e">dictNext</span>(dictIterator <span style="color:#f92672">*</span>iter);
+<span style="color:#998;font-style:italic">// 获取下一个entry
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictNext</span>(dictIterator <span style="color:#000;font-weight:bold">*</span>iter);
 
-<span style="color:#75715e">// 释放迭代器
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 如果在非安全的情况下，dict有改变，会直接报错
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dictReleaseIterator</span>(dictIterator <span style="color:#f92672">*</span>iter);
+<span style="color:#998;font-style:italic">// 释放迭代器
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 如果在非安全的情况下，dict有改变，会直接报错
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">dictReleaseIterator</span>(dictIterator <span style="color:#000;font-weight:bold">*</span>iter);
 
-<span style="color:#75715e">// 随机获取一个entry
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 先random获取table上的index，再次random获取链表上的entry
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">*</span><span style="color:#a6e22e">dictGetRandomKey</span>(dict <span style="color:#f92672">*</span>d);
+<span style="color:#998;font-style:italic">// 随机获取一个entry
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 先random获取table上的index，再次random获取链表上的entry
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictGetRandomKey</span>(dict <span style="color:#000;font-weight:bold">*</span>d);
 
-<span style="color:#75715e">// dictGetRandomKey可能会出现随机不公平的情况
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">*</span><span style="color:#a6e22e">dictGetFairRandomKey</span>(dict <span style="color:#f92672">*</span>d);
+<span style="color:#998;font-style:italic">// dictGetRandomKey可能会出现随机不公平的情况
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictGetFairRandomKey</span>(dict <span style="color:#000;font-weight:bold">*</span>d);
 
-<span style="color:#75715e">// 获取一些entry
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 不保证一定会获取到count个entry，可能跟你的size相关，也可能跟步数(count*10)相关
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 也不保证获取到的数据是不重复的
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// 获取到的数据会有连续性，在random到一个非空的index时，会将这个index对应的链表整个存储下来，直到存储满，如果没存储满，index就会自增，然后反复循环，类似于在一个数组中选择一个index，然后圈定这个index后面count个元素，在index自增过程中，如果连续五次都是空的，就会再一次随机
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictGetSomeKeys</span>(dict <span style="color:#f92672">*</span>d, dictEntry <span style="color:#f92672">**</span>des, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> count);
+<span style="color:#998;font-style:italic">// 获取一些entry
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 不保证一定会获取到count个entry，可能跟你的size相关，也可能跟步数(count*10)相关
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 也不保证获取到的数据是不重复的
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// 获取到的数据会有连续性，在random到一个非空的index时，会将这个index对应的链表整个存储下来，直到存储满，如果没存储满，index就会自增，然后反复循环，类似于在一个数组中选择一个index，然后圈定这个index后面count个元素，在index自增过程中，如果连续五次都是空的，就会再一次随机
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictGetSomeKeys</span>(dict <span style="color:#000;font-weight:bold">*</span>d, dictEntry <span style="color:#000;font-weight:bold">**</span>des, <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">int</span> count);
 
-<span style="color:#75715e">// 使用siphash算法
-</span><span style="color:#75715e"></span>
-uint64_t <span style="color:#a6e22e">dictGenCaseHashFunction</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">int</span> len);
+<span style="color:#998;font-style:italic">// 使用siphash算法
+</span><span style="color:#998;font-style:italic"></span>
+uint64_t <span style="color:#900;font-weight:bold">dictGenCaseHashFunction</span>(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">char</span> <span style="color:#000;font-weight:bold">*</span>buf, <span style="color:#458;font-weight:bold">int</span> len);
 
-<span style="color:#75715e">// 置空dict
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dictEmpty</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">void</span>(callback)(<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>));
+<span style="color:#998;font-style:italic">// 置空dict
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">dictEmpty</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">void</span>(callback)(<span style="color:#458;font-weight:bold">void</span><span style="color:#000;font-weight:bold">*</span>));
 
-<span style="color:#75715e">// 对dict_can_resize进行设置，控制是否可以resize dict的大小
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dictEnableResize</span>(<span style="color:#66d9ef">void</span>);
+<span style="color:#998;font-style:italic">// 对dict_can_resize进行设置，控制是否可以resize dict的大小
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">dictEnableResize</span>(<span style="color:#458;font-weight:bold">void</span>);
 
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dictDisableResize</span>(<span style="color:#66d9ef">void</span>);
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">dictDisableResize</span>(<span style="color:#458;font-weight:bold">void</span>);
 
-<span style="color:#75715e">// 进行rehash操作
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictRehash</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">int</span> n);
+<span style="color:#998;font-style:italic">// 进行rehash操作
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictRehash</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">int</span> n);
 
-<span style="color:#75715e">// 在ms毫秒内，进行rehash，每次rehash进行100次，然后再去比较时间
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dictRehashMilliseconds</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">int</span> ms);
+<span style="color:#998;font-style:italic">// 在ms毫秒内，进行rehash，每次rehash进行100次，然后再去比较时间
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dictRehashMilliseconds</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">int</span> ms);
 
-<span style="color:#75715e">// 设置hash的种子，hash种子dictGenCaseHashFunction函数会用
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dictSetHashFunctionSeed</span>(uint8_t <span style="color:#f92672">*</span>seed);
+<span style="color:#998;font-style:italic">// 设置hash的种子，hash种子dictGenCaseHashFunction函数会用
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">dictSetHashFunctionSeed</span>(uint8_t <span style="color:#000;font-weight:bold">*</span>seed);
 
-<span style="color:#75715e">// 获取hash种子，没人用
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// dictGenCaseHashFunction函数是直接拿的seed指针
-</span><span style="color:#75715e"></span>
-uint8_t <span style="color:#f92672">*</span><span style="color:#a6e22e">dictGetHashFunctionSeed</span>(<span style="color:#66d9ef">void</span>);
+<span style="color:#998;font-style:italic">// 获取hash种子，没人用
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#998;font-style:italic">// dictGenCaseHashFunction函数是直接拿的seed指针
+</span><span style="color:#998;font-style:italic"></span>
+uint8_t <span style="color:#000;font-weight:bold">*</span><span style="color:#900;font-weight:bold">dictGetHashFunctionSeed</span>(<span style="color:#458;font-weight:bold">void</span>);
 
-<span style="color:#75715e">// 遍历dict的key value，但是不保证唯一性
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">dictScan</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> v, dictScanFunction <span style="color:#f92672">*</span>fn, dictScanBucketFunction <span style="color:#f92672">*</span>bucketfn, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata);
+<span style="color:#998;font-style:italic">// 遍历dict的key value，但是不保证唯一性
+</span><span style="color:#998;font-style:italic"></span>
+<span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">dictScan</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">long</span> v, dictScanFunction <span style="color:#000;font-weight:bold">*</span>fn, dictScanBucketFunction <span style="color:#000;font-weight:bold">*</span>bucketfn, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata);
 
-<span style="color:#75715e">// 直接调用的宏dictHashKey
-</span><span style="color:#75715e"></span>
-uint64_t <span style="color:#a6e22e">dictGetHash</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+<span style="color:#998;font-style:italic">// 直接调用的宏dictHashKey
+</span><span style="color:#998;font-style:italic"></span>
+uint64_t <span style="color:#900;font-weight:bold">dictGetHash</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-<span style="color:#75715e">// 根据hash和指针来找到对应的entry
-</span><span style="color:#75715e"></span>
-dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictFindEntryRefByPtrAndHash</span>(dict <span style="color:#f92672">*</span>d, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>oldptr, uint64_t hash);
+<span style="color:#998;font-style:italic">// 根据hash和指针来找到对应的entry
+</span><span style="color:#998;font-style:italic"></span>
+dictEntry <span style="color:#000;font-weight:bold">**</span><span style="color:#900;font-weight:bold">dictFindEntryRefByPtrAndHash</span>(dict <span style="color:#000;font-weight:bold">*</span>d, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>oldptr, uint64_t hash);
 
-</code></pre></div><h2 id="杂项">杂项</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="杂项">杂项</h2>
 <h3 id="struct-dict中的void-privdata是干啥用的"><code>struct dict</code>中的<code>void *privdata</code>是干啥用的？</h3>
 <p>先看<code>strct dictType</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> dictType {
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#000;font-weight:bold">struct</span> dictType {
 
-    uint64_t (<span style="color:#f92672">*</span>hashFunction)(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+    uint64_t (<span style="color:#000;font-weight:bold">*</span>hashFunction)(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>keyDup)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>(<span style="color:#000;font-weight:bold">*</span>keyDup)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>valDup)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>obj);
+    <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>(<span style="color:#000;font-weight:bold">*</span>valDup)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>obj);
 
-    <span style="color:#66d9ef">int</span> (<span style="color:#f92672">*</span>keyCompare)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key1, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key2);
+    <span style="color:#458;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">*</span>keyCompare)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key1, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key2);
 
-    <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>keyDestructor)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>key);
+    <span style="color:#458;font-weight:bold">void</span> (<span style="color:#000;font-weight:bold">*</span>keyDestructor)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>key);
 
-    <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>valDestructor)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>privdata, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>obj);
+    <span style="color:#458;font-weight:bold">void</span> (<span style="color:#000;font-weight:bold">*</span>valDestructor)(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>privdata, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>obj);
 
 } dictType;
 
-</code></pre></div><p>可以看出，结构体是使用privdata字段比较多的地方，</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看出，结构体是使用privdata字段比较多的地方，</p>
 <p>再看下dictType声明的地方，在server.c中，有一堆dictType的变量，查看其中的参数可以发现，所有的函数都会使用<code>DICT_NOTUSED(privdata)</code>，再去看下DICT_NOTUSED定义</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
-<span style="color:#75715e">/* Unused arguments generate annoying warnings... */</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+<span style="color:#998;font-style:italic">/* Unused arguments generate annoying warnings... */</span>
 
-<span style="color:#75715e">#define DICT_NOTUSED(V) ((void) V)
-</span><span style="color:#75715e"></span>
-</code></pre></div><blockquote>
+<span style="color:#999;font-weight:bold;font-style:italic">#define DICT_NOTUSED(V) ((void) V)
+</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>原来没用了&hellip;&hellip;</p>
 </blockquote>
 
         </div>
 
         
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://siskinc.github.io/">Daryl</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/">https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
 
 
         
@@ -675,15 +1200,15 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Redis源码阅读之字典（一）</a></li>
+        <li><a href="/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%AD%97%E5%85%B8%E4%B8%80/">Redis源码阅读之字典（一）</a></li>
         
-        <li><a href="/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2sdshdr/">redis源码解读--动态字符串SDSHDR</a></li>
+        <li><a href="/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2SDSHDR/">redis源码解读--动态字符串SDSHDR</a></li>
         
         <li><a href="/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8Dzmalloc/">redis源码解读--内存分配zmalloc</a></li>
         
-        <li><a href="/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/">Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</a></li>
+        <li><a href="/post/Python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBPyAPI_FUNCPyAPI_DATAPyMODINIT_FUNC/">Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</a></li>
         
-        <li><a href="/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/">Python源码阅读——基础</a></li>
+        <li><a href="/post/Python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9F%BA%E7%A1%80/">Python源码阅读——基础</a></li>
         
     </ul>
 </div>
@@ -742,16 +1267,31 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -764,7 +1304,7 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -772,11 +1312,11 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -784,23 +1324,23 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -812,35 +1352,35 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -859,15 +1399,19 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -921,9 +1465,9 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -969,8 +1513,6 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -988,8 +1530,6 @@ dictEntry <span style="color:#f92672">**</span><span style="color:#a6e22e">dictF
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

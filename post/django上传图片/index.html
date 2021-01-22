@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>Django上传图片 | Daryl&#39;s Blog</title>
     <meta property="og:title" content="Django上传图片 - Daryl&#39;s Blog">
@@ -16,11 +18,11 @@
         
     <meta property="article:modified_time" content='2019-07-25T20:24:51&#43;08:00'>
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="Django上传图片">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">
+    <meta property="og:url" content="https://siskinc.github.io/post/Django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -32,6 +34,10 @@
     
     
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -46,7 +52,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -170,10 +176,15 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            <span class="meta-category"><a href='/categories/Python'>Python</a></span>
             
         </div>
         
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
         
         
         <div class="clear" style="display: none">
@@ -184,103 +195,221 @@
         
         <div class="post-content">
             <h1 id="model">model</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">from</span> django.db <span style="color:#f92672">import</span> models
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">from</span> <span style="color:#555">django.db</span> <span style="color:#000;font-weight:bold">import</span> models
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Picture</span>(models<span style="color:#f92672">.</span>Model):
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Picture</span>(models<span style="color:#000;font-weight:bold">.</span>Model):
 
-    path <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>ImageField(upload_to<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;share_pictures/&#39;</span>)
+    path <span style="color:#000;font-weight:bold">=</span> models<span style="color:#000;font-weight:bold">.</span>ImageField(upload_to<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;share_pictures/&#39;</span>)
 
-    name <span style="color:#f92672">=</span> models<span style="color:#f92672">.</span>CharField(max_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>)
-
-
-
-    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Meta</span>:
-
-        db_table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;picture&#34;</span> 
+    name <span style="color:#000;font-weight:bold">=</span> models<span style="color:#000;font-weight:bold">.</span>CharField(max_length <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">50</span>)
 
 
 
-    <span style="color:#66d9ef">def</span> __str__(self):
+    <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Meta</span>:
 
-        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>name
-
-
-
-</code></pre></div><h1 id="forms">forms</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#f92672">from</span> django <span style="color:#f92672">import</span> forms
+        db_table <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;picture&#34;</span> 
 
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ImageForm</span>(forms<span style="color:#f92672">.</span>Form):
+    <span style="color:#000;font-weight:bold">def</span> __str__(<span style="color:#999">self</span>):
 
-    name <span style="color:#f92672">=</span> forms<span style="color:#f92672">.</span>CharField(max_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;名字：&#39;</span>)
-
-    picture <span style="color:#f92672">=</span> forms<span style="color:#f92672">.</span>ImageField(label<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;图片：&#39;</span>) 
-
-</code></pre></div><h1 id="views">Views</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PictureView</span>(APIView):
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>name
 
 
 
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self, request):
-
-        name <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>GET<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;name&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)
-
-        <span style="color:#66d9ef">try</span>:
-
-            picture <span style="color:#f92672">=</span> Picture<span style="color:#f92672">.</span>objects<span style="color:#f92672">.</span>get(name<span style="color:#f92672">=</span>name)
-
-        <span style="color:#66d9ef">except</span> Picture<span style="color:#f92672">.</span>DoesNotExist:
-
-            <span style="color:#66d9ef">return</span> Response(status<span style="color:#f92672">=</span>status<span style="color:#f92672">.</span>HTTP_404_NOT_FOUND)
-
-        image <span style="color:#f92672">=</span> open(picture<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>url[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#39;rb&#39;</span>)<span style="color:#f92672">.</span>read()
-
-        <span style="color:#66d9ef">return</span> HttpResponse(image, content_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;image/png&#39;</span>)
-
-
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post</span>(self, request):
-
-        MyImageForm <span style="color:#f92672">=</span> ImageForm(request<span style="color:#f92672">.</span>POST, request<span style="color:#f92672">.</span>FILES)
-
-        <span style="color:#75715e"># 检验表单是否通过校验</span>
-
-        <span style="color:#66d9ef">if</span> MyImageForm<span style="color:#f92672">.</span>is_valid():
-
-            <span style="color:#75715e"># 构造一个 Profile 实例</span>
-
-            picture <span style="color:#f92672">=</span> Picture()
-
-            <span style="color:#75715e"># 获取name</span>
-
-            picture<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> MyImageForm<span style="color:#f92672">.</span>cleaned_data[<span style="color:#e6db74">&#34;name&#34;</span>]
-
-            <span style="color:#75715e"># 获取图片</span>
-
-            picture<span style="color:#f92672">.</span>path <span style="color:#f92672">=</span> MyImageForm<span style="color:#f92672">.</span>cleaned_data[<span style="color:#e6db74">&#34;picture&#34;</span>]
-
-            e <span style="color:#f92672">=</span> picture<span style="color:#f92672">.</span>save()
-
-            <span style="color:#66d9ef">print</span>(e)
-
-        <span style="color:#66d9ef">else</span>:
-
-            <span style="color:#66d9ef">return</span> Response(status<span style="color:#f92672">=</span><span style="color:#ae81ff">403</span>)
-
-        <span style="color:#66d9ef">return</span> Response(status<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="forms">forms</h1>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">from</span> <span style="color:#555">django</span> <span style="color:#000;font-weight:bold">import</span> forms
 
 
 
-</code></pre></div>
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ImageForm</span>(forms<span style="color:#000;font-weight:bold">.</span>Form):
+
+    name <span style="color:#000;font-weight:bold">=</span> forms<span style="color:#000;font-weight:bold">.</span>CharField(max_length <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">100</span>, label<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;名字：&#39;</span>)
+
+    picture <span style="color:#000;font-weight:bold">=</span> forms<span style="color:#000;font-weight:bold">.</span>ImageField(label<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;图片：&#39;</span>) 
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="views">Views</h1>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">PictureView</span>(APIView):
+
+
+
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">get</span>(<span style="color:#999">self</span>, request):
+
+        name <span style="color:#000;font-weight:bold">=</span> request<span style="color:#000;font-weight:bold">.</span>GET<span style="color:#000;font-weight:bold">.</span>get(<span style="color:#d14">&#39;name&#39;</span>, <span style="color:#d14">&#39;&#39;</span>)
+
+        <span style="color:#000;font-weight:bold">try</span>:
+
+            picture <span style="color:#000;font-weight:bold">=</span> Picture<span style="color:#000;font-weight:bold">.</span>objects<span style="color:#000;font-weight:bold">.</span>get(name<span style="color:#000;font-weight:bold">=</span>name)
+
+        <span style="color:#000;font-weight:bold">except</span> Picture<span style="color:#000;font-weight:bold">.</span>DoesNotExist:
+
+            <span style="color:#000;font-weight:bold">return</span> Response(status<span style="color:#000;font-weight:bold">=</span>status<span style="color:#000;font-weight:bold">.</span>HTTP_404_NOT_FOUND)
+
+        image <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">open</span>(picture<span style="color:#000;font-weight:bold">.</span>path<span style="color:#000;font-weight:bold">.</span>url[<span style="color:#099">1</span>:], <span style="color:#d14">&#39;rb&#39;</span>)<span style="color:#000;font-weight:bold">.</span>read()
+
+        <span style="color:#000;font-weight:bold">return</span> HttpResponse(image, content_type<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#39;image/png&#39;</span>)
+
+
+
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">post</span>(<span style="color:#999">self</span>, request):
+
+        MyImageForm <span style="color:#000;font-weight:bold">=</span> ImageForm(request<span style="color:#000;font-weight:bold">.</span>POST, request<span style="color:#000;font-weight:bold">.</span>FILES)
+
+        <span style="color:#998;font-style:italic"># 检验表单是否通过校验</span>
+
+        <span style="color:#000;font-weight:bold">if</span> MyImageForm<span style="color:#000;font-weight:bold">.</span>is_valid():
+
+            <span style="color:#998;font-style:italic"># 构造一个 Profile 实例</span>
+
+            picture <span style="color:#000;font-weight:bold">=</span> Picture()
+
+            <span style="color:#998;font-style:italic"># 获取name</span>
+
+            picture<span style="color:#000;font-weight:bold">.</span>name <span style="color:#000;font-weight:bold">=</span> MyImageForm<span style="color:#000;font-weight:bold">.</span>cleaned_data[<span style="color:#d14">&#34;name&#34;</span>]
+
+            <span style="color:#998;font-style:italic"># 获取图片</span>
+
+            picture<span style="color:#000;font-weight:bold">.</span>path <span style="color:#000;font-weight:bold">=</span> MyImageForm<span style="color:#000;font-weight:bold">.</span>cleaned_data[<span style="color:#d14">&#34;picture&#34;</span>]
+
+            e <span style="color:#000;font-weight:bold">=</span> picture<span style="color:#000;font-weight:bold">.</span>save()
+
+            <span style="color:#000;font-weight:bold">print</span>(e)
+
+        <span style="color:#000;font-weight:bold">else</span>:
+
+            <span style="color:#000;font-weight:bold">return</span> Response(status<span style="color:#000;font-weight:bold">=</span><span style="color:#099">403</span>)
+
+        <span style="color:#000;font-weight:bold">return</span> Response(status<span style="color:#000;font-weight:bold">=</span><span style="color:#099">200</span>)
+
+
+
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://siskinc.github.io/">Daryl</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://siskinc.github.io/post/Django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">https://siskinc.github.io/post/Django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
 
 
         
@@ -289,15 +418,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/django_dumpdata_and_loaddata/">Django dumpdata and loaddata</a></li>
+        <li><a href="/post/Django_dumpdata_and_loaddata/">Django dumpdata and loaddata</a></li>
         
-        <li><a href="/post/python_any_%E5%87%BD%E6%95%B0/">Python any() 函数</a></li>
+        <li><a href="/post/Python_any_%E5%87%BD%E6%95%B0/">Python any() 函数</a></li>
         
-        <li><a href="/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/">Python如何合并两个字典</a></li>
+        <li><a href="/post/Python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/">Python如何合并两个字典</a></li>
         
-        <li><a href="/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/">Python中下划线的5种含义</a></li>
+        <li><a href="/post/Python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/">Python中下划线的5种含义</a></li>
         
-        <li><a href="/post/python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBpyapi_funcpyapi_datapymodinit_func/">Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</a></li>
+        <li><a href="/post/Python%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BBPyAPI_FUNCPyAPI_DATAPyMODINIT_FUNC/">Python源码阅读——PyAPI_FUNC,PyAPI_DATA,PyMODINIT_FUNC</a></li>
         
     </ul>
 </div>
@@ -356,16 +485,31 @@
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -378,7 +522,7 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -386,11 +530,11 @@
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -398,23 +542,23 @@
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -426,35 +570,35 @@
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -473,15 +617,19 @@
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -535,9 +683,9 @@
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -583,8 +731,6 @@
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -602,8 +748,6 @@
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

@@ -6,22 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>Linux | Daryl&#39;s Blog</title>
     <meta property="og:title" content="Linux - Daryl&#39;s Blog">
     <meta property="og:type" content="article">
         
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="Linux">
         
     <meta name="author" content="Daryl">
-    <meta property="og:url" content="https://siskinc.github.io/categories/linux/">
+    <meta property="og:url" content="https://siskinc.github.io/categories/Linux/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/categories/linux/index.xml" title="Daryl's Blog" />
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/categories/Linux/index.xml" title="Daryl's Blog" />
     <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -29,6 +31,10 @@
     
     
     
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
     
 </head>
 
@@ -43,7 +49,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -74,7 +80,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+                <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -84,24 +90,24 @@
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/linux'>Linux</a>
+            <a href='/categories/Linux'>Linux</a>
             
         </div>
         
         <div class="post-content">
             在笔记本上装ubuntu系统，也可以从事相关开发工作。但笔记本存在这样的情况，就是有时服务功能设好了，不需要操作了，但是希望机器一直开机提供服务，或者长期下载大文件。此时，为了省电，可将笔记本屏幕合上，静待其完成任务。 但是，在默认情况下，笔记本合上屏幕后，ubuntu系统会休眠，我试着用GUI改了一下设置，实践证明没有效果，还是直接修改配置文件来得快，方法如下： 修改 Login Manager的配置文件，/etc/systemd/logind.conf: 然后将其中的：
-#HandleLidSwitch=suspend 改成：
-HandleLidSwitch=ignore 然后重启服务：
-service systemd-logind restart 或者直接重启
-sudo shutdown -r now 即可使设置生效。……
-            <p class="readmore"><a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/">阅读全文</a></p>
+1  #HandleLidSwitch=suspend   改成：
+1  HandleLidSwitch=ignore   然后重启服务：
+1  service systemd-logind restart   或者直接重启
+1  sudo shutdown -r now   即可使设置生效。……
+            <p class="readmore"><a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/">Centos下，源码安装Python的h3包</a>
+                <a href="https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/">Centos下，源码安装Python的h3包</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -111,26 +117,26 @@ sudo shutdown -r now 即可使设置生效。……
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/linux'>Linux</a>
+            <a href='/categories/Linux'>Linux</a>
             
         </div>
         
         <div class="post-content">
             公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
- 检查cmake版本 cmake --version 如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
+ 检查cmake版本 1 2 3  cmake --version   如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
 下载文件  自己下载对于的master压缩包
    https://github.com/uber/h3
   https://github.com/uber/h3-py
-  解压文件 unzip h3-master.zip unzip h3-py-master.zip 修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
-#!/usr/bin/env bash set -ex VERSION=$1 IS_64BITS=$2 if [ &#34;&#34; == &#34;$VERSION&#34; ]; then echo &#34;Failed to specify version required&#34; exit 1 fi command -v cmake &gt;/dev/null 2&gt;&amp;1 || { echo &#34;cmake required but not found.&#34;; exit 1; } mkdir -p h3/out rm -rf h3c git clone https://github.……
-            <p class="readmore"><a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/">阅读全文</a></p>
+  解压文件 1 2 3 4 5  unzip h3-master.zip unzip h3-py-master.zip   修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101  #!……
+            <p class="readmore"><a href="https://siskinc.github.io/post/Centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85Python%E7%9A%84h3%E5%8C%85/">阅读全文</a></p>
         </div>
     </article>
     
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">Ubuntu 18.04换国内源</a>
+                <a href="https://siskinc.github.io/post/Ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">Ubuntu 18.04换国内源</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -140,7 +146,7 @@ sudo shutdown -r now 即可使设置生效。……
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/linux'>Linux</a>
+            <a href='/categories/Linux'>Linux</a>
             
         </div>
         
@@ -149,7 +155,7 @@ sudo shutdown -r now 即可使设置生效。……
 我们这里以阿里云的源为例展示如何修改Ubuntu 18.04里面默认的源。
 编辑/etc/apt/sources.list文件：
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiversedeb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse中科大源 deb https://mirrors.……
-            <p class="readmore"><a href="https://siskinc.github.io/post/ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/Ubuntu_18.04%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/">阅读全文</a></p>
         </div>
     </article>
     
@@ -166,7 +172,7 @@ sudo shutdown -r now 即可使设置生效。……
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/linux'>Linux</a>
+            <a href='/categories/Linux'>Linux</a>
             
         </div>
         
@@ -184,7 +190,7 @@ sudo shutdown -r now 即可使设置生效。……
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">Linux进程的五个段</a>
+                <a href="https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">Linux进程的五个段</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -194,7 +200,7 @@ sudo shutdown -r now 即可使设置生效。……
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/linux'>Linux</a>
+            <a href='/categories/Linux'>Linux</a>
             
         </div>
         
@@ -205,7 +211,7 @@ sudo shutdown -r now 即可使设置生效。……
  堆（heap）  堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可以动态扩展或者所建。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩展）；当利用free等函数释放内存时，被释放的内存从堆中被提出（堆被缩减）；
  栈  栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。
  ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">阅读全文</a></p>
+            <p class="readmore"><a href="https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">阅读全文</a></p>
         </div>
     </article>
     
@@ -222,12 +228,12 @@ sudo shutdown -r now 即可使设置生效。……
         <div class="post-meta meta-category">
             |
             
-            <a href='/categories/linux'>Linux</a>
+            <a href='/categories/Linux'>Linux</a>
             
         </div>
         
         <div class="post-content">
-            #!/bin/bash echo &#34;Switch Directory : /home/pktgen-2.9.0&#34; dir=&#34;/home/pktgen-2.9.0&#34; cd $dir cmd=&#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&#34; eval $cmd ……
+            1 2 3 4 5 6 7 8 9 10 11 12 13  #!/bin/bash echo &#34;Switch Directory : /home/pktgen-2.9.0&#34; dir=&#34;/home/pktgen-2.9.0&#34; cd $dir cmd=&#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&#34; eval $cmd   ……
             <p class="readmore"><a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/">阅读全文</a></p>
         </div>
     </article>
@@ -265,16 +271,31 @@ sudo shutdown -r now 即可使设置生效。……
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -287,7 +308,7 @@ sudo shutdown -r now 即可使设置生效。……
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -295,11 +316,11 @@ sudo shutdown -r now 即可使设置生效。……
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -307,23 +328,23 @@ sudo shutdown -r now 即可使设置生效。……
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -335,35 +356,35 @@ sudo shutdown -r now 即可使设置生效。……
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -382,15 +403,19 @@ sudo shutdown -r now 即可使设置生效。……
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -444,9 +469,9 @@ sudo shutdown -r now 即可使设置生效。……
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -492,8 +517,6 @@ sudo shutdown -r now 即可使设置生效。……
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -511,8 +534,6 @@ sudo shutdown -r now 即可使设置生效。……
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

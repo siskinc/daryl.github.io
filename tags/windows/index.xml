@@ -9,10 +9,10 @@
     <lastBuildDate>Wed, 26 Feb 2020 17:21:02 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Windows下如何使用pip安装Uber H3</title>
-      <link>https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/</link>
+      <link>https://siskinc.github.io/post/Windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85Uber_H3/</link>
       <pubDate>Wed, 26 Feb 2020 17:21:02 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/</guid>
+      <guid>https://siskinc.github.io/post/Windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85Uber_H3/</guid>
       <description>最近项目中会用到uber h3，而我写一个小工具或者去验证一些思路的时候常常会使用Python来着，方便嘛！而Uber H3是C写的，只是为Python提供了拓展，所以需要安装Vs14。这个需要自己提前安装好。
 在使用pip安装时直接报错了！
 大概的报错内容就是需要cmake，bash等东西，cmake好解决，自己下载到本地，放到环境变量里面就行，bash可以使用git bash来代替，所以只能跟Power shell暂时说拜拜，使用Git Bash来安装H3。Ok， 你运行pip install h3就会看见如下界面</description>

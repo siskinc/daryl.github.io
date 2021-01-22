@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CAS on Daryl&#39;s Blog</title>
-    <link>https://siskinc.github.io/tags/cas/</link>
+    <link>https://siskinc.github.io/tags/CAS/</link>
     <description>Recent content in CAS on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Mar 2020 17:33:17 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/cas/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 14 Mar 2020 17:33:17 +0000</lastBuildDate><atom:link href="https://siskinc.github.io/tags/CAS/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>乐观锁（CAS）</title>
-      <link>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</link>
+      <link>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81CAS/</link>
       <pubDate>Sat, 14 Mar 2020 17:33:17 +0000</pubDate>
       
-      <guid>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81cas/</guid>
+      <guid>https://siskinc.github.io/post/%E4%B9%90%E8%A7%82%E9%94%81CAS/</guid>
       <description>什么是CAS   CAS(compare and swap) 比较并替换，比较和替换是线程并发算法时用到的一种技术
   CAS是原子操作，保证并发安全，而不是保证并发同步
   CAS是CPU的一个指令
@@ -24,7 +24,7 @@
   ABA问题 线程C、D,线程D将A修改为B后又修改为A,此时C线程以为A没有改变过，java的原子类AtomicStampedReference，通过控制变量值的版本来保证CAS的正确性。
   自旋时间过长，消耗CPU资源， 如果资源竞争激烈，多线程自旋长时间消耗资源。
     CAS例子 不加锁 代码：
-package main import &amp;#34;fmt&amp;#34; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &amp;lt; 100000; i++ { p++ } end &amp;lt;- struct{}{} } func main() { go changeP() go changeP() &amp;lt;-end &amp;lt;-end fmt.</description>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43  package main import &amp;#34;fmt&amp;#34; var p uint64 var end = make(chan struct{}, 2) func changeP() { for i := 0; i &amp;lt; 100000; i++ { p++ } end &amp;lt;- struct{}{} } func main() { go changeP() go changeP() &amp;lt;-end &amp;lt;-end fmt.</description>
     </item>
     
   </channel>

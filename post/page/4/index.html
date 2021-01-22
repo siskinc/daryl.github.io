@@ -6,13 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
 
     <title>Posts | Daryl&#39;s Blog</title>
     <meta property="og:title" content="Posts - Daryl&#39;s Blog">
     <meta property="og:type" content="article">
         
         
-    <meta name="Keywords" content="">
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
     <meta name="description" content="Posts">
         
     <meta name="author" content="Daryl">
@@ -30,6 +32,10 @@
     
     
     
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
 </head>
 
 
@@ -43,7 +49,7 @@
                         Daryl&#39;s Blog
                     </a>
                 
-                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
@@ -67,7 +73,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/" title="Run jQuery in Chrome Console">Run jQuery in Chrome Console</a>
+                <a href="https://siskinc.github.io/post/Run_jQuery_in_Chrome_Console/" title="Run jQuery in Chrome Console">Run jQuery in Chrome Console</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -77,14 +83,14 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/javascript'>JavaScript</a></span>
+            <span class="meta-category"><a href='/categories/JavaScript'>JavaScript</a></span>
             
         </div>
         
         <div class="post-content">
-            var jqry = document.createElement(&#39;script&#39;); jqry.src = &#34;https://code.jquery.com/jquery-3.3.1.min.js&#34;; document.getElementsByTagName(&#39;head&#39;)[0].appendChild(jqry); jQuery.noConflict(); ……
+            1 2 3  var jqry = document.createElement(&#39;script&#39;); jqry.src = &#34;https://code.jquery.com/jquery-3.3.1.min.js&#34;; document.getElementsByTagName(&#39;head&#39;)[0].appendChild(jqry); jQuery.noConflict();   ……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/run_jquery_in_chrome_console/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/Run_jQuery_in_Chrome_Console/">阅读全文</a></p>
     </article>
     
     
@@ -92,7 +98,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/" title="golang http.client 的 Connection reset by peer 问题">golang http.client 的 Connection reset by peer 问题</a>
+                <a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_Connection_reset_by_peer_%E9%97%AE%E9%A2%98/" title="golang http.client 的 Connection reset by peer 问题">golang http.client 的 Connection reset by peer 问题</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -102,14 +108,14 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            <span class="meta-category"><a href='/categories/Go'>Go</a></span>
             
         </div>
         
         <div class="post-content">
-            func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Close = true resp, err := http.Client.Do(req) } func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Header.Add(&#34;Connection&#34;, &#34;close&#34;) resp, err := http.Client.Do(req) } func main() { tr := http.Transport{DisableKeepAlives: true} client := http.Client{Transport: &amp;tr} resp, err := client.Get(&#34;https://www.baidu.com/&#34;) if resp != nil { defer resp.Body.Close() } checkError(err) fmt.……
+            1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err != nil { log.Errorf(&#34;&#34;) } req.Close = true resp, err := http.Client.Do(req) }   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  func main() { req, err := http.NewRequest(&#34;GET&#34;, &#34;http://www.baidu.com&#34;,nil ) if err !……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_Connection_reset_by_peer_%E9%97%AE%E9%A2%98/">阅读全文</a></p>
     </article>
     
     
@@ -127,7 +133,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            <span class="meta-category"><a href='/categories/Go'>Go</a></span>
             
         </div>
         
@@ -137,7 +143,7 @@
 今天查看公司某kafka group消费情况的时候，发现该group消费的topic大多数的message写入了同一个partition，先从配置问题查找，后来又去看公司包装的kafka的库的源码查找，看起来都没啥问题。
 并且，该问题就出现在一个服务里面，很是让人迷惑。该服务和其他服务最大的不同在于，它每一次都只会发送一个message给kafka。
 先看看，kafka-go的demo：
-w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, }) 第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
+1 2 3 4 5 6 7 8 9 10 11  w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, })   第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
 因为代码是每次都发送一个message，每次都是一个新的Balancer，所以Balancer每次只需Balance的状态都是一致，所以会造成只写入一个partition中。
 总结一下，这个问题可大可小，数据量不大，程序抗得住当然没什么，但是总有一天会扛不住。所以奉劝一句，写完代码记得认认真真测试，程序跑得起来不代表正确。……
         </div>
@@ -179,7 +185,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/" title="CSS清除浮动">CSS清除浮动</a>
+                <a href="https://siskinc.github.io/post/CSS%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/" title="CSS清除浮动">CSS清除浮动</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -194,9 +200,9 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
         </div>
         
         <div class="post-content">
-            使用方法：.clearfix:after { content: &#34;&#34;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; } .clearfix:before, .clearfix:after { content: &#34;&#34;; display: table; } .clearfix:after { clear: both; } .clearfix { *zoom: 1; } ……
+            使用方法：1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23  .clearfix:after { content: &#34;&#34;; display: block; height: 0; clear: both; visibility: hidden; } /* IE6、7专有 */ .clearfix { *zoom: 1; }   1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  .clearfix:before, .……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/css%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/CSS%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8/">阅读全文</a></p>
     </article>
     
     
@@ -204,7 +210,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/" title="golang自动调用结构体中内嵌字段的Init()函数">golang自动调用结构体中内嵌字段的Init()函数</a>
+                <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84Init%E5%87%BD%E6%95%B0/" title="golang自动调用结构体中内嵌字段的Init()函数">golang自动调用结构体中内嵌字段的Init()函数</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -214,14 +220,14 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            <span class="meta-category"><a href='/categories/Go'>Go</a></span>
             
         </div>
         
         <div class="post-content">
-            package main import ( &#34;fmt&#34; &#34;reflect&#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.ValueOf(c) if rv.Kind() == reflect.Ptr { rv = rv.Elem() } for i := 0; i &lt; rv.NumField(); i++ { value := rv.Field(i) if conf, ok := value.Interface().(initial); ok { conf.Init() } } } type A struct { } func (a *A) Init() { fmt.Println(&#34;Init A&#34;) } type B struct { AA *A } func main() { b := B{} triggerInitials(b) } ……
+            1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81  package main import ( &#34;fmt&#34; &#34;reflect&#34; ) type initial interface { Init() } func triggerInitials(c interface{}) { rv := reflect.……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84Init%E5%87%BD%E6%95%B0/">阅读全文</a></p>
     </article>
     
     
@@ -229,7 +235,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/" title="Linux进程的五个段">Linux进程的五个段</a>
+                <a href="https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/" title="Linux进程的五个段">Linux进程的五个段</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -239,7 +245,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
+            <span class="meta-category"><a href='/categories/Linux'>Linux</a></span>
             
         </div>
         
@@ -251,7 +257,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
  栈  栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。
  ……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/Linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">阅读全文</a></p>
     </article>
     
     
@@ -294,7 +300,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" title="Goroutines和线程对比">Goroutines和线程对比</a>
+                <a href="https://siskinc.github.io/post/Goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" title="Goroutines和线程对比">Goroutines和线程对比</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -304,7 +310,7 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            <span class="meta-category"><a href='/categories/Go'>Go</a></span>
             
         </div>
         
@@ -315,13 +321,10 @@ w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#
   goroutine：Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine。和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器而是被Go语言&quot;建筑&quot;本身进行调度的。例如当一个goroutine调用了time.Sleep或者被channel调用或者mutex操作阻塞时，调度器会使其进入休眠并开始执行另一个goroutine直到时机到了再去唤醒第一个goroutine。因为这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。
   GOMAXPROCS Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。(GOMAXPROCS是前面说的m:n调度中的n)。在休眠中的或者在通信中被阻塞的goroutine是不需要一个对应的线程来做调度的。在I/O中或系统调用中或调用非Go语言函数时，是需要一个对应的操作系统线程的，但是GOMAXPROCS并不需要将这几种情况计算在内。
 你可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它。我们在下面的小程序中会看到GOMAXPROCS的效果，这个程序会无限打印0和1。
-for { go fmt.Print(0) fmt.Print(1) } $ GOMAXPROCS=1 go run hacker-cliché.go 111111111111111111110000000000000000000011111... $ GOMAXPROCS=2 go run hacker-cliché.go 010101010101010101011001100101011010010100110... 在第一次执行时，最多同时只能有一个goroutine被执行。初始情况下只有main goroutine被执行，所以会打印很多1。过了一段时间后，GO调度器会将其置为休眠，并唤醒另一个goroutine，这时候就开始打印很多0了，在打印的时候，goroutine是被调度到操作系统线程上的。在第二次执行时，我们使用了两个操作系统线程，所以两个goroutine可以一起被执行，以同样的频率交替打印0和1。我们必须强调的是goroutine的调度是受很多因子影响的，而runtime也是在不断地发展演进的，所以这里的你实际得到的结果可能会因为版本的不同而与我们运行的结果有所不同。
-Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言中，当前的线程都有一个独特的身份(id)，并且这个身份信息可以以一个普通值的形式被被很容易地获取到，典型的可以是一个integer或者指针值。这种情况下我们做一个抽象化的thread-local storage(线程本地存储，多线程编程中不希望其它线程访问的内容)就很容易，只需要以线程的id作为key的一个map就可以解决问题，每一个线程以其id就能从中获取到值，且和其它线程互不冲突。
-goroutine没有可以被程序员获取到的身份(id)的概念。这一点是设计上故意而为之，由于thread-local storage总是会被滥用。比如说，一个web server是用一种支持tls的语言实现的，而非常普遍的是很多函数会去寻找HTTP请求的信息，这代表它们就是去其存储层(这个存储层有可能是tls)查找的。这就像是那些过分依赖全局变量的程序一样，会导致一种非健康的“距离外行为”，在这种行为下，一个函数的行为可能不是由其自己内部的变量所决定，而是由其所运行在的线程所决定。因此，如果线程本身的身份会改变——比如一些worker线程之类的——那么函数的行为就会变得神秘莫测。
-Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显式的。这样不仅使程序变得更易读，而且会让我们自由地向一些给定的函数分配子任务时不用担心其身份信息影响行为。
-你现在应该已经明白了写一个Go程序所需要的所有语言特性信息。在后面两章节中，我们会回顾一些之前的实例和工具，支持我们写出更大规模的程序：如何将一个工程组织成一系列的包，如何获取，构建，测试，性能测试，剖析，写文档，并且将这些包分享出去。……
+1 2 3 4 5 6 7 8 9  for { go fmt.Print(0) fmt.Print(1) }   1 2 3 4 5 6 7 8 9 10 11  $ GOMAXPROCS=1 go run hacker-cliché.go 111111111111111111110000000000000000000011111... $ GOMAXPROCS=2 go run hacker-cliché.go 010101010101010101011001100101011010010100110...   在第一次执行时，最多同时只能有一个goroutine被执行。初始情况下只有main goroutine被执行，所以会打印很多1。过了一段时间后，GO调度器会将其置为休眠，并唤醒另一个goroutine，这时候就开始打印很多0了，在打印的时候，goroutine是被调度到操作系统线程上的。在第二次执行时，我们使用了两个操作系统线程，所以两个goroutine可以一起被执行，以同样的频率交替打印0和1。我们必须强调的是goroutine的调度是受很多因子影响的，而runtime也是在不断地发展演进的，所以这里的你实际得到的结果可能会因为版本的不同而与我们运行的结果有所不同。
+Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言中，当前的线程都有一个独特的身份(id)，并且这个身份信息可以以一个普通值的形式被被很容易地获取到，典型的可以是一个integer或者指针值。这种情况下我们做一个抽象化的thread-local storage(线程本地存储，多线程编程中不希望其它线程访问的内容)就很容易，只需要以线程的id作为key的一个map就可以解决问题，每一个线程以其id就能从中获取到值，且和其它线程互不冲突。……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/Goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/">阅读全文</a></p>
     </article>
     
     
@@ -329,7 +332,7 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/" title="数组中重复的数字(Python)">数组中重复的数字(Python)</a>
+                <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Python/" title="数组中重复的数字(Python)">数组中重复的数字(Python)</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -339,14 +342,14 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            <span class="meta-category"><a href='/categories/Python'>Python</a></span>
             
         </div>
         
         <div class="post-content">
-            #!/usr/bin/env python  # -*- coding: utf-8 -*- # @Time : 2019-08-13 22:35 # @Author : daryl # @File : main.py def use_map(numbers): &#34;&#34;&#34; 使用哈希表结构 :param numbers: :return: &#34;&#34;&#34; num_map = dict() for number in numbers: if number in num_map: print(number) else: num_map[number] = True def use_set(numbers): &#34;&#34;&#34; 使用set结构 :param numbers: :return: &#34;&#34;&#34; num_set = set() for number in numbers: if number in num_set: print(number) else: num_set.add(number) def use_sort(numbers): &#34;&#34;&#34; 排序后查找 :param numbers: :return: &#34;&#34;&#34; numbers = sorted(numbers) print(numbers) for index, number in enumerate(numbers): if index !……
+            1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107  #!……
         </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/">阅读全文</a></p>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97Python/">阅读全文</a></p>
     </article>
     
     
@@ -434,16 +437,31 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
 
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
 
 
 
+    <script src='/js/douban.js'></script>
 
                 </div>
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='//www.google.com/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
       <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
@@ -456,7 +474,7 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
 <ul class="widget-list">
     
     <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
+        <a href="https://siskinc.github.io/post/Ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
     <li>
@@ -464,11 +482,11 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
+        <a href="https://siskinc.github.io/post/Python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9CSSH/" title="Python远程操作SSH">Python远程操作SSH</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
+        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8Redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
     <li>
@@ -476,23 +494,23 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
+        <a href="https://siskinc.github.io/post/Golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
+        <a href="https://siskinc.github.io/post/Redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
+        <a href="https://siskinc.github.io/post/Golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
     <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
+        <a href="https://siskinc.github.io/post/Redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
     </li>
     
 </ul>
@@ -504,35 +522,35 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Algorithm/">Algorithm (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Android/">Android (2)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    <li><a href="https://siskinc.github.io/categories/C&#43;&#43;/">C&#43;&#43; (3)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Docker/">Docker (5)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/Go/">Go (18)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    <li><a href="https://siskinc.github.io/categories/JavaScript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/MongoDB/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Python/">Python (18)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/SVN/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/Windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
-    
-    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
     
@@ -551,15 +569,19 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
         <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
 <div class="tagcloud">
     
-    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    <a href="https://siskinc.github.io/tags/Basic-Latin/">Basic Latin</a>
     
-    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    <a href="https://siskinc.github.io/tags/CAS/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/RTTI/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/Unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
     
     <a href="https://siskinc.github.io/tags/branch/">branch</a>
     
     <a href="https://siskinc.github.io/tags/bug/">bug</a>
-    
-    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
     
     <a href="https://siskinc.github.io/tags/centos/">centos</a>
     
@@ -613,9 +635,9 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
     
     <a href="https://siskinc.github.io/tags/init/">init</a>
     
-    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    <a href="https://siskinc.github.io/tags/jQuery/">jQuery</a>
     
-    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
     
     <a href="https://siskinc.github.io/tags/json/">json</a>
     
@@ -661,8 +683,6 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
     
     <a href="https://siskinc.github.io/tags/restful/">restful</a>
     
-    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
-    
     <a href="https://siskinc.github.io/tags/shell/">shell</a>
     
     <a href="https://siskinc.github.io/tags/source-code/">source code</a>
@@ -680,8 +700,6 @@ Go鼓励更为简单的模式，这种模式下参数对函数的影响都是显
     <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
     
     <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
-    
-    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
     
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     

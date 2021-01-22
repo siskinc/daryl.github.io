@@ -13,7 +13,7 @@
       <pubDate>Thu, 25 Jul 2019 20:35:01 +0000</pubDate>
       
       <guid>https://siskinc.github.io/post/docker%E4%B8%80%E9%94%AEss/</guid>
-      <description>sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &amp;#34;ss-server&amp;#34; -s &amp;#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&amp;#34; -x -e &amp;#34;kcpserver&amp;#34; -k &amp;#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&amp;#34; </description>
+      <description>1 2 3  sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &amp;#34;ss-server&amp;#34; -s &amp;#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&amp;#34; -x -e &amp;#34;kcpserver&amp;#34; -k &amp;#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&amp;#34;   </description>
     </item>
     
   </channel>
