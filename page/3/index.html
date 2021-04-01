@@ -71,6 +71,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/" title="Windows下如何使用pip安装Uber H3">Windows下如何使用pip安装Uber H3</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年2月26日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/windows'>Windows</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            最近项目中会用到uber h3，而我写一个小工具或者去验证一些思路的时候常常会使用Python来着，方便嘛！而Uber H3是C写的，只是为Python提供了拓展，所以需要安装Vs14。这个需要自己提前安装好。
+在使用pip安装时直接报错了！
+大概的报错内容就是需要cmake，bash等东西，cmake好解决，自己下载到本地，放到环境变量里面就行，bash可以使用git bash来代替，所以只能跟Power shell暂时说拜拜，使用Git Bash来安装H3。Ok， 你运行pip install h3就会看见如下界面……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/windows%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8pip%E5%AE%89%E8%A3%85uber_h3/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/nexus_5x_api_29_x86%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%97%A0%E6%B3%95%E8%81%94%E7%BD%91%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80chrome/" title="Nexus 5X API 29 x86模拟器无法联网，无法打开chrome">Nexus 5X API 29 x86模拟器无法联网，无法打开chrome</a>
             </h1>
         </header>
@@ -289,31 +314,6 @@
         <p class="readmore"><a href="https://siskinc.github.io/post/gorm%E8%BD%AF%E5%88%A0%E9%99%A4%E5%92%8C%E5%94%AF%E4%B8%80%E9%94%AE%E5%86%B2%E7%AA%81%E7%9A%84%E9%97%AE%E9%A2%98/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/wordpressdocker%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7/" title="wordpress,docker,插件升级">wordpress,docker,插件升级</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年12月6日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/docker'>Docker</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-              wp-config.php最后一行添加define('FS_METHOD', &quot;direct&quot;);
-  设置文件权限chown -R www-data:www-data ./
-  ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/wordpressdocker%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -435,6 +435,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
     </li>
     
@@ -470,10 +474,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8B%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Redis源码阅读之动态字符串">Redis源码阅读之动态字符串</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -505,7 +505,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (18)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (19)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
