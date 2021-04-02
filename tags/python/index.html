@@ -80,6 +80,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/">如何使用vscode远程调试Python</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年4月2日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/vscode'>VSCode</a>
+            
+        </div>
+        
+        <div class="post-content">
+            插件  SFTP Python  配置 sftp.json  用于同步本地代码和远端服务器代码
+ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  { &#34;name&#34;: &#34;remote sync&#34;, &#34;host&#34;: &#34;remote host&#34;, &#34;protocol&#34;: &#34;sftp&#34;, &#34;port&#34;: 22, &#34;username&#34;: &#34;username&#34;, &#34;password&#34;: &#34;password&#34;, &#34;remotePath&#34;: &#34;remote project path&#34;, &#34;uploadOnSave&#34;: true, &#34;ignore&#34;: [ &#34;.vscode&#34;, &#34;.git&#34;, &#34;.DS_Store&#34;, &#34;.idea&#34;, &#34;venv&#34;, &#34;__pycache__&#34; ] }   tasks.json  用于一键启动远端程序
+ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  { // See https://go.……
+            <p class="readmore"><a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/">Python判断数字字符串</a>
             </h1>
         </header>
@@ -300,29 +325,6 @@
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/python'>Python</a>
-            
-        </div>
-        
-        <div class="post-content">
-            from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=''):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype='application/json')class JSONResponse(Response):def __init__(self, data, msg=''):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype='application/json')class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&quot;need login&quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype='application/json', status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果……
-            <p class="readmore"><a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -413,6 +415,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
     </li>
     
@@ -446,10 +452,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bmap/" title="Golang源码阅读之map">Golang源码阅读之map</a>
     </li>
     
 </ul>
@@ -488,6 +490,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/vscode/">VSCode (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
@@ -643,6 +647,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
     
     <a href="https://siskinc.github.io/tags/uwsgi/">uwsgi</a>
+    
+    <a href="https://siskinc.github.io/tags/vscode/">vscode</a>
     
     <a href="https://siskinc.github.io/tags/vue/">vue</a>
     

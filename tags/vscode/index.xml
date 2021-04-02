@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vscode on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/vscode/</link>
+    <description>Recent content in vscode on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 02 Apr 2021 08:51:31 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何使用vscode远程调试Python</title>
+      <link>https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/</link>
+      <pubDate>Fri, 02 Apr 2021 08:51:31 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/</guid>
+      <description>插件  SFTP Python  配置 sftp.json  用于同步本地代码和远端服务器代码
+ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  { &amp;#34;name&amp;#34;: &amp;#34;remote sync&amp;#34;, &amp;#34;host&amp;#34;: &amp;#34;remote host&amp;#34;, &amp;#34;protocol&amp;#34;: &amp;#34;sftp&amp;#34;, &amp;#34;port&amp;#34;: 22, &amp;#34;username&amp;#34;: &amp;#34;username&amp;#34;, &amp;#34;password&amp;#34;: &amp;#34;password&amp;#34;, &amp;#34;remotePath&amp;#34;: &amp;#34;remote project path&amp;#34;, &amp;#34;uploadOnSave&amp;#34;: true, &amp;#34;ignore&amp;#34;: [ &amp;#34;.vscode&amp;#34;, &amp;#34;.git&amp;#34;, &amp;#34;.DS_Store&amp;#34;, &amp;#34;.idea&amp;#34;, &amp;#34;venv&amp;#34;, &amp;#34;__pycache__&amp;#34; ] }   tasks.json  用于一键启动远端程序
+ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  { // See https://go.</description>
+    </item>
+    
+  </channel>
+</rss>
