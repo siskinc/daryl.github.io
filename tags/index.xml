@@ -6,7 +6,43 @@
     <description>Recent content in Tags on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Apr 2021 08:51:31 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Apr 2021 23:43:50 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gin</title>
+      <link>https://siskinc.github.io/tags/gin/</link>
+      <pubDate>Wed, 07 Apr 2021 23:43:50 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/tags/gin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://siskinc.github.io/tags/golang/</link>
+      <pubDate>Wed, 07 Apr 2021 23:43:50 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mongodb</title>
+      <link>https://siskinc.github.io/tags/mongodb/</link>
+      <pubDate>Wed, 07 Apr 2021 23:43:50 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/tags/mongodb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>restful</title>
+      <link>https://siskinc.github.io/tags/restful/</link>
+      <pubDate>Wed, 07 Apr 2021 23:43:50 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/tags/restful/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>python</title>
       <link>https://siskinc.github.io/tags/python/</link>
@@ -49,15 +85,6 @@
       <pubDate>Mon, 09 Nov 2020 23:49:58 +0000</pubDate>
       
       <guid>https://siskinc.github.io/tags/go-redis/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>golang</title>
-      <link>https://siskinc.github.io/tags/golang/</link>
-      <pubDate>Mon, 09 Nov 2020 23:49:58 +0000</pubDate>
-      
-      <guid>https://siskinc.github.io/tags/golang/</guid>
       <description></description>
     </item>
     
@@ -611,29 +638,11 @@
     </item>
     
     <item>
-      <title>gin</title>
-      <link>https://siskinc.github.io/tags/gin/</link>
-      <pubDate>Thu, 25 Jul 2019 20:25:30 +0000</pubDate>
-      
-      <guid>https://siskinc.github.io/tags/gin/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>gridfs</title>
       <link>https://siskinc.github.io/tags/gridfs/</link>
       <pubDate>Thu, 25 Jul 2019 20:25:30 +0000</pubDate>
       
       <guid>https://siskinc.github.io/tags/gridfs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>mongodb</title>
-      <link>https://siskinc.github.io/tags/mongodb/</link>
-      <pubDate>Thu, 25 Jul 2019 20:25:30 +0000</pubDate>
-      
-      <guid>https://siskinc.github.io/tags/mongodb/</guid>
       <description></description>
     </item>
     
@@ -724,15 +733,6 @@
       <pubDate>Thu, 25 Jul 2019 17:33:08 +0000</pubDate>
       
       <guid>https://siskinc.github.io/tags/unicode/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>restful</title>
-      <link>https://siskinc.github.io/tags/restful/</link>
-      <pubDate>Thu, 25 Jul 2019 17:31:19 +0000</pubDate>
-      
-      <guid>https://siskinc.github.io/tags/restful/</guid>
       <description></description>
     </item>
     
