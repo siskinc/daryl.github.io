@@ -6,7 +6,24 @@
     <description>Recent content in golang on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Apr 2021 23:43:50 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Apr 2021 17:20:53 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go使用Thrift连接HBase</title>
+      <link>https://siskinc.github.io/post/go%E4%BD%BF%E7%94%A8thrift%E8%BF%9E%E6%8E%A5hbase/</link>
+      <pubDate>Wed, 14 Apr 2021 17:20:53 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/post/go%E4%BD%BF%E7%94%A8thrift%E8%BF%9E%E6%8E%A5hbase/</guid>
+      <description>安装thrift 通过scoop下载 1  scoop install thrift   其他方式 https://www.jianshu.com/p/301c013cf955
+获取Thrift文件 下载HBase源码 https://hbase.apache.org/downloads.html
+下载src的都可以
+路径 hbase-2.4.2\hbase-thrift\src\main\resources\org\apache\hadoop\hbase\thrift\Hbase.thrift
+生成代码 版本号 thrift版本需要和github.com/apache/thrift版本一致
+thrift -gen go -o . ./Hbase.thrift修改代码 生成的代码不能直接使用,编译会报错,在编辑器中使用replace操作
+选择代码:_key(.*) = temp
+修改代码: _key$1 = string(temp)
+Replace ALL即可</description>
+    </item>
+    
     <item>
       <title>当golang遇见工厂模式</title>
       <link>https://siskinc.github.io/post/%E5%BD%93golang%E9%81%87%E8%A7%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</link>

@@ -4,26 +4,51 @@
   
   <url>
     <loc>https://siskinc.github.io/categories/</loc>
-    <lastmod>2021-04-07T23:43:50+08:00</lastmod>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://siskinc.github.io/</loc>
-    <lastmod>2021-04-07T23:43:50+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://siskinc.github.io/tags/gin/</loc>
-    <lastmod>2021-04-07T23:43:50+08:00</lastmod>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://siskinc.github.io/categories/go/</loc>
-    <lastmod>2021-04-07T23:43:50+08:00</lastmod>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://siskinc.github.io/tags/golang/</loc>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/post/go%E4%BD%BF%E7%94%A8thrift%E8%BF%9E%E6%8E%A5hbase/</loc>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/tags/hbase/</loc>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/post/</loc>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/tags/</loc>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/tags/thrift/</loc>
+    <lastmod>2021-04-14T17:20:53+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://siskinc.github.io/tags/gin/</loc>
     <lastmod>2021-04-07T23:43:50+08:00</lastmod>
   </url>
   
@@ -33,17 +58,7 @@
   </url>
   
   <url>
-    <loc>https://siskinc.github.io/post/</loc>
-    <lastmod>2021-04-07T23:43:50+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://siskinc.github.io/tags/restful/</loc>
-    <lastmod>2021-04-07T23:43:50+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://siskinc.github.io/tags/</loc>
     <lastmod>2021-04-07T23:43:50+08:00</lastmod>
   </url>
   
