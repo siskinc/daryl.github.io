@@ -26,7 +26,7 @@
       <guid>https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
       <description>今天遇到线上一个BUG，用户导入数据时，将某个字段填写一个负数会导致服务器报错，大概的代码如下:
 1 2 3 4  if isinstance(obj, str) and obj.isdigit(): obj = int(obj) else: raise Exception(&amp;#34;fuck you&amp;#34;)   但是，负数并不能直接使用isdigit判断，看下截图： 所以，还需要做一些转换，满足这个需求:
-1 2 3 4 5 6 7 8 9 10  def isdigit(num: str) -&amp;gt; bool: if not obj: return False if obj[0] == &amp;#39;-&amp;#39;: return obj[1:].isdigit() return obj.isdigit() if isinstance(obj, str) and isdigit(obj): obj = int(obj) else: raise Exception(&amp;#34;fuck you&amp;#34;)   </description>
+1 2 3 4 5 6 7 8 9 10  def isdigit(num: str) -&amp;gt; bool: if not num: return False if num[0] == &amp;#39;-&amp;#39;: return num[1:].isdigit() return num.isdigit() if isinstance(num, str) and isdigit(num): num = int(num) else: raise Exception(&amp;#34;fuck you&amp;#34;)   </description>
     </item>
     
     <item>

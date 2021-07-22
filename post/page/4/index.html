@@ -73,6 +73,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" title="Golang交叉编译">Golang交叉编译</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年12月12日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            Mac 下编译 Linux 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Linux 下编译 Mac 和 Windows 64位可执行程序 1 2 3 4 5  CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build main.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build main.go   Windows 下编译 Mac 和 Linux 64位可执行程序(cmd下) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  SET CGO_ENABLED=0 SET GOOS=darwin SET GOARCH=amd64 go build main.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/k8s%E6%9C%8D%E5%8A%A1%E7%9B%B4%E6%8E%A5%E6%8C%82%E6%8E%89%E7%9A%84%E5%8E%9F%E5%9B%A0/" title="k8s服务直接挂掉的原因">k8s服务直接挂掉的原因</a>
             </h1>
         </header>
@@ -312,36 +337,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/" title="Linux进程的五个段">Linux进程的五个段</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年8月24日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            数据段  用来存放可执行文件中已初始化的全局变量，换句话说就是存放程序静态分配的变量和全局变量；
- 代码段  代码段是用来存放可执行文件的操作指令，也就是说它是可执行程序在内存中的镜像。代码段需要防止在运行时被非法修改，所以只允许读取操作，而不允许写入（修改）操作&mdash;&ndash;它是不可写的；
- BSS段  包含了程序中未初始化的全局变量，在内存中bss段全部置零；
- 堆（heap）  堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可以动态扩展或者所建。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩展）；当利用free等函数释放内存时，被释放的内存从堆中被提出（堆被缩减）；
- 栈  栈是用户存放程序临时创建的局部变量，也就是说我们函数括弧中定义的变量（但是并不包括static声明的变量，static意味着在数据段中存放变量）.除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出的特点，所以栈特别方便用来保存/回复调用现场。从这个意义上讲，我们可以把栈看成一个寄存，交换临时数据的内存区。它是由操作系统分配的，内存的申请与回收都由OS管理。
- ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/linux%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AE%B5/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -387,6 +382,10 @@
     
     <li >
         <a href="https://siskinc.github.io/post/page/9/">9</a>
+    </li>
+    
+    <li >
+        <a href="https://siskinc.github.io/post/page/10/">10</a>
     </li>
     
 
@@ -462,6 +461,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-bufio%E9%98%85%E8%AF%BB/" title="Golang源码阅读 Bufio阅读">Golang源码阅读 Bufio阅读</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%BD%93golang%E9%81%87%E8%A7%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="当golang遇见工厂模式">当golang遇见工厂模式</a>
     </li>
     
@@ -497,10 +500,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -520,7 +519,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (19)</a></li>
+    <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
     

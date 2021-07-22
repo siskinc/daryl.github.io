@@ -80,6 +80,36 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">记一次kafka-go使用踩坑（多个partition只会写入一个partition）</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年11月6日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/go'>Go</a>
+            
+        </div>
+        
+        <div class="post-content">
+            kafka-go地址: https://github.com/segmentio/kafka-go
+ 注意：本文解决的问题不是因为kafka配置造成的，是因为代码写得有问题。
+今天查看公司某kafka group消费情况的时候，发现该group消费的topic大多数的message写入了同一个partition，先从配置问题查找，后来又去看公司包装的kafka的库的源码查找，看起来都没啥问题。
+并且，该问题就出现在一个服务里面，很是让人迷惑。该服务和其他服务最大的不同在于，它每一次都只会发送一个message给kafka。
+先看看，kafka-go的demo：
+1 2 3 4 5 6 7 8 9 10 11  w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, })   第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
+因为代码是每次都发送一个message，每次都是一个新的Balancer，所以Balancer每次只需Balance的状态都是一致，所以会造成只写入一个partition中。
+总结一下，这个问题可大可小，数据量不大，程序抗得住当然没什么，但是总有一天会扛不住。所以奉劝一句，写完代码记得认认真真测试，程序跑得起来不代表正确。……
+            <p class="readmore"><a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/golang%E8%87%AA%E5%8A%A8%E8%B0%83%E7%94%A8%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%AD%E5%86%85%E5%B5%8C%E5%AD%97%E6%AE%B5%E7%9A%84init%E5%87%BD%E6%95%B0/">golang自动调用结构体中内嵌字段的Init()函数</a>
             </h1>
         </header>
@@ -400,6 +430,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-bufio%E9%98%85%E8%AF%BB/" title="Golang源码阅读 Bufio阅读">Golang源码阅读 Bufio阅读</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%BD%93golang%E9%81%87%E8%A7%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="当golang遇见工厂模式">当golang遇见工厂模式</a>
     </li>
     
@@ -435,10 +469,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/golang_map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%8E%A5%E5%8F%97json%E4%B8%AD%E7%9A%84uint64%E6%95%B0%E6%8D%AE/" title="Golang map数据结构接受json中的uint64数据">Golang map数据结构接受json中的uint64数据</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -458,7 +488,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/go/">Go (19)</a></li>
+    <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
     
