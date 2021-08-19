@@ -6,7 +6,20 @@
     <description>Recent content in Python on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Apr 2021 08:37:46 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Aug 2021 10:48:16 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python3在类的内部使用当前类作为类型提示</title>
+      <link>https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/</link>
+      <pubDate>Thu, 19 Aug 2021 10:48:16 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/</guid>
+      <description>问题 在Python3中，例如：构建链表节点类，会有一个指向自身类型的指针，代码如下:
+1 2 3 4 5  class ListNode(object): value: int nextNode: ListNode def merge(self, head: ListNode): pass   如果直接写成这样，代码提示器是无法识别到的
+解决 Python 3.10以及以后的版本 已经支持该方式
+Python 3.7+ 使用feature 1  from __future__ import annotations   Python 3.6以及更旧的版本 直接使用字符串的方式，例如:
+1 2 3 4 5  class ListNode(object): value: int nextNode: &amp;#39;ListNode&amp;#39; def merge(self, head: &amp;#39;ListNode&amp;#39;): pass   参考资料 https://stackoverflow.com/questions/33533148/how-do-i-type-hint-a-method-with-the-type-of-the-enclosing-class</description>
+    </item>
+    
     <item>
       <title>Python判断数字字符串</title>
       <link>https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
