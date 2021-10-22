@@ -80,6 +80,29 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>Python</a>
+            
+        </div>
+        
+        <div class="post-content">
+            from json import dumpsfrom flask import Responsefrom flask_api import statusfrom protocol.errors_pb2 import *class ErrorResponse(Response):def __init__(self, err_code, err_msg=''):result = dumps(dict(code=err_code, msg=err_msg))Response.__init__(self, result, mimetype='application/json')class JSONResponse(Response):def __init__(self, data, msg=''):result = dumps(dict(data=data, code=Error_None, msg=msg))Response.__init__(self, result, mimetype='application/json')class UnauthorizedResponse(Response):def __init__(self):data = dumps(dict(msg=&quot;need login&quot;, code=Error_NeedLogin, data=None))Response.__init__(self, data, mimetype='application/json', status=status.HTTP_401_UNAUTHORIZED)注意：一定要使用json.dumps来转换最后的结果……
+            <p class="readmore"><a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/django%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Django上传图片</a>
             </h1>
         </header>
@@ -316,34 +339,6 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/django_dumpdata_and_loaddata/">Django dumpdata and loaddata</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/python'>Python</a>
-            
-        </div>
-        
-        <div class="post-content">
-            原文来自于: https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata
- dumpdata 命令  这个是Django自带的管理命令，可以用来备份你的模型实例和数据库  dumpdata 基本数据库的转存  下面的命令将把整个数据转存到db.json文件中   ./manage.py dumpdata &gt; db.json
- dumpdata 备份特定的 app  下面的命令将在django admin app 转存到 admin.json文件中   ./manage.py dumpdata admin &gt; admin.json
- dumpdata 备份特定的表  下面的命令将只转存django admin.logentry 表中的内容   ./manage.py dumpdata admin.logentry &gt; logentry.json
-  下面的命令将只转存django auth.user 表中的内容   ./manage.py dumpdata auth.user &gt; user.json
- dumpdata (&ndash;exclude)   你可以使用 &ndash;exclude 选择不需要备份的app或者表……
-            <p class="readmore"><a href="https://siskinc.github.io/post/django_dumpdata_and_loaddata/">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -365,7 +360,15 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
         <a href="https://siskinc.github.io/categories/python/page/2/">2</a>
     </li>
     
+    <li >
+        <a href="https://siskinc.github.io/categories/python/page/3/">3</a>
+    </li>
+    
 
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/categories/python/page/3/">下一页</a>
+    </li>
     
 </ol>
 
@@ -434,6 +437,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
@@ -469,10 +476,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -504,7 +507,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (20)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -633,7 +636,11 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
     
+    <a href="https://siskinc.github.io/tags/pydantic/">Pydantic</a>
+    
     <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python-language-server/">Python Language Server</a>
     
     <a href="https://siskinc.github.io/tags/python2/">python2</a>
     

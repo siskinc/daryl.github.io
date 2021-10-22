@@ -71,6 +71,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/" title="axios_发送post请求">axios_发送post请求</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E5%89%8D%E7%AB%AF'>前端</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            方案一 在node中使用axios以post的方式发送一张图片给某个server时:
+let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
+let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&gt; {if(response.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/error-inflating-class-fragment/" title="Error_inflating_class_fragment">Error_inflating_class_fragment</a>
             </h1>
         </header>
@@ -265,6 +290,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
@@ -300,10 +329,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -335,7 +360,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (20)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -464,7 +489,11 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
     
+    <a href="https://siskinc.github.io/tags/pydantic/">Pydantic</a>
+    
     <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python-language-server/">Python Language Server</a>
     
     <a href="https://siskinc.github.io/tags/python2/">python2</a>
     

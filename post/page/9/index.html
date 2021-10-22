@@ -73,6 +73,47 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" title="mysql查看数据库和表的占用空间大小">mysql查看数据库和表的占用空间大小</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/mysql'>Mysql</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            查看数据库的大小 use 数据库名
+SELECT sum(DATA_LENGTH)+sum(INDEX_LENGTH)
+FROM information_schema.TABLES where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;
+得到的结果是以字节为单位，除1024为K，除1048576为M。
+查看表的最后mysql修改时间 select TABLE_NAME,UPDATE_TIME from INFORMATION_SCHEMA.tables where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;
+可以通过查看数据库中表的mysql修改时间，来确定mysql数据库是否已经长期不再使用。
+查看数据库中各个表占用的空间大小 如果想知道MySQL数据库中每个表占用的空间、表记录的行数的话，可以打开MySQL的 information_schema 数据库。在该库中有一个 TABLES 表，这个表主要字段分别是：
+TABLE_SCHEMA : 数据库名
+TABLE_NAME：表名
+ENGINE：所使用的存储引擎
+TABLES_ROWS：记录数
+DATA_LENGTH：数据大小
+INDEX_LENGTH：索引大小
+其他字段请参考MySQL的手册，我们只需要了解这几个就足够了。
+所以要知道一个表占用空间的大小，那就相当于是 数据大小 + 索引大小 即可。
+SQL:
+SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SCHEMA=&lsquo;数据库名&rsquo; AND TABLE_NAME=&lsquo;表名&rsquo;……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/unicode_%E7%BC%96%E7%A0%81_%E8%8C%83%E5%9B%B4/" title="Unicode 编码 范围">Unicode 编码 范围</a>
             </h1>
         </header>
@@ -353,33 +394,6 @@ https://vuejs-templates.github.io/webpack/proxy.html
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/" title="axios_发送post请求">axios_发送post请求</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/%E5%89%8D%E7%AB%AF'>前端</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            方案一 在node中使用axios以post的方式发送一张图片给某个server时:
-let data = fs.createReadStream(__dirname + '/test.jpg')axios.post(url,{media:data,type:&quot;image&quot;}).then(function (response) {console.log(response.data);}).catch(function (error) {console.log(error);})方案二 事实证明，这样做是完全没有用的，我尝试向另一个服务器poststream，返回的总是错误。然而，如果我使用request，下面这样的代码是完全没有问题的：
-let data = fs.createReadStream(__dirname + '/test.jpg')let form = {type:&quot;image&quot;,media:data}request.post({url:url,formData:form},(err,res,body)=&gt;{if(err) console.log(err)console.log(body)})// 注册事件方法register: function() {let registerUrl = this.GetServerUrl() + &quot;/user/signup&quot;;let params = {username: this.username,password: this.password,email: this.email,captcha: this.captcha};this.axios.post(registerUrl, params).then(response =&gt; {if(response.……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -504,6 +518,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
@@ -539,10 +557,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -574,7 +588,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (20)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -703,7 +717,11 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
     
+    <a href="https://siskinc.github.io/tags/pydantic/">Pydantic</a>
+    
     <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python-language-server/">Python Language Server</a>
     
     <a href="https://siskinc.github.io/tags/python2/">python2</a>
     
