@@ -73,6 +73,37 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/" title="vue 跨域问题">vue 跨域问题</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E5%89%8D%E7%AB%AF'>前端</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            和后端联调时总是会面对恼人的跨域问题，最近基于Vue开发项目时也遇到了这个问题，两边各自想了一堆办法，查了一堆资料，加了一堆参数，最后还得我把自己的localhost映射成上线时将要使用的域名。
+今天翻看代码时，突然发现vue-cli的config文件里有一个参数叫proxyTable，看这个名字就感觉能解决问题，于是我就去搜了一下，果然。在vuejs-templates，也就是vue-cli的使用的模板插件里，有关于API proxy的说明，使用的就是这个参数。
+https://vuejs-templates.github.io/webpack/proxy.html
+这个参数主要是一个地址映射表，你可以通过设置将复杂的url简化，例如我们要请求的地址是api.xxxxxxxx.com/list/1，可以按照如下设置：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15  proxyTable: { &#39;/list&#39;: { target: &#39;http://api.xxxxxxxx.com&#39;, pathRewrite: { &#39;^/list&#39;: &#39;/list&#39; } } }   这样我们在写url的时候，只用写成/list/1就可以代表api.xxxxxxxx.com/list/1.
+那么又是如何解决跨域问题的呢？其实在上面的list的参数里有一个changeOrigin参数，接收一个布尔值，如果设置为true,那么本地会虚拟一个服务端接收你的请求并代你发送该请求，这样就不会有跨域问题了，当然这只适用于开发环境。增加的代码如下所示：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  proxyTable: { &#39;/list&#39;: { target: &#39;http://api.xxxxxxxx.com&#39;, changeOrigin: true, pathRewrite: { &#39;^/list&#39;: &#39;/list&#39; } } }   ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/vue-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/axios-%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82/" title="axios_发送post请求">axios_发送post请求</a>
             </h1>
         </header>
@@ -297,6 +328,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
     </li>
     
@@ -330,10 +365,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
 </ul>
@@ -388,6 +419,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%BD%AF%E6%8A%80%E8%83%BD/">软技能 (1)</a></li>
     
 </ul>
     </section>
@@ -557,6 +590,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
     
     <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
     
     <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
     

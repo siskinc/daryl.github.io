@@ -71,6 +71,29 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/" title="golang scan rows to []string，golang使用mysql，将结果写入到string列表中">golang scan rows to []string，golang使用mysql，将结果写入到string列表中</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年12月17日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31  rows, err := db.Query(sqlStr) if err != nil { return } for rows.Next() { result := make([]string, len(readerResult.Columns)) pointers := make([]interface{}, len(result)) for i := range pointers { pointers[i] = &amp;result[i] } err := rows.Scan(pointers...) if err != nil { logrus.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/nohup%E4%B8%8D%E8%BE%93%E5%87%BA%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95/" title="nohup不输出日志信息的方法">nohup不输出日志信息的方法</a>
             </h1>
         </header>
@@ -282,34 +305,6 @@
         <p class="readmore"><a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/" title="定时统计任务参考">定时统计任务参考</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年11月1日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/%E7%BB%8F%E9%AA%8C'>经验</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-              时间的触发，过期的数据不再使用（数据来源是消息中间件）
-  相关联的任务使用事件的方式，例如一天的统计数据是需要小时的数据来生成的，当一天的小时数据生成完了，再去触发生成一天的数据，请勿使用延时的观念，是神坑，勿入。
-  数据的读取，采用批量的方式读取，一次读取一个限定的值的数量。
-  数据的写入，采用批量的方式写入，最好有ticker来触发写入未到阈值数量的数据。
-  撸数据是一次sql撸完，还是分页撸？DBA告诉我让我一次撸完。
-  ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%AE%9A%E6%97%B6%E7%BB%9F%E8%AE%A1%E4%BB%BB%E5%8A%A1%E5%8F%82%E8%80%83/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -435,6 +430,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
     </li>
     
@@ -468,10 +467,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
 </ul>
@@ -526,6 +521,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%BD%AF%E6%8A%80%E8%83%BD/">软技能 (1)</a></li>
     
 </ul>
     </section>
@@ -695,6 +692,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
     
     <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
     
     <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
     

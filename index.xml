@@ -6,7 +6,28 @@
     <description>Recent content on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 Oct 2021 16:23:08 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Nov 2021 13:35:08 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>四象限工作法</title>
+      <link>https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/</link>
+      <pubDate>Thu, 11 Nov 2021 13:35:08 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/</guid>
+      <description> 所谓四象限工作法是由著名管理学家史蒂芬柯维提出的一个时间管理理论。该理论把事情按照重要和紧急分成了四个象限：重要而且紧急、重要但不紧急、不重要但紧急、不重要不紧急。
+ 各个象限的解释 第一象限  重要而且紧急。例如为孩子填写高考志愿，处理某某负面消息等等。这些事情必须马上去做，不然后果很严重。
+ 第二象限  重要但不紧急。例如制定公司的战略计划，准备某某合同的资料等。这些事情虽然看起来不紧急，但是却不能置之不理。如果现在不重视它，它随时都会发展成重要而且紧急的事情。
+ 第三象限  不重要但紧急。例如客户突然打来电话，召开临时会议等。这个象限的精力花费是相当无奈的，但包括你在内的很多人都会被假象迷惑，认为紧急就是重要的。其实，紧急和重要一点关系也没有。对于突如其来的紧急事情，你先得评估下这件事情对于手里的其他事情的重要性再决定要不要做这件事情。在这个象限，我们应该思考这个问题，如何减少第三象限的事情？
+ 第四象限  不重要不紧急。看无聊的电视剧，一个人瞎逛，发呆。这个象限的事情都是用来打发时间的，仅仅当做前三个象限的调剂还说得过去，若过多的沉溺于这个象限，那我们的产出则会大打折扣。在这个象限，我们应该思考这个问题，有必要进入这个象限吗？
+ 处理四象限事务的原则 第一象限  没什么好说的，立即去做。在工作中主要压力来自于第一象限，在生活中主要危机也来自于第一象限。
+ 第二象限  有计划去做。
+ 第三象限  交给别人去做。
+ 第四象限  尽量别去做。
+ 应用猴子法则走出第三象限 猴子法则是William Oncken 提出的一个理论，叫背上是我猴子。Oncken教授把那些工作比喻为活蹦乱跳，随时可能跳到你身上的猴子。
+你将一些并非自己职责的事情做得很有效率，可这值得沾沾自喜吗？你自己的事情完成得怎么样了呢？这个就是猴子法则。把不是自己背上的猴子巧妙的转移到别人身上，或者是换给给你猴子的人身上。
+第二象限工作法 如何走入第二项象限，第二现象工作法是四象限的核心和最终目的。
+四象限法小结  根据自己的价值观评判出某件事务的重要程度 根据事务的截止日期判断其紧迫程度 将自己所有的日常事务放到四象限中分析 对于四象限事务有不同处理的方法和原则 我们的主要精力是解决第二象限的事务 平常制定工作计划和目标都是相对于第二象限来说的  </description>
+    </item>
+    
     <item>
       <title>Python Language Server 支持Pydantic</title>
       <link>https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/</link>

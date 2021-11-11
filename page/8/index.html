@@ -71,6 +71,32 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/" title="Python如何合并两个字典">Python如何合并两个字典</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            Python 3
+1 2 3 4 5 6 7  x = {&#39;a&#39;: 1, &#39;b&#39;: 2} y = {&#39;b&#39;: 3, &#39;c&#39;: 4} z = {**x, **y}   Python 2
+1 2 3  z = dict(x, **y)    Python中只能处理这种简单的合并，如果出现相同的key，Python会选择覆盖
+ ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/" title="Python中下划线的5种含义">Python中下划线的5种含义</a>
             </h1>
         </header>
@@ -312,33 +338,6 @@ db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})�
         <p class="readmore"><a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/" title="关于Basic Latin踩到的一些坑">关于Basic Latin踩到的一些坑</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/%E7%BC%96%E7%A0%81'>编码</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            在wiki中，很多语言的字符集都包含了Basic Latin，一开始我没有细看，以为Basic Latin里面都是正常的字符集，后来在线上环境出现了问题
- 博主某天接到一个需求，需要过滤出某国语言的字符集（避免出现Unicode中的不可见字符），于是高高兴兴的在维基百科上找到该语言字符集抄了下来
-嗯，于是，线上环境出了一点小问题，由于我们某些功能是依赖于Basic Latin里面的特殊字符来做分割的，博主过于年轻，没有细看，于是翻车，卒，享年22岁。
-先看看Basic Latin里面到底是什么：https://jrgraphix.net/r/Unicode/0020-007F
-仔细看里面其实有很多特殊字符的，所以大多数程序员一般都会在正则表达式里面写0-9a-zA-Z来表示Basic Latin里面的东西，为什么不直接写\x0020-\x007F是有用意，以后看见一些东西还是不要随意忽略，就像为什么写0-9a-zA-Z来表示\x0020-\x007F，你以为别人是傻逼，写这么一长串干啥，实际上你是傻逼。……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -464,6 +463,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
     </li>
     
@@ -497,10 +500,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B%E5%9C%A8redis%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="幂次定律在Redis中的应用">幂次定律在Redis中的应用</a>
     </li>
     
 </ul>
@@ -555,6 +554,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%BD%AF%E6%8A%80%E8%83%BD/">软技能 (1)</a></li>
     
 </ul>
     </section>
@@ -724,6 +725,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
     
     <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
     
     <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
     
