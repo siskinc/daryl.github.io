@@ -80,6 +80,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>Python</a>
+            
+        </div>
+        
+        <div class="post-content">
+             在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
+ 解决方法如下，在__init__文件中加入以下代码:
+1 2 3 4 5 6 7  import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;))   ……
+            <p class="readmore"><a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a>
             </h1>
         </header>
@@ -314,31 +339,6 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/">Python使用datetime来判断近七天</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/python'>Python</a>
-            
-        </div>
-        
-        <div class="post-content">
-            strptime 使用strptime来格式化字符串
-1 2 3 4 5  datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) # datetime.datetime(2019, 1, 2, 0, 10)   timedelta 使用timedelta来进行计算天数
-1 2 3 4 5 6 7 8 9 10 11 12 13  a = datetime.datetime.strptime(&#34;2019-10-02&#34;, &#34;%Y-%m-%d&#34;) b = datetime.datetime.strptime(&#34;2019-10-01&#34;, &#34;%Y-%m-%d&#34;) a - b # datetime.timedelta(1) (a - b).days # 1   ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -437,6 +437,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
@@ -472,10 +476,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -507,7 +507,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -573,6 +573,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/flask/">flask</a>
     
     <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
     
     <a href="https://siskinc.github.io/tags/gin/">gin</a>
     

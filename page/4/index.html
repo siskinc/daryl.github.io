@@ -71,6 +71,34 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/" title="xshell过期了怎么办，如何破解xshell">xshell过期了怎么办，如何破解xshell</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年12月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+              卸载xshell
+  删除xshell注册表
+  打开运行框（快捷键WIN+R）,输入regedit.exe
+  删除计算机\HKEY_CURRENT_USER\Software\Netscape目录
+    重新安装xshell
+  ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/xshell%E8%BF%87%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%E5%A6%82%E4%BD%95%E7%A0%B4%E8%A7%A3xshell/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/golang_scan_rows_to_stringgolang%E4%BD%BF%E7%94%A8mysql%E5%B0%86%E7%BB%93%E6%9E%9C%E5%86%99%E5%85%A5%E5%88%B0string%E5%88%97%E8%A1%A8%E4%B8%AD/" title="golang scan rows to []string，golang使用mysql，将结果写入到string列表中">golang scan rows to []string，golang使用mysql，将结果写入到string列表中</a>
             </h1>
         </header>
@@ -275,36 +303,6 @@
         <p class="readmore"><a href="https://siskinc.github.io/post/golang_http.client_%E7%9A%84_connection_reset_by_peer_%E9%97%AE%E9%A2%98/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/" title="记一次kafka-go使用踩坑（多个partition只会写入一个partition）">记一次kafka-go使用踩坑（多个partition只会写入一个partition）</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年11月6日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            kafka-go地址: https://github.com/segmentio/kafka-go
- 注意：本文解决的问题不是因为kafka配置造成的，是因为代码写得有问题。
-今天查看公司某kafka group消费情况的时候，发现该group消费的topic大多数的message写入了同一个partition，先从配置问题查找，后来又去看公司包装的kafka的库的源码查找，看起来都没啥问题。
-并且，该问题就出现在一个服务里面，很是让人迷惑。该服务和其他服务最大的不同在于，它每一次都只会发送一个message给kafka。
-先看看，kafka-go的demo：
-1 2 3 4 5 6 7 8 9 10 11  w := kafka.NewWriter(kafka.WriterConfig{ Brokers: []string{&#34;localhost:9092&#34;}, Topic: &#34;topic-A&#34;, Balancer: &amp;kafka.LeastBytes{}, })   第一个看起来没啥问题，我发现公司代码也是照抄的，继续往NewWriter这个函数里面看，会发现这东西居然是起了一个协程，然后再去查看LeastBytes这个Balancer，他的Balance方法是依赖结构体中字段的状态的，每一次发送的时候都去创建一个新的Balancer，你不翻车谁翻车啊。
-因为代码是每次都发送一个message，每次都是一个新的Balancer，所以Balancer每次只需Balance的状态都是一致，所以会造成只写入一个partition中。
-总结一下，这个问题可大可小，数据量不大，程序抗得住当然没什么，但是总有一天会扛不住。所以奉劝一句，写完代码记得认认真真测试，程序跑得起来不代表正确。……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1kafka-go%E4%BD%BF%E7%94%A8%E8%B8%A9%E5%9D%91%E5%A4%9A%E4%B8%AApartition%E5%8F%AA%E4%BC%9A%E5%86%99%E5%85%A5%E4%B8%80%E4%B8%AApartition/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -430,6 +428,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
@@ -465,10 +467,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -500,7 +498,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -566,6 +564,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/flask/">flask</a>
     
     <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
     
     <a href="https://siskinc.github.io/tags/gin/">gin</a>
     

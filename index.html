@@ -71,6 +71,37 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年11月11日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            GIL是什么 首先需要明确的一点是GIL并不是Python的特性，它是在实现Python解析器(CPython)时所引入的一个概念。就好比C++是一套语言（语法）标准，但是可以用不同的编译器来编译成可执行代码。有名的编译器例如GCC，INTEL C++，Visual C++等。Python也一样，同样一段代码可以通过CPython，PyPy，Psyco等不同的Python执行环境来执行。像其中的JPython就没有GIL。然而因为CPython是大部分环境下默认的Python执行环境。所以在很多人的概念里CPython就是Python，也就想当然的把GIL归结为Python语言的缺陷。所以这里要先明确一点：GIL并不是Python的特性，Python完全可以不依赖于GIL。
+那么CPython实现中的GIL又是什么呢？GIL全称Global Interpreter Lock为了避免误导，我们还是来看一下官方给出的解释：
+ In CPython, the global interpreter lock, or GIL, is a mutex that prevents multiple native threads from executing Python bytecodes at once. This lock is necessary mainly because CPython’s memory management is not thread-safe. (However, since the GIL exists, other features have grown to depend on the guarantees that it enforces.)
+ 好吧，是不是看上去很糟糕？一个防止多线程并发执行机器码的一个Mutex，乍一看就是个BUG般存在的全局锁嘛！别急，我们下面慢慢的分析。
+为什么会有GIL 由于物理上的限制，各CPU厂商在核心频率上的比赛已经被多核所取代。为了更有效的利用多核处理器的性能，就出现了多线程的编程方式，而随之带来的就是线程间数据一致性和状态同步的困难。即使在CPU内部的Cache也不例外，为了有效解决多份缓存之间的数据同步时各厂商花费了不少心思，也不可避免的带来了一定的性能损失。
+Python当然也逃不开，为了利用多核，Python开始支持多线程。而解决多线程之间数据完整性和状态同步的最简单方法自然就是加锁。 于是有了GIL这把超级大锁，而当越来越多的代码库开发者接受了这种设定后，他们开始大量依赖这种特性（即默认python内部对象是thread-safe的，无需在实现时考虑额外的内存锁和同步操作）。
+慢慢的这种实现方式被发现是蛋疼且低效的。但当大家试图去拆分和去除GIL的时候，发现大量库代码开发者已经重度依赖GIL而非常难以去除了。有多难？做个类比，像MySQL这样的“小项目”为了把Buffer Pool Mutex这把大锁拆分成各个小锁也花了从5.5到5.6再到5.7多个大版为期近5年的时间，并且仍在继续。MySQL这个背后有公司支持且有固定开发团队的产品走的如此艰难，那又更何况Python这样核心开发和代码贡献者高度社区化的团队呢？
+所以简单的说GIL的存在更多的是历史原因。如果推到重来，多线程的问题依然还是要面对，但是至少会比目前GIL这种方式会更优雅。
+GIL 到底锁的是什么？ 大家都说 Python 有 GIL 锁，那么这个锁到底锁的是什么东西？？……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
             </h1>
         </header>
@@ -312,30 +343,6 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
         <p class="readmore"><a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年11月5日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            三方组件 paramiko
-创建ssh 连接 1 2 3 4 5 6 7 8 9 10 11 12 13  def connect_ssh(host: str, port: int, username: str, password: str): ssh = paramiko.SSHClient() key = paramiko.AutoAddPolicy() ssh.set_missing_host_key_policy(key) ssh.connect(host, port, username, password, timeout=5) return ssh   执行命令 1 2 3 4 5 6 7 8 9  def execute(ssh: paramiko.SSHClient): stdin, stdout, stderr = ssh.exec_command(&#39;command&#39;) for line in stdout.readlines(): print(line)   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -457,6 +464,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
@@ -492,10 +503,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -527,7 +534,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -593,6 +600,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/flask/">flask</a>
     
     <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
     
     <a href="https://siskinc.github.io/tags/gin/">gin</a>
     

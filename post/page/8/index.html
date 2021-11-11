@@ -73,6 +73,34 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/" title="Python any() 函数">Python any() 函数</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。
+元素除了是 0、空、FALSE 外都算 TRUE。
+如果想要测试一个list中是否有一个是1可以使用any，例如：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&#39;passed&#39;) if 1 in (x, y, z): print(&#39;passed&#39;) # These only test for truthiness: if x or y or z: print(&#39;passed&#39;) if any((x, y, z)): print(&#39;passed&#39;)   ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/python%E5%A6%82%E4%BD%95%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E5%AD%97%E5%85%B8/" title="Python如何合并两个字典">Python如何合并两个字典</a>
             </h1>
         </header>
@@ -329,37 +357,6 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Golang mgo 模糊查询的使用">Golang mgo 模糊查询的使用</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
-db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
-1 2 3  query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;/a/&#34;, &#34;$options&#34;: &#34;im&#34;}}   大家用这个方式去查询，能查询到算我输！
-下面总结一下，正真使用的方式：
- 在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&quot;\a&quot;，而不是\a\。   根据第一点，我们将代码修改一下。
- 1 2 3  query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;a&#34;, &#34;$options&#34;: &#34;im&#34;}}    但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
- 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25  // RegEx represents a regular expression.……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -484,6 +481,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
@@ -519,10 +520,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -554,7 +551,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -620,6 +617,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/flask/">flask</a>
     
     <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
     
     <a href="https://siskinc.github.io/tags/gin/">gin</a>
     

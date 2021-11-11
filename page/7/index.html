@@ -71,6 +71,32 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/uwsgi_flask_gevent_%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87coverage/" title="uwsgi flask gevent 测试代码覆盖率（coverage）">uwsgi flask gevent 测试代码覆盖率（coverage）</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            可能出现的问题   多进程启动
+  gevent启动
+  运行的服务可能不会停止
+  解决 我先参考了一下这一篇文章使用Coverage分析WSGI项目的代码覆盖率，他基本能够解决掉1.2两个问题，第三个问题我是使用了一个接口来停止当前进程的coverage，接口返回一个当前进程的work_id，可以判断是否所以进程都结束了，然后进行coverage combine就行了……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/uwsgi_flask_gevent_%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E7%8E%87coverage/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/" title="次优二叉树">次优二叉树</a>
             </h1>
         </header>
@@ -316,32 +342,6 @@ lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有
         <p class="readmore"><a href="https://siskinc.github.io/post/%E5%BD%93%E6%88%91%E4%BB%AC%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E4%BB%AC%E5%BA%94%E8%AF%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BB%80%E4%B9%88%E5%91%A2/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/" title="Python any() 函数">Python any() 函数</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            any() 函数用于判断给定的可迭代参数 iterable 是否全部为 False，则返回 False，如果有一个为 True，则返回 True。
-元素除了是 0、空、FALSE 外都算 TRUE。
-如果想要测试一个list中是否有一个是1可以使用any，例如：
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  x, y, z = 0, 1, 0 if x == 1 or y == 1 or z == 1: print(&#39;passed&#39;) if 1 in (x, y, z): print(&#39;passed&#39;) # These only test for truthiness: if x or y or z: print(&#39;passed&#39;) if any((x, y, z)): print(&#39;passed&#39;)   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/python_any_%E5%87%BD%E6%95%B0/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -467,6 +467,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
@@ -502,10 +506,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -537,7 +537,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -603,6 +603,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/flask/">flask</a>
     
     <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
     
     <a href="https://siskinc.github.io/tags/gin/">gin</a>
     

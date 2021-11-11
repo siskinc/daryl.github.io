@@ -73,6 +73,37 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Golang mgo 模糊查询的使用">Golang mgo 模糊查询的使用</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            在日常使用的Mongodb中，有一项功能叫做模糊查询（使用正则匹配），例如:
+db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})这是我们常用Mongodb的命令行使用的方式，但是在mgo中做出类似的方式视乎是行不通的：
+1 2 3  query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;/a/&#34;, &#34;$options&#34;: &#34;im&#34;}}   大家用这个方式去查询，能查询到算我输！
+下面总结一下，正真使用的方式：
+ 在Mongodb的命令行中，我们可以使用形如 \abcd\ 的方式来作为我们的pattern，但是在mgo是直接传入字符串来进行的，也就是传入的是&quot;\a&quot;，而不是\a\。   根据第一点，我们将代码修改一下。
+ 1 2 3  query := bson.M{&#34;title&#34;: bson.M{&#34;$regex&#34;: &#34;a&#34;, &#34;$options&#34;: &#34;im&#34;}}    但是我们会发现依然不能得到我们想要的结果，那么第二点就会产生了！
+ 在mgo中要用到模糊查询需要mgo中自带的一个结构: bson.RegEx  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25  // RegEx represents a regular expression.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/golang_mgo_%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%E7%9A%84%E4%BD%BF%E7%94%A8/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/" title="关于Basic Latin踩到的一些坑">关于Basic Latin踩到的一些坑</a>
             </h1>
         </header>
@@ -355,43 +386,6 @@ sds  char *的别名
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8Dzmalloc/" title="redis源码解读--内存分配zmalloc">redis源码解读--内存分配zmalloc</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            主要函数   void *zmalloc(size_t size);
-  void *zcalloc(size_t size);
-  void *zrealloc(void *ptr, size_t size);
-  void zfree(void *ptr);
-  char *zstrdup(const char *s);
-  size_t zmalloc_used_memory(void);
-  void zmalloc_set_oom_handler(void (*oom_handler)(size_t));
-  size_t zmalloc_get_rss(void);
-  int zmalloc_get_allocator_info(size_t *allocated, size_t *active, size_t *resident);
-  size_t zmalloc_get_private_dirty(long pid);
-  size_t zmalloc_get_smap_bytes_by_field(char *field, long pid);
-  size_t zmalloc_get_memory_size(void);
-  void zlibc_free(void *ptr);……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB-%E5%86%85%E5%AD%98%E5%88%86%E9%85%8Dzmalloc/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -516,6 +510,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
@@ -551,10 +549,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/go-redis%E6%89%B9%E9%87%8Fpipeline%E6%8B%89%E5%8F%96%E6%95%B0%E6%8D%AE%E7%9A%84%E6%93%8D%E4%BD%9C/" title="go-redis批量(pipeline)拉取数据的操作">go-redis批量(pipeline)拉取数据的操作</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cssh/" title="Python远程操作SSH">Python远程操作SSH</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -586,7 +580,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (21)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -652,6 +646,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/flask/">flask</a>
     
     <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
     
     <a href="https://siskinc.github.io/tags/gin/">gin</a>
     
