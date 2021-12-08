@@ -71,6 +71,30 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月8日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/golang'>Golang</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            Tips: 建议先看下官方文档，如何使用env再看源码
+ 项目信息  地址：https://github.com/caarlos0/env 描述：一个可以parse环境变量到go struct的简单的三方库 版本：tag: v6.8.0  源码阅读 入口函数(Parse) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25  // Parse parses a struct containing `env` tags and loads its values from // environment variables. func Parse(v interface{}, opts ...Options) error { return ParseWithFuncs(v, map[reflect.Type]ParserFunc{}, opts...) } // ParseWithFuncs is the same as `Parse` except it also allows the user to pass // in custom parsers.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" title="上下文切换">上下文切换</a>
             </h1>
         </header>
@@ -319,33 +343,6 @@ Python 3.7+ 使用feature 1  from __future__ import annotations   Python 3.6以�
         <p class="readmore"><a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年1月22日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            在笔记本上装ubuntu系统，也可以从事相关开发工作。但笔记本存在这样的情况，就是有时服务功能设好了，不需要操作了，但是希望机器一直开机提供服务，或者长期下载大文件。此时，为了省电，可将笔记本屏幕合上，静待其完成任务。 但是，在默认情况下，笔记本合上屏幕后，ubuntu系统会休眠，我试着用GUI改了一下设置，实践证明没有效果，还是直接修改配置文件来得快，方法如下： 修改 Login Manager的配置文件，/etc/systemd/logind.conf: 然后将其中的：
-1  #HandleLidSwitch=suspend   改成：
-1  HandleLidSwitch=ignore   然后重启服务：
-1  service systemd-logind restart   或者直接重启
-1  sudo shutdown -r now   即可使设置生效。……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -467,6 +464,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" title="上下文切换">上下文切换</a>
     </li>
     
@@ -502,10 +503,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -526,6 +523,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/golang/">Golang (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
     
@@ -614,7 +613,9 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
     
-    <a href="https://siskinc.github.io/tags/golang/">golang</a>
+    <a href="https://siskinc.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">Golang源码阅读</a>
     
     <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
     

@@ -73,6 +73,34 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="关于Python的导入覆盖解决办法">关于Python的导入覆盖解决办法</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            这种问题一般来说还是不会引起的，可能会出现在datetime和time这样类型的模块中。
+例如：
+1 2 3 4 5  import datetime from datetime import datetime   如果写在一个文件到倒是一眼能够看出来，主要是在公司这种多人协同合作的时候，导入相关模块的时候会出现覆盖的情况需要注意。
+我的建议是将系统的模块放在最后面导入，自己写的模块放在前面，不过最好跟公司的人统一一下，统一使用import datetime就行。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Epython%E7%9A%84%E5%AF%BC%E5%85%A5%E8%A6%86%E7%9B%96%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/python%E4%BD%BF%E7%94%A8datetime%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%91%E4%B8%83%E5%A4%A9/" title="Python使用datetime来判断近七天">Python使用datetime来判断近七天</a>
             </h1>
         </header>
@@ -358,31 +386,6 @@ SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SC
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式">C&#43;&#43; std::string 在一个字符串前插入一个字符串几种方式</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/c&#43;&#43;'>C&#43;&#43;</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            1、直接使用字符串相加 std::string a = &quot;hello&quot;;std::string b = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a = b + a;}2、使用insert函数 std::string a = &quot;hello&quot;;for(int i = 0; i &lt; 100; ++i){a.insert(0, &quot;hello&quot;);}比较：通过Quick C++ Benchmarks 可得到结果 static void StringCreation(benchmark::State&amp; state) {// Code inside this loop is measured repeatedlystd::string x = &quot;hello&quot;;for (auto _ : state) {x.……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/cplusplus_stdstring_%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%89%8D%E6%8F%92%E5%85%A5%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -507,6 +510,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" title="上下文切换">上下文切换</a>
     </li>
     
@@ -542,10 +549,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -566,6 +569,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/golang/">Golang (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
     
@@ -654,7 +659,9 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
     
-    <a href="https://siskinc.github.io/tags/golang/">golang</a>
+    <a href="https://siskinc.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">Golang源码阅读</a>
     
     <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
     

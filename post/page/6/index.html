@@ -73,6 +73,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/" title="数组中重复的数字(Golang)">数组中重复的数字(Golang)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月13日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            使用哈希表 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27  import &#34;fmt&#34; func main() { a := [...]int{2,3,1,0,2,5,3} num := make(map[int]bool) for _, v := range a { if !num[v] { num[v] = true } else { fmt.Println(v) } } }   排序查找 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41  package main import ( &#34;fmt&#34; &#34;sort&#34; ) func main() { a := []int{2,3,1,0,2,5,3} sort.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97golang/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/golang_%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Golang 实现单例模式">Golang 实现单例模式</a>
             </h1>
         </header>
@@ -309,31 +334,6 @@ svn的docker搭建方法   请提前在服务器安装好docker服务
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/docker%E4%B8%80%E9%94%AEss/" title="docker一键ss">docker一键ss</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/docker'>Docker</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            1 2 3  sudo docker run -dt --name ssserver -p 6443:6443 -p 8188:8188/udp mritd/shadowsocks -m &#34;ss-server&#34; -s &#34;-s 0.0.0.0 -p 6443 -m chacha20-ietf-poly1305 -k yourpassword&#34; -x -e &#34;kcpserver&#34; -k &#34;-t 127.0.0.1:6443 -l :8188 -mode fast2&#34;   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/docker%E4%B8%80%E9%94%AEss/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -458,6 +458,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" title="上下文切换">上下文切换</a>
     </li>
     
@@ -493,10 +497,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/ubuntu16.04-%E7%AC%94%E8%AE%B0%E6%9C%AC%E5%90%88%E4%B8%8A%E7%9B%96%E5%AD%90%E6%97%B6%E4%B8%8D%E8%BF%9B%E5%85%A5%E4%BC%91%E7%9C%A0/" title="Ubuntu16.04 笔记本合上盖子时不进入休眠">Ubuntu16.04 笔记本合上盖子时不进入休眠</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -517,6 +517,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/golang/">Golang (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
     
@@ -605,7 +607,9 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
     
-    <a href="https://siskinc.github.io/tags/golang/">golang</a>
+    <a href="https://siskinc.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">Golang源码阅读</a>
     
     <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
     

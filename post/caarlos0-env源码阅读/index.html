@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>`caarlos0/env`源码阅读 | Daryl&#39;s Blog</title>
+    <meta property="og:title" content="`caarlos0/env`源码阅读 - Daryl&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-12-08T12:14:07&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-12-08T12:14:07&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
+    <meta name="description" content="`caarlos0/env`源码阅读">
+        
+    <meta name="author" content="Daryl">
+    <meta property="og:url" content="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://siskinc.github.io/">
+                        Daryl&#39;s Blog
+                    </a>
+                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#项目信息">项目信息</a></li>
+    <li><a href="#源码阅读">源码阅读</a>
+      <ul>
+        <li><a href="#入口函数parse">入口函数(Parse)</a></li>
+        <li><a href="#默认的数据转换函数映射defaultbuiltinparsers-defaulttypeparsers">默认的数据转换函数映射(<code>defaultBuiltInParsers</code>, <code>defaultTypeParsers</code>)</a></li>
+        <li><a href="#环境变量解析逻辑doparse">环境变量解析逻辑(<code>doParse</code>)</a></li>
+        <li><a href="#使用反射来设置结构体中对应字段的值set">使用反射来设置结构体中对应字段的值(<code>set</code>)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">`caarlos0/env`源码阅读</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月8日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/golang'>Golang</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <blockquote>
+<p>Tips: 建议先看下官方文档，如何使用env再看源码</p>
+</blockquote>
+<h2 id="项目信息">项目信息</h2>
+<ul>
+<li>地址：https://github.com/caarlos0/env</li>
+<li>描述：一个可以parse环境变量到go struct的简单的三方库</li>
+<li>版本：tag:  <code>v6.8.0</code></li>
+</ul>
+<h2 id="源码阅读">源码阅读</h2>
+<h3 id="入口函数parse">入口函数(Parse)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// Parse parses a struct containing `env` tags and loads its values from
+</span><span style="color:#998;font-style:italic">// environment variables.
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">Parse</span>(v <span style="color:#000;font-weight:bold">interface</span>{}, opts <span style="color:#000;font-weight:bold">...</span>Options) <span style="color:#458;font-weight:bold">error</span> {
+	<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">ParseWithFuncs</span>(v, <span style="color:#000;font-weight:bold">map</span>[reflect.Type]ParserFunc{}, opts<span style="color:#000;font-weight:bold">...</span>)
+}
+<span style="color:#998;font-style:italic">// ParseWithFuncs is the same as `Parse` except it also allows the user to pass
+</span><span style="color:#998;font-style:italic">// in custom parsers.
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">ParseWithFuncs</span>(v <span style="color:#000;font-weight:bold">interface</span>{}, funcMap <span style="color:#000;font-weight:bold">map</span>[reflect.Type]ParserFunc, opts <span style="color:#000;font-weight:bold">...</span>Options) <span style="color:#458;font-weight:bold">error</span> {
+	opts = <span style="color:#900;font-weight:bold">configure</span>(opts)
+
+	ptrRef <span style="color:#000;font-weight:bold">:=</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(v)
+	<span style="color:#000;font-weight:bold">if</span> ptrRef.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">!=</span> reflect.Ptr {
+		<span style="color:#000;font-weight:bold">return</span> ErrNotAStructPtr
+	}
+	ref <span style="color:#000;font-weight:bold">:=</span> ptrRef.<span style="color:#900;font-weight:bold">Elem</span>()
+	<span style="color:#000;font-weight:bold">if</span> ref.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">!=</span> reflect.Struct {
+		<span style="color:#000;font-weight:bold">return</span> ErrNotAStructPtr
+	}
+	parsers <span style="color:#000;font-weight:bold">:=</span> defaultTypeParsers
+	<span style="color:#000;font-weight:bold">for</span> k, v <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">range</span> funcMap {
+		parsers[k] = v
+	}
+
+	<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">doParse</span>(ref, parsers, opts)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>入口函数<code>Parse</code>相当于对<code>ParseWithFuncs</code>做了一个封装，送入了一个空的<code>funcMap</code>参数，一般这种操作都是送一个默认的配置给下层的函数，估计是在下层的函数中做的处理。
+在<code>ParseWithFuncs</code>，先判定了用户传入的需要被parse的go struct是否是一个struct指针，然后会将用<code>funcMap</code>和<code>defaultTypeParsers</code>去合并出一个新的<code>parsers</code>，接下来就是使用处理后的go struct piont, parserts, opts处理数据。</p>
+<h3 id="默认的数据转换函数映射defaultbuiltinparsers-defaulttypeparsers">默认的数据转换函数映射(<code>defaultBuiltInParsers</code>, <code>defaultTypeParsers</code>)</h3>
+<blockquote>
+<p><code>defaultBuiltInParsers</code>与<code>defaultTypeParsers</code> 都是 <code>map[reflect.Kind]ParserFunc</code> 类型</p>
+</blockquote>
+<h4 id="defaultbuiltinparsers"><code>defaultBuiltInParsers</code></h4>
+<blockquote>
+<p><code>defaultBuiltInParsers</code> 主要是对基本数据类型做数据转换，如：<code>bool</code>, <code>string</code>, <code>int</code>, <code>int16</code>, <code>int32</code>, <code>int64</code>, <code>int8</code>, <code>uint</code>, <code>uint16</code>, <code>uint32</code>, <code>uint64</code>, <code>uint8</code>, <code>float64</code>, <code>float32</code>。</p>
+</blockquote>
+<h5 id="源码">源码</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    defaultBuiltInParsers = <span style="color:#000;font-weight:bold">map</span>[reflect.Kind]ParserFunc{
+		reflect.Bool: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			<span style="color:#000;font-weight:bold">return</span> strconv.<span style="color:#900;font-weight:bold">ParseBool</span>(v)
+		},
+		reflect.String: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			<span style="color:#000;font-weight:bold">return</span> v, <span style="color:#000;font-weight:bold">nil</span>
+		},
+		reflect.Int: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseInt</span>(v, <span style="color:#099">10</span>, <span style="color:#099">32</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">int</span>(i), err
+		},
+		reflect.Int16: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseInt</span>(v, <span style="color:#099">10</span>, <span style="color:#099">16</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">int16</span>(i), err
+		},
+		reflect.Int32: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseInt</span>(v, <span style="color:#099">10</span>, <span style="color:#099">32</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">int32</span>(i), err
+		},
+		reflect.Int64: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			<span style="color:#000;font-weight:bold">return</span> strconv.<span style="color:#900;font-weight:bold">ParseInt</span>(v, <span style="color:#099">10</span>, <span style="color:#099">64</span>)
+		},
+		reflect.Int8: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseInt</span>(v, <span style="color:#099">10</span>, <span style="color:#099">8</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">int8</span>(i), err
+		},
+		reflect.Uint: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseUint</span>(v, <span style="color:#099">10</span>, <span style="color:#099">32</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">uint</span>(i), err
+		},
+		reflect.Uint16: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseUint</span>(v, <span style="color:#099">10</span>, <span style="color:#099">16</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">uint16</span>(i), err
+		},
+		reflect.Uint32: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseUint</span>(v, <span style="color:#099">10</span>, <span style="color:#099">32</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">uint32</span>(i), err
+		},
+		reflect.Uint64: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseUint</span>(v, <span style="color:#099">10</span>, <span style="color:#099">64</span>)
+			<span style="color:#000;font-weight:bold">return</span> i, err
+		},
+		reflect.Uint8: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			i, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseUint</span>(v, <span style="color:#099">10</span>, <span style="color:#099">8</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">uint8</span>(i), err
+		},
+		reflect.Float64: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			<span style="color:#000;font-weight:bold">return</span> strconv.<span style="color:#900;font-weight:bold">ParseFloat</span>(v, <span style="color:#099">64</span>)
+		},
+		reflect.Float32: <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			f, err <span style="color:#000;font-weight:bold">:=</span> strconv.<span style="color:#900;font-weight:bold">ParseFloat</span>(v, <span style="color:#099">32</span>)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">float32</span>(f), err
+		},
+	}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="defaulttypeparsers"><code>defaultTypeParsers</code></h4>
+<blockquote>
+<p><code>defaultTypeParsers</code> 是对一些golang标准库的一些结构体进行预定义的parser，如：<code>url.URL</code>, <code>time.Nanosecond</code>。
+在描述<code>ParseWithFuncs</code>函数时，有说到，<code>ParseWithFuncs</code> 会去合并<code>defaultTypeParsers</code>与用户传入的<code>funcMap</code>参数，所以，如果对某些特殊的类型有自己的parse需求，可以考虑使用<code>ParseWithFuncs</code>函数替代<code>Parse</code>函数</p>
+</blockquote>
+<h5 id="源码-1">源码</h5>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	defaultTypeParsers = <span style="color:#000;font-weight:bold">map</span>[reflect.Type]ParserFunc{
+		reflect.<span style="color:#900;font-weight:bold">TypeOf</span>(url.URL{}): <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			u, err <span style="color:#000;font-weight:bold">:=</span> url.<span style="color:#900;font-weight:bold">Parse</span>(v)
+			<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>, fmt.<span style="color:#900;font-weight:bold">Errorf</span>(<span style="color:#d14">&#34;unable to parse URL: %v&#34;</span>, err)
+			}
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">*</span>u, <span style="color:#000;font-weight:bold">nil</span>
+		},
+		reflect.<span style="color:#900;font-weight:bold">TypeOf</span>(time.Nanosecond): <span style="color:#000;font-weight:bold">func</span>(v <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>) {
+			s, err <span style="color:#000;font-weight:bold">:=</span> time.<span style="color:#900;font-weight:bold">ParseDuration</span>(v)
+			<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>, fmt.<span style="color:#900;font-weight:bold">Errorf</span>(<span style="color:#d14">&#34;unable to parse duration: %v&#34;</span>, err)
+			}
+			<span style="color:#000;font-weight:bold">return</span> s, err
+		},
+	}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="环境变量解析逻辑doparse">环境变量解析逻辑(<code>doParse</code>)</h3>
+<h4 id="源码-2">源码</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">doParse</span>(ref reflect.Value, funcMap <span style="color:#000;font-weight:bold">map</span>[reflect.Type]ParserFunc, opts []Options) <span style="color:#458;font-weight:bold">error</span> {
+    <span style="color:#998;font-style:italic">// 反射获取到用户传入的结构体类型
+</span><span style="color:#998;font-style:italic"></span>	refType <span style="color:#000;font-weight:bold">:=</span> ref.<span style="color:#900;font-weight:bold">Type</span>()
+
+    <span style="color:#998;font-style:italic">// 遍历结构体中的所有字段
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">:=</span> <span style="color:#099">0</span>; i &lt; refType.<span style="color:#900;font-weight:bold">NumField</span>(); i<span style="color:#000;font-weight:bold">++</span> {
+        <span style="color:#998;font-style:italic">// 获取到某个字段的反射信息
+</span><span style="color:#998;font-style:italic"></span>		refField <span style="color:#000;font-weight:bold">:=</span> ref.<span style="color:#900;font-weight:bold">Field</span>(i)
+        <span style="color:#998;font-style:italic">// 如果对应字段是不可以被设置的，跳过本次循环
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> !refField.<span style="color:#900;font-weight:bold">CanSet</span>() {
+			<span style="color:#000;font-weight:bold">continue</span>
+		}
+        <span style="color:#998;font-style:italic">// 如果字段是一个非空的结构体指针，会再一次调用`ParseWithFuncs`函数进行递归处理数据，并且根据当前字段设置的env前缀构建出一个新的`option`列表，本字段的env前置会放在原前缀的最后，例如，原前缀是ENV_，当前字段的前缀是Field_，那么构造出来的新前缀就是ENV_Field_
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// 如果不是一个结构体指针，那么一样会调用`ParseWithFuncs`函数，但会报错
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> reflect.Ptr <span style="color:#000;font-weight:bold">==</span> refField.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">&amp;&amp;</span> !refField.<span style="color:#900;font-weight:bold">IsNil</span>() {
+			<span style="color:#000;font-weight:bold">if</span> refField.<span style="color:#900;font-weight:bold">Elem</span>().<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Struct {
+				<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">ParseWithFuncs</span>(refField.<span style="color:#900;font-weight:bold">Interface</span>(), funcMap, <span style="color:#900;font-weight:bold">optsWithPrefix</span>(refType.<span style="color:#900;font-weight:bold">Field</span>(i), opts)<span style="color:#000;font-weight:bold">...</span>); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> err
+				}
+				<span style="color:#000;font-weight:bold">continue</span>
+			}
+			<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">ParseWithFuncs</span>(refField.<span style="color:#900;font-weight:bold">Interface</span>(), funcMap, opts<span style="color:#000;font-weight:bold">...</span>); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> err
+			}
+			<span style="color:#000;font-weight:bold">continue</span>
+		}
+        <span style="color:#998;font-style:italic">// 如果字段是一个结构体，那么会去取这个字段对应的字段，递归调用`Parse`函数去解析本指针
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> reflect.Struct <span style="color:#000;font-weight:bold">==</span> refField.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">&amp;&amp;</span> refField.<span style="color:#900;font-weight:bold">CanAddr</span>() <span style="color:#000;font-weight:bold">&amp;&amp;</span> refField.<span style="color:#900;font-weight:bold">Type</span>().<span style="color:#900;font-weight:bold">Name</span>() <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#34;&#34;</span> {
+			<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">Parse</span>(refField.<span style="color:#900;font-weight:bold">Addr</span>().<span style="color:#900;font-weight:bold">Interface</span>(), opts<span style="color:#000;font-weight:bold">...</span>); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> err
+			}
+			<span style="color:#000;font-weight:bold">continue</span>
+		}
+		refTypeField <span style="color:#000;font-weight:bold">:=</span> refType.<span style="color:#900;font-weight:bold">Field</span>(i)
+        <span style="color:#998;font-style:italic">// 获取field对应的数据
+</span><span style="color:#998;font-style:italic"></span>		value, err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">get</span>(refTypeField, opts)
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> err
+		}
+		<span style="color:#000;font-weight:bold">if</span> value <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#34;&#34;</span> {
+			<span style="color:#000;font-weight:bold">if</span> reflect.Struct <span style="color:#000;font-weight:bold">==</span> refField.<span style="color:#900;font-weight:bold">Kind</span>() {
+				<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">doParse</span>(refField, funcMap, <span style="color:#900;font-weight:bold">optsWithPrefix</span>(refType.<span style="color:#900;font-weight:bold">Field</span>(i), opts)); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> err
+				}
+			}
+			<span style="color:#000;font-weight:bold">continue</span>
+		}
+        <span style="color:#998;font-style:italic">// 设置field对应的数据
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">set</span>(refField, refTypeField, value, funcMap); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> err
+		}
+	}
+	<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="使用反射来设置结构体中对应字段的值set">使用反射来设置结构体中对应字段的值(<code>set</code>)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// field =&gt; field的反射值
+</span><span style="color:#998;font-style:italic">// sf =&gt; 结构体中field的反射信息
+</span><span style="color:#998;font-style:italic">// value =&gt; 根据field的tag设置，取出来的field的值(string)
+</span><span style="color:#998;font-style:italic">// funcMap =&gt; 数据转换的parser
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">set</span>(field reflect.Value, sf reflect.StructField, value <span style="color:#458;font-weight:bold">string</span>, funcMap <span style="color:#000;font-weight:bold">map</span>[reflect.Type]ParserFunc) <span style="color:#458;font-weight:bold">error</span> {
+    <span style="color:#998;font-style:italic">// 判断字段是否是一个TextUnmarshaler，如果是，就使用UnmarshalText解析数据
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> tm <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">asTextUnmarshaler</span>(field); tm <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> tm.<span style="color:#900;font-weight:bold">UnmarshalText</span>([]<span style="color:#0086b3">byte</span>(value)); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">newParseError</span>(sf, err)
+		}
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+	}
+
+	typee <span style="color:#000;font-weight:bold">:=</span> sf.Type
+	fieldee <span style="color:#000;font-weight:bold">:=</span> field
+	<span style="color:#000;font-weight:bold">if</span> typee.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Ptr {
+		typee = typee.<span style="color:#900;font-weight:bold">Elem</span>()
+		fieldee = field.<span style="color:#900;font-weight:bold">Elem</span>()
+	}
+
+    <span style="color:#998;font-style:italic">// 取出对应的parser，构建数据，设置数据
+</span><span style="color:#998;font-style:italic"></span>	parserFunc, ok <span style="color:#000;font-weight:bold">:=</span> funcMap[typee]
+	<span style="color:#000;font-weight:bold">if</span> ok {
+		val, err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">parserFunc</span>(value)
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">newParseError</span>(sf, err)
+		}
+
+		fieldee.<span style="color:#900;font-weight:bold">Set</span>(reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(val))
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+	}
+
+    <span style="color:#998;font-style:italic">// 如果不是特殊类型，是golang内置基本数据结构，一样的取出对应的parser，构建数据，设置数据
+</span><span style="color:#998;font-style:italic"></span>	parserFunc, ok = defaultBuiltInParsers[typee.<span style="color:#900;font-weight:bold">Kind</span>()]
+	<span style="color:#000;font-weight:bold">if</span> ok {
+		val, err <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">parserFunc</span>(value)
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">newParseError</span>(sf, err)
+		}
+
+		fieldee.<span style="color:#900;font-weight:bold">Set</span>(reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(val).<span style="color:#900;font-weight:bold">Convert</span>(typee))
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+	}
+
+	<span style="color:#000;font-weight:bold">if</span> field.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Slice {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">handleSlice</span>(field, value, sf, funcMap)
+	}
+
+	<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">newNoParserError</span>(sf)
+}
+</code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://siskinc.github.io/">Daryl</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/">上下文切换</a></li>
+        
+        <li><a href="/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/">Python的全局锁(GIL)</a></li>
+        
+        <li><a href="/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/">四象限工作法</a></li>
+        
+        <li><a href="/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/">Python Language Server 支持Pydantic</a></li>
+        
+        <li><a href="/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/">Python3在类的内部使用当前类作为类型提示</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/golang'>Golang</a></li>
+                
+                <li><a href='/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB'>Golang源码阅读</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" title="上下文切换">上下文切换</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-bufio%E9%98%85%E8%AF%BB/" title="Golang源码阅读 Bufio阅读">Golang源码阅读 Bufio阅读</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%BD%93golang%E9%81%87%E8%A7%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="当golang遇见工厂模式">当golang遇见工厂模式</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/golang/">Golang (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/vscode/">VSCode (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/">经验 (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/">编码 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%BD%AF%E6%8A%80%E8%83%BD/">软技能 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    
+    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    
+    <a href="https://siskinc.github.io/tags/branch/">branch</a>
+    
+    <a href="https://siskinc.github.io/tags/bug/">bug</a>
+    
+    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/centos/">centos</a>
+    
+    <a href="https://siskinc.github.io/tags/convert/">convert</a>
+    
+    <a href="https://siskinc.github.io/tags/coverage/">coverage</a>
+    
+    <a href="https://siskinc.github.io/tags/cpu/">CPU</a>
+    
+    <a href="https://siskinc.github.io/tags/cron-task/">cron task</a>
+    
+    <a href="https://siskinc.github.io/tags/css/">css</a>
+    
+    <a href="https://siskinc.github.io/tags/datetime/">datetime</a>
+    
+    <a href="https://siskinc.github.io/tags/dict/">dict</a>
+    
+    <a href="https://siskinc.github.io/tags/django/">django</a>
+    
+    <a href="https://siskinc.github.io/tags/docker/">docker</a>
+    
+    <a href="https://siskinc.github.io/tags/docker-compose/">docker-compose</a>
+    
+    <a href="https://siskinc.github.io/tags/eval/">eval</a>
+    
+    <a href="https://siskinc.github.io/tags/flask/">flask</a>
+    
+    <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
+    
+    <a href="https://siskinc.github.io/tags/gin/">gin</a>
+    
+    <a href="https://siskinc.github.io/tags/git/">git</a>
+    
+    <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
+    
+    <a href="https://siskinc.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">Golang源码阅读</a>
+    
+    <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
+    
+    <a href="https://siskinc.github.io/tags/goroutine/">goroutine</a>
+    
+    <a href="https://siskinc.github.io/tags/gridfs/">gridfs</a>
+    
+    <a href="https://siskinc.github.io/tags/hash/">hash</a>
+    
+    <a href="https://siskinc.github.io/tags/hooks/">hooks</a>
+    
+    <a href="https://siskinc.github.io/tags/http/">http</a>
+    
+    <a href="https://siskinc.github.io/tags/https/">https</a>
+    
+    <a href="https://siskinc.github.io/tags/import/">import</a>
+    
+    <a href="https://siskinc.github.io/tags/init/">init</a>
+    
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    
+    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    
+    <a href="https://siskinc.github.io/tags/json/">json</a>
+    
+    <a href="https://siskinc.github.io/tags/k8s/">k8s</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka-go/">kafka-go</a>
+    
+    <a href="https://siskinc.github.io/tags/linux/">linux</a>
+    
+    <a href="https://siskinc.github.io/tags/lua/">lua</a>
+    
+    <a href="https://siskinc.github.io/tags/mac/">mac</a>
+    
+    <a href="https://siskinc.github.io/tags/map/">map</a>
+    
+    <a href="https://siskinc.github.io/tags/mgo/">mgo</a>
+    
+    <a href="https://siskinc.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://siskinc.github.io/tags/mongoengine/">mongoengine</a>
+    
+    <a href="https://siskinc.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://siskinc.github.io/tags/nodejs/">nodejs</a>
+    
+    <a href="https://siskinc.github.io/tags/pep8/">PEP8</a>
+    
+    <a href="https://siskinc.github.io/tags/pipeline/">pipeline</a>
+    
+    <a href="https://siskinc.github.io/tags/process/">process</a>
+    
+    <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
+    
+    <a href="https://siskinc.github.io/tags/pydantic/">Pydantic</a>
+    
+    <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python-language-server/">Python Language Server</a>
+    
+    <a href="https://siskinc.github.io/tags/python2/">python2</a>
+    
+    <a href="https://siskinc.github.io/tags/python3/">python3</a>
+    
+    <a href="https://siskinc.github.io/tags/python%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/">Python类型提示</a>
+    
+    <a href="https://siskinc.github.io/tags/redis/">redis</a>
+    
+    <a href="https://siskinc.github.io/tags/referencefield/">referencefield</a>
+    
+    <a href="https://siskinc.github.io/tags/restful/">restful</a>
+    
+    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/shell/">shell</a>
+    
+    <a href="https://siskinc.github.io/tags/source-code/">source code</a>
+    
+    <a href="https://siskinc.github.io/tags/ss/">ss</a>
+    
+    <a href="https://siskinc.github.io/tags/ssh/">ssh</a>
+    
+    <a href="https://siskinc.github.io/tags/svn/">svn</a>
+    
+    <a href="https://siskinc.github.io/tags/thread/">thread</a>
+    
+    <a href="https://siskinc.github.io/tags/trap/">trap</a>
+    
+    <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
+    
+    <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
+    
+    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
+    
+    <a href="https://siskinc.github.io/tags/uwsgi/">uwsgi</a>
+    
+    <a href="https://siskinc.github.io/tags/vscode/">vscode</a>
+    
+    <a href="https://siskinc.github.io/tags/vue/">vue</a>
+    
+    <a href="https://siskinc.github.io/tags/windows/">windows</a>
+    
+    <a href="https://siskinc.github.io/tags/wordpress/">wordpress</a>
+    
+    <a href="https://siskinc.github.io/tags/xshell/">xshell</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">二叉搜索树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/">插件</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%B7%A8%E5%9F%9F/">跨域</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

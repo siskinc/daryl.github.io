@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Nov 2021 20:56:33 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 08 Dec 2021 12:14:07 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang</title>
+      <link>https://siskinc.github.io/tags/golang/</link>
+      <pubDate>Wed, 08 Dec 2021 12:14:07 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang源码阅读</title>
+      <link>https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</link>
+      <pubDate>Wed, 08 Dec 2021 12:14:07 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>CPU</title>
       <link>https://siskinc.github.io/tags/cpu/</link>
@@ -76,15 +94,6 @@
       <pubDate>Fri, 22 Oct 2021 16:23:08 +0800</pubDate>
       
       <guid>https://siskinc.github.io/tags/python%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>golang</title>
-      <link>https://siskinc.github.io/tags/golang/</link>
-      <pubDate>Thu, 22 Jul 2021 08:04:27 +0800</pubDate>
-      
-      <guid>https://siskinc.github.io/tags/golang/</guid>
       <description></description>
     </item>
     
