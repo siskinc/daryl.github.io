@@ -73,6 +73,32 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月16日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+             GIL 保证的 Thread-safe 是在 Bytecode 层而不是 Python Code。所以能确保的是每行 Bytecode 都会被运行完成，而多行 Bytecode 是则有被中断切换执行的可能性。
+ 原子操作  读取/覆盖一个对象属性 读取/覆盖一个全部变量 从list拿到一个元素 更新list的一个元素(例如: list.append()) 从dictionary中获取一个元素 更新dictionary的一个元素  参考文章  Atomic operations  ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
             </h1>
         </header>
@@ -338,33 +364,6 @@ Python 3.7+ 使用feature 1  from __future__ import annotations   Python 3.6以�
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年4月1日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            今天遇到线上一个BUG，用户导入数据时，将某个字段填写一个负数会导致服务器报错，大概的代码如下:
-1 2 3 4  if isinstance(obj, str) and obj.isdigit(): obj = int(obj) else: raise Exception(&#34;fuck you&#34;)   但是，负数并不能直接使用isdigit判断，看下截图： 所以，还需要做一些转换，满足这个需求:
-1 2 3 4 5 6 7 8 9 10  def isdigit(num: str) -&gt; bool: if not num: return False if num[0] == &#39;-&#39;: return num[1:].isdigit() return num.isdigit() if isinstance(num, str) and isdigit(num): num = int(num) else: raise Exception(&#34;fuck you&#34;)   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -485,6 +484,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
     </li>
     
@@ -520,10 +523,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -557,7 +556,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (23)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     

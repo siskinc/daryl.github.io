@@ -80,6 +80,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">Python 同级目录import报错</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>Python</a>
+            
+        </div>
+        
+        <div class="post-content">
+             在使用protobuf时，我们自己了各种Options的时候，在生成的python文件会在同级目录中引用，所以这个时候我们不能做到，加个__init__.py文件了事然后在文件里面写 import mudole.file这样的代码，因为我们自己无法控制
+ 解决方法如下，在__init__文件中加入以下代码:
+1 2 3 4 5 6 7  import sys import os sys.path.append(os.path.dirname(&#39;mudole_name/&#39;))   ……
+            <p class="readmore"><a href="https://siskinc.github.io/post/python_%E5%90%8C%E7%BA%A7%E7%9B%AE%E5%BD%95import%E6%8A%A5%E9%94%99/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/flask%E8%BF%94%E5%9B%9E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84response/">flask返回自定义的Response</a>
             </h1>
         </header>
@@ -310,34 +335,6 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/django_dumpdata_and_loaddata/">Django dumpdata and loaddata</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/python'>Python</a>
-            
-        </div>
-        
-        <div class="post-content">
-            原文来自于: https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata
- dumpdata 命令  这个是Django自带的管理命令，可以用来备份你的模型实例和数据库  dumpdata 基本数据库的转存  下面的命令将把整个数据转存到db.json文件中   ./manage.py dumpdata &gt; db.json
- dumpdata 备份特定的 app  下面的命令将在django admin app 转存到 admin.json文件中   ./manage.py dumpdata admin &gt; admin.json
- dumpdata 备份特定的表  下面的命令将只转存django admin.logentry 表中的内容   ./manage.py dumpdata admin.logentry &gt; logentry.json
-  下面的命令将只转存django auth.user 表中的内容   ./manage.py dumpdata auth.user &gt; user.json
- dumpdata (&ndash;exclude)   你可以使用 &ndash;exclude 选择不需要备份的app或者表……
-            <p class="readmore"><a href="https://siskinc.github.io/post/django_dumpdata_and_loaddata/">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -359,7 +356,15 @@ PyMODINIT_FUNC: 一个Python模块初始化函数。如果这些函数是在Pyth
         <a href="https://siskinc.github.io/tags/python/page/2/">2</a>
     </li>
     
+    <li >
+        <a href="https://siskinc.github.io/tags/python/page/3/">3</a>
+    </li>
+    
 
+    
+    <li class="next">
+        <a href="https://siskinc.github.io/tags/python/page/3/">下一页</a>
+    </li>
     
 </ol>
 
@@ -428,6 +433,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
     </li>
     
@@ -463,10 +472,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -500,7 +505,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (23)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     

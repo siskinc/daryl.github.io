@@ -80,6 +80,30 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/">CPython的原子操作</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月16日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>Python</a>
+            
+        </div>
+        
+        <div class="post-content">
+             GIL 保证的 Thread-safe 是在 Bytecode 层而不是 Python Code。所以能确保的是每行 Bytecode 都会被运行完成，而多行 Bytecode 是则有被中断切换执行的可能性。
+ 原子操作  读取/覆盖一个对象属性 读取/覆盖一个全部变量 从list拿到一个元素 更新list的一个元素(例如: list.append()) 从dictionary中获取一个元素 更新dictionary的一个元素  参考文章  Atomic operations  ……
+            <p class="readmore"><a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/">Python的全局锁(GIL)</a>
             </h1>
         </header>
@@ -303,31 +327,6 @@ Python 3.7+ 使用feature 1  from __future__ import annotations   Python 3.6以�
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python%E4%B8%AD%E6%A3%80%E6%B5%8B%E6%9F%90%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E6%9C%89%E5%AE%9A%E4%B9%89/">python中检测某个变量是否有定义</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/python'>Python</a>
-            
-        </div>
-        
-        <div class="post-content">
-            第一种方法使用内置函数locals() 'testvar' in locals().keys()
-第二种方法使用内置函数dir() 'testvar' in dir()
-第三种方法使用内置函数vars() vars().has_key('testvar')……
-            <p class="readmore"><a href="https://siskinc.github.io/post/python%E4%B8%AD%E6%A3%80%E6%B5%8B%E6%9F%90%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E6%9C%89%E5%AE%9A%E4%B9%89/">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -422,6 +421,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
     </li>
     
@@ -457,10 +460,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python%E5%88%A4%E6%96%AD%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="Python判断数字字符串">Python判断数字字符串</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -494,7 +493,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (22)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (23)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
