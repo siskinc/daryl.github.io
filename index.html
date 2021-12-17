@@ -71,6 +71,30 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%86%B3%E7%AD%96%E5%BC%95%E6%93%8E/" title="决策引擎">决策引擎</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月17日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88'>解决方案</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            决策引擎是一种计算机程序，用于计算一个系统的决策。
+ 目标  提供规则集、决策表、交叉决策表（决策矩阵）、决策树、评分卡、复杂评分卡、规则流等八种类型的业务规则设计工具 并发执行规则  数据库设计 规则  表名称: rules     字段名称 字段类型 描述     id string primary key   created int 创建时间   updated int 更新时间   merchant string 商户   code string 规则编码   type string(enum) 规则类型   information json(dict) 规则信息   name string 规则名称   description string 规则描述    type enum列表  raw - 原始脚本 ruleset - 规则集 normal_score_card - 普通评分卡 complex_score_card - 复杂评分卡 decision_tree - 决策树 decision_table - 决策表 decision_matrix - 决策矩阵  information json字段介绍 type == raw 时的information 1 2 3  { &#34;script&#34;: &#34;string, 脚本字符串&#34; }   type == ruleset 时的information 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33  { &#34;rules&#34;: [ { &#34;name&#34;: &#34;string, 子规则名称&#34;, &#34;description&#34;: &#34;string, 子规则描述&#34;, &#34;rule_group&#34;: { // 树形结构 // type: string(enum), 规则条件类型, enum: expression, logic_expression &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [ { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ] } } ] }   type == decision_table 时的information 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47  { &#34;table_conditions&#34;: [ { // 树形结构 // type: string(enum), 规则条件类型, enum: expression, logic_expression &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [ { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ] } ], &#34;table_actions&#34;: [ // type: string(enum), 动作类型, assignment, function { &#34;type&#34;: &#34;assignment&#34;, &#34;field&#34;: &#34;string, 字段路径&#34;, &#34;value&#34;: &#34;string, 写入值&#34; }, { &#34;type&#34;: &#34;function&#34;, &#34;function_name&#34;: &#34;string, 函数名&#34;, &#34;arguments&#34;: [ { &#34;type&#34;: &#34;string(enum), 参数类型, variable, constant&#34;, &#34;value&#34;: &#34;string, 参数值&#34; } ] } ] }   type == decision_matrix 时的information 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52  { // 赋值动作 &#34;action&#34;: { &#34;field&#34;: &#34;string, 字段路径&#34; }, // 表信息 &#34;matrix&#34;: [ [ { &#34;crosswise_conditions&#34;: [ { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ], &#34;lengthwise_conditions&#34;: [ { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ], &#34;value&#34;: &#34;string, 值&#34; } ] ] }   type == normal_score_card 时的information 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36  { &#34;is_weight&#34;: &#34;boolean, 权重&#34;, &#34;action&#34;: { // 求和方式 &#34;type&#34;: &#34;function&#34;, &#34;function_name&#34;: &#34;string, 函数名称&#34; }, &#34;score_card_table&#34;: { &#34;string, 字段路径&#34;: { &#34;weight&#34;: &#34;int, 权重&#34;, &#34;conditions_and_score&#34;: [ { &#34;conditions&#34;: [ { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ], &#34;score&#34;: &#34;int, 分数&#34; } ] } } }   type == complex_score_card 时的information 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39  { &#34;action&#34;: { // 求和方式 &#34;type&#34;: &#34;function&#34;, &#34;function_name&#34;: &#34;string, 函数名称&#34; }, &#34;score_card_table&#34;: [ [ { &#34;string, 字段路径&#34;: { &#34;weight&#34;: &#34;int, 权重&#34;, &#34;conditions_and_score&#34;: [ { &#34;conditions&#34;: [ { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ], &#34;score&#34;: &#34;int, 分数&#34; } ] } } ] ] }   type == decision_tree 时的information 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75  { &#34;field&#34;: &#34;string, 字段路径&#34;, &#34;nodes&#34;: [ { &#34;conditions&#34;: [ // 需要执行的条件 { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ], &#34;alise&#34;: { // type: string(enum), enum: leaf_node(叶子节点), non_leaf_node(非叶子节点) &#34;type&#34;: &#34;string(enum), enum: leaf_node&#34;, &#34;action&#34;: [ // type: string(enum), 动作类型, assignment, function { &#34;type&#34;: &#34;assignment&#34;, &#34;field&#34;: &#34;string, 字段路径&#34;, &#34;value&#34;: &#34;string, 写入值&#34; }, { &#34;type&#34;: &#34;function&#34;, &#34;function_name&#34;: &#34;string, 函数名&#34;, &#34;arguments&#34;: [ { &#34;type&#34;: &#34;string(enum), 参数类型, variable, constant&#34;, &#34;value&#34;: &#34;string, 参数值&#34; } ] } ] } }, { &#34;conditions&#34;: [ // 需要执行的条件 { &#34;type&#34;: &#34;expression&#34;, &#34;operator&#34;: &#34;string(enum), 表达式操作符, eq, neq, gt, gte, lt, lte, in, nin&#34;, &#34;left_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; }, &#34;right_value&#34;: { &#34;type&#34;: &#34;string(enum), 左值类型, variable, constant, function&#34;, &#34;value&#34;: &#34;string, 左值值&#34; } }, { &#34;type&#34;: &#34;logic_expression&#34;, &#34;op&#34;: &#34;string(enum), 规则操作符, or, and&#34;, &#34;conditions&#34;: [] } ], &#34;alise&#34;: { // type: string(enum), enum: leaf_node(叶子节点), non_leaf_node(非叶子节点) &#34;type&#34;: &#34;string(enum), enum: non_leaf_node&#34;, &#34;field&#34;: &#34;string, 字段路径&#34;, &#34;nodes&#34;: [] } } ] }   决策流  表名称: decision_flow     字段名称 字段类型 描述     id string primary key   created int 创建时间   updated int 更新时间   merchant string 商户   code string 决策流编码   name string 决策流名称   description string 决策流描述    决策流-规则节点  表名称: decision_flow_node     字段名称 字段类型 描述     id string primary key   created int 创建时间   updated int 更新时间   merchant string 商户   decision_flow_code string 决策流编码   rule_code string 规则编码   next_node list[string] 下一步规则节点编码列表   name string 规则节点名称   description string 规则节点描述    数据库图 接口文档 规则 创建 Request  Method: POST URL: /v1/rule Headers: Content-Type: application/json  Body 1 2 3 4 5 6 7 8 9 10 11 12  { &#34;data_list&#34;: [ { &#34;merchant&#34;: &#34;string, 商户号&#34;, &#34;code&#34;: &#34;string, 规则编码&#34;, &#34;type&#34;: &#34;string(enum), 规则类型&#34;, &#34;information&#34;: &#34;json(dict), 规则信息, 根据type进行变化&#34;, &#34;name&#34;: &#34;string, 规则名称&#34;, &#34;description&#34;: &#34;string, 规则描述&#34; } ] }   Response 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16  { &#34;data&#34;: [ { &#34;data&#34;: { &#34;id&#34;: &#34;string, 主键&#34;, &#34;created&#34;: &#34;int, 创建时间&#34;, &#34;updated&#34;: &#34;int, 更新时间&#34; // 其余全量数据 }, &#34;msg&#34;: &#34;success&#34;, &#34;code&#34;: 0 } ], &#34;msg&#34;: &#34;success&#34;, &#34;code&#34;: 0 }   描述  无……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%86%B3%E7%AD%96%E5%BC%95%E6%93%8E/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
             </h1>
         </header>
@@ -317,31 +341,6 @@ Python 3.7+ 使用feature 1  from __future__ import annotations   Python 3.6以�
         <p class="readmore"><a href="https://siskinc.github.io/post/%E5%BD%93golang%E9%81%87%E8%A7%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2021年4月2日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/vscode'>VSCode</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            插件  SFTP Python  配置 sftp.json  用于同步本地代码和远端服务器代码
- 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18  { &#34;name&#34;: &#34;remote sync&#34;, &#34;host&#34;: &#34;remote host&#34;, &#34;protocol&#34;: &#34;sftp&#34;, &#34;port&#34;: 22, &#34;username&#34;: &#34;username&#34;, &#34;password&#34;: &#34;password&#34;, &#34;remotePath&#34;: &#34;remote project path&#34;, &#34;uploadOnSave&#34;: true, &#34;ignore&#34;: [ &#34;.vscode&#34;, &#34;.git&#34;, &#34;.DS_Store&#34;, &#34;.idea&#34;, &#34;venv&#34;, &#34;__pycache__&#34; ] }   tasks.json  用于一键启动远端程序
- 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  { // See https://go.……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -463,6 +462,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%86%B3%E7%AD%96%E5%BC%95%E6%93%8E/" title="决策引擎">决策引擎</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
     </li>
     
@@ -496,10 +499,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/%E5%BD%93golang%E9%81%87%E8%A7%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="当golang遇见工厂模式">当golang遇见工厂模式</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
     </li>
     
 </ul>
@@ -552,6 +551,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/">经验 (3)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/">编码 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
@@ -741,6 +742,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/">插件</a>
     
     <a href="https://siskinc.github.io/tags/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案</a>
     
     <a href="https://siskinc.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
     

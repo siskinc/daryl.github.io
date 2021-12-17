@@ -71,6 +71,36 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/" title="Goroutines和线程对比">Goroutines和线程对比</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年8月15日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/go'>Go</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            栈不同   线程：每一个OS线程都有一个固定大小的内存块(一般会是2MB)来做栈，这个栈会用来存储当前正在被调用或挂起(指在调用其它函数时)的函数的内部变量。固定大小的栈对于更复杂或者更深层次的递归函数调用来说显然是不够的。修改固定的大小可以提升空间的利用率允许创建更多的线程，并且可以允许更深的递归调用，不过这两者是没法同时兼备的。
+  goroutine：一个goroutine会以一个很小的栈开始其生命周期，一般只需要2KB。一个goroutine的栈，和操作系统线程一样，会保存其活跃或挂起的函数调用的本地变量，但是和OS线程不太一样的是一个goroutine的栈大小并不是固定的；栈的大小会根据需要动态地伸缩。而goroutine的栈的最大值有1GB，比传统的固定大小的线程栈要大得多，尽管一般情况下，大多goroutine都不需要这么大的栈。
+  调度不同   线程：OS线程会被操作系统内核调度。每几毫秒，一个硬件计时器会中断处理器，这会调用一个叫作scheduler的内核函数。这个函数会挂起当前执行的线程并保存内存中它的寄存器内容，检查线程列表并决定下一次哪个线程可以被运行，并从内存中恢复该线程的寄存器信息，然后恢复执行该线程的现场并开始执行线程。因为操作系统线程是被内核所调度，所以从一个线程向另一个“移动”需要完整的上下文切换，也就是说，保存一个用户线程的状态到内存，恢复另一个线程的到寄存器，然后更新调度器的数据结构。这几步操作很慢，因为其局部性很差需要几次内存访问，并且会增加运行的cpu周期。
+  goroutine：Go的运行时包含了其自己的调度器，这个调度器使用了一些技术手段，比如m:n调度，因为其会在n个操作系统线程上多工(调度)m个goroutine。Go调度器的工作和内核的调度是相似的，但是这个调度器只关注单独的Go程序中的goroutine。和操作系统的线程调度不同的是，Go调度器并不是用一个硬件定时器而是被Go语言&quot;建筑&quot;本身进行调度的。例如当一个goroutine调用了time.Sleep或者被channel调用或者mutex操作阻塞时，调度器会使其进入休眠并开始执行另一个goroutine直到时机到了再去唤醒第一个goroutine。因为这种调度方式不需要进入内核的上下文，所以重新调度一个goroutine比调度一个线程代价要低得多。
+  GOMAXPROCS Go的调度器使用了一个叫做GOMAXPROCS的变量来决定会有多少个操作系统的线程同时执行Go的代码。其默认的值是运行机器上的CPU的核心数，所以在一个有8个核心的机器上时，调度器一次会在8个OS线程上去调度GO代码。(GOMAXPROCS是前面说的m:n调度中的n)。在休眠中的或者在通信中被阻塞的goroutine是不需要一个对应的线程来做调度的。在I/O中或系统调用中或调用非Go语言函数时，是需要一个对应的操作系统线程的，但是GOMAXPROCS并不需要将这几种情况计算在内。
+你可以用GOMAXPROCS的环境变量来显式地控制这个参数，或者也可以在运行时用runtime.GOMAXPROCS函数来修改它。我们在下面的小程序中会看到GOMAXPROCS的效果，这个程序会无限打印0和1。
+1 2 3 4 5 6 7 8 9  for { go fmt.Print(0) fmt.Print(1) }   1 2 3 4 5 6 7 8 9 10 11  $ GOMAXPROCS=1 go run hacker-cliché.go 111111111111111111110000000000000000000011111... $ GOMAXPROCS=2 go run hacker-cliché.go 010101010101010101011001100101011010010100110...   在第一次执行时，最多同时只能有一个goroutine被执行。初始情况下只有main goroutine被执行，所以会打印很多1。过了一段时间后，GO调度器会将其置为休眠，并唤醒另一个goroutine，这时候就开始打印很多0了，在打印的时候，goroutine是被调度到操作系统线程上的。在第二次执行时，我们使用了两个操作系统线程，所以两个goroutine可以一起被执行，以同样的频率交替打印0和1。我们必须强调的是goroutine的调度是受很多因子影响的，而runtime也是在不断地发展演进的，所以这里的你实际得到的结果可能会因为版本的不同而与我们运行的结果有所不同。
+Goroutine没有ID号 在大多数支持多线程的操作系统和程序语言中，当前的线程都有一个独特的身份(id)，并且这个身份信息可以以一个普通值的形式被被很容易地获取到，典型的可以是一个integer或者指针值。这种情况下我们做一个抽象化的thread-local storage(线程本地存储，多线程编程中不希望其它线程访问的内容)就很容易，只需要以线程的id作为key的一个map就可以解决问题，每一个线程以其id就能从中获取到值，且和其它线程互不冲突。……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/goroutines%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%AF%B9%E6%AF%94/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97python/" title="数组中重复的数字(Python)">数组中重复的数字(Python)</a>
             </h1>
         </header>
@@ -285,32 +315,6 @@ svn的docker搭建方法   请提前在服务器安装好docker服务
         <p class="readmore"><a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/docker_xfs%E5%8D%A1%E6%AD%BB/" title="docker xfs卡死">docker xfs卡死</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/docker'>Docker</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            原因 docker在xfs文件系统中，过于频繁create/destory container、pull/push image，当thin pool满时，DeviceMapper后端默认文件系统xfs会不断retry 失败的IO，导致进程挂起。
-解决办法   不用xfs文件系统
-  加入启动参数 dm.xfs_nospace_max_retries=0
-  ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/docker_xfs%E5%8D%A1%E6%AD%BB/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -436,6 +440,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%86%B3%E7%AD%96%E5%BC%95%E6%93%8E/" title="决策引擎">决策引擎</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
     </li>
     
@@ -469,10 +477,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/%E5%BD%93golang%E9%81%87%E8%A7%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="当golang遇见工厂模式">当golang遇见工厂模式</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95python/" title="如何使用vscode远程调试Python">如何使用vscode远程调试Python</a>
     </li>
     
 </ul>
@@ -525,6 +529,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/">经验 (3)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/">编码 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
@@ -714,6 +720,8 @@ if (!doNotTrack) {
     <a href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/">插件</a>
     
     <a href="https://siskinc.github.io/tags/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案</a>
     
     <a href="https://siskinc.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
     
