@@ -192,14 +192,20 @@
         </div>
         
         
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
         <div class="post-content">
             <blockquote>
 <p>GIL 保证的 Thread-safe 是在 Bytecode 层而不是 Python Code。所以能确保的是每行 Bytecode 都会被运行完成，而多行 Bytecode 是则有被中断切换执行的可能性。</p>
 </blockquote>
 <h2 id="原子操作">原子操作</h2>
 <ol>
-<li>读取/覆盖一个对象属性</li>
-<li>读取/覆盖一个全部变量</li>
+<li>读取/覆盖一个单变量</li>
+<li>读取/覆盖一个全局变量</li>
 <li>从list拿到一个元素</li>
 <li>更新list的一个元素(例如: list.append())</li>
 <li>从dictionary中获取一个元素</li>

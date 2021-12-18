@@ -14,7 +14,7 @@
       
       <guid>https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/</guid>
       <description> GIL 保证的 Thread-safe 是在 Bytecode 层而不是 Python Code。所以能确保的是每行 Bytecode 都会被运行完成，而多行 Bytecode 是则有被中断切换执行的可能性。
- 原子操作  读取/覆盖一个对象属性 读取/覆盖一个全部变量 从list拿到一个元素 更新list的一个元素(例如: list.append()) 从dictionary中获取一个元素 更新dictionary的一个元素  参考文章  Atomic operations  </description>
+ 原子操作  读取/覆盖一个单变量 读取/覆盖一个全局变量 从list拿到一个元素 更新list的一个元素(例如: list.append()) 从dictionary中获取一个元素 更新dictionary的一个元素  参考文章  Atomic operations  </description>
     </item>
     
     <item>
