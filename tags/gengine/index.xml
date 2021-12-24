@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gengine on Daryl&#39;s Blog</title>
+    <link>https://siskinc.github.io/tags/gengine/</link>
+    <description>Recent content in Gengine on Daryl&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Dec 2021 17:29:16 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/tags/gengine/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gengine源码阅读 DataContext</title>
+      <link>https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/</link>
+      <pubDate>Fri, 24 Dec 2021 17:29:16 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/</guid>
+      <description>数据结构概览 1 2 3 4 5  type DataContext struct { lockVars sync.Mutex // 对外部送进来的vars进行加锁 	lockBase sync.Mutex // 对下面一行的`base`字段加锁 	base map[string]reflect.Value // 存储各种类型的值, key是变量名, value是变量值, 变量值可以是任意类型, 例如:函数 }   上下文数据的增删查改 1 2 3 4 5 6 7 8 9 10 11 12 13  // 在base中添加一条数据，并将obj转换为reflect.Value类型 // 会使用localBase func (dc *DataContext) Add(key string, obj interface{}) // 批量删除base中的数据 // 会使用localBase func (dc *DataContext) Del(key string) // load一个动态库，并将动态库中提供给外部的接口全部写入base中 // 会使用localBase func (dc *DataContext) PluginLoader(absolutePathOfSO string) (string, plugin.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1539 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>Gengine源码阅读 DataContext | Daryl&#39;s Blog</title>
+    <meta property="og:title" content="Gengine源码阅读 DataContext - Daryl&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-12-24T17:29:16&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-12-24T17:29:16&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
+    <meta name="description" content="Gengine源码阅读 DataContext">
+        
+    <meta name="author" content="Daryl">
+    <meta property="og:url" content="https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://siskinc.github.io/">
+                        Daryl&#39;s Blog
+                    </a>
+                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据结构概览">数据结构概览</a></li>
+    <li><a href="#上下文数据的增删查改">上下文数据的增删查改</a></li>
+    <li><a href="#执行exec函数族">执行(<code>Exec</code>)函数族</a>
+      <ul>
+        <li><a href="#执行函数execfunc">执行函数(ExecFunc)</a></li>
+        <li><a href="#执行结构体方法execmethod">执行结构体方法(<code>ExecMethod</code>)</a></li>
+        <li><a href="#三级函数调用execthreelevel">三级函数调用(<code>ExecThreeLevel</code>)</a></li>
+        <li><a href="#获取值getvalue">获取值(<code>GetValue</code>)</a></li>
+        <li><a href="#设置值setvalue">设置值(<code>SetValue</code>)</a></li>
+        <li><a href="#给map的key赋值setmapvarvalue">给Map的Key赋值(<code>SetMapVarValue</code>)</a></li>
+      </ul>
+    </li>
+    <li><a href="#qa">Q&amp;A</a>
+      <ul>
+        <li><a href="#vars是什么lockvars为什么需要给vars上锁"><code>Vars</code>是什么？<code>lockVars</code>为什么需要给<code>Vars</code>上锁？</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">Gengine源码阅读 DataContext</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年12月24日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/golang'>Golang</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h2 id="数据结构概览">数据结构概览</h2>
+<p>
+        <img class="mx-auto" alt="gengine-data-context" src="https://cdn.daryl.top/notebook/20211223-104913.png" />   
+    </p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">type</span> DataContext <span style="color:#000;font-weight:bold">struct</span> {
+	lockVars sync.Mutex               <span style="color:#998;font-style:italic">// 对外部送进来的vars进行加锁
+</span><span style="color:#998;font-style:italic"></span>	lockBase sync.Mutex               <span style="color:#998;font-style:italic">// 对下面一行的`base`字段加锁
+</span><span style="color:#998;font-style:italic"></span>	base     <span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]reflect.Value <span style="color:#998;font-style:italic">// 存储各种类型的值, key是变量名, value是变量值, 变量值可以是任意类型, 例如:函数
+</span><span style="color:#998;font-style:italic"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="上下文数据的增删查改">上下文数据的增删查改</h2>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// 在base中添加一条数据，并将obj转换为reflect.Value类型
+</span><span style="color:#998;font-style:italic">// 会使用localBase
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">Add</span>(key <span style="color:#458;font-weight:bold">string</span>, obj <span style="color:#000;font-weight:bold">interface</span>{})
+<span style="color:#998;font-style:italic">// 批量删除base中的数据
+</span><span style="color:#998;font-style:italic">// 会使用localBase
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">Del</span>(key <span style="color:#458;font-weight:bold">string</span>)
+<span style="color:#998;font-style:italic">// load一个动态库，并将动态库中提供给外部的接口全部写入base中
+</span><span style="color:#998;font-style:italic">// 会使用localBase
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">PluginLoader</span>(absolutePathOfSO <span style="color:#458;font-weight:bold">string</span>) (<span style="color:#458;font-weight:bold">string</span>, plugin.Symbol, <span style="color:#458;font-weight:bold">error</span>)
+<span style="color:#998;font-style:italic">// 通过一个key查询到相关的数据
+</span><span style="color:#998;font-style:italic">// 如无数据，会返回一个Not Found key: $key的错误
+</span><span style="color:#998;font-style:italic">// 会使用localBase
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">Get</span>(key <span style="color:#458;font-weight:bold">string</span>) (reflect.Value, <span style="color:#458;font-weight:bold">error</span>)
+</code></pre></td></tr></table>
+</div>
+</div><p>以上函数提供了<code>DataContext</code>对任何数据存储的能力，不论是基础类型，还是自定义类型，亦或者是一个函数都可以存储到<code>DataContext</code>中，但在<code>DataContext</code>中无法断定，最终的使用是读多写少，所以使用了一个<strong>互斥锁</strong>。</p>
+<h2 id="执行exec函数族">执行(<code>Exec</code>)函数族</h2>
+<h3 id="执行函数execfunc">执行函数(ExecFunc)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic">execute the injected functions: a(..)
+</span><span style="color:#998;font-style:italic">function execute supply multi return values, but simplify ,just return one value
+</span><span style="color:#998;font-style:italic">*/</span>
+<span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">ExecFunc</span>(Vars <span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]reflect.Value, funcName <span style="color:#458;font-weight:bold">string</span>, parameters []reflect.Value) (reflect.Value, <span style="color:#458;font-weight:bold">error</span>) {
+    <span style="color:#998;font-style:italic">// 使用localBase互斥锁，从DataContext取到函数名(funcName)对应值，取完数据后，立即释放互斥锁(localBase)
+</span><span style="color:#998;font-style:italic"></span>	dc.lockBase.<span style="color:#900;font-weight:bold">Lock</span>()
+	v, ok <span style="color:#000;font-weight:bold">:=</span> dc.base[funcName]
+	dc.lockBase.<span style="color:#900;font-weight:bold">Unlock</span>()
+
+    <span style="color:#998;font-style:italic">// 检查是否从DataContext获取到函数名称对应的函数
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// 如果获取到函数，执行并返回结果
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> ok {
+		args <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">ParamsTypeChange</span>(v, parameters)
+		res <span style="color:#000;font-weight:bold">:=</span> v.<span style="color:#900;font-weight:bold">Call</span>(args)
+		raw, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetRawTypeValue</span>(res)
+		<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), e
+		}
+		<span style="color:#000;font-weight:bold">return</span> raw, <span style="color:#000;font-weight:bold">nil</span>
+	}
+
+    <span style="color:#998;font-style:italic">// 使用localVars互斥锁，从Vars中获取到函数名对应的函数，取完数据后，立即释放互斥锁(localVars)
+</span><span style="color:#998;font-style:italic"></span>	dc.lockVars.<span style="color:#900;font-weight:bold">Lock</span>()
+	vv, vok <span style="color:#000;font-weight:bold">:=</span> Vars[funcName]
+	dc.lockVars.<span style="color:#900;font-weight:bold">Unlock</span>()
+	<span style="color:#998;font-style:italic">// 检查是否从Vars获取到函数名称对应的函数
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#998;font-style:italic">// 如果获取到函数，执行并返回结果
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> vok {
+		args <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">ParamsTypeChange</span>(vv, parameters)
+		res <span style="color:#000;font-weight:bold">:=</span> vv.<span style="color:#900;font-weight:bold">Call</span>(args)
+		raw, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetRawTypeValue</span>(res)
+		<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), e
+		}
+		<span style="color:#000;font-weight:bold">return</span> raw, <span style="color:#000;font-weight:bold">nil</span>
+	}
+	<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;NOT FOUND function \&#34;%s(..)\&#34;&#34;</span>, funcName))
+}
+</code></pre></td></tr></table>
+</div>
+</div><p><code>ExecFunc</code>是gengine用来执行用户预定义的函数，还有用户在rule代码中自己构造的函数，<strong>但是并没有实现go中的多值返回，只返回了第一个参数</strong>。从函数逻辑来看，是先从用户预定义的函数中找到想要执行的函数，然后再从<code>Vars</code>里面找到需要的函数执行，所以优先级是：先用户预定义的函数，再是<code>Vars</code>。我理解的<code>Vars</code>是当前执行环境的上下文，感觉<code>Vars</code>带有的信息更加局部，所以应该先执行，且行且看吧，答案在整个流程中。</p>
+<h3 id="执行结构体方法execmethod">执行结构体方法(<code>ExecMethod</code>)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic">execute the struct&#39;s functions: a.b(..)
+</span><span style="color:#998;font-style:italic">function execute supply multi return values, but simplify ,just return one value
+</span><span style="color:#998;font-style:italic">*/</span>
+<span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">ExecMethod</span>(Vars <span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]reflect.Value, methodName <span style="color:#458;font-weight:bold">string</span>, args []reflect.Value) (reflect.Value, <span style="color:#458;font-weight:bold">error</span>) {
+    <span style="color:#998;font-style:italic">// 分解字符串，按照“.”分割，第一个是strcut实例的名称，第二个是struct method的名称
+</span><span style="color:#998;font-style:italic"></span>	structAndMethod <span style="color:#000;font-weight:bold">:=</span> strings.<span style="color:#900;font-weight:bold">Split</span>(methodName, <span style="color:#d14">&#34;.&#34;</span>)
+
+    <span style="color:#998;font-style:italic">// 如果长度不为2，那说明这个语句有问题，也就是说，不是按照a.b的格式
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(structAndMethod) <span style="color:#000;font-weight:bold">!=</span> <span style="color:#099">2</span> {
+		<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;Not supported call \&#34;%s(..)\&#34;, just support struct.method call, now length is %d&#34;</span>, methodName, <span style="color:#0086b3">len</span>(structAndMethod)))
+	}
+
+	a <span style="color:#000;font-weight:bold">:=</span> structAndMethod[<span style="color:#099">0</span>]
+	b <span style="color:#000;font-weight:bold">:=</span> structAndMethod[<span style="color:#099">1</span>]
+
+    <span style="color:#998;font-style:italic">// 从DataContext中获取对应的struct实例
+</span><span style="color:#998;font-style:italic"></span>	dc.lockBase.<span style="color:#900;font-weight:bold">Lock</span>()
+	v, ok <span style="color:#000;font-weight:bold">:=</span> dc.base[a]
+	dc.lockBase.<span style="color:#900;font-weight:bold">Unlock</span>()
+
+    <span style="color:#998;font-style:italic">// 执行实例对应的方法
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> ok {
+		res, err <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">InvokeFunction</span>(v, b, args)
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), err
+		}
+		<span style="color:#000;font-weight:bold">return</span> res, <span style="color:#000;font-weight:bold">nil</span>
+	}
+
+    <span style="color:#998;font-style:italic">// 从Vars中获取到对应的struct实例
+</span><span style="color:#998;font-style:italic"></span>	dc.lockVars.<span style="color:#900;font-weight:bold">Lock</span>()
+	vv, vok <span style="color:#000;font-weight:bold">:=</span> Vars[a]
+	dc.lockVars.<span style="color:#900;font-weight:bold">Unlock</span>()
+    <span style="color:#998;font-style:italic">// 执行实例对应的方法
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> vok {
+		res, err <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">InvokeFunction</span>(vv, b, args)
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), err
+		}
+		<span style="color:#000;font-weight:bold">return</span> res, <span style="color:#000;font-weight:bold">nil</span>
+	}
+	<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;Not found method: \&#34;%s(..)\&#34;&#34;</span>, methodName))
+}
+</code></pre></td></tr></table>
+</div>
+</div><p><code>ExecMethod</code>是gengine用来执行用户预定义对象的方法，还有用户在rule代码中自己构造的对象的方法，<strong>但是并没有实现go中的多值返回，只返回了第一个参数</strong>。并且和<code>ExecFunc</code>函数类型，都是先从DataContext里面取对象，取不到，再去<code>Vars</code>中获取。</p>
+<h3 id="三级函数调用execthreelevel">三级函数调用(<code>ExecThreeLevel</code>)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic">execute the struct&#39;s functions: a.b.c(..)
+</span><span style="color:#998;font-style:italic">function execute supply multi return values, but simplify ,just return one value
+</span><span style="color:#998;font-style:italic">*/</span>
+<span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">ExecThreeLevel</span>(Vars <span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]reflect.Value, threeLevelName <span style="color:#458;font-weight:bold">string</span>, args []reflect.Value) (reflect.Value, <span style="color:#458;font-weight:bold">error</span>) {
+	structAndMethod <span style="color:#000;font-weight:bold">:=</span> strings.<span style="color:#900;font-weight:bold">Split</span>(threeLevelName, <span style="color:#d14">&#34;.&#34;</span>)
+
+	<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(structAndMethod) <span style="color:#000;font-weight:bold">!=</span> <span style="color:#099">3</span> {
+		<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;Not supported call \&#34;%s(..)\&#34;, just support struct.field.method call, now length is %d&#34;</span>, threeLevelName, <span style="color:#0086b3">len</span>(structAndMethod)))
+	}
+
+	a <span style="color:#000;font-weight:bold">:=</span> structAndMethod[<span style="color:#099">0</span>]
+	b <span style="color:#000;font-weight:bold">:=</span> structAndMethod[<span style="color:#099">1</span>]
+	c <span style="color:#000;font-weight:bold">:=</span> structAndMethod[<span style="color:#099">2</span>]
+
+	dc.lockBase.<span style="color:#900;font-weight:bold">Lock</span>()
+	v, ok <span style="color:#000;font-weight:bold">:=</span> dc.base[a]
+	dc.lockBase.<span style="color:#900;font-weight:bold">Unlock</span>()
+
+	<span style="color:#000;font-weight:bold">if</span> ok {
+		value, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(v, b)
+		<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), e
+		}
+
+		res, err <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">InvokeFunction</span>(value, c, args)
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), err
+		}
+		<span style="color:#000;font-weight:bold">return</span> res, <span style="color:#000;font-weight:bold">nil</span>
+	}
+
+	dc.lockVars.<span style="color:#900;font-weight:bold">Lock</span>()
+	vv, vok <span style="color:#000;font-weight:bold">:=</span> Vars[structAndMethod[<span style="color:#099">0</span>]]
+	dc.lockVars.<span style="color:#900;font-weight:bold">Unlock</span>()
+	<span style="color:#000;font-weight:bold">if</span> vok {
+		value, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(vv, b)
+		<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), e
+		}
+		res, err <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">InvokeFunction</span>(value, c, args)
+		<span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), err
+		}
+		<span style="color:#000;font-weight:bold">return</span> res, <span style="color:#000;font-weight:bold">nil</span>
+	}
+	<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;Not found method: \&#34;%s(..)\&#34;&#34;</span>, threeLevelName))
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>这个函数实现了gengine文档中描述的<a href="https://github.com/bilibili/gengine/wiki/%E8%AF%AD%E6%B3%95#%E5%A4%9A%E7%BA%A7%E8%B0%83%E7%94%A8%E6%94%AF%E6%8C%81">三级调用</a>中的<strong>函数执行</strong></p>
+<pre><code>1.当语法是C,或者a=C, 则C可以为具体值、变量、函数或方法、结构体(指针)、map、slice、array等, 具体的如 a=100, a = Mp[&quot;hello&quot;], a = x, a = getMessage(p1,p2..)等  
+2.当语法是A.C,或者a=A.C, 则A必须为结构体(指针), C同上, 具体如a = A.Mp[&quot;hello&quot;], a = A.Field1, a = A.GetMessage(p1,p2..)等
+3.当语法是A.B.C,或者a=A.B.C, 则A和B必须为结构体(指针),C同上, 具体如 a = A.B.Mp[&quot;hello&quot;], a =A.B.Field1, a= A.B.GetMessage(p1, p2..)等
+
+那么,如果语法为A.B.C时, A.Mp[&quot;hello&quot;].C 这种语法是不合法的 
+</code></pre><h3 id="获取值getvalue">获取值(<code>GetValue</code>)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">84
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">/**
+</span><span style="color:#998;font-style:italic">get the value user set
+</span><span style="color:#998;font-style:italic">*/</span>
+<span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">GetValue</span>(Vars <span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]reflect.Value, variable <span style="color:#458;font-weight:bold">string</span>) (reflect.Value, <span style="color:#458;font-weight:bold">error</span>) {
+	<span style="color:#000;font-weight:bold">if</span> strings.<span style="color:#900;font-weight:bold">Contains</span>(variable, <span style="color:#d14">&#34;.&#34;</span>) {
+        <span style="color:#998;font-style:italic">// 不允许超过三级调用的规则
+</span><span style="color:#998;font-style:italic"></span>		structAndField <span style="color:#000;font-weight:bold">:=</span> strings.<span style="color:#900;font-weight:bold">Split</span>(variable, <span style="color:#d14">&#34;.&#34;</span>)
+		<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(structAndField) &gt; <span style="color:#099">3</span> {
+			<span style="color:#998;font-style:italic">//a.b.c.d...
+</span><span style="color:#998;font-style:italic"></span>			<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;Not supported Field:%s , just support struct.field or struct.field.field, now length is %d&#34;</span>, variable, <span style="color:#0086b3">len</span>(structAndField)))
+		}
+
+		<span style="color:#998;font-style:italic">//a.b
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// 二级调用时，取数据的规则
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(structAndField) <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">2</span> {
+			a <span style="color:#000;font-weight:bold">:=</span> structAndField[<span style="color:#099">0</span>]
+			b <span style="color:#000;font-weight:bold">:=</span> structAndField[<span style="color:#099">1</span>]
+
+			dc.lockBase.<span style="color:#900;font-weight:bold">Lock</span>()
+			v, ok <span style="color:#000;font-weight:bold">:=</span> dc.base[a]
+			dc.lockBase.<span style="color:#900;font-weight:bold">Unlock</span>()
+
+			<span style="color:#000;font-weight:bold">if</span> ok {
+				<span style="color:#000;font-weight:bold">return</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(v, b)
+			}
+
+			<span style="color:#998;font-style:italic">//for return struct or struct ptr
+</span><span style="color:#998;font-style:italic"></span>			dc.lockVars.<span style="color:#900;font-weight:bold">Lock</span>()
+			obj, ok <span style="color:#000;font-weight:bold">:=</span> Vars[a]
+			dc.lockVars.<span style="color:#900;font-weight:bold">Unlock</span>()
+			<span style="color:#000;font-weight:bold">if</span> ok {
+				<span style="color:#000;font-weight:bold">return</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(obj, b)
+			}
+		}
+
+		<span style="color:#998;font-style:italic">//a.b.c
+</span><span style="color:#998;font-style:italic"></span>        <span style="color:#998;font-style:italic">// 三级调用时，取数据的规则
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(structAndField) <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">3</span> {
+			a <span style="color:#000;font-weight:bold">:=</span> structAndField[<span style="color:#099">0</span>]
+			b <span style="color:#000;font-weight:bold">:=</span> structAndField[<span style="color:#099">1</span>]
+			c <span style="color:#000;font-weight:bold">:=</span> structAndField[<span style="color:#099">2</span>]
+
+			dc.lockBase.<span style="color:#900;font-weight:bold">Lock</span>()
+			v, ok <span style="color:#000;font-weight:bold">:=</span> dc.base[a]
+			dc.lockBase.<span style="color:#900;font-weight:bold">Unlock</span>()
+			<span style="color:#000;font-weight:bold">if</span> ok {
+				value, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(v, b)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), e
+				}
+				<span style="color:#000;font-weight:bold">return</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(value, c)
+			}
+
+			dc.lockVars.<span style="color:#900;font-weight:bold">Lock</span>()
+			obj, ok <span style="color:#000;font-weight:bold">:=</span> Vars[a]
+			dc.lockVars.<span style="color:#900;font-weight:bold">Unlock</span>()
+			<span style="color:#000;font-weight:bold">if</span> ok {
+				value, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(obj, b)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), e
+				}
+				<span style="color:#000;font-weight:bold">return</span> core.<span style="color:#900;font-weight:bold">GetStructAttributeValue</span>(value, c)
+			}
+		}
+	} <span style="color:#000;font-weight:bold">else</span> {
+		<span style="color:#998;font-style:italic">//user set
+</span><span style="color:#998;font-style:italic"></span>		dc.lockBase.<span style="color:#900;font-weight:bold">Lock</span>()
+		v, ok <span style="color:#000;font-weight:bold">:=</span> dc.base[variable]
+		dc.lockBase.<span style="color:#900;font-weight:bold">Unlock</span>()
+
+		<span style="color:#000;font-weight:bold">if</span> ok {
+			<span style="color:#000;font-weight:bold">return</span> v, <span style="color:#000;font-weight:bold">nil</span>
+		}
+		<span style="color:#998;font-style:italic">//in RuleEntity
+</span><span style="color:#998;font-style:italic"></span>		dc.lockVars.<span style="color:#900;font-weight:bold">Lock</span>()
+		res, rok <span style="color:#000;font-weight:bold">:=</span> Vars[variable]
+		dc.lockVars.<span style="color:#900;font-weight:bold">Unlock</span>()
+		<span style="color:#000;font-weight:bold">if</span> rok {
+			<span style="color:#000;font-weight:bold">return</span> res, <span style="color:#000;font-weight:bold">nil</span>
+		}
+
+	}
+	<span style="color:#000;font-weight:bold">return</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>), errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;Did not found variable : %s &#34;</span>, variable))
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>该函数只支持带“.”的数据获取，例如：<code>a</code>,<code>a.b</code>,<code>a.b.c</code>，但不支持map的操作，并且遵从了三级调用的规则</p>
+<h3 id="设置值setvalue">设置值(<code>SetValue</code>)</h3>
+<p>代码其余与<code>GetValue</code>差别不大，主要还是针对带“.”的操作，并且不支持map的操作，并且遵从了三级调用的规则</p>
+<h3 id="给map的key赋值setmapvarvalue">给Map的Key赋值(<code>SetMapVarValue</code>)</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">154
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">155
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">156
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">157
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">158
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">159
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">160
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">161
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">162
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">163
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">164
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">165
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> (dc <span style="color:#000;font-weight:bold">*</span>DataContext) <span style="color:#900;font-weight:bold">SetMapVarValue</span>(Vars <span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]reflect.Value, mapVarName, mapVarStrkey, mapVarVarkey <span style="color:#458;font-weight:bold">string</span>, mapVarIntkey <span style="color:#458;font-weight:bold">int64</span>, setValue reflect.Value) <span style="color:#458;font-weight:bold">error</span> {
+
+	<span style="color:#998;font-style:italic">// 从上下文变量集合中获取map变量
+</span><span style="color:#998;font-style:italic"></span>	value, e <span style="color:#000;font-weight:bold">:=</span> dc.<span style="color:#900;font-weight:bold">GetValue</span>(Vars, mapVarName)
+	<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+		<span style="color:#000;font-weight:bold">return</span> e
+	}
+
+	<span style="color:#000;font-weight:bold">if</span> value.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Ptr { <span style="color:#998;font-style:italic">// mapVarsName对应的变量是指针时
+</span><span style="color:#998;font-style:italic"></span>		newValue <span style="color:#000;font-weight:bold">:=</span> value.<span style="color:#900;font-weight:bold">Elem</span>()
+		valueType <span style="color:#000;font-weight:bold">:=</span> newValue.<span style="color:#900;font-weight:bold">Type</span>().<span style="color:#900;font-weight:bold">Elem</span>() <span style="color:#998;font-style:italic">// map对象中值的类型
+</span><span style="color:#998;font-style:italic"></span>
+		<span style="color:#998;font-style:italic">// 判断map变量是否是真的是map变量
+</span><span style="color:#998;font-style:italic"></span>		<span style="color:#000;font-weight:bold">if</span> newValue.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Map {
+			keyType <span style="color:#000;font-weight:bold">:=</span> newValue.<span style="color:#900;font-weight:bold">Type</span>().<span style="color:#900;font-weight:bold">Key</span>() <span style="color:#998;font-style:italic">// map的key类型
+</span><span style="color:#998;font-style:italic"></span>			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarVarkey) &gt; <span style="color:#099">0</span> {       <span style="color:#998;font-style:italic">// 取出mapVarVarkey对应的值
+</span><span style="color:#998;font-style:italic"></span>				key, e <span style="color:#000;font-weight:bold">:=</span> dc.<span style="color:#900;font-weight:bold">GetValue</span>(Vars, mapVarVarkey)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				wantedKey, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(key, keyType) <span style="color:#998;font-style:italic">// 获取key的真实值
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType) <span style="color:#998;font-style:italic">// 获取value的真实值
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">Elem</span>().<span style="color:#900;font-weight:bold">SetMapIndex</span>(wantedKey, wantedValue) <span style="color:#998;font-style:italic">// 将真实值设置到map中
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			}
+
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarStrkey) &gt; <span style="color:#099">0</span> {
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType) <span style="color:#998;font-style:italic">// 获取value的真实值
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">Elem</span>().<span style="color:#900;font-weight:bold">SetMapIndex</span>(reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(mapVarStrkey), wantedValue) <span style="color:#998;font-style:italic">// 将真实值设置到map中
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			}
+
+			<span style="color:#998;font-style:italic">//int key
+</span><span style="color:#998;font-style:italic"></span>			wantedKey, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(mapVarIntkey), keyType) <span style="color:#998;font-style:italic">// 获取key的真实值
+</span><span style="color:#998;font-style:italic"></span>			<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> e
+			}
+			wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType) <span style="color:#998;font-style:italic">// 获取value的真实值
+</span><span style="color:#998;font-style:italic"></span>			<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> e
+			}
+			value.<span style="color:#900;font-weight:bold">Elem</span>().<span style="color:#900;font-weight:bold">SetMapIndex</span>(wantedKey, wantedValue) <span style="color:#998;font-style:italic">// 将真实值设置到map中
+</span><span style="color:#998;font-style:italic"></span>			<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+		}
+
+		<span style="color:#000;font-weight:bold">if</span> newValue.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Slice <span style="color:#000;font-weight:bold">||</span> newValue.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Array { <span style="color:#998;font-style:italic">// map值如果是切片或数组
+</span><span style="color:#998;font-style:italic"></span>			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarVarkey) &gt; <span style="color:#099">0</span> {
+				key, e <span style="color:#000;font-weight:bold">:=</span> dc.<span style="color:#900;font-weight:bold">GetValue</span>(Vars, mapVarVarkey) <span style="color:#998;font-style:italic">// 取出mapVarVarkey对应的值
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType) <span style="color:#998;font-style:italic">// 获取value的真实值
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">Elem</span>().<span style="color:#900;font-weight:bold">Index</span>(<span style="color:#0086b3">int</span>(key.<span style="color:#900;font-weight:bold">Int</span>())).<span style="color:#900;font-weight:bold">Set</span>(wantedValue) <span style="color:#998;font-style:italic">// 将真实值设置到map中
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			}
+
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarStrkey) &gt; <span style="color:#099">0</span> {
+				<span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;the index of array or slice should not be string, now is str \&#34;%s\&#34;&#34;</span>, mapVarStrkey))
+			}
+
+			<span style="color:#000;font-weight:bold">if</span> mapVarIntkey <span style="color:#000;font-weight:bold">&gt;=</span> <span style="color:#099">0</span> {
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType) <span style="color:#998;font-style:italic">// 获取value的真实值
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">Elem</span>().<span style="color:#900;font-weight:bold">Index</span>(<span style="color:#0086b3">int</span>(mapVarIntkey)).<span style="color:#900;font-weight:bold">Set</span>(wantedValue) <span style="color:#998;font-style:italic">// 将真实值设置到map中
+</span><span style="color:#998;font-style:italic"></span>				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			} <span style="color:#000;font-weight:bold">else</span> {
+				<span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">New</span>(<span style="color:#d14">&#34;Slice or Array index  must be non-negative!&#34;</span>)
+			}
+		}
+
+	} <span style="color:#000;font-weight:bold">else</span> { <span style="color:#998;font-style:italic">// mapVarsName对应的变量是非指针时, 以下逻辑和上面的逻辑几乎一样
+</span><span style="color:#998;font-style:italic"></span>		newValue <span style="color:#000;font-weight:bold">:=</span> value
+		valueType <span style="color:#000;font-weight:bold">:=</span> newValue.<span style="color:#900;font-weight:bold">Type</span>().<span style="color:#900;font-weight:bold">Elem</span>()
+
+		<span style="color:#000;font-weight:bold">if</span> newValue.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Map {
+			keyType <span style="color:#000;font-weight:bold">:=</span> newValue.<span style="color:#900;font-weight:bold">Type</span>().<span style="color:#900;font-weight:bold">Key</span>()
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarVarkey) &gt; <span style="color:#099">0</span> {
+				key, e <span style="color:#000;font-weight:bold">:=</span> dc.<span style="color:#900;font-weight:bold">GetValue</span>(Vars, mapVarVarkey)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				wantedKey, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(key, keyType)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">SetMapIndex</span>(wantedKey, wantedValue)
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			}
+
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarStrkey) &gt; <span style="color:#099">0</span> {
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">SetMapIndex</span>(reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(mapVarStrkey), wantedValue)
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			}
+
+			<span style="color:#998;font-style:italic">//int key
+</span><span style="color:#998;font-style:italic"></span>			wantedKey, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(mapVarIntkey), keyType)
+			<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> e
+			}
+			wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType)
+			<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+				<span style="color:#000;font-weight:bold">return</span> e
+			}
+			value.<span style="color:#900;font-weight:bold">SetMapIndex</span>(wantedKey, wantedValue)
+			<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+
+		}
+
+		<span style="color:#000;font-weight:bold">if</span> newValue.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Slice <span style="color:#000;font-weight:bold">||</span> newValue.<span style="color:#900;font-weight:bold">Kind</span>() <span style="color:#000;font-weight:bold">==</span> reflect.Array {
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarVarkey) &gt; <span style="color:#099">0</span> {
+				key, e <span style="color:#000;font-weight:bold">:=</span> dc.<span style="color:#900;font-weight:bold">GetValue</span>(Vars, mapVarVarkey)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">Index</span>(<span style="color:#0086b3">int</span>(key.<span style="color:#900;font-weight:bold">Int</span>())).<span style="color:#900;font-weight:bold">Set</span>(wantedValue)
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			}
+
+			<span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(mapVarStrkey) &gt; <span style="color:#099">0</span> {
+				<span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;the index of array or slice should not be string, now is str \&#34;%s\&#34;&#34;</span>, mapVarStrkey))
+			}
+
+			<span style="color:#000;font-weight:bold">if</span> mapVarIntkey <span style="color:#000;font-weight:bold">&gt;=</span> <span style="color:#099">0</span> {
+				wantedValue, e <span style="color:#000;font-weight:bold">:=</span> core.<span style="color:#900;font-weight:bold">GetWantedValue</span>(setValue, valueType)
+				<span style="color:#000;font-weight:bold">if</span> e <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+					<span style="color:#000;font-weight:bold">return</span> e
+				}
+				value.<span style="color:#900;font-weight:bold">Index</span>(<span style="color:#0086b3">int</span>(mapVarIntkey)).<span style="color:#900;font-weight:bold">Set</span>(wantedValue)
+				<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+			} <span style="color:#000;font-weight:bold">else</span> {
+				<span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">New</span>(<span style="color:#d14">&#34;Slice or Array index  must be non-negative!&#34;</span>)
+			}
+		}
+	}
+
+	<span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">New</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">&#34;unspport type, mapVarName =%s&#34;</span>, mapVarName))
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>代码看起来很长，实际上有很多冗余的部分，他的大概执行方式是想做类似于Python<code>__setitem__</code>操作，不论你是<code>slice</code>,<code>map</code>,<code>array</code>，都是走了这一套逻辑</p>
+<h2 id="qa">Q&amp;A</h2>
+<h3 id="vars是什么lockvars为什么需要给vars上锁"><code>Vars</code>是什么？<code>lockVars</code>为什么需要给<code>Vars</code>上锁？</h3>
+<p>文件地址：<code>internal\base\rule_entity.go</code></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> (r <span style="color:#000;font-weight:bold">*</span>RuleEntity) <span style="color:#900;font-weight:bold">Execute</span>(dc <span style="color:#000;font-weight:bold">*</span>context.DataContext) (<span style="color:#000;font-weight:bold">interface</span>{}, <span style="color:#458;font-weight:bold">error</span>, <span style="color:#458;font-weight:bold">bool</span>) {
+	v, e, b <span style="color:#000;font-weight:bold">:=</span> r.RuleContent.<span style="color:#900;font-weight:bold">Execute</span>(dc, <span style="color:#0086b3">make</span>(<span style="color:#000;font-weight:bold">map</span>[<span style="color:#458;font-weight:bold">string</span>]reflect.Value))
+	<span style="color:#000;font-weight:bold">if</span> v <span style="color:#000;font-weight:bold">==</span> reflect.<span style="color:#900;font-weight:bold">ValueOf</span>(<span style="color:#000;font-weight:bold">nil</span>) {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>, e, b
+	}
+	<span style="color:#000;font-weight:bold">return</span> v.<span style="color:#900;font-weight:bold">Interface</span>(), e, b
+}
+</code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+<div class="post-archive">
+    <ul class="post-copyright">
+        <li><strong>原文作者：</strong><a rel="author" href="https://siskinc.github.io/">Daryl</a></li>
+        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/">https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/</a></li>
+        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
+    </ul>
+</div>
+<br/>
+
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">`caarlos0/env`源码阅读</a></li>
+        
+        <li><a href="/post/%E5%86%B3%E7%AD%96%E5%BC%95%E6%93%8E/">决策引擎</a></li>
+        
+        <li><a href="/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/">CPython的原子操作</a></li>
+        
+        <li><a href="/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/">上下文切换</a></li>
+        
+        <li><a href="/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/">Python的全局锁(GIL)</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/golang'>Golang</a></li>
+                
+                <li><a href='/tags/gengine'>Gengine</a></li>
+                
+                <li><a href='/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB'>源码阅读</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/" title="Gengine源码阅读 DataContext">Gengine源码阅读 DataContext</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%86%B3%E7%AD%96%E5%BC%95%E6%93%8E/" title="决策引擎">决策引擎</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" title="上下文切换">上下文切换</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-bufio%E9%98%85%E8%AF%BB/" title="Golang源码阅读 Bufio阅读">Golang源码阅读 Bufio阅读</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/golang/">Golang (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/python/">Python (23)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/vscode/">VSCode (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/">经验 (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/">编码 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%BD%AF%E6%8A%80%E8%83%BD/">软技能 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    
+    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    
+    <a href="https://siskinc.github.io/tags/branch/">branch</a>
+    
+    <a href="https://siskinc.github.io/tags/bug/">bug</a>
+    
+    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/centos/">centos</a>
+    
+    <a href="https://siskinc.github.io/tags/convert/">convert</a>
+    
+    <a href="https://siskinc.github.io/tags/coverage/">coverage</a>
+    
+    <a href="https://siskinc.github.io/tags/cpu/">CPU</a>
+    
+    <a href="https://siskinc.github.io/tags/cron-task/">cron task</a>
+    
+    <a href="https://siskinc.github.io/tags/css/">css</a>
+    
+    <a href="https://siskinc.github.io/tags/datetime/">datetime</a>
+    
+    <a href="https://siskinc.github.io/tags/dict/">dict</a>
+    
+    <a href="https://siskinc.github.io/tags/django/">django</a>
+    
+    <a href="https://siskinc.github.io/tags/docker/">docker</a>
+    
+    <a href="https://siskinc.github.io/tags/docker-compose/">docker-compose</a>
+    
+    <a href="https://siskinc.github.io/tags/eval/">eval</a>
+    
+    <a href="https://siskinc.github.io/tags/flask/">flask</a>
+    
+    <a href="https://siskinc.github.io/tags/gengine/">Gengine</a>
+    
+    <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
+    
+    <a href="https://siskinc.github.io/tags/gin/">gin</a>
+    
+    <a href="https://siskinc.github.io/tags/git/">git</a>
+    
+    <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
+    
+    <a href="https://siskinc.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">Golang源码阅读</a>
+    
+    <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
+    
+    <a href="https://siskinc.github.io/tags/goroutine/">goroutine</a>
+    
+    <a href="https://siskinc.github.io/tags/gridfs/">gridfs</a>
+    
+    <a href="https://siskinc.github.io/tags/hash/">hash</a>
+    
+    <a href="https://siskinc.github.io/tags/hooks/">hooks</a>
+    
+    <a href="https://siskinc.github.io/tags/http/">http</a>
+    
+    <a href="https://siskinc.github.io/tags/https/">https</a>
+    
+    <a href="https://siskinc.github.io/tags/import/">import</a>
+    
+    <a href="https://siskinc.github.io/tags/init/">init</a>
+    
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    
+    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    
+    <a href="https://siskinc.github.io/tags/json/">json</a>
+    
+    <a href="https://siskinc.github.io/tags/k8s/">k8s</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka-go/">kafka-go</a>
+    
+    <a href="https://siskinc.github.io/tags/linux/">linux</a>
+    
+    <a href="https://siskinc.github.io/tags/lua/">lua</a>
+    
+    <a href="https://siskinc.github.io/tags/mac/">mac</a>
+    
+    <a href="https://siskinc.github.io/tags/map/">map</a>
+    
+    <a href="https://siskinc.github.io/tags/mgo/">mgo</a>
+    
+    <a href="https://siskinc.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://siskinc.github.io/tags/mongoengine/">mongoengine</a>
+    
+    <a href="https://siskinc.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://siskinc.github.io/tags/nodejs/">nodejs</a>
+    
+    <a href="https://siskinc.github.io/tags/pep8/">PEP8</a>
+    
+    <a href="https://siskinc.github.io/tags/pipeline/">pipeline</a>
+    
+    <a href="https://siskinc.github.io/tags/process/">process</a>
+    
+    <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
+    
+    <a href="https://siskinc.github.io/tags/pydantic/">Pydantic</a>
+    
+    <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python-language-server/">Python Language Server</a>
+    
+    <a href="https://siskinc.github.io/tags/python2/">python2</a>
+    
+    <a href="https://siskinc.github.io/tags/python3/">python3</a>
+    
+    <a href="https://siskinc.github.io/tags/python%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/">Python类型提示</a>
+    
+    <a href="https://siskinc.github.io/tags/redis/">redis</a>
+    
+    <a href="https://siskinc.github.io/tags/referencefield/">referencefield</a>
+    
+    <a href="https://siskinc.github.io/tags/restful/">restful</a>
+    
+    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/shell/">shell</a>
+    
+    <a href="https://siskinc.github.io/tags/source-code/">source code</a>
+    
+    <a href="https://siskinc.github.io/tags/ss/">ss</a>
+    
+    <a href="https://siskinc.github.io/tags/ssh/">ssh</a>
+    
+    <a href="https://siskinc.github.io/tags/svn/">svn</a>
+    
+    <a href="https://siskinc.github.io/tags/thread/">thread</a>
+    
+    <a href="https://siskinc.github.io/tags/trap/">trap</a>
+    
+    <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
+    
+    <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
+    
+    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
+    
+    <a href="https://siskinc.github.io/tags/uwsgi/">uwsgi</a>
+    
+    <a href="https://siskinc.github.io/tags/vscode/">vscode</a>
+    
+    <a href="https://siskinc.github.io/tags/vue/">vue</a>
+    
+    <a href="https://siskinc.github.io/tags/windows/">windows</a>
+    
+    <a href="https://siskinc.github.io/tags/wordpress/">wordpress</a>
+    
+    <a href="https://siskinc.github.io/tags/xshell/">xshell</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">二叉搜索树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/">插件</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">源码阅读</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%B7%A8%E5%9F%9F/">跨域</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
