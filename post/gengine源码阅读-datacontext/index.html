@@ -144,6 +144,10 @@
         <li><a href="#执行函数execfunc">执行函数(ExecFunc)</a></li>
         <li><a href="#执行结构体方法execmethod">执行结构体方法(<code>ExecMethod</code>)</a></li>
         <li><a href="#三级函数调用execthreelevel">三级函数调用(<code>ExecThreeLevel</code>)</a></li>
+      </ul>
+    </li>
+    <li><a href="#操作值getset函数族">操作值(<code>Get</code>/<code>Set</code>)函数族</a>
+      <ul>
         <li><a href="#获取值getvalue">获取值(<code>GetValue</code>)</a></li>
         <li><a href="#设置值setvalue">设置值(<code>SetValue</code>)</a></li>
         <li><a href="#给map的key赋值setmapvarvalue">给Map的Key赋值(<code>SetMapVarValue</code>)</a></li>
@@ -560,7 +564,8 @@
 3.当语法是A.B.C,或者a=A.B.C, 则A和B必须为结构体(指针),C同上, 具体如 a = A.B.Mp[&quot;hello&quot;], a =A.B.Field1, a= A.B.GetMessage(p1, p2..)等
 
 那么,如果语法为A.B.C时, A.Mp[&quot;hello&quot;].C 这种语法是不合法的 
-</code></pre><h3 id="获取值getvalue">获取值(<code>GetValue</code>)</h3>
+</code></pre><h2 id="操作值getset函数族">操作值(<code>Get</code>/<code>Set</code>)函数族</h2>
+<h3 id="获取值getvalue">获取值(<code>GetValue</code>)</h3>
 <div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
