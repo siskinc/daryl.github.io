@@ -73,6 +73,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/" title="Redis源码阅读之quicklist">Redis源码阅读之quicklist</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年5月21日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            数据结构 quicklistNode 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41  /* quicklistNode is a 32 byte struct describing a ziplist for a quicklist. * We use bit fields keep the quicklistNode at 32 bytes. * count: 16 bits, max 65536 (max zl bytes is 65k, so max count actually &lt; 32k).……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E4%B9%8Bquicklist/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/redis%E5%AD%97%E5%85%B8%E6%89%A9%E5%BC%A0%E7%AE%97%E6%B3%95/" title="Redis字典扩张算法">Redis字典扩张算法</a>
             </h1>
         </header>
@@ -337,36 +362,6 @@ Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不�
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/" title="Golang重复对一个slice进行append造成数据错误">Golang重复对一个slice进行append造成数据错误</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年4月4日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/go'>Go</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            slice的属性   切片（slice）是建立在数组之上的更方便，更灵活，更强大的数据结构。切片并不存储任何元素而只是对现有数组的引用。
-  切片的长度是指切片中元素的个数。切片的容量是指从切片的起始元素开始到其底层数组中的最后一个元素的个数。
-  那么问题来了，几个不同的切片指向同一个数组，如果数组的值被改变会出现什么神奇的操作？
-问题实例 slice的cap是怎么增长的   参考文章:How does Go slice capacity change on append? [duplicate]
-  有兴趣也可以看看golang的源码实现,在$GOPATH/src/runtime/slice.go
-  slice的结构 1 2 3 4 5 6 7 8 9 10 11  type slice struct { array unsafe.Pointer len int cap int }   多次append造成的数据错误 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45  package main import &#34;fmt&#34; func main() { temp := []int{} temp = append(temp, 1) printSlice(&#34;temp&#34;, temp) temp = append(temp, 2) printSlice(&#34;temp&#34;, temp) temp = append(temp, 3) // temp := []int{1, 2, 3}  printSlice(&#34;temp&#34;, temp) temp2 := append(temp, 4) printSlice(&#34;temp2&#34;, temp2) temp4 := append(temp, 5, 6) printSlice(&#34;temp4&#34;, temp4) temp3 := append(temp, 5) printSlice(&#34;temp3&#34;, temp3) printSlice(&#34;temp2&#34;, temp2) } func printSlice(valName string, s []int) { fmt.……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -378,53 +373,71 @@ Redis Rehash是什么？  在我们日常使用redis的过程中，随着key不�
     
 
     
-    <li >
-        <a href="https://siskinc.github.io/post/">1</a>
-    </li>
+
     
-    <li >
-        <a href="https://siskinc.github.io/post/page/2/">2</a>
-    </li>
+        
     
-    <li  class="current">
-        <a href="https://siskinc.github.io/post/page/3/">3</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/4/">4</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/5/">5</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/6/">6</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/7/">7</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/8/">8</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/9/">9</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/10/">10</a>
-    </li>
     
 
     
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/">1</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/2/">2</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://siskinc.github.io/post/page/3/">3</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/4/">4</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/5/">5</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/11/">11</a>
+        </li>
+        
+    
+
+    
+    
+
     <li class="next">
         <a href="https://siskinc.github.io/post/page/4/">下一页</a>
     </li>
     
 </ol>
+
 
 
 
@@ -491,6 +504,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E5%8E%86%E7%A8%8B/" title="记一次线上服务内存优化历程">记一次线上服务内存优化历程</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/" title="Gengine源码阅读 DataContext">Gengine源码阅读 DataContext</a>
     </li>
     
@@ -526,10 +543,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-bufio%E9%98%85%E8%AF%BB/" title="Golang源码阅读 Bufio阅读">Golang源码阅读 Bufio阅读</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -563,7 +576,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (23)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (24)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -762,9 +775,13 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译</a>
     
+    <a href="https://siskinc.github.io/tags/%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96/">内存优化</a>
+    
     <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
     
     <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%A4%8D%E7%9B%98/">复盘</a>
     
     <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
     

@@ -73,6 +73,34 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/" title="svn钩子(hooks)">svn钩子(hooks)</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/svn'>SVN</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            钩子脚本的具体写法就是操作系统中shell脚本程序的写法,请根据自己SVN所在的操作系统和shell程序进行相应的写作
+所谓钩子就是与一些版本库事件触发的程序，例如新修订版本的创建，或是未版本化属性的修改。每个钩子都会被告知足够多的信息，包括那是什么事件，所操作的对象，和触发事件的用户名。通过钩子的输出或返回状态，钩子程序能让工作继续、停止或是以某种方式挂起。
+svn在每个代码仓库下有一个hooks目录用于放hook脚本, svn为我们提供了模板
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25  [root@idcflow2175 hooks]# pwd /home/svn/csvn/data/repositories/tr2/hooks [root@idcflow2175 hooks]# ll -rw-r--r-- 1 svn svn 1977 Jul 1 2013 post-commit.tmpl -rw-r--r-- 1 svn svn 1638 Jul 1 2013 post-lock.tmpl -rw-r--r-- 1 svn svn 2289 Jul 1 2013 post-revprop-change.tmpl -rw-r--r-- 1 svn svn 1567 Jul 1 2013 post-unlock.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BAsvn%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/" title="使用Docker搭建svn服务器教程">使用Docker搭建svn服务器教程</a>
             </h1>
         </header>
@@ -332,33 +360,6 @@ lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/python%E4%B8%AD%E6%A3%80%E6%B5%8B%E6%9F%90%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E6%9C%89%E5%AE%9A%E4%B9%89/" title="python中检测某个变量是否有定义">python中检测某个变量是否有定义</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/python'>Python</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            第一种方法使用内置函数locals() 'testvar' in locals().keys()
-第二种方法使用内置函数dir() 'testvar' in dir()
-第三种方法使用内置函数vars() vars().has_key('testvar')……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/python%E4%B8%AD%E6%A3%80%E6%B5%8B%E6%9F%90%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E6%9C%89%E5%AE%9A%E4%B9%89/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -370,53 +371,85 @@ lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有
     
 
     
-    <li >
-        <a href="https://siskinc.github.io/post/">1</a>
-    </li>
+
     
-    <li >
-        <a href="https://siskinc.github.io/post/page/2/">2</a>
-    </li>
+        
+        
     
-    <li >
-        <a href="https://siskinc.github.io/post/page/3/">3</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/4/">4</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/5/">5</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/6/">6</a>
-    </li>
-    
-    <li  class="current">
-        <a href="https://siskinc.github.io/post/page/7/">7</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/8/">8</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/9/">9</a>
-    </li>
-    
-    <li >
-        <a href="https://siskinc.github.io/post/page/10/">10</a>
-    </li>
     
 
     
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/">1</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/5/">5</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/6/">6</a>
+        </li>
+        
+    
+        
+        
+        <li  class="current">
+            <a href="https://siskinc.github.io/post/page/7/">7</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/8/">8</a>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/9/">9</a>
+        </li>
+        
+    
+        
+        <li>
+            <span>...</span>
+        </li>
+        
+    
+        
+        
+        <li >
+            <a href="https://siskinc.github.io/post/page/11/">11</a>
+        </li>
+        
+    
+
+    
+    
+
     <li class="next">
         <a href="https://siskinc.github.io/post/page/8/">下一页</a>
     </li>
     
 </ol>
+
 
 
 
@@ -483,6 +516,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E5%8E%86%E7%A8%8B/" title="记一次线上服务内存优化历程">记一次线上服务内存优化历程</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/" title="Gengine源码阅读 DataContext">Gengine源码阅读 DataContext</a>
     </li>
     
@@ -518,10 +555,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-bufio%E9%98%85%E8%AF%BB/" title="Golang源码阅读 Bufio阅读">Golang源码阅读 Bufio阅读</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -555,7 +588,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (23)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (24)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
@@ -754,9 +787,13 @@ if (!doNotTrack) {
     
     <a href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译</a>
     
+    <a href="https://siskinc.github.io/tags/%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96/">内存优化</a>
+    
     <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
     
     <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%A4%8D%E7%9B%98/">复盘</a>
     
     <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
     
