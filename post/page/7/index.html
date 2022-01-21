@@ -73,6 +73,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/" title="shell中通过eval执行一个字符串命令">shell中通过eval执行一个字符串命令</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            1 2 3 4 5 6 7 8 9 10 11 12 13  #!/bin/bash echo &#34;Switch Directory : /home/pktgen-2.9.0&#34; dir=&#34;/home/pktgen-2.9.0&#34; cd $dir cmd=&#34;./pktgen_20180410 -c f -n 4 --proc-type auto --socket-mem 512 -b 01:00.1 --file-prefix pg1 -- -T -m 3.0 -s 0:voip-udp.pcap:2 -d 10000 --bps 1500&#34; eval $cmd   ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/shell%E4%B8%AD%E9%80%9A%E8%BF%87eval%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%91%BD%E4%BB%A4/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/svn%E9%92%A9%E5%AD%90hooks/" title="svn钩子(hooks)">svn钩子(hooks)</a>
             </h1>
         </header>
@@ -326,40 +351,6 @@ svn的docker搭建方法   请提前在服务器安装好docker服务
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/vue-lazyload%E6%8F%92%E4%BB%B6/" title="vue-lazyload插件">vue-lazyload插件</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/%E5%89%8D%E7%AB%AF'>前端</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            使用 1 2 3  npm install vue-lazyload --save   1 2 3 4 5 6 7  //注册插件  import vueLazyload from &#39;vue-lazyload&#39; Vue.use(vueLazyload);   1 2 3 4 5  //在需要懒加载的图片上 &lt;img v-lazy=&#34;imgUrl&#34;&gt;   参数说明 注册插件的时候，是可以传入第二个配置参数的
-1 2 3  Vue.use(vueLazyload,{})   可选的参数如下：
-preLoad:类型Number,默认1.3. 表示lazyload的元素距离页面底部距离的百分比.计算值为(preload - 1).
-attempt:图片加载失败后的重试次数.默认为3.
-error:类型string.图片加载失败后的显示的失败图片路径.
-loading:类型string.图片正在加载中显示的loading图片的路径.
-listenEvents:类型array.默认[&lsquo;scroll&rsquo;, &lsquo;wheel&rsquo;, &lsquo;mousewheel&rsquo;, &lsquo;resize&rsquo;, &lsquo;animationend&rsquo;, &lsquo;transitionend&rsquo;, &lsquo;touchmove&rsquo;].即是在监听上述事件中,判断图片是否在preload的位置.如果你不想在那么多事件中判断,可以指定一个或者几个.例如如果你给这个属性只指定[&lsquo;touchmove&rsquo;].那么scroll 屏幕不会加载图片,只有手指滑动屏幕才会加载图片.
-adapter:注册img 的loading,loaded,error三个状态的回调函数,参数会暴露懒加载的img元素,可以对其进行操作.
-filter: img未加载之前,解析到src 的时候注册的回调函数.可以在加载图片之前,对src进行修改.注册在filter下的所有的函数都会执行
-lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有在出现在preload的位置中才会加载组件.这个lazyloadComponent 组件有个缺点就是,组件在加载前是什么都不渲染的,这样子的话,有可能会影响布局,以及加载前到加载后的切换不好,有点突兀和生硬.……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/vue-lazyload%E6%8F%92%E4%BB%B6/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -457,7 +448,7 @@ lazyComponent:类型Boolean.是否启用懒加载组件.组件中的内容只有
 
                     <footer id="footer">
     <div>
-        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
+        &copy; 2022 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
         
     </div>
     <br />
@@ -516,6 +507,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E5%8E%86%E7%A8%8B/" title="记一次线上服务内存优化历程">记一次线上服务内存优化历程</a>
     </li>
     
@@ -549,10 +544,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
 </ul>
@@ -599,6 +590,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%A4%8D%E7%9B%98/">复盘 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (2)</a></li>
     

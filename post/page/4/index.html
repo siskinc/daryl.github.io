@@ -73,6 +73,37 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/" title="Centos下，源码安装Python的h3包">Centos下，源码安装Python的h3包</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月6日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>Linux</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            公司的渣渣网速，在服务器上pip install h3的时候老是git clone 失败，不得已，只能手动安装h3的包，下面就是我安装h3包的全部过程。
+ 检查cmake版本 1 2 3  cmake --version   如果版本显示是3.1以上就算OK的，但是在centos下面使用yum安装的默认就是2.8的版本，所以需要自己手动安装一下，如何安装我就不说了，传送门给你们：Centos7安装高版本Cmake
+下载文件  自己下载对于的master压缩包
+   https://github.com/uber/h3
+  https://github.com/uber/h3-py
+  解压文件 1 2 3 4 5  unzip h3-master.zip unzip h3-py-master.zip   修改.install.sh文件 在解压后的h3-py-master文件夹中有一个.install.sh
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101  #!……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/golang%E9%87%8D%E5%A4%8D%E5%AF%B9%E4%B8%80%E4%B8%AAslice%E8%BF%9B%E8%A1%8Cappend%E9%80%A0%E6%88%90%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF/" title="Golang重复对一个slice进行append造成数据错误">Golang重复对一个slice进行append造成数据错误</a>
             </h1>
         </header>
@@ -325,33 +356,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/" title="git使用ssh自动替代https">git使用ssh自动替代https</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年12月12日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/git'>Git</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-             在使用go mod的时候，并且在一些私有的仓库，例如公司的代码库中，经常会需要输入密码，我们可以现在公司的代码库中设置好ssh密钥
- 本地执行git命令: 1 2 3 4 5  git config --global url.&#34;git@github.com:&#34;.insteadOf &#34;https://github.com/&#34; git config --global url.&#34;git@git.company.com:&#34;.insteadOf &#34;https://git.company.com/&#34;    company.com换成你自己公司的地址即可。
-  而对于 golang.org 上的代码，在这一阶段，会从 https://go.googlesource.com 获取代码，不过庆幸的是，这些代码都在 github 上有镜像，我们可以替换一下： 1 2 3  git config --global url.&#34;git@github.com:golang/&#34;.insteadOf &#34;https://go.googlesource.com/&#34;   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/git%E4%BD%BF%E7%94%A8ssh%E8%87%AA%E5%8A%A8%E6%9B%BF%E4%BB%A3https/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -449,7 +453,7 @@
 
                     <footer id="footer">
     <div>
-        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
+        &copy; 2022 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
         
     </div>
     <br />
@@ -508,6 +512,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E5%8E%86%E7%A8%8B/" title="记一次线上服务内存优化历程">记一次线上服务内存优化历程</a>
     </li>
     
@@ -541,10 +549,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
 </ul>
@@ -591,6 +595,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%A4%8D%E7%9B%98/">复盘 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (2)</a></li>
     

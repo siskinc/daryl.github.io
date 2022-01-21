@@ -73,6 +73,32 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/error-inflating-class-fragment/" title="Error_inflating_class_fragment">Error_inflating_class_fragment</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/android'>Android</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            如果你的 XXXXFragment 从android.app.Fragment继承，你需要改变一下onCreateView()方法。return你需要显示Fragment view或者转换使用LayoutInflater转换你的布局变成view，并return 他。
+1 2 3 4 5 6 7 8 9 10 11  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { View mainview = inflater.inflate(R.layout.main, null); return mainview; }   ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/error-inflating-class-fragment/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/redis-mongodb%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E6%96%B9%E5%BC%8F/" title="redis_mongodb持久化的方式">redis_mongodb持久化的方式</a>
             </h1>
         </header>
@@ -188,7 +214,7 @@ RDB文件是否需要CRC64校验, 若为yes,会在生成RDB文件后计算其CRC
 
                     <footer id="footer">
     <div>
-        &copy; 2021 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
+        &copy; 2022 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
         
     </div>
     <br />
@@ -247,6 +273,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E5%8E%86%E7%A8%8B/" title="记一次线上服务内存优化历程">记一次线上服务内存优化历程</a>
     </li>
     
@@ -280,10 +310,6 @@ if (!doNotTrack) {
     
     <li>
         <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
-    </li>
-    
-    <li>
-        <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
     </li>
     
 </ul>
@@ -330,6 +356,8 @@ if (!doNotTrack) {
     <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%A4%8D%E7%9B%98/">复盘 (1)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (2)</a></li>
     

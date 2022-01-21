@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+
+    <title>复盘 | Daryl&#39;s Blog</title>
+    <meta property="og:title" content="复盘 - Daryl&#39;s Blog">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,java,android,博客,项目管理,python,软件架构,公众号,小程序,Daryl">
+    <meta name="description" content="复盘">
+        
+    <meta name="author" content="Daryl">
+    <meta property="og:url" content="https://siskinc.github.io/categories/%E5%A4%8D%E7%9B%98/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml+xml" href="https://siskinc.github.io/categories/%E5%A4%8D%E7%9B%98/index.xml" title="Daryl's Blog" />
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://siskinc.github.io/">
+                        Daryl&#39;s Blog
+                    </a>
+                
+                <p class="description">专注于Go语言(golang)、Python、项目管理、软件架构</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://siskinc.github.io/">首页</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <h3 class="archive-title">
+        分类
+        <span class="keyword">复盘</span>
+        中的文章
+    </h3>
+    
+
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/">对HTTP制作统一缓存的思考</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月21日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/%E5%A4%8D%E7%9B%98'>复盘</a>
+            
+        </div>
+        
+        <div class="post-content">
+            背景  最近收到反馈，用户觉得小程序比较慢，统一分析后认为，我们系统在用户刷新的一些动作时，耗时比较长。
+ 排查  由于业务的需求，用户在打开微信小程序的时候会调用一次服务端的接口 服务端在执行时会去调用高德地图/IPIP的接口，由于是外部服务的调用，所以耗时比较长(有些极端的会达到好几秒，但是普遍都是500ms+) 由于业务的原因，这些外部调用必须调用  解决思路  一开始是针对部分接口有了缓存的（Redis），但对每一个小的业务场景都使用了一个对象来处理缓存的使用，目前已经积累了五个了，按照堆屎山的逻辑，我应该再去配置一堆缓存对象来处理这个问题，然后在各个调用接口的地方使用缓存对象，但，我认为这不是一个好的设计了，原有的设计不太实用了，并且会造成代码逻辑的混乱，不好维护，以后即便缓存出现了问题，也难以排查。所以怎么解决呢？
+ 启发  无意中看到代码中有http trace的逻辑（可以对http调用过程中的状态进行感知），我想到，是不是可以使用类似的逻辑来实现对HTTP调用统一的缓存呢？我只需要配置一下域名，路由，HTTP Method，是不是就可以快速完成HTTP调用呢？
+ 实现  方案一：在HTTP Trace中制作缓存，但我发现HTTP Trace没有办法去拦截HTTP的Response数据，所以这条路行不通。 方案二：对HTTP的调用进行封装，这样确实是可以统一的进行HTTP缓存的逻辑，但是我想了一下，工作量有点接受不了，太多了。 方案三：我找到了一个aiohttp的client缓存三方库，它相当于对http的调用进行了封装，当然是当一个api gay来得快乐，但是，这个库对于缓存的过期机制的处理有点傻，没有使用Redis的过期机制，所以对其进行改动了一部分。  总结  当初在设计HTTP缓存的时候并没有考虑到这是一个通用的东西，也没有做得太通用，每一种业务调用都和缓存类进行强绑定，所谓“吃一堑，长一智”，下一次遇到类似的逻辑我一定不会写出强侵入式的逻辑。 在调研HTTP Trace的逻辑时，一开始是认为能走通的，但确实是没考虑到HTTP Trace没有办法拦截HTTP的Response数据的问题，导致自己做了一半了，不得不放弃，这也算是自己没有把事情的全流程考虑好，算是拿了半截就跑的典型错误，下一次还是要将全流程的思路写出来才算是调研成功。  ……
+            <p class="readmore"><a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/">阅读全文</a></p>
+        </div>
+    </article>
+    
+
+    
+
+
+
+
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://siskinc.github.io/">Daryl&#39;s Blog By Daryl</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'Python,Golang', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://siskinc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://siskinc.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E5%8E%86%E7%A8%8B/" title="记一次线上服务内存优化历程">记一次线上服务内存优化历程</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/gengine%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-datacontext/" title="Gengine源码阅读 DataContext">Gengine源码阅读 DataContext</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%86%B3%E7%AD%96%E5%BC%95%E6%93%8E/" title="决策引擎">决策引擎</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/cpython%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" title="CPython的原子操作">CPython的原子操作</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/caarlos0-env%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="`caarlos0/env`源码阅读">`caarlos0/env`源码阅读</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2/" title="上下文切换">上下文切换</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python%E7%9A%84%E5%85%A8%E5%B1%80%E9%94%81_gil/" title="Python的全局锁(GIL)">Python的全局锁(GIL)</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
+    </li>
+    
+    <li>
+        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://siskinc.github.io/categories/algorithm/">Algorithm (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/android/">Android (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/c&#43;&#43;/">C&#43;&#43; (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/docker/">Docker (5)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/git/">Git (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/go/">Go (20)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/golang/">Golang (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/javascript/">JavaScript (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/k8s/">k8s (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/linux/">Linux (6)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mongodb/">MongoDB (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/python/">Python (24)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/svn/">SVN (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/vscode/">VSCode (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/windows/">Windows (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%89%8D%E7%AB%AF/">前端 (4)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E5%A4%8D%E7%9B%98/">复盘 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BB%8F%E9%AA%8C/">经验 (3)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E7%BC%96%E7%A0%81/">编码 (2)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式 (1)</a></li>
+    
+    <li><a href="https://siskinc.github.io/categories/%E8%BD%AF%E6%8A%80%E8%83%BD/">软技能 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://siskinc.github.io/tags/axios/">axios</a>
+    
+    <a href="https://siskinc.github.io/tags/basic-latin/">Basic Latin</a>
+    
+    <a href="https://siskinc.github.io/tags/branch/">branch</a>
+    
+    <a href="https://siskinc.github.io/tags/bug/">bug</a>
+    
+    <a href="https://siskinc.github.io/tags/cas/">CAS</a>
+    
+    <a href="https://siskinc.github.io/tags/centos/">centos</a>
+    
+    <a href="https://siskinc.github.io/tags/convert/">convert</a>
+    
+    <a href="https://siskinc.github.io/tags/coverage/">coverage</a>
+    
+    <a href="https://siskinc.github.io/tags/cpu/">CPU</a>
+    
+    <a href="https://siskinc.github.io/tags/cron-task/">cron task</a>
+    
+    <a href="https://siskinc.github.io/tags/css/">css</a>
+    
+    <a href="https://siskinc.github.io/tags/datetime/">datetime</a>
+    
+    <a href="https://siskinc.github.io/tags/dict/">dict</a>
+    
+    <a href="https://siskinc.github.io/tags/django/">django</a>
+    
+    <a href="https://siskinc.github.io/tags/docker/">docker</a>
+    
+    <a href="https://siskinc.github.io/tags/docker-compose/">docker-compose</a>
+    
+    <a href="https://siskinc.github.io/tags/eval/">eval</a>
+    
+    <a href="https://siskinc.github.io/tags/flask/">flask</a>
+    
+    <a href="https://siskinc.github.io/tags/gengine/">Gengine</a>
+    
+    <a href="https://siskinc.github.io/tags/gevent/">gevent</a>
+    
+    <a href="https://siskinc.github.io/tags/gil/">GIL</a>
+    
+    <a href="https://siskinc.github.io/tags/gin/">gin</a>
+    
+    <a href="https://siskinc.github.io/tags/git/">git</a>
+    
+    <a href="https://siskinc.github.io/tags/go-redis/">go-redis</a>
+    
+    <a href="https://siskinc.github.io/tags/golang/">Golang</a>
+    
+    <a href="https://siskinc.github.io/tags/golang%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">Golang源码阅读</a>
+    
+    <a href="https://siskinc.github.io/tags/gorm/">gorm</a>
+    
+    <a href="https://siskinc.github.io/tags/goroutine/">goroutine</a>
+    
+    <a href="https://siskinc.github.io/tags/gridfs/">gridfs</a>
+    
+    <a href="https://siskinc.github.io/tags/hash/">hash</a>
+    
+    <a href="https://siskinc.github.io/tags/hooks/">hooks</a>
+    
+    <a href="https://siskinc.github.io/tags/http/">http</a>
+    
+    <a href="https://siskinc.github.io/tags/https/">https</a>
+    
+    <a href="https://siskinc.github.io/tags/import/">import</a>
+    
+    <a href="https://siskinc.github.io/tags/init/">init</a>
+    
+    <a href="https://siskinc.github.io/tags/javascript/">javascript</a>
+    
+    <a href="https://siskinc.github.io/tags/jquery/">jQuery</a>
+    
+    <a href="https://siskinc.github.io/tags/json/">json</a>
+    
+    <a href="https://siskinc.github.io/tags/k8s/">k8s</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka/">kafka</a>
+    
+    <a href="https://siskinc.github.io/tags/kafka-go/">kafka-go</a>
+    
+    <a href="https://siskinc.github.io/tags/linux/">linux</a>
+    
+    <a href="https://siskinc.github.io/tags/lua/">lua</a>
+    
+    <a href="https://siskinc.github.io/tags/mac/">mac</a>
+    
+    <a href="https://siskinc.github.io/tags/map/">map</a>
+    
+    <a href="https://siskinc.github.io/tags/mgo/">mgo</a>
+    
+    <a href="https://siskinc.github.io/tags/mongodb/">mongodb</a>
+    
+    <a href="https://siskinc.github.io/tags/mongoengine/">mongoengine</a>
+    
+    <a href="https://siskinc.github.io/tags/mysql/">mysql</a>
+    
+    <a href="https://siskinc.github.io/tags/nodejs/">nodejs</a>
+    
+    <a href="https://siskinc.github.io/tags/pep8/">PEP8</a>
+    
+    <a href="https://siskinc.github.io/tags/pipeline/">pipeline</a>
+    
+    <a href="https://siskinc.github.io/tags/process/">process</a>
+    
+    <a href="https://siskinc.github.io/tags/proxy/">proxy</a>
+    
+    <a href="https://siskinc.github.io/tags/pydantic/">Pydantic</a>
+    
+    <a href="https://siskinc.github.io/tags/python/">python</a>
+    
+    <a href="https://siskinc.github.io/tags/python-language-server/">Python Language Server</a>
+    
+    <a href="https://siskinc.github.io/tags/python2/">python2</a>
+    
+    <a href="https://siskinc.github.io/tags/python3/">python3</a>
+    
+    <a href="https://siskinc.github.io/tags/python%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/">Python类型提示</a>
+    
+    <a href="https://siskinc.github.io/tags/redis/">redis</a>
+    
+    <a href="https://siskinc.github.io/tags/referencefield/">referencefield</a>
+    
+    <a href="https://siskinc.github.io/tags/restful/">restful</a>
+    
+    <a href="https://siskinc.github.io/tags/rtti/">RTTI</a>
+    
+    <a href="https://siskinc.github.io/tags/shell/">shell</a>
+    
+    <a href="https://siskinc.github.io/tags/source-code/">source code</a>
+    
+    <a href="https://siskinc.github.io/tags/ss/">ss</a>
+    
+    <a href="https://siskinc.github.io/tags/ssh/">ssh</a>
+    
+    <a href="https://siskinc.github.io/tags/svn/">svn</a>
+    
+    <a href="https://siskinc.github.io/tags/thread/">thread</a>
+    
+    <a href="https://siskinc.github.io/tags/trap/">trap</a>
+    
+    <a href="https://siskinc.github.io/tags/uber-h3/">uber h3</a>
+    
+    <a href="https://siskinc.github.io/tags/ubuntu/">ubuntu</a>
+    
+    <a href="https://siskinc.github.io/tags/unicode/">Unicode</a>
+    
+    <a href="https://siskinc.github.io/tags/unique-index/">unique index</a>
+    
+    <a href="https://siskinc.github.io/tags/uwsgi/">uwsgi</a>
+    
+    <a href="https://siskinc.github.io/tags/vscode/">vscode</a>
+    
+    <a href="https://siskinc.github.io/tags/vue/">vue</a>
+    
+    <a href="https://siskinc.github.io/tags/windows/">windows</a>
+    
+    <a href="https://siskinc.github.io/tags/wordpress/">wordpress</a>
+    
+    <a href="https://siskinc.github.io/tags/xshell/">xshell</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">二叉搜索树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96/">内存优化</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%9B%BD%E5%86%85%E6%BA%90/">国内源</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%A4%8D%E7%9B%98/">复盘</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA/">工作方法论</a>
+    
+    <a href="https://siskinc.github.io/tags/%E5%B9%82%E6%AC%A1%E5%AE%9A%E5%BE%8B/">幂次定律</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%8F%92%E4%BB%B6/">插件</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%AC%A1%E4%BC%98%E4%BA%8C%E5%8F%89%E6%A0%91/">次优二叉树</a>
+    
+    <a href="https://siskinc.github.io/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/">源码阅读</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%B7%A8%E5%9F%9F/">跨域</a>
+    
+    <a href="https://siskinc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://siskinc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
