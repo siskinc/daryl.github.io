@@ -58,6 +58,8 @@
                 <nav id="nav-menu" class="clearfix">
                     <a class="current" href="https://siskinc.github.io/">首页</a>
                     
+                    <a  href="https://siskinc.github.io/about/" title="关于">关于</a>
+                    
                 </nav>
             </div>
         </div>
@@ -234,6 +236,7 @@
 <ol>
 <li>当初在设计HTTP缓存的时候并没有考虑到这是一个通用的东西，也没有做得太通用，每一种业务调用都和缓存类进行强绑定，所谓“吃一堑，长一智”，下一次遇到类似的逻辑我一定不会写出强侵入式的逻辑。</li>
 <li>在调研HTTP Trace的逻辑时，一开始是认为能走通的，但确实是没考虑到HTTP Trace没有办法拦截HTTP的Response数据的问题，导致自己做了一半了，不得不放弃，这也算是自己没有把事情的全流程考虑好，算是拿了半截就跑的典型错误，下一次还是要将全流程的思路写出来才算是调研成功。</li>
+<li>目前看来，增加了缓存还是提升了很大的效率，算是告一段落。</li>
 </ol>
 
         </div>
