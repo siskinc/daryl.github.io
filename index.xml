@@ -6,7 +6,18 @@
     <description>Recent content on Daryl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Jan 2022 20:38:03 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Jan 2022 11:39:22 +0800</lastBuildDate><atom:link href="https://siskinc.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python3动态创建module</title>
+      <link>https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/</link>
+      <pubDate>Sat, 22 Jan 2022 11:39:22 +0800</pubDate>
+      
+      <guid>https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/</guid>
+      <description> 最近要支持一个功能，让用户自定义一些动态的逻辑，索性让用户自己写代码执行，所以需要做到让用户的代码动态执行起来。下面列举一下核心逻辑。
+ 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14  #!/usr/bin/env python3 import importlib def new_module(mod_name): spec = importlib.machinery.ModuleSpec(mod_name,None) return importlib.util.module_from_spec(spec) def create_module(mod_name, object_list): mod = new_module(mod_name) for obj in object_list: setattr(mod,obj.__name__, obj) return mod    这个脚本主要是用来动态创建module，并且把对象放到module中，这样就可以在其他地方调用了。
+ 参考文章  Creating Dynamic Modules in Python 3  </description>
+    </item>
+    
     <item>
       <title>对HTTP制作统一缓存的思考</title>
       <link>https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/</link>

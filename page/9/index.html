@@ -73,6 +73,38 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/" title="Python中下划线的5种含义">Python中下划线的5种含义</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年7月25日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            单前导下划线 _var 当涉及到变量和方法名称时，单个下划线前缀有一个约定俗成的含义。 它是对程序员的一个提示 - 意味着Python社区一致认为它应该是什么意思，但程序的行为不受影响。
+下划线前缀的含义是告知其他程序员：以单个下划线开头的变量或方法仅供内部使用。 该约定在PEP 8中有定义。
+单末尾下划线 var_ 有时候，一个变量的最合适的名称已经被一个关键字所占用。 因此，像class或def这样的名称不能用作Python中的变量名称。 在这种情况下，你可以附加一个下划线来解决命名冲突。总之，单个末尾下划线（后缀）是一个约定，用来避免与Python关键字产生命名冲突。 PEP 8解释了这个约定。
+双前导下划线 __var 到目前为止，我们所涉及的所有命名模式的含义，来自于已达成共识的约定。 而对于以双下划线开头的Python类的属性（包括变量和方法），情况就有点不同了。
+双下划线前缀会导致Python解释器重写属性名称，以避免子类中的命名冲突。
+这也叫做名称修饰（name mangling） - 解释器更改变量的名称（例如：class名为Test, 变量名为__a,那么__a会被Python解释器重写属性名为_Test__a），以便在类被扩展的时候不容易产生冲突。名称修饰会影响在一个类的上下文中，以两个下划线字符（&ldquo;dunders&rdquo;）开头的所有名称。
+双前导和双末尾下划线 var 如果一个名字同时以双下划线开始和结束，则不会应用名称修饰。 由双下划线前缀和后缀包围的变量不会被Python解释器修改。
+单下划线 _ 按照习惯，有时候单个独立下划线是用作一个名字，来表示某个变量是临时的或无关紧要的。你也可以在拆分(unpacking)表达式中将单个下划线用作“不关心的”变量，以忽略特定的值。 同样，这个含义只是“依照约定”，并不会在Python解释器中触发特殊的行为。 单个下划线仅仅是一个有效的变量名称，会有这个用途而已。
+除了用作临时变量之外，“_”是大多数Python REPL中的一个特殊变量，它表示由解释器评估的最近一个表达式的结果。
+Python下划线命名模式 - 小结 evernotecid://9326179B-5200-4478-B32E-B919B94B243C/appyinxiangcom/21231346/ENResource/p4……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%845%E7%A7%8D%E5%90%AB%E4%B9%89/">阅读全文</a></p>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/golang%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%8A%8Aslice%E8%BD%AC%E6%8D%A2%E6%88%90interface%E7%B1%BB%E5%9E%8B%E7%9A%84slice/" title="Golang不会自动把slice转换成interface{}类型的slice">Golang不会自动把slice转换成interface{}类型的slice</a>
             </h1>
         </header>
@@ -309,45 +341,6 @@ db.article.find({&quot;title&quot;: {$regex: /a/, $options: &quot;im&quot;}})�
         <p class="readmore"><a href="https://siskinc.github.io/post/%E5%85%B3%E4%BA%8Ebasic_latin%E8%B8%A9%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9D%91/">阅读全文</a></p>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/" title="mysql查看数据库和表的占用空间大小">mysql查看数据库和表的占用空间大小</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/mysql'>Mysql</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            查看数据库的大小 use 数据库名
-SELECT sum(DATA_LENGTH)+sum(INDEX_LENGTH)
-FROM information_schema.TABLES where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;
-得到的结果是以字节为单位，除1024为K，除1048576为M。
-查看表的最后mysql修改时间 select TABLE_NAME,UPDATE_TIME from INFORMATION_SCHEMA.tables where TABLE_SCHEMA=&lsquo;数据库名&rsquo;;
-可以通过查看数据库中表的mysql修改时间，来确定mysql数据库是否已经长期不再使用。
-查看数据库中各个表占用的空间大小 如果想知道MySQL数据库中每个表占用的空间、表记录的行数的话，可以打开MySQL的 information_schema 数据库。在该库中有一个 TABLES 表，这个表主要字段分别是：
-TABLE_SCHEMA : 数据库名
-TABLE_NAME：表名
-ENGINE：所使用的存储引擎
-TABLES_ROWS：记录数
-DATA_LENGTH：数据大小
-INDEX_LENGTH：索引大小
-其他字段请参考MySQL的手册，我们只需要了解这几个就足够了。
-所以要知道一个表占用空间的大小，那就相当于是 数据大小 + 索引大小 即可。
-SQL:
-SELECT TABLE_NAME,DATA_LENGTH+INDEX_LENGTH,TABLE_ROWS FROM TABLES WHERE TABLE_SCHEMA=&lsquo;数据库名&rsquo; AND TABLE_NAME=&lsquo;表名&rsquo;……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/mysql%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E5%8D%A0%E7%94%A8%E7%A9%BA%E9%97%B4%E5%A4%A7%E5%B0%8F/">阅读全文</a></p>
-    </article>
-    
     
 
 
@@ -492,6 +485,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/" title="Python3动态创建module">Python3动态创建module</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
     </li>
     
@@ -527,10 +524,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -564,7 +557,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (24)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (25)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     

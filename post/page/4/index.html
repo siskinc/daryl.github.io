@@ -75,6 +75,32 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/" title="Redis源码阅读-dict">Redis源码阅读-dict</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年4月21日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            数据结构 字典的基本单元——dictEntry 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21  typedef struct dictEntry { void *key; union { void *val; uint64_t u64; int64_t s64; double d; } v; struct dictEntry *next; } dictEntry;   dictEntry是Redis中的哈希表数据接口的基本单元，有一个指向key的指针，还有一个联合体v，代表的是字典的值，它可以是一个数字（浮点或者有符号整型或者无符号整型），还有一个next字段指向下一个dictEntry的指针。说明了一个问题，dictEntry其实是一个链表节点。
+哈希表——dictht 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17  /* This is our hash table structure.……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/redis%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-dict/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/centos%E4%B8%8B%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python%E7%9A%84h3%E5%8C%85/" title="Centos下，源码安装Python的h3包">Centos下，源码安装Python的h3包</a>
             </h1>
         </header>
@@ -340,24 +366,6 @@
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/nohup%E4%B8%8D%E8%BE%93%E5%87%BA%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95/" title="nohup不输出日志信息的方法">nohup不输出日志信息的方法</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年12月15日
-        </date>
-        
-        <div class="post-content">
-            只输出错误信息到日志文件 1 2 3  nohup ./program &gt; /dev/null 2 &gt; log &amp;   什么信息也不要 1 2 3  nohup ./program &gt;/dev/null 2&gt;&amp;1 &amp;   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/nohup%E4%B8%8D%E8%BE%93%E5%87%BA%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E7%9A%84%E6%96%B9%E6%B3%95/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -514,6 +522,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/" title="Python3动态创建module">Python3动态创建module</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
     </li>
     
@@ -549,10 +561,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -586,7 +594,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (24)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (25)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     

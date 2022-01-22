@@ -75,6 +75,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年10月22日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/python'>Python</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            步骤  打开pydantic/main.py文件并且搜索ModelMetaclass定义，在ModelMetaclass类型定义，粘贴以下代码:  1 2 3 4 5 6 7 8  def __dataclass_transform__( *, eq_default: bool = True, order_default: bool = False, kw_only_default: bool = False, field_descriptors: Tuple[Union[type, Callable[..., Any]], ...] = (()), ) -&gt; Callable[[_T], _T]: return lambda a: a   增加包装器在ModelMetaclass定义上:  1  @__dataclass_transform__(kw_only_default=True, field_descriptors=(Field, FieldInfo))   结果 修改前 修改后 参考文献 ……
+        </div>
+        <p class="readmore"><a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/python3%E5%9C%A8%E7%B1%BB%E7%9A%84%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="Python3在类的内部使用当前类作为类型提示">Python3在类的内部使用当前类作为类型提示</a>
             </h1>
         </header>
@@ -325,34 +350,6 @@ demo 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/" title="redis lua script注意点">redis lua script注意点</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年8月16日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/redis'>Redis</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            脚本死循环 Redis 的指令执行是个单线程，这个单线程还要执行来自客户端的 lua 脚本。如果 lua 脚本中来一个死循环，在脚本没有对 Redis 的内部数据状态进行修改时，可以使用script kill指令用于动态杀死一个执行时间超时的 lua 脚本。因为 Redis 不允许 script kill 破坏脚本执行的原子性。比如脚本内部使用了 redis.call(&ldquo;set&rdquo;, key, value) 修改了内部的数据，那么 script kill 执行时服务器会返回错误。
-Script Kill 的原理 lua 脚本引擎功能太强大了，它提供了各式各样的钩子函数，它允许在内部虚拟机执行指令时运行钩子代码。比如每执行 N 条指令执行一次某个钩子函数，Redis 正是使用了这个钩子函数。
-
-1 2 3 4 5 6 7 8 9 10 11 12 13  void evalGenericCommand(client *c, int evalsha) { ... // lua引擎每执行10w条指令，执行一次钩子函数 luaMaskCountHook  lua_sethook(lua,luaMaskCountHook,LUA_MASKCOUNT,100000); ... }   ……
-        </div>
-        <p class="readmore"><a href="https://siskinc.github.io/post/redis_lua_script%E6%B3%A8%E6%84%8F%E7%82%B9/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -488,6 +485,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/" title="Python3动态创建module">Python3动态创建module</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
     </li>
     
@@ -523,10 +524,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -560,7 +557,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (24)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (25)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     

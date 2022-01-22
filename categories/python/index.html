@@ -82,6 +82,31 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/">Python3动态创建module</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年1月22日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='/categories/python'>Python</a>
+            
+        </div>
+        
+        <div class="post-content">
+             最近要支持一个功能，让用户自定义一些动态的逻辑，索性让用户自己写代码执行，所以需要做到让用户的代码动态执行起来。下面列举一下核心逻辑。
+ 代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14  #!/usr/bin/env python3 import importlib def new_module(mod_name): spec = importlib.machinery.ModuleSpec(mod_name,None) return importlib.util.module_from_spec(spec) def create_module(mod_name, object_list): mod = new_module(mod_name) for obj in object_list: setattr(mod,obj.__name__, obj) return mod    这个脚本主要是用来动态创建module，并且把对象放到module中，这样就可以在其他地方调用了。
+ 参考文章  Creating Dynamic Modules in Python 3  ……
+            <p class="readmore"><a href="https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://siskinc.github.io/post/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8A%E6%9C%8D%E5%8A%A1%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E5%8E%86%E7%A8%8B/">记一次线上服务内存优化历程</a>
             </h1>
         </header>
@@ -315,30 +340,6 @@ Python 3.7+ 使用feature 1  from __future__ import annotations   Python 3.6以�
         </div>
     </article>
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/">如何在mongoengine中使用referencefield引用本类</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年7月25日
-        </date>
-        
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='/categories/python'>Python</a>
-            
-        </div>
-        
-        <div class="post-content">
-            引用：原文
-1 2 3 4 5 6 7 8 9 10 11  from mongoengine import * class Employee(Document): name = StringField() boss = ReferenceField(&#34;self&#34;, reverse_delete_rule = NULLIFY)   ……
-            <p class="readmore"><a href="https://siskinc.github.io/post/%E5%A6%82%E4%BD%95%E5%9C%A8mongoengine%E4%B8%AD%E4%BD%BF%E7%94%A8referencefield%E5%BC%95%E7%94%A8%E6%9C%AC%E7%B1%BB/">阅读全文</a></p>
-        </div>
-    </article>
-    
 
     
 
@@ -433,6 +434,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://siskinc.github.io/post/python3%E5%8A%A8%E6%80%81%E5%88%9B%E5%BB%BAmodule/" title="Python3动态创建module">Python3动态创建module</a>
+    </li>
+    
+    <li>
         <a href="https://siskinc.github.io/post/%E5%AF%B9http%E5%88%B6%E4%BD%9C%E7%BB%9F%E4%B8%80%E7%BC%93%E5%AD%98%E7%9A%84%E6%80%9D%E8%80%83/" title="对HTTP制作统一缓存的思考">对HTTP制作统一缓存的思考</a>
     </li>
     
@@ -468,10 +473,6 @@ if (!doNotTrack) {
         <a href="https://siskinc.github.io/post/%E5%9B%9B%E8%B1%A1%E9%99%90%E5%B7%A5%E4%BD%9C%E6%B3%95/" title="四象限工作法">四象限工作法</a>
     </li>
     
-    <li>
-        <a href="https://siskinc.github.io/post/python-language-server-%E6%94%AF%E6%8C%81pydantic/" title="Python Language Server 支持Pydantic">Python Language Server 支持Pydantic</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -505,7 +506,7 @@ if (!doNotTrack) {
     
     <li><a href="https://siskinc.github.io/categories/mysql/">Mysql (1)</a></li>
     
-    <li><a href="https://siskinc.github.io/categories/python/">Python (24)</a></li>
+    <li><a href="https://siskinc.github.io/categories/python/">Python (25)</a></li>
     
     <li><a href="https://siskinc.github.io/categories/redis/">Redis (12)</a></li>
     
